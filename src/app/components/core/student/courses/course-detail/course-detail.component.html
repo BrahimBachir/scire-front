@@ -1,0 +1,220 @@
+@if(course) {
+<!-- <mat-card class="cardWithShadow overflow-hidden">
+  <div class="bg-{{ course.colour }} text-white p-y-10 p-x-24 d-flex justify-content-between align-items-center">
+    <mat-card-title class="d-flex align-items-center gap-10">
+      <a (click)="goBack()" mat-icon-button class="text-white d-flex justify-content-center">
+        <i-tabler name="chevron-left" class="icon-18 d-flex"></i-tabler>
+      </a>
+      {{ course.description }}
+    </mat-card-title>
+
+    <div class="start-course">
+      <button class="text-white" mat-icon-button (click)="goToCourseContent()" matTooltip="Empezar/reanudar curso">
+        <i-tabler name="player-play" class="icon-18"></i-tabler>
+      </button>
+    </div>
+  </div>
+  <div class="general-actions d-flex align-items-center gap-10 p-3 justify-content-end">
+    <button mat-icon-button class="text-muted" (click)="addToFavorites()" matTooltip="Añadir a favoritos">
+      <i-tabler name="{{favorite_class}}" class="icon-18"></i-tabler>
+    </button>
+    <button mat-icon-button class="text-muted" (click)="shareCourse()" matTooltip="Compartir curso">
+      <i-tabler name="share" class="icon-18"></i-tabler>
+    </button>
+    <button mat-icon-button class="text-muted" (click)="joinCourse()" matTooltip="Ingresar al curso">
+      <i-tabler name="{{user_class}}" class="icon-18"></i-tabler>
+    </button>
+  </div>
+</mat-card> -->
+<app-course-header [course]="course" ></app-course-header>
+
+<mat-card class="cardWithShadow">
+  <mat-tab-group mat-stretch-tabs="false" animationDuration="0ms">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="d-flex align-items-center">
+          <mat-icon class="d-flex align-items-center">
+            <i-tabler name="file-invoice" class="icon-20 m-r-8 d-flex"></i-tabler>
+          </mat-icon>
+        </div>
+        Descripción General
+      </ng-template>
+      <mat-card-content class="p-y-24">
+        <!-- <div class="row">
+            <p>Aquí irá la descripción general del curso así como su contenido</p>
+          </div> -->
+          <mat-accordion>
+            <div class="col-lg-12 col-sm-12 m-b-20">
+              <h6 class="f-w-600 f-s-24"> Parte general </h6>
+            </div>
+
+            @for( topic of courseGeneralPartTopics; track topic.id ) {
+              <!--  (click)="getTopicBlocks(topic.id)" -->
+              <mat-expansion-panel class="cardWithShadow" (opened)="setStep(topic.id)" hideToggle> 
+                <mat-expansion-panel-header>
+                  <mat-panel-title class="f-w-600"> {{ topic.section?.name }} </mat-panel-title>
+                  <mat-panel-description class="f-s-12 row-sb">
+                    {{topic.description.substring(0,50)}}...
+                    <div >
+
+                      <mat-icon class="m-l-auto m-r-8" matTooltip="Empezar estudio del tema" (click)="goToTopicContent(course.id,topic.id)">
+                        <i-tabler name="player-play" class="icon-20"></i-tabler>
+                      </mat-icon>
+                      <mat-icon class="m-l-auto m-r-8" matTooltip="Estado del tema">
+                        @if(topic.isEnded) {
+                          <i-tabler name="check-circle" class="icon-20 text-success"></i-tabler>
+                        } @else {
+                          <i-tabler name="circle" class="icon-20"></i-tabler>
+                        }
+                      </mat-icon>
+                    </div>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+  
+                <div class="row">
+                  <div class="col-lg-12 col-sm-12">
+                    <h6 class="f-s-16"> {{topic.description }} </h6>
+                  </div>
+                </div>
+                @if(topic.blocks && topic.blocks.length > 0) {
+                  <mat-divider class="row m-t-16"></mat-divider>
+                  <div class="row m-t-16">
+                    <div class="col-lg-12 col-sm-12">
+                      @for( block of topic.blocks; track block.id ) {
+                        <mat-list>
+                          <mat-list-item >
+                            <!-- <span matListItemTitle class="f-s-16 f-w-600 col-lg-12 col-sm-12"> {{ block.description }} </span> -->
+                            <span matListItemLine class="f-s-14 col-lg-12 col-sm-12 text-wrap">{{ block.description }}</span>
+                          </mat-list-item>
+                        </mat-list>
+                      }
+                    </div>
+                  </div>
+                }
+                <mat-action-row>
+                  <button mat-flat-button color="warn" (click)="prevStep()">
+                    Previous
+                  </button>
+                  <button mat-flat-button color="primary" (click)="nextStep()">
+                    Next
+                  </button>
+                </mat-action-row>
+              </mat-expansion-panel>
+            }
+
+            <div class="col-lg-12 col-sm-12 m-b-20 m-t-20">
+              <h6 class="f-w-600 f-s-24"> Parte específica </h6>
+            </div>
+
+            @for( topic of courseSpecificPartTopics; track topic.id ) {
+              <mat-expansion-panel class="cardWithShadow" (opened)="setStep(topic.id)" hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title class="f-w-600"> {{ topic.section?.name }} </mat-panel-title>
+                  <mat-panel-description class="f-s-12">
+                    {{topic.description.substring(0,50)}}...
+                    <mat-icon class="m-l-auto m-r-8">
+                      <i-tabler name="file-description" class="icon-20"></i-tabler>
+                    </mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+  
+                <div class="row">
+                  <div class="col-lg-12 col-sm-12">
+                    <h6 class="f-s-16"> {{topic.description }} </h6>
+                  </div>
+                </div>
+                <mat-divider class="row m-t-16"></mat-divider>
+                <div class="row m-t-16">
+                  <div class="col-lg-12 col-sm-12">
+                    <h6 class="f-s-16"> {{topic.description }} </h6>
+                  </div>
+                </div>
+  
+                <mat-action-row>
+                  <button mat-flat-button color="warn" (click)="prevStep()">
+                    Previous
+                  </button>
+                  <button mat-flat-button color="primary" (click)="nextStep()">
+                    Next
+                  </button>
+                </mat-action-row>
+              </mat-expansion-panel>
+            }
+          </mat-accordion>
+      </mat-card-content>
+    </mat-tab>
+    <!-- Instructor/es -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="d-flex align-items-center">
+          <mat-icon class="d-flex align-items-center">
+            <i-tabler name="user" class="icon-20 m-r-8 d-flex"></i-tabler>
+          </mat-icon>
+        </div>
+        Instructor/es
+      </ng-template>
+      <mat-card-content class="p-y-24">
+        <div class="row">
+          <mat-card>
+            <mat-card-content>
+              <p>Aquí irá la información genral relativa al/a los instructor/es</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-card-content>
+    </mat-tab>
+    <!-- Anuncios -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="d-flex align-items-center">
+          <mat-icon class="d-flex align-items-center">
+            <i-tabler name="bell-ringing" class="icon-20 m-r-8 d-flex"></i-tabler>
+          </mat-icon>
+        </div>
+        <p>
+          Anuncios
+        </p>
+      </ng-template>
+      <mat-card-content class="p-y-24">
+        <div class="row">
+          <p>Aquí irán los anuncios del curso</p>
+        </div>
+      </mat-card-content>
+    </mat-tab>
+    <!-- Reseñas -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="d-flex align-items-center">
+          <mat-icon class="d-flex align-items-center">
+            <i-tabler name="heart-star" class="icon-20 m-r-8 d-flex"></i-tabler>
+          </mat-icon>
+        </div>
+        <p>
+          Reseñas
+        </p>
+      </ng-template>
+      <mat-card-content class="p-y-24">
+        <app-reviews [featureType]="featureType" [featureId]="id"></app-reviews>
+      </mat-card-content>
+    </mat-tab>
+    <!-- Dudas y respuestas -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="d-flex align-items-center">
+          <mat-icon class="d-flex align-items-center">
+            <i-tabler name="message-circle-question" class="icon-20 m-r-8 d-flex"></i-tabler>
+          </mat-icon>
+        </div>
+        <p>
+          Dudas y respuestas
+        </p>
+      </ng-template>
+      <mat-card-content class="p-y-24">
+        <div class="row">
+          <p>Aquí irán las dudas planteadas por los alumnos del curso y sus respuestas.</p>
+        </div>
+      </mat-card-content>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
+}

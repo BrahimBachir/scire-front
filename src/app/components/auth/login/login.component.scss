@@ -1,0 +1,12 @@
+@use '../../../../assets/scss/grid/mixins' as *;   // or a name like as bp;
+
+.img-height {
+  height: 100vh;
+
+  @include bp-gt(medium) {
+    @include bp-lt(large) {
+      height: 50vh;
+    }  }
+}
+
+// C:\Users\ibraa\Programming\Opos\opos-front\src\assets\scss\grid\_variables.scss

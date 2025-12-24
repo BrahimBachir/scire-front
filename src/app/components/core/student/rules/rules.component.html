@@ -1,0 +1,106 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <form #filterForm="ngForm">
+      <div class="row justify-content-between">
+        <div class="col-lg-3">
+          <mat-form-field appearance="outline" class="w-100 hide-hint">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" />
+            <mat-icon matSuffix>
+              <i-tabler name="search" class="icon-20 d-flex m-t-2"></i-tabler>
+            </mat-icon>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Tipo de norma</mat-label>
+            <input type="text" placeholder="Buscar tipo de norma" aria-label="Tipo de norma" matInput id="type"
+              name="type" [formControl]="typeControl" [matAutocomplete]="TypeAuto" />
+            <mat-autocomplete autoActiveFirstOption #TypeAuto="matAutocomplete" [displayWith]="displayEntityName"
+              (optionSelected)="onTypeSelected($event)">
+              @for(type of filteredTypes(); track type.code) {
+              <mat-option [value]="type">
+                {{ type.description }}
+              </mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Ámbito de norma</mat-label>
+            <input type="text" placeholder="Buscar ámbito de norma" aria-label="Ámbito de norma" matInput id="ambit"
+              name="ambit" [formControl]="ambitControl" [matAutocomplete]="AmbitAuto" />
+            <mat-autocomplete autoActiveFirstOption #AmbitAuto="matAutocomplete" [displayWith]="displayEntityName"
+              (optionSelected)="onAmbitSelected($event)">
+              @for(ambit of filteredAmbits(); track ambit.code) {
+              <mat-option [value]="ambit">
+                {{ ambit.description }}
+              </mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Diario de publicación</mat-label>
+            <input type="gazette" placeholder="Buscar diario de publicación" aria-label="Diario de publicación" matInput
+              id="gazette" name="gazette" [formControl]="gazetteControl" [matAutocomplete]="GazetteAuto" />
+            <mat-autocomplete autoActiveFirstOption #GazetteAuto="matAutocomplete" [displayWith]="displayEntityName"
+              (optionSelected)="onGazetteSelected($event)">
+              @for(gazette of filteredGazettes(); track gazette.code) {
+              <mat-option [value]="gazette">
+                {{ gazette.description }}
+              </mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+    <button mat-flat-button color="primary" (click)="createRule()">
+      <!-- TODO: (click)="openDialog('Add', {})" Levantar diálogo para crear módulo. -->
+      Crear
+    </button>
+  </mat-card-content>
+</mat-card>
+
+<div class="row">
+  @for(rule of filteredRules(); track rule.id) {
+  <div class="col-lg-4" id="rule-item">
+    <mat-card class="cardWithShadow overflow-hidden">
+      <div class="course-header text-white p-12 bg-{{
+          rule.ambit?.color
+        }} d-flex justify-content-between">
+        <mat-card-title class="m-b-0 f-s-16">
+          {{ rule.ambit?.description }}
+        </mat-card-title>
+        <span class="d-flex align-items-center gap-4 f-s-14"><i-tabler name="clock" class="icon-16 d-flex"></i-tabler>{{
+          rule?.readingTime || 0 }}</span>
+      </div>
+      <mat-card-content class="text-center rule-item">
+        <h3 class="m-b-4 f-s-16 f-w-600">
+          {{ rule.description }}
+        </h3>
+        <span class="f-s-12">{{ rule.updateDate | date:'dd/mm/yy' }}</span>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <div class="text-center p-y-8 p-x-12">
+        @if( ('COURSE_DELETE' | accessControl) | async ) {
+        <button mat-mini-fab class="cart-btn-overlay bg-error text-white" matTooltip="Delete" (click)=" deleteRule(rule.id); $event.stopPropagation()">
+          <i-tabler name="trash" class="icon-16 d-flex"></i-tabler>
+        </button>
+        }
+        @if(('COURSE_EDIT' | accessControl) | async ) {
+        <button mat-mini-fab class="cart-btn-overlay bg-primary text-white" matTooltip="Edit" (click)="editRule(rule)">
+          <i-tabler name="pencil" class="icon-16 d-flex"></i-tabler>
+        </button>
+        }
+        <a mat-button (click)="goToRoute(rule)" class="w-100">
+          Empezar
+        </a>
+      </div>
+    </mat-card>
+  </div>
+  }
+</div>

@@ -1,0 +1,36 @@
+@if(flashcard()){
+<mat-card class="cardWithShadow theme-card">
+    <mat-card-content class="b-t-1 d-flex d-col justify-content-center">
+        <div class="wrapper" [class.flipped]="isFlipped" (click)="flipCard()">
+            <mat-card
+                class="cardWithShadow front fc theme-card d-flex d-col align-items-center justify-content-center m-t-16 min-h">
+                <mat-card-content>
+                    <div class="row">
+                        <p>{{flashcard()?.question}}</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card
+                class="cardWithShadow back fc bg-secondary theme-card d-flex d-col align-items-center justify-content-center m-t-16 min-h">
+                <mat-card-content>
+                    <div class="row">
+                        <p>{{flashcard()?.answer}}</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-card-content>
+    <mat-card-actions class="d-flex d-raw gap-16">
+        <button mat-stroked-button color="warn" class="w-100 m-t-24" (click)="getPrevious()">
+            <i-tabler name="chevron-left" class="icon-18 d-flex text-primary"></i-tabler>
+        </button>
+        <button mat-stroked-button color="warn" class="w-100 m-t-24" (click)="getNext()">
+            <i-tabler name="chevron-right" class="icon-18 d-flex text-primary"></i-tabler>
+        </button>
+    </mat-card-actions>
+    <mat-divider></mat-divider>
+    <div class="d-flex align-items-center justify-content-between m-10">
+        <app-reactions [content]="flashcard" [featureType]="featureType"></app-reactions>
+    </div>
+</mat-card>
+}

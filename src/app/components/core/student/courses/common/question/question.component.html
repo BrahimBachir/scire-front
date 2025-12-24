@@ -1,0 +1,45 @@
+@if(question()){
+<mat-card class="cardWithShadow theme-card">
+    <div class="p-24">
+        <mat-card-title class="m-b-0">{{question()?.text}}</mat-card-title>
+    </div>
+    <mat-card-content class="b-t-1">
+      <mat-chip-listbox class="mat-mdc-chip-set-stacked d-flex flex-wrap" aria-label="Cutest dog breeds">
+        @for (answer of question()?.answers; track answer.id) {
+          <mat-chip-option [value]="answer.id" [selected]="answer.selected" (click)="answerQuestion(answer)" [ngClass]="{
+            'correct':
+            question()?.answered && question()?.isCorrect && answer.selected,
+            'error':
+            question()?.answered &&
+            answer.selected &&
+            !question()?.isCorrect
+          }">{{answer.text}}</mat-chip-option>
+          }
+        </mat-chip-listbox>
+      </mat-card-content>
+      @if(question()?.answered){  
+        <mat-card-content class="b-t-1" >
+          <p>{{question()?.explanation}}</p>
+        </mat-card-content>
+      }
+    <mat-card-actions class="d-flex d-raw gap-16 p-t-0">
+        <button mat-stroked-button color="warn" class="w-100" (click)="getNext()">
+          <i-tabler
+            name="chevron-left"
+            class="icon-18 d-flex text-primary"
+          ></i-tabler>
+        </button>
+        <button mat-stroked-button color="warn" class="w-100 d-flex d-raw" (click)="getPrevious()">
+          <i-tabler
+            name="chevron-right"
+            class="icon-18 d-flex text-primary"
+            label="Siguiente"
+          ></i-tabler>
+        </button>
+    </mat-card-actions>
+    <mat-divider></mat-divider>
+    <div class="d-flex align-items-center justify-content-between m-10">
+      <app-reactions [content]="question" [featureType]="featureType"></app-reactions>
+    </div>
+</mat-card>
+}

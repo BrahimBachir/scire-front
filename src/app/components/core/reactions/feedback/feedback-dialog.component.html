@@ -1,0 +1,22 @@
+<div class="d-flex align-items-center justify-content-between m-b-16 p-x-20 p-t-16">
+  <h3>Danos tu opinión sobre qué podemos mejorar</h3>
+  <button mat-icon-button mat-dialog-close class="d-flex justify-content-center m-l-20 bg-error text-white">
+    <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
+  </button>
+</div>
+<mat-dialog-content>
+  <form [formGroup]="feedbackForm">
+    <div class="row">
+      <div class="col-xl-12">
+        <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Tu opinión</mat-label>
+
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <textarea matInput required rows="5" formControlName="feedback"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <button mat-flat-button (click)="saveFeedback()" [disabled]="!feedbackForm.valid">
+      Guardar
+    </button>
+  </form>
+</mat-dialog-content>

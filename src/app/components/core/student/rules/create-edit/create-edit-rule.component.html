@@ -1,0 +1,302 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <form [formGroup]="locateRuleForm">
+      <div class="d-flex row m-b-30 justify-content-between align-items-end">
+        <div class="col-lg-3">
+          <label id="example-radio-group-label" class="f-w-600 d-block f-s-14">¿Es una norma legislativa?</label>
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" id="isLegalRule"
+            name="isLegalRule" required formControlName="isLegalRule">
+            <mat-radio-button class="example-radio-button" color="primary" [value]="true">
+              Sí
+            </mat-radio-button>
+            <mat-radio-button class="example-radio-button" color="primary" [value]="false">
+              No
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Código BOE</mat-label>
+            <input type="text" placeholder="Buscar por código" aria-label="Buscar por código" matInput id="type"
+              required name="type" formControlName="ruleCodeControl" />
+            <mat-hint> Estructura típica: BOE-A-2015-10565</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 justify-content-end d-flex">
+          <button mat-flat-button (click)="seachBoeRule()" [disabled]="!locateRuleForm.valid || boeRuleLocated()">
+            Buscar
+          </button>
+        </div>
+      </div>
+    </form>
+    @if(internalRuleLocated()){
+      <div class="row col-xl-12 justify-content-center "> 
+        <div class="col-sm-6 col-lg-6">
+          <mat-card class="cardWithShadow">
+            <mat-card-content>
+              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center col-lg-9">
+                  <div class="m-l-16">
+                    <h6 class="m-0 f-w-600 f-s-16">{{ local_data.description }}</h6>
+                    <span class="d-flex align-items-center f-s-14"><i-tabler name="gavel"
+                        class="icon-14 m-r-4"></i-tabler>La norm ya existe</span>
+                  </div>
+                </div>
+                <button mat-flat-button color="primary" class="m-l-auto col-lg-3" (click)="goToRule()" > Detalles </button>               
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>
+
+@if(boeRuleLocated() === true){
+  <mat-card class="cardWithShadow">
+    <mat-card-content>
+        @if(!savingRule){
+        <form #ruleForm="ngForm">
+          <div class="row">
+            <div class="col-xl-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Descripción</mat-label>
+                <input type="text" placeholder="Nombre de la norma" aria-label="Nombre de la norma" matInput
+                  id="descControl" equired name="descControl" [formControl]="descControl" />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-3">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Código</mat-label>
+                <input type="text" placeholder="Código de la norma" aria-label="Código de la norma" matInput
+                  id="codeControl" required name="codeControl" [formControl]="codeControl" />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-3">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Tipo de norma</mat-label>
+                <input type="text" placeholder="Buscar tipo de norma" aria-label="Tipo de norma" matInput id="typeControl"
+                  required name="typeControl" [formControl]="typeControl" [matAutocomplete]="TypeAuto" />
+                <mat-autocomplete autoActiveFirstOption #TypeAuto="matAutocomplete" [displayWith]="displayEntityName"
+                  (optionSelected)="onTypeSelected($event)">
+                  @for(type of filteredTypes(); track type.code) {
+                  <mat-option [value]="type">
+                    {{ type.description }}
+                  </mat-option>
+                  }
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-3">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Ámbito de norma</mat-label>
+                <input type="text" placeholder="Buscar ámbito de norma" aria-label="Ámbito de norma" matInput
+                  id="ambitControl" required name="ambitControl" [formControl]="ambitControl"
+                  [matAutocomplete]="AmbitAuto" />
+                <mat-autocomplete autoActiveFirstOption #AmbitAuto="matAutocomplete" [displayWith]="displayEntityName"
+                  (optionSelected)="onAmbitSelected($event)">
+                  @for(ambit of filteredAmbits(); track ambit.code) {
+                  <mat-option [value]="ambit">
+                    {{ ambit.description }}
+                  </mat-option>
+                  }
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-3">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Diario de publicación</mat-label>
+                <input type="gazette" placeholder="Buscar diario de publicación" aria-label="Diario de publicación" matInput
+                  id="gazetteControl" required name="gazetteControl" [formControl]="gazetteControl"
+                  [matAutocomplete]="GazetteAuto" />
+                <mat-autocomplete autoActiveFirstOption #GazetteAuto="matAutocomplete" [displayWith]="displayEntityName"
+                  (optionSelected)="onGazetteSelected($event)">
+                  @for(gazette of filteredGazettes(); track gazette.code) {
+                  <mat-option [value]="gazette">
+                    {{ gazette.description }}
+                  </mat-option>
+                  }
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-3">
+              <mat-slide-toggle id="internal" name="internal" class="w-100"
+                [formControl]="internalControl">¿Interno?</mat-slide-toggle>
+            </div>
+            <div class="col-lg-3">
+              <mat-slide-toggle id="repealed" name="repealed" class="w-100"
+                [formControl]="repealedControl">¿Derogada?</mat-slide-toggle>
+            </div>
+            <div class="col-lg-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Última actualización</mat-label>
+                <input matInput [matDatepicker]="updateDate" [formControl]="updateDateControl" placeholder="DD/MM/AAAA" />
+                <mat-datepicker-toggle matIconSuffix [for]="updateDate"></mat-datepicker-toggle>
+                <mat-datepicker #updateDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Fecha publicación</mat-label>
+                <input matInput [matDatepicker]="enactmentDate" [formControl]="enactmentDateControl"
+                  placeholder="DD/MM/AAAA" />
+                <mat-datepicker-toggle matIconSuffix [for]="enactmentDate"></mat-datepicker-toggle>
+                <mat-datepicker #enactmentDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Fecha de vigencia</mat-label>
+                <input matInput [matDatepicker]="effectiveDate" [formControl]="effectiveDateControl"
+                  placeholder="DD/MM/AAAA" />
+                <mat-datepicker-toggle matIconSuffix [for]="effectiveDate"></mat-datepicker-toggle>
+                <mat-datepicker #effectiveDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          @if(local_data && boeIndex && boeIndex.length > 0){
+            <div class="col-xl-12">
+              <mat-form-field appearance="outline" class="w-100 m-t-20">
+                <mat-label>Artículos de la norma</mat-label>
+                <mat-chip-grid #formChip aria-label="Enter keywords" [formControl]="ruleArticlesControl">
+                  @for (article of boeIndex; track article.id) {
+                  <!-- <mat-chip-row (removed)="removeKeyword(keyword)"> -->
+                  <mat-chip-row >
+                    {{ article.titulo }}
+                    <button matChipRemove aria-label="'remove ' + keyword">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                  }
+                </mat-chip-grid>
+                <!-- <input placeholder="New keyword..." [matChipInputFor]="formChip" (matChipInputTokenEnd)="addForm($event)" /> -->
+                <input placeholder="Añadir elemento..." [matChipInputFor]="formChip"/>
+              </mat-form-field>
+            </div>
+          }
+          <div class="row justify-content-end">
+            <button mat-flat-button (click)="saveRule()" [disabled]="!ruleForm.valid">
+              Guardar
+            </button>
+          </div>
+        </form>
+        } @else {
+          <mat-spinner></mat-spinner>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+
+<!-- <div class="d-flex align-items-center justify-content-between m-b-16 p-x-20 p-t-16">
+  <h3>{{title}}</h3>
+  <button mat-icon-button mat-dialog-close class="d-flex justify-content-center m-l-20">
+    <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
+  </button>
+</div>
+<mat-dialog-content>
+  <form #ruleForm="ngForm">
+    @if(!boeRuleLocated()){
+      <div class="row">
+        <div class="col-xl-12">
+          <label id="example-radio-group-label" class="f-w-600 d-block f-s-14">¿Es una norma legislativa?</label>
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" id="isLegalRule"
+            name="isLegalRule" required [formControl]="isLegalRule">
+            <mat-radio-button class="example-radio-button" color="primary" [value]="true">
+              Sí
+            </mat-radio-button>
+            <mat-radio-button class="example-radio-button" color="primary" [value]="false">
+              No
+            </mat-radio-button>
+          </mat-radio-group>
+        </div> -->
+<!-- <div class="col-lg-6">
+          <label id="example-radio-group-label" class="f-w-600 d-block f-s-14">¿Publicada en el BOE?</label>
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [formControl]="inBOE"
+            id="inBOE" name="inBOE">
+            <mat-radio-button class="example-radio-button" color="primary" [value]="true">
+              Sí
+            </mat-radio-button>
+            <mat-radio-button class="example-radio-button" color="primary" [value]="false">
+              No
+            </mat-radio-button>
+          </mat-radio-group>
+        </div> -->
+<!-- </div>
+      @if(isLegalRule.value){
+        <div class="row m-b-30">
+          <div class="col-xl-12">
+            <mat-label class="f-s-14 f-w-600 m-b-10 d-block">Código BOE</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput required [formControl]="ruleCodeControl"/>
+              <mat-hint> Estructura típica: BOE-A-2015-10565</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      }
+    } @else {
+      <div class="row m-b-30">
+          <div class="col-xl-12">
+            <mat-label class="f-s-14 f-w-600 m-b-10 d-block">Código BOE</mat-label>
+            <mat-form-field appearance="outline"  class="w-100" color="primary">
+              <input matInput required [formControl]="ruleCodeControl"/>
+            </mat-form-field>
+          </div>
+        </div>
+      <div class="row justify-content-between">
+        <div class="col-lg-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Tipo de norma</mat-label>
+            <input type="text" placeholder="Buscar tipo de norma" aria-label="Tipo de norma" matInput id="type"
+              name="type" [formControl]="typeDialogControl" [matAutocomplete]="TypeAuto" />
+            <mat-autocomplete autoActiveFirstOption #TypeAuto="matAutocomplete" [displayWith]="displayEntityName"
+              (optionSelected)="onTypeSelected($event)">
+              @for(type of filteredTypes(); track type.code) {
+              <mat-option [value]="type">
+                {{ type.description }}
+              </mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Ámbito de norma</mat-label>
+            <input type="text" placeholder="Buscar ámbito de norma" aria-label="Ámbito de norma" matInput id="ambit"
+              name="ambit" [formControl]="ambitDialogControl" [matAutocomplete]="AmbitAuto" />
+            <mat-autocomplete autoActiveFirstOption #AmbitAuto="matAutocomplete" [displayWith]="displayEntityName"
+              (optionSelected)="onAmbitSelected($event)">
+              @for(ambit of filteredAmbits(); track ambit.code) {
+              <mat-option [value]="ambit">
+                {{ ambit.description }}
+              </mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Diario de publicación</mat-label>
+            <input type="gazette" placeholder="Buscar diario de publicación" aria-label="Diario de publicación" matInput
+              id="gazette" name="gazette" [formControl]="gazetteDialogControl" [matAutocomplete]="GazetteAuto" />
+            <mat-autocomplete autoActiveFirstOption #GazetteAuto="matAutocomplete" [displayWith]="displayEntityName"
+              (optionSelected)="onGazetteSelected($event)">
+              @for(gazette of filteredGazettes(); track gazette.code) {
+              <mat-option [value]="gazette">
+                {{ gazette.description }}
+              </mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+    }
+  </form>
+  <button mat-flat-button (click)="saveModule()" [disabled]="!ruleForm.valid">
+    Guardar
+  </button>
+  @if(isLegalRule.value){
+    <button mat-flat-button class="m-l-8 bg-secondary text-white" (click)="seachBoeRule()"  [disabled]="!ruleForm.valid">
+      Buscar
+    </button>
+  }
+</mat-dialog-content> -->

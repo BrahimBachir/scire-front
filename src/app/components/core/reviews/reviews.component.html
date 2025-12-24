@@ -1,0 +1,69 @@
+<mat-card class="cardWithShadow b-1 rounded p-30">
+  <div class="row gap-0 w-100">
+    <div class="col-lg-4 d-flex">
+      <mat-card class="cardWithShadow b-1 rounded w-100 h-80 d-flex justify-content-center align-items-center p-20 m-b-0">
+        <div class="text-center">
+          <h6 class="f-s-14 f-w-500">Nota media</h6>
+          <h6 class="text-primary f-s-30 f-w-600 m-y-24">{{ getFormattedRating() }}</h6>
+          <div class="d-flex gap-5">
+            @for(i of [0, 1, 2, 3, 4]; track i) {
+            <span [class]="getStarClass(i)">
+              <i-tabler name="star" class="icon-18"
+                [class.fill-warning]="getStarClass(i) === 'fill-warning'"></i-tabler>
+            </span>
+            }
+          </div>
+          <span class="f-s-12">({{ ratingCount }} reseñas)</span>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-lg-4 d-flex">
+      <mat-card class="cardWithShadow b-1 rounded w-100 h-80 p-20 m-b-0">
+        @for(rating of ratings; track rating) {
+        <div class="d-flex align-items-center gap-1 m-t-10">
+          <span class="f-s-14 w-60">{{ rating.label }} Estrellas </span>
+          <mat-progress-bar class="progress rounded w-20 m-x-24 m-y-10" color="primary" mode="determinate"
+            [value]="rating.value">
+          </mat-progress-bar>
+          <span class="count">({{ rating.count || 0 }})</span>
+        </div>
+        } @empty {
+        <div class="text-center">
+          <h6 class="f-s-14 f-w-500">Todavía no hay resñas para este elemento. <br><br> Sé el primero en darnos tu opinión sobre nuestro contenido.</h6>
+        </div>
+        }
+      </mat-card>
+    </div>
+<div class="col-lg-4 d-flex">
+  <mat-card class="cardWithShadow b-1 rounded w-100 h-80 d-flex align-items-center justify-content-center m-b-0">
+    <button mat-stroked-button class="w-75 bg-light-primary" (click)="openReviewDialog()">
+      <div class="d-flex align-items-center justify-content-center">
+        <tabler-icon name="pencil" class="m-x-6"></tabler-icon>
+        <span>Escribe una reseña</span>
+      </div>
+    </button>
+  </mat-card>
+</div>
+  </div>
+</mat-card>
+<mat-card class="cardWithShadow b-1 rounded p-30 m-t-20 m-b-0">
+  @for(review of latestReviews; track review.id) {
+  <mat-card class="cardWithShadow b-1 rounded p-20">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center justify-content-between">
+        <img [src]="review.user?.image" alt="Imagen del usuario" width="50" height="50" class="rounded-circle m-r-15">
+        <span class="f-w-500">{{ review.user?.full_name }}</span>
+      </div>
+      <div class="d-flex gap-2">
+        @for(i of [1, 2, 3, 4, 5]; track i) {
+        <i-tabler name="star" class="icon-16" [class.fill-warning]="i <= review.rating"
+          [class.text-gray]="i > review.rating">
+        </i-tabler>
+        }
+      </div>
+    </div>
+    <mat-divider class="m-t-15"></mat-divider>
+    <p class="f-s-14 m-t-15 p-l-80">{{ review.reviewText }}</p>
+  </mat-card>
+  }
+</mat-card>

@@ -1,0 +1,65 @@
+<div class="blank-layout-container justify-content-center">
+  <div class="position-relative row w-100 h-100">
+    <div class="col-lg-8 col-xl-9 bg-gredient p-0">
+      <div class="p-24 h-100">
+        <app-auth-branding></app-auth-branding>
+
+        <div class="align-items-center justify-content-center img-height d-none d-lg-flex">
+          <img src="/assets/images/backgrounds/info-bg.svg" alt="personal information" style="max-width: 500px" />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-xl-3 p-0 d-flex justify-content-center bg-white">
+      <div class="p-32 d-flex align-items-start align-items-lg-center h-100 max-width-form justify-content-center">
+        <div>
+          <h4 class="f-w-700 f-s-20 m-0">3. Información de perfil</h4>
+          <span class="f-s-14 d-block f-s-14 m-t-24">Completa la información mínima de tu perfil.</span>
+          <form class="m-t-30 p-t-30" [formGroup]="form" (ngSubmit)="submit()">
+            <!-- input -->
+            <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Nombre</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput formControlName="name" type="text" placeholder="Escriba su nombre" />
+            </mat-form-field>
+            <!-- input -->
+            <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Primer apellido</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput formControlName="first_surname" type="text" placeholder="Escriba su 1er apellido" />
+            </mat-form-field>
+            <!-- input -->
+            <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Segundo apellido</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput formControlName="second_surname" type="text" placeholder="Escriba 2o apellido" />
+            </mat-form-field>
+            <!-- input -->
+            <mat-label class="f-s-14 f-w-600 m-b-8 d-block" [hidden]="true">Código</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput formControlName="code" type="text" placeholder="Códiogo del usuario"/>
+            </mat-form-field>
+            <!-- input -->
+            <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Género</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select formControlName="gender"> 
+                @for (gender of genders; track gender.id) {
+                  <mat-option [value]="gender.id">{{ gender.description }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <!-- input -->
+            <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Role</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select formControlName="role"> 
+                @for (role of roles; track role.id) {
+                  <mat-option [value]="role.id">{{ role.description }} </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+           <!-- actions -->
+            <button mat-flat-button color="primary" class="w-100" [disabled]="!form.valid">
+              Guardar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

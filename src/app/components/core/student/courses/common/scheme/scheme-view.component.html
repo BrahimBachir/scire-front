@@ -1,0 +1,53 @@
+<mat-card class="scheme-content m-t-20">
+  @if(showBanner === false){
+  <mat-card-header>
+    @if(selectedScheme()?.description){
+    <mat-card-title>
+      {{currentIndex+1}} - {{ selectedScheme()?.description }}
+    </mat-card-title>
+    }
+    @if(selectedScheme()?.url){
+    <mat-card-subtitle>
+      <a href="{{selectedScheme()?.url}}" target="_blank" rel="noopener noreferrer">Origen</a>
+    </mat-card-subtitle>
+    }
+  </mat-card-header>
+  @if(panZoom){
+  <div class="d-flex row m-10 justify-content-end">
+    <button mat-mini-fab matTooltip="Acercar" class="text-primary" aria-label="Acercar diagrama"
+      (click)="panZoom.zoomIn()">
+      <i-tabler class="icon-20 d-flex" name="plus"></i-tabler>
+    </button>
+    <button mat-mini-fab matTooltip="Alejar" class="text-primary m-l-10" aria-label="Alejar diagrama"
+      (click)="panZoom.zoomOut()">
+      <i-tabler class="icon-20 d-flex" name="minus"></i-tabler>
+    </button>
+  </div>
+  }
+  <mat-card-content>
+    <div class="scheme-container" [class.d-none]="!selectedScheme()">
+      <div #mermaid class="mermaid" mermaidPanZoom></div>
+    </div>
+    <div class="like-dislike">
+
+
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="d-flex d-raw gap-16">
+    <button mat-stroked-button color="warn" class="w-100 m-t-24" (click)="getPrevious()">
+      <i-tabler name="chevron-left" class="icon-18 d-flex text-primary"></i-tabler>
+    </button>
+    <button mat-stroked-button color="warn" class="w-100 m-t-24" (click)="getNext()">
+      <i-tabler name="chevron-right" class="icon-18 d-flex text-primary"></i-tabler>
+    </button>
+  </mat-card-actions>
+  <mat-divider></mat-divider>
+  <div class="d-flex align-items-center justify-content-between m-10">
+    @if(selectedScheme()){
+    <app-reactions [content]="selectedScheme" [featureType]="featureType"></app-reactions>
+    }
+  </div>
+  } @else {
+  <app-banner-level-up [bannerText]="bannerText"></app-banner-level-up>
+  }
+</mat-card>

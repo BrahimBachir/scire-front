@@ -1,0 +1,43 @@
+/* Allow the chip container to wrap */
+::ng-deep .mat-mdc-chip-set .mdc-evolution-chip-set__chips {
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Allow text to wrap inside chips */
+::ng-deep .mdc-evolution-chip__text-label {
+  white-space: normal !important;
+  overflow-wrap: break-word;
+}
+
+/* Ensure full width fit */
+::ng-deep .mat-mdc-chip {
+  max-width: 100%;
+}
+
+/* Allow the CHIP to expand in height */
+::ng-deep .mat-mdc-chip.mat-mdc-standard-chip {
+  height: auto !important;
+  min-height: 32px;            /* default height, keeps short chips looking normal */
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  align-items: flex-start;      /* allow content to move to top */
+}
+
+::ng-deep .mdc-evolution-chip__action {
+  height: auto !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.correct {
+  font-weight: bold;
+  color: green;
+}
+
+.error {
+  font-weight: bold;
+  text-decoration: line-through;
+  color: red;
+}

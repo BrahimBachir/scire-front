@@ -1,0 +1,23 @@
+<!-- <div class="h-100 ai-element"> -->
+<mat-chip-listbox aria-label="AI element selection">
+  <mat-chip-option (selectionChange)="onChipSelection($event)" value="question" class="f-s-14" color="primary">
+    <div class="d-flex gap-10">
+      <i-tabler class="icon-20 " name="help-circle"></i-tabler>
+      <span>Pregunta</span>
+    </div>
+  </mat-chip-option>
+  <mat-chip-option (selectionChange)="onChipSelection($event)" value="diagram" class="f-s-14">
+    <div class="d-flex gap-10">
+      <i-tabler class="icon-20" name="schema"></i-tabler>
+      <span>Diagrama</span>
+    </div>
+  </mat-chip-option>
+  <mat-chip-option (selectionChange)="onChipSelection($event)" value="flashcard"
+    class="f-s-14" color="accent">
+    <div class="d-flex gap-10">
+      <i-tabler class="icon-20" name="flip-vertical"></i-tabler>
+      <span>Flashcard</span>
+    </div>
+  </mat-chip-option>
+</mat-chip-listbox>
+<!-- </div> -->

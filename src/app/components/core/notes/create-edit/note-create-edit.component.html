@@ -1,0 +1,36 @@
+<div [formGroup]="form">
+    <div class="NgxEditor__Wrapper" style="min-height: 300px;">
+        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" class=""> </ngx-editor-menu>
+        <ngx-editor [editor]="editor" formControlName="editorContent" placeholder="Escriba aquí..."></ngx-editor>
+    </div>
+
+    <div class="d-flex justify-content-between m-t-15">
+        <div class="d-flex">
+            @for(c of colors; track c.colorName) {
+            <div class="Selectbuttoncolor  ">
+                <button mat-mini-fab class=" bg-{{ c.colorName }} rounded-circle icon-21 m-r-8 "
+                    (click)="onSelectColor(c.colorName)" [ngClass]="{
+                  selectColorResizable: selectedColor() === c.colorName
+                }"></button>
+                @if(selectedColor() === c.colorName) {
+                <div>
+                    <mat-icon class="checkIcon">check</mat-icon>
+                </div>
+                }
+            </div>
+            }
+            <mat-slide-toggle color="primary" formControlName="noteFavorite">Favorita</mat-slide-toggle>
+
+        </div>
+        <div class="d-flex justify-content-end">
+
+            <button matButton="filled" aria-label="Guardar la nota" (click)="saveNote()"
+                [disabled]="!form.valid || !selectedColor()">
+                <div class="d-flex align-items-center">
+                    <i-tabler class="icon-15 m-r-4" name="device-floppy"></i-tabler>
+                    Guardar
+                </div>
+            </button>
+        </div>
+    </div>
+</div>

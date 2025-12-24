@@ -1,0 +1,116 @@
+<div class="d-flex align-items-stretch">
+  <mat-card class="cardWithShadow law-content">
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedIndexChange)="onTabChange($event)">
+      @for(tab of tabs; track $index) {
+      <mat-tab>
+        <ng-template mat-tab-label>
+          @if(tab.titulo) {
+          <div class="d-flex align-items-center" (click)="getArticle(tab)">
+            {{ tab.titulo }}
+          </div>
+          } @else {
+          <div class="d-flex align-items-center" (click)="getArticle(tab)">
+            {{ tab.id.toUpperCase() }}
+          </div>
+          }
+        </ng-template>
+        <mat-card-content>
+          <mat-vertical-stepper #stepper (selectionChange)="onStepChange($event)">
+            <mat-step>
+              <ng-template matStepLabel>Contenido</ng-template>
+              @if(article){
+              <div class="d-flex flex-start">
+                <div>
+                  <h3 class="m-t-12">{{article.title}}</h3>
+                  @if(article.versions && article.versions.length > 0){
+                  @for(paragraph of article.versions[0].paragraphs; track $index){
+                  <p>{{paragraph['#text']}}</p>
+                  }
+                  }
+                </div>
+                <!-- <div class="add-element">
+                  <button mat-mini-fab class="bg-primary text-white" matTooltip="Crear un nuevo elemento"
+                    aria-label="Crear un nuevo elemento" (click)="showActions = !showActions">
+                    <i-tabler name="plus" class="icon-20 d-flex"></i-tabler>
+                  </button>
+                </div> -->
+              </div>
+              }
+              <div>
+                <button mat-flat-button matStepperNext>Siguiente</button>
+              </div>
+            </mat-step>
+
+            @if(tab.id.startsWith('a')) {
+            <mat-step>
+              <ng-template matStepLabel>Vídeo</ng-template>
+              <h3 class="m-t-12">Vídeo del artículo</h3>
+              @if (selectedTabIndex === $index && currentStepIndex === 1) {
+              <app-video [ruleCode]="ruleCode" [artiCode]="artiCode"></app-video>
+              }
+              <div class="d-flex align-items-center gap-12">
+                <button mat-flat-button matStepperPrevious class="bg-secondary">Previo</button>
+                <button mat-flat-button matStepperNext>Siguiente</button>
+              </div>
+            </mat-step>
+
+            <mat-step>
+              <ng-template matStepLabel>Diagrama y resúmenes</ng-template>
+              <h3 class="m-t-12">Diagrama resumen/es del artículo</h3>
+              @if (selectedTabIndex === $index && currentStepIndex === 2) {
+              <app-scheme-view [ruleCode]="ruleCode" [artiCode]="artiCode"></app-scheme-view>
+              }
+              <div class="d-flex align-items-center gap-12">
+                <button mat-flat-button matStepperPrevious class="bg-secondary">Previo</button>
+                <button mat-flat-button matStepperNext>Siguiente</button>
+              </div>
+            </mat-step>
+
+            <mat-step>
+              <ng-template matStepLabel>Tarjetas de memorización</ng-template>
+              @if (selectedTabIndex === $index && currentStepIndex === 3) {
+              <app-flashcard [ruleCode]="ruleCode" [artiCode]="artiCode"></app-flashcard>
+              }
+              <div class="d-flex align-items-center gap-12">
+                <button mat-flat-button matStepperPrevious class="bg-secondary">Previo</button>
+                <button mat-flat-button matStepperNext>Siguiente</button>
+              </div>
+            </mat-step>
+
+            <mat-step>
+              <ng-template matStepLabel>Preguntas de repaso</ng-template>
+              @if (selectedTabIndex === $index && currentStepIndex === 4) {
+              <app-question [ruleCode]="ruleCode" [artiCode]="artiCode"></app-question>
+              }
+              <div class="d-flex align-items-center gap-12">
+                <button mat-flat-button matStepperPrevious class="bg-secondary">Previo</button>
+                <button mat-flat-button matStepperNext>Siguiente</button>
+              </div>
+            </mat-step>
+            }
+
+            <mat-step>
+              <ng-template matStepLabel>¡Felicitaciones!</ng-template>
+              <h3 class="m-t-12">¡Artículo superado!</h3>
+              <p>
+                A por el siguiente. Te deseamos mucha suerte :).
+              </p>
+              <div class="d-flex align-items-center gap-12">
+                <button mat-flat-button matStepperPrevious class="bg-secondary">Previo</button>
+                <button mat-flat-button (click)="stepper.reset()">Reiniciar</button>
+                <button mat-stroked-button class="text-primary" (selectedIndexChange)="changeSelectedArticle(tab)">Siguiente artículo</button>
+              </div>
+            </mat-step>
+          </mat-vertical-stepper>
+        </mat-card-content>
+
+      </mat-tab>
+      }
+    </mat-tab-group>
+  </mat-card>
+  @if(article && selectedRule){
+    <mat-card class="cardWithShadow m-l-20 gen-actions ">
+      <app-create-generic-element  [rule]="selectedRule"  [article]="article"></app-create-generic-element>
+    </mat-card>
+  }
+</div>

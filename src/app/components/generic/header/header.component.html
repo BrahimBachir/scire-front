@@ -1,0 +1,82 @@
+<mat-toolbar class="topbar gap-8">
+  <app-branding></app-branding>
+  <!-- --------------------------------------------------------------- -->
+  <!-- Desktop Menu -->
+  @if(showToggle) {
+  <button mat-icon-button (click)="toggleCollapsed.emit()" class="d-flex justify-content-center">
+    <i-tabler name="menu-2" class="icon-20 d-flex"></i-tabler>
+  </button>
+  }
+
+  <!-- Mobile Menu -->
+  @if(!showToggle) {
+  <button mat-icon-button (click)="toggleMobileNav.emit()" class="d-flex justify-content-center">
+    <i-tabler name="menu-2" class="icon-20 d-flex"></i-tabler>
+  </button>
+  }
+  <span class="flex-1-auto"></span>
+
+  @if(options.theme=='light'){
+  <button mat-icon-button aria-label="lightdark" class="d-flex justify-content-center" (click)="setlightDark('dark')">
+    <i-tabler class="d-flex icon-22" [name]="'moon'"></i-tabler>
+  </button>
+  }@else{
+  <button mat-icon-button aria-label="lightdark" class="d-flex justify-content-center" (click)="setlightDark('light')">
+    <i-tabler class="d-flex icon-22" [name]="'sun'"></i-tabler>
+  </button>
+  }
+
+  <!-- --------------------------------------------------------------- -->
+  <!-- Collpase bar -->
+  <!-- --------------------------------------------------------------- -->
+  <button mat-icon-button (click)="toggleCollpase()" class="d-flex d-lg-none justify-content-center">
+    <i-tabler name="dots" class="icon-20 d-flex"></i-tabler>
+  </button>
+  <!-- --------------------------------------------------------------- -->
+  <!-- profile Dropdown -->
+  <!-- --------------------------------------------------------------- -->
+  <button mat-icon-button extended [matMenuTriggerFor]="profilemenu" aria-label="Notifications"
+    class="position-relative align-items-center justify-content-center profile-btn-dd d-none d-lg-flex">
+    @if(logedUser$ | async; as user){
+    <img [src]="user.image"
+      class="rounded-circle icon-30 object-cover profile-dd d-flex align-items-center justify-content-center m-l-2 m-t-2"
+      width="30" height="30" />
+    }
+  </button>
+  <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow dd-notifications">
+    <div class="p-x-16 p-y-20 b-b-1">
+      <div class="d-flex align-items-center cursor-pointer">
+        @if(logedUser$ | async; as user){
+        <img [src]="user.image" class="rounded-circle" width="50" height="50" />
+        }
+        <div class="m-l-16">
+          <h6 class="f-s-14 f-w-600 m-0 d-flex align-items-center">
+            {{ (logedUser$ | async)?.full_name }}
+          </h6>
+          <!-- <span>info&#64;kaptya.com</span> -->
+        </div>
+      </div>
+    </div>
+    <div class="p-16">
+      @for(profile of profiledd; track profile.title) {
+      <a class="p-8 text-decoration-none d-block text-hover-primary" (click)="goToLink(profile)">
+        <div class="d-flex align-items-center cursor-pointer">
+          <h5 class="f-s-14 f-w-500 m-0 textprimary hover-text">
+            {{ profile.title }}
+          </h5>
+          @if(profile.new) {
+          <span class="bg-light-error text-error rounded p-x-8 p-y-2 f-w-500 f-s-12 m-l-8">5</span>
+          }
+        </div>
+      </a>
+      }
+      <mat-divider></mat-divider>
+      <a class="p-8 text-decoration-none d-block text-hover-primary cursor-pointer" (click)="logout()">
+        <div class="d-flex align-items-center gap-10">
+          <i-tabler class="d-flex icon-22" name="logout"></i-tabler>
+          <h5 class="f-s-14 f-w-500 m-0 textprimary hover-text">Cerrar sesión</h5>
+        </div>
+      </a>
+    </div>
+  </mat-menu>
+</mat-toolbar>

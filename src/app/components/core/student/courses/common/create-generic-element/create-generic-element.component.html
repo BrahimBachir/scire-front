@@ -1,0 +1,32 @@
+<div class="d-flex h-100">
+  <div class="genrate-actions">
+    <button mat-mini-fab matTooltip="Crear una pregunta" class="bg-primary text-white" aria-label="Crear una pregunta"
+      (click)="openDialog('QUESTION')">
+      <i-tabler class="icon-20 d-flex" name="help-circle"></i-tabler>
+    </button>
+
+    <button mat-mini-fab matTooltip="Crear un elemento con IA" class="bg-success text-white"
+      aria-label="Crear un elemento con IA" (click)="openDialog('AI')">
+      <i-tabler class="icon-20 d-flex" name="sparkles"></i-tabler>
+    </button>
+
+    <button mat-mini-fab matTooltip="Crear un esquema" class="bg-secondary text-white" aria-label="Crear un esquema"
+      (click)="openDialog('DIAGRAM')">
+      <i-tabler class="icon-20 d-flex" name="schema"></i-tabler>
+    </button>
+    <button mat-mini-fab matTooltip="Crear una flashcard" class="bg-warning text-white" aria-label="Crear una flashcard"
+      (click)="openDialog('FLASHCARD')">
+      <i-tabler class="icon-20 d-flex" name="flip-vertical"></i-tabler>
+    </button>
+
+    <button mat-mini-fab matTooltip="Aportar un nuevo vídeo" class="bg-error text-white"
+      aria-label="Aportar un nuevo vídeo" (click)="openDialog('VIDEO')">
+      <i-tabler class="icon-20 d-flex" name="video"></i-tabler>
+    </button>
+
+    <button mat-mini-fab matTooltip="Añadir una nota" class="text-primary" aria-label="Añadir una nota"
+      (click)="openDialog('NOTE')">
+      <i-tabler class="icon-20 d-flex" name="note"></i-tabler>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="row">
+    <!-- card -->
+    <mat-card class="shadow-none bg-white overflow-hidden">
+      <div class="p-30 p-b-0">
+        <div class="row justify-content-between">
+          <div class="col-lg-8">
+            <mat-card-title>Hola, {{logedUser()?.full_name}}</mat-card-title>
+            <mat-card-subtitle class=" m-t-16 lh-24 m-b-24"
+              > {{ bannerText }}</mat-card-subtitle
+            >
+            <!-- <button mat-flat-button>Llévame</button> -->
+          </div>
+          <div class="col-sm-4">
+            <img
+              src="assets/images/backgrounds/gold.png"
+              alt="welcome"
+              width="150"
+              class="welcome-img"
+            />
+          </div>
+        </div>
+      </div>
+      <mat-card-actions class="d-flex m-t-20 justify-content-end">
+        <button mat-flat-button>Subir de plan</button>
+      </mat-card-actions>
+    </mat-card>
+</div>

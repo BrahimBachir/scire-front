@@ -1,0 +1,90 @@
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <h4 class="f-s-30 f-w-600 text-center  lh-lg m-b-16">
+      Planes flexibles que se adaptan a ti!
+    </h4>
+    <div class="d-flex align-items-center justify-content-center">
+      <span class="f-s-14 m-r-8">Mensual</span>
+      <mat-slide-toggle (click)="show = !show" color="primary">Anual</mat-slide-toggle>
+    </div>
+  </div>
+</div>
+
+<div class="row m-t-32 p-t-32">
+  @for(plan of planes(); track plan.code) {
+  <div class="col-sm-6 col-lg-4">
+    <mat-card class="cardWithShadow">
+      <mat-card-content class="p-y-24">
+        @if(plan.popular) {
+        <span
+          class="popular-badge text-uppercase bg-light-warning text-warning p-x-8 p-y-4 f-s-12 f-w-500 rounded">Popular</span>
+        }
+
+        <span class="d-block text-uppercase f-s-12 m-b-16">{{
+          plan.description
+          }}</span>
+        <img src="{{ plan.image }}" alt="badge" width="90" />
+
+        @if(plan.price === 0.0) {
+        <h2 class="mat-headline-6 plan-title m-b-24">Gratuito</h2>
+        } @else {
+        <div>
+          @if(show) {
+          <div>
+            <div class="d-flex">
+              <span class="f-s-16 dollar-sign">€</span>
+              <h2 class="mat-headline-6 plan-title m-b-24">
+                {{ yearlyPrice(plan.price) | number : '1.2-2' }}
+              </h2>
+              <span class="f-s-16 per-month">/año</span>
+            </div>
+          </div>
+          } @else {
+          <div class="d-flex">
+            <span class="f-s-16 dollar-sign">€</span>
+            <h2 class="mat-headline-6 plan-title m-b-24">
+              {{ plan.price }}
+            </h2>
+            <span class="f-s-16 per-month">/mes</span>
+          </div>
+          }
+        </div>
+        }
+        @for(plan_feat of plan.plan_features; track plan_feat.id){
+        <div class="d-flex align-items-center p-y-12">
+          <div class="d-flex align-items-center">
+            <!-- <i-tabler [name]="plan_feat.feat_available ? 'check' : 'x'" [class]="plan_feat.feat_available ? 'icon-16 m-r-12 text-primary d-flex' : 'icon-16 m-r-12 text-error d-flex'"></i-tabler> -->
+            <i-tabler [name]="plan_feat.feature.icon"
+              [class]="plan_feat.feat_available ? 'icon-16 m-r-12 text-primary d-flex' : 'icon-16 m-r-12 text-error d-flex'"></i-tabler>
+            @if(plan_feat.daily_limit > 0){
+            <span class="f-s-14 f-w-500"> {{ plan_feat.feature.description }} ({{ plan_feat.daily_limit }} por
+              día)</span>
+            } @else if (plan_feat.weekly_limit > 0 && plan_feat.feature.code !== 'SUPPORT') {
+            <span class="f-s-14 f-w-500"> {{ plan_feat.feature.description }} ({{ plan_feat.weekly_limit }} por
+              semana)</span>
+            } @else if (plan_feat.feature.code === 'SUPPORT') {
+            @if(plan_feat.weekly_limit < 100) { <span class="f-s-14 f-w-500"> {{ plan_feat.feature.description }} (en
+              menos de {{ plan_feat.weekly_limit }} horas)</span>
+              } @else {
+              <span class="f-s-14 f-w-500"> {{ plan_feat.feature.description }} (en menos de {{
+                plan_feat.weekly_limit/24 }} días)</span>
+              }
+              }@else if (plan_feat.monthly_limit > 0) {
+              <span class="f-s-14 f-w-500"> {{ plan_feat.feature.description }} ({{ plan_feat.monthly_limit }} por
+                mes)</span>
+              }@else if (!plan_feat.feat_available) {
+              <span class="f-s-14 f-w-500"> {{ plan_feat.feature.description }} (no disponibl)</span>
+              } @else {
+              <span class="f-s-14 f-w-500"> {{ plan_feat.feature.description }} (sin límite)</span>
+              }
+          </div>
+        </div>
+        }
+        <button mat-flat-button color="primary" class="w-100 m-t-24">
+          Elegir {{ plan.description }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  }
+</div>

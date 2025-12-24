@@ -1,0 +1,40 @@
+
+<div class="d-flex align-items-center justify-content-between p-x-20">
+  <h3 mat-dialog-title class="p-x-0 p-b-0">{{ data.title }}</h3>
+  <button mat-icon-button mat-dialog-close class="d-flex justify-content-center m-l-20">
+    <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
+  </button>
+</div>
+<mat-dialog-content class="mat-typography p-b-0">
+  <div class="d-flex justify-content-center gap-2 m-b-24">
+    @for(star of maxStars; track star) {
+      <span (click)="setRating(star)" style="cursor: pointer;">
+        <i-tabler name="star" class="icon-24" 
+                  [class.fill-warning]="star <= currentRating" 
+                  [class.text-gray]="star > currentRating">
+        </i-tabler>
+      </span>
+    }
+  </div>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Ayúdanos a mejorar</mat-label>
+    <textarea matInput 
+              [(ngModel)]="reviewText" 
+              cdkTextareaAutosize
+              required
+              #autosize="cdkTextareaAutosize" 
+              cdkAutosizeMinRows="3" 
+              cdkAutosizeMaxRows="5"
+              placeholder="¿Qué podemos mejorar de este contenido?">
+    </textarea>
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="p-t-0">
+  <!-- <button mat-button  class="col-lg-4 m-l-8 bg-error text-white" (click)="onCancel()">Cancelar</button> -->
+  <button mat-flat-button class="col-lg-4" color="primary" [disabled]="currentRating === 0 || reviewText === ''" (click)="onConfirm()">
+    Enviar
+  </button>
+</mat-dialog-actions>

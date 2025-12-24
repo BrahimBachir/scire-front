@@ -1,0 +1,104 @@
+<mat-card class="mat-card-top notes-app cardWithShadow overflow-hidden">
+  <mat-sidenav-container [ngClass]="{
+      'side-panel-opened': sidePanelOpened(),
+      'side-panel-closed': !sidePanelOpened()
+    }" class="h-100 bg-white">
+    <mat-sidenav #noteslist [mode]="isOver() ? 'over' : 'side'" [opened]="!isOver()" (open)="sidePanelOpened.set(true)"
+      (close)="sidePanelOpened.set(false)" style="width: 290px">
+      <div class="p-16">
+        <mat-form-field appearance="outline" class="w-100 hide-hint">
+          <input matInput type="text" (keyup)="applyFilter($event)" placeholder="Buscar notas..." />
+          <mat-icon matSuffix>
+            <i-tabler name="search" class="icon-20 d-flex m-t-2"></i-tabler>
+          </mat-icon>
+        </mat-form-field>
+      </div>
+      <ng-scrollbar class="position-relative" style="height: calc(100vh - 310px)">
+        <h4 class="f-s-16 f-w-600 p-x-16 m-t-16">Mis notes</h4>
+        <mat-nav-list class="p-x-16">
+          @if(notes().length > 0) {
+            @for(note of notes(); track note.id) {
+            <mat-list-item class="notes-item rounded m-b-8 bg-light-{{ note.color }}" (click)="onSelect(note)" style="min-height: 100px;"
+              [class.selected]="note === selectedNote()">
+              <!-- <span class="note-title  f-w-500 text-{{ note.color }}" matListItemTitle>{{ note.title }}</span> -->
+              <div class="f-s-14 f-w-500" [innerHTML]="note?.title"></div>
+              <div class="d-flex justify-content-between">
+                <span class="note-time f-s-12 f-w-500">{{
+                  note.updatedAt | date
+                  }}</span>
+              </div>
+            </mat-list-item>
+            } 
+          } @else {
+          <div class="p-15 bg-light-primary text-primary rounded m-t-20 text-center">
+            <span class="m-0 f-s-14">No tienes notas registradas</span>
+          </div>
+          }
+        </mat-nav-list>
+      </ng-scrollbar>
+    </mat-sidenav>
+    <mat-toolbar class="b-b-1">
+      <div class="d-flex align-items-center justify-content-between w-100">
+        <button (click)="noteslist.toggle()" class="d-flex" mat-icon-button>
+          <i-tabler name="menu-2" class="icon-20"></i-tabler>
+        </button>
+        <!-- <button mat-flat-button (click)="addNoteClick()">Add Notes</button> -->
+        <button mat-mini-fab class="bg-primary text-white" matTooltip="Crear nota" aria-label="Crear nota">
+          <i-tabler name="plus" class="icon-20 d-flex"></i-tabler>
+        </button>
+      </div>
+    </mat-toolbar>
+    <mat-card-content>
+      @if(selectedNote()){
+      <mat-card class="shadow-none b-1 theme-card m-t-10">
+        <mat-card-title class="p-15">Notas</mat-card-title>
+        <mat-card-content class="b-t-1">
+          <ng-scrollbar class="position-relative" style="height: 50vh">
+            <div [innerHTML]="selectedNote()?.content"></div>
+          </ng-scrollbar>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-action-row class="p-x-15 p-b-15">
+          <div class="d-flex justify-content-between m-t-15">
+            <div class="d-flex">
+              @for(c of colors; track c.colorName) {
+              <div class="Selectbuttoncolor  ">
+                <div class=" bg-{{ c.colorName }} rounded-circle icon-21 m-r-8 " [ngClass]="{
+                    selectColorResizable: selectedNote()?.color === c.colorName
+                  }">
+                </div>
+                @if(selectedNote()?.color === c.colorName) {
+                <div>
+                  <mat-icon class="checkIcon">check</mat-icon>
+                </div>
+                }
+              </div>
+              }
+              <mat-slide-toggle color="primary" [disabled]="true"
+                [checked]="selectedNote()?.favourite">Favorita</mat-slide-toggle>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button mat-mini-fab class="bg-secondary text-white" matTooltip="Editar nota" aria-label="Editar nota"
+                (click)="editeNote()">
+                <i-tabler name="pencil" class="icon-20 d-flex"></i-tabler>
+              </button>
+              <button mat-mini-fab class="bg-error text-white m-l-10" matTooltip="Editar nota" aria-label="Editar nota"
+                (click)="deleteNote()">
+                <i-tabler name="trash" class="icon-20 d-flex"></i-tabler>
+              </button>
+            </div>
+          </div>
+        </mat-action-row>
+      </mat-card>
+      } @else{
+
+      <div class="d-flex align-items-center justify-content-center h-100 w-100">
+        <div>
+          <img src="/assets/images/breadcrumb/emailSv.png" width="250px" />
+          <h3 class="f-s-21 f-w-600 text-center m-t-20">No se ha seleccionado ninguna nota</h3>
+        </div>
+      </div>
+      }
+    </mat-card-content>
+  </mat-sidenav-container>
+</mat-card>

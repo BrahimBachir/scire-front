@@ -1,0 +1,19 @@
+<div class="d-flex d-row col-lg-3">
+    <span class="m-r-10 d-flex" (click)="react('LIKE')">
+        @if( userVote() === 'LIKE'){
+        <i-tabler name="thumb-up-filled" class="icon-18 m-r-10 cursor-pointer"></i-tabler>
+        }@else{
+        <i-tabler name="thumb-up" class="icon-18 m-r-10 cursor-pointer"></i-tabler>
+        }
+        {{likeCount()}}
+    </span>
+
+    <span class="m-r-10 d-flex" (click)="react('DISLIKE')">
+        @if( userVote() === 'DISLIKE'){
+        <i-tabler name="thumb-down-filled" class="icon-18 m-r-10 cursor-pointer"></i-tabler>
+        }@else{
+        <i-tabler name="thumb-down" class="icon-18 m-r-10 cursor-pointer"></i-tabler>
+        }
+        {{dislikeCount()}}
+    </span>
+</div>

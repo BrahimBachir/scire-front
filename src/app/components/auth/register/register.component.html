@@ -1,0 +1,211 @@
+<div class="blank-layout-container justify-content-center">
+  <div class="position-relative row w-100 h-100">
+    <div class="col-lg-6 col-xl-6 bg-gredient p-0">
+      <div class="p-24 h-100">
+        <app-auth-branding></app-auth-branding>
+
+        <div class="align-items-center justify-content-center img-height d-none d-lg-flex">
+          <img src="/assets/images/backgrounds/login-bg.png" alt="login" style="max-width: 500px" />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-xl-6 p-0 bg-white">
+      <div class="p-32 d-flex align-items-start align-items-lg-center justify-content-center h-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-lg-9 max-width-form">
+            <h4 class="f-w-700 f-s-24 m-0">Oposita como un Pro</h4>
+            <span class="f-s-14 d-block f-s-14 m-t-8">Tu aula virtual para oposiciones: vídeos, esquemas, flashcards y
+              mucho más</span>
+            <form class="m-t-30" [formGroup]="form" (ngSubmit)="submit()">
+              <mat-label class="f-s-14 f-w-600 m-b-12 d-block">Correo electrónico</mat-label>
+              <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput type="email" formControlName="email" />
+                @if(f['email'].touched && f['email'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                  @if(f['email'].errors && f['email'].errors['required']) {
+                  <div class="text-error">El correo es requerido.</div>
+                  }
+
+                  @if(f['email'].errors && f['email'].errors['pattern']) {
+                  <div class="text-error">El texto introducido no es un correo.</div>
+                  }
+                </mat-hint>
+                }
+              </mat-form-field>
+              <div class="d-flex d-raw gap-16">
+                <mat-label class="f-s-14 f-w-600 m-b-12 d-block">Contraseña</mat-label>
+                <i-tabler name="info-triangle">
+                </i-tabler>
+              </div>
+              <mat-form-field appearance="outline" class="w-100 d-flex d-raw" color="primary">
+                <input matInput [type]="showPass ? 'text' : 'password'" formControlName="password" />
+                <div class="d-flex" (click)="showPassword()">
+                  <i-tabler name="{{showPass ? 'eye' : 'eye-off'}}" class="cursor-pointer"></i-tabler>
+                </div>
+
+                @if(f['password'].touched && f['password'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                  @if( f['password'].errors && f['password'].errors['required'])
+                  {
+                  <div class="text-error">La contraseña es requerida.</div>
+                  }
+                </mat-hint>
+                }
+              </mat-form-field>
+              <div class="d-flex d-raw gap-16">
+                <mat-label class="f-s-14 f-w-600 m-b-12 d-block">Confirmar contraseña</mat-label>
+                <i-tabler name="info-triangle">
+                </i-tabler>
+              </div>
+              <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput matInput [type]="showConfirmPass ? 'text' : 'password'"
+                  formControlName="confirmPassword" />
+                <div class="d-flex" (click)="showConfirmPassword()">
+                  <i-tabler name="{{showConfirmPass ? 'eye' : 'eye-off'}}" class="cursor-pointer"></i-tabler>
+                </div>
+
+                @if(f['confirmPassword'].touched &&
+                f['confirmPassword'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                  @if( f['confirmPassword'].errors &&
+                  f['confirmPassword'].errors['required'])
+                  {
+                  <div class="text-error">La confirmación de la contraseña es requerida.</div>
+                  }
+                  @if(form.errors?.['passwordMismatch'] && f['confirmPassword'].touched) {
+                  <mat-hint class=" error-msg">
+                    <div class="text-error">Las contraseñas no coinciden.</div>
+                  </mat-hint>
+                  }
+                </mat-hint>
+                }
+              </mat-form-field>
+              <app-pass-info class="d-flex"></app-pass-info>
+              <button class="w-100 m-t-20" mat-flat-button color="primary" [disabled]="!form.valid">
+                Siguiente
+              </button>
+            </form>
+            <span class="d-block f-w-500 d-block m-t-24">¿Ya tienes una cuenta? <a [routerLink]="['/auth']"
+                class="text-decoration-none text-primary f-w-500 f-s-14"> Inicia sesión</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 
+            @if(!creating){
+              <form class="m-t-30" [formGroup]="form" (ngSubmit)="submit()">
+                <mat-label class="f-s-14 f-w-600 m-b-12 d-block">Correo electrónico</mat-label>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                  <input matInput type="email" formControlName="email" />
+                  @if(f['email'].touched && f['email'].invalid) {
+                  <mat-hint class="m-b-16 error-msg">
+                    @if(f['email'].errors && f['email'].errors['required']) {
+                    <div class="text-error">El correo es requerido.</div>
+                    }
+
+                    @if(f['email'].errors && f['email'].errors['pattern']) {
+                    <div class="text-error">El texto introducido no es un correo.</div>
+                    }
+                  </mat-hint>
+                  }
+                </mat-form-field>
+                <div class="d-flex d-raw gap-16">
+                  <mat-label class="f-s-14 f-w-600 m-b-12 d-block">Contraseña</mat-label>
+                  <i-tabler
+                    name="info-triangle">
+                  </i-tabler>
+                </div>
+                <mat-form-field appearance="outline" class="w-100 d-flex d-raw" color="primary">
+                  <input matInput [type]="showPass ? 'text' : 'password'" formControlName="password" />
+                  <div class="d-flex" (click)="showPassword()">
+                    <i-tabler name="{{showPass ? 'eye' : 'eye-off'}}" class="cursor-pointer"></i-tabler>
+                  </div>
+
+                  @if(f['password'].touched && f['password'].invalid) {
+                  <mat-hint class="m-b-16 error-msg">
+                    @if( f['password'].errors && f['password'].errors['required'])
+                    {
+                    <div class="text-error">La contraseña es requerida.</div>
+                    }
+                  </mat-hint>
+                  }
+                </mat-form-field>
+                <div class="d-flex d-raw gap-16">
+                  <mat-label class="f-s-14 f-w-600 m-b-12 d-block">Confirmar contraseña</mat-label>
+                  <i-tabler
+                    name="info-triangle">
+                  </i-tabler>
+                </div>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                  <input matInput matInput [type]="showConfirmPass ? 'text' : 'password'"
+                    formControlName="confirmPassword" />
+                  <div class="d-flex" (click)="showConfirmPassword()">
+                    <i-tabler name="{{showConfirmPass ? 'eye' : 'eye-off'}}" class="cursor-pointer"></i-tabler>
+                  </div>
+
+                  @if(f['confirmPassword'].touched && f['confirmPassword'].invalid) {
+                  <mat-hint class="m-b-16 error-msg">
+                    @if( f['confirmPassword'].errors && f['confirmPassword'].errors['required'])
+                    {
+                    <div class="text-error">La confirmación de la contraseña es requerida.</div>
+                    }
+                    @if(form.errors?.['passwordMismatch'] && f['confirmPassword'].touched) {
+                    <mat-hint class="m-b-16 error-msg">
+                      <div class="text-error">Las contraseñas no coinciden.</div>
+                    </mat-hint>
+                    }
+                  </mat-hint>
+                  }
+                </mat-form-field>
+                <app-pass-info></app-pass-info>
+                <button mat-flat-button color="primary" class="w-100" [disabled]="!form.valid">
+                  Regístrate
+                </button>
+              </form>
+              <span class="d-block f-w-500 d-block m-t-24">¿Ya tienes una cuenta?
+
+                <a [routerLink]="['/auth']" class="text-decoration-none text-primary f-w-500 f-s-14">
+                  Inicia sesión</a>
+              </span>
+            } @else {
+              <mat-progress-bar class=" m-t-30" mode="indeterminate"></mat-progress-bar>
+            }
+-->
+
+<!-- <mat-label class="f-s-14 f-w-600 m-b-12 d-block">Nombre</mat-label>
+              <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput formControlName="uname" />
+                @if(f['uname'].touched && f['uname'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                  @if(f['uname'].errors && f['uname'].errors['required']) {
+                  <div class="text-error">El nombre es requerido.</div>
+                  } @if(f['uname'].errors && f['uname'].errors['minlength']) {
+                  <div class="text-error">El nombre debe tener, al menos, 6 caracteres</div>
+                  }
+                </mat-hint>
+                }
+              </mat-form-field> -->
+<!-- <mat-label class="f-s-14 f-w-600 m-b-12 d-block">Rol</mat-label>
+              <mat-form-field class="w-100" appearance="outline">
+                <input type="text" placeholder="Escoja un rol" aria-label="Role" matInput formControlName="role"
+                  [matAutocomplete]="auto" />
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                  @for(firstoption of filteredOptions | async; track
+                  firstoption) {
+                  <mat-option [value]="firstoption">
+                    {{ firstoption }}
+                  </mat-option>
+                  }
+                </mat-autocomplete>
+                @if(f['role'].touched && f['role'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                  @if( f['role'].errors && f['role'].errors['required'])
+                  {
+                  <div class="text-error">Escoja un rol.</div>
+                  }
+                </mat-hint>
+                }
+              </mat-form-field> -->

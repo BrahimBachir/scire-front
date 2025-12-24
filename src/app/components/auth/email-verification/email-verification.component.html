@@ -1,0 +1,82 @@
+<div class="blank-layout-container justify-content-center">
+  <div class="position-relative row w-100 h-100">
+    <div class="col-lg-8 col-xl-9 bg-gredient p-0">
+      <div class="p-24 h-100">
+        <app-auth-branding></app-auth-branding>
+
+        <div class="align-items-center justify-content-center img-height d-none d-lg-flex">
+          <img src="/assets/images/backgrounds/login-bg.svg" alt="login" style="max-width: 500px" />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-xl-3 p-0 d-flex justify-content-center bg-white">
+      <div class="p-32 d-flex align-items-start align-items-lg-center h-100 max-width-form justify-content-center">
+        <div>
+          <h4 class="f-w-700 f-s-20 m-0">2. Verificación del correo</h4>
+          <span class="f-s-14 d-block f-s-14 m-t-24">Te hemos enviado al correo un código de 6 dígitos. Por favor,
+            introduce el código en el campo de abajo.</span>
+            <form class="m-t-30 p-t-30" [formGroup]="form" (ngSubmit)="submit()">
+              <mat-label class="f-s-14 f-w-600 m-b-12 d-block">Introduce los 6 dígitos</mat-label>
+              <div class="d-flex align-items-center"></div>
+              <div class="row custom-row">
+                <div class="col-2">
+                  <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <input matInput type="text" formControlName="one" appDigitInput #inputOne [nextInput]="inputTwo" />
+                  </mat-form-field>
+                </div>
+                <div class="col-2">
+                  <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <input matInput type="text" formControlName="two" appDigitInput #inputTwo [nextInput]="inputThree"
+                      [prevInput]="inputOne" />
+                  </mat-form-field>
+                </div>
+                <div class="col-2">
+                  <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <input matInput type="text" formControlName="three" appDigitInput #inputThree [nextInput]="inputFour"
+                      [prevInput]="inputTwo" />
+                  </mat-form-field>
+                </div>
+                <div class="col-2">
+                  <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <input matInput type="text" formControlName="four" appDigitInput #inputFour [nextInput]="inputFive"
+                      [prevInput]="inputThree" />
+                  </mat-form-field>
+                </div>
+                <div class="col-2">
+                  <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <input matInput type="text" formControlName="five" appDigitInput #inputFive [nextInput]="inputSix"
+                      [prevInput]="inputFour" />
+                  </mat-form-field>
+                </div>
+                <div class="col-2">
+                  <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <input matInput type="text" formControlName="six" appDigitInput #inputSix [prevInput]="inputFive" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <!-- actions -->
+              <button mat-flat-button color="primary" class="w-100" [disabled]="!form.valid">
+                Verificar Cuenta
+              </button>
+            </form>
+          <!-- } @else {
+            <a [routerLink]="['/auth/register']" mat-flat-button color="primary" class="w-100">
+              Ir a registro
+            </a>
+            <span class="f-s-14 d-block f-s-14 m-t-24">Esta cuenta ha sido eliminada. Por favor, intenta un nuevo registro.</span>
+          } -->
+          @if(invalidCode){
+            <span class="f-s-14 d-block f-s-14 m-t-24 text-error" >Código incorrecto. Por favor, inténtalo otra vez.</span>
+          }
+            <span class="d-block f-w-500 d-block f-s-14 m-t-24">¿Nos has recibido el código?
+            <a class="text-decoration-none text-primary f-w-500 cursor-pointer" (click)="resendCode()">Reenviar</a>
+          </span>
+          @if(codeResent){
+            <span class="f-s-14 d-block f-s-14 m-t-24" >Se ha reenviado un nuevo código asociada al usuario.</span>
+          }
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

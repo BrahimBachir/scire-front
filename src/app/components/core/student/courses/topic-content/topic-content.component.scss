@@ -1,0 +1,73 @@
+/* Contenedor del botón + */
+.add-element {
+  margin-left: 20px;
+  //margin-right: 20px;
+}
+
+/* Contenedor del carrete */
+.extra-actions {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  /* Animación / oculto por defecto */
+  max-height: 0;
+  overflow: visible;
+  opacity: 0;
+  transform: translateY(-10px);
+
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* Al abrir */
+.extra-actions.open {
+  max-height: 300px; /* suficiente para 2 filas */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Cada fila */
+.extra-actions .row {
+  display: flex;
+  gap: 10px;
+}
+
+/* Efecto flotante */
+.extra-actions button {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.extra-actions button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.30);
+}
+
+
+.sticky-actions {
+  position: -webkit-sticky; /* Safari support */
+  position: sticky;
+  top: 20px;               /* Distance from the top of the viewport */
+ // min-width: 80px;
+  z-index: 10;             /* Ensure it stays above content if overlapping */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* .flex-grow {
+  max-width: 80vw;
+} */
+
+.law-content {
+  flex: 1 1 auto; // take remaining space
+  min-width: 0;   // IMPORTANT: allows shrinking when child2 appears
+}
+
+.gen-actions {
+  flex: 0 0 auto; // take only the space it needs
+}
