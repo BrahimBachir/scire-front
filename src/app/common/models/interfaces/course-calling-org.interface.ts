@@ -1,6 +1,6 @@
 import { ICourse } from '.';
 
-export interface ICallingOrg {
+export interface ICaller {
   id: number; // ID del examen
   code: string; // Código del curso
   description: string; // Descripción del curso
@@ -10,6 +10,6 @@ export interface ICallingOrg {
 
 export interface IIncomingCallingOrgs {
     total: number;
-    rows: ICallingOrg[];
+    rows: ICaller[];
 }
 

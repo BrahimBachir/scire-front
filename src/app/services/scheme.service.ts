@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Routes } from '../common/config';
-import { QueryingDto, IIncomingEntity, IScheme } from '../common/models/interfaces';
+import { IQueryingDto, IIncomingEntity, IScheme, IncomingNavigableEntity, DeletedElement } from '../common/models/interfaces';
 import { buildParams } from '../common/utils';
 
 
@@ -15,7 +15,7 @@ export class SchemeService {
     private http: HttpClient,
   ) {}
 
-  public getAll(queryingDto?: QueryingDto): Observable<IIncomingEntity> {
+  public getAll(queryingDto?: IQueryingDto): Observable<IIncomingEntity> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);
@@ -29,26 +29,28 @@ export class SchemeService {
   }
 
   public getByRule(ruleCode: string, artiCode: string): Observable<IIncomingEntity> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.schemes.byRule}`.replace(':ruleCode', ruleCode).replace(':artiCode',artiCode);
+    let URL = `${environment.api_base_url}${this.routes.api.learning.schemes.byArticle}`.replace(':ruleCode', ruleCode).replace(':artiCode',artiCode);
     return this.http.get<IIncomingEntity>(URL);
   }
 
-  public navigate(ruleCode: string, artiCode: string, queryingDto: QueryingDto): Observable<IScheme> {
+  public getByArticle(articleId: number): Observable<IScheme> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.schemes.byRule}`.replace(':articleId', articleId.toString());
+    return this.http.get<IScheme>(URL);
+  }
+
+  public navigate(articleId: number, queryingDto?: IQueryingDto): Observable<IncomingNavigableEntity> {
     let params = new HttpParams();
     if(queryingDto)
-        params = buildParams(queryingDto, params);
+      params = buildParams(queryingDto, params);
 
-    console.log("Data to be sent: ",queryingDto.direction, queryingDto.schemeId)
-
-    let URL = `${environment.api_base_url}${this.routes.api.learning.schemes.navigate}`
-      .replace(':ruleCode', ruleCode || '')
-      .replace(':artiCode', artiCode || '');
-    return this.http.get<IScheme>(URL, { params });
+    let URL = `${environment.api_base_url}${this.routes.api.learning.schemes.navigate}`.
+      replace(':articleId', articleId.toString());
+    return this.http.get<IncomingNavigableEntity>(URL, { params });
   }
   
-  public delete(id: number): Observable<string> {
+  public delete(id: number): Observable<DeletedElement> {
     let URL = `${environment.api_base_url}${this.routes.api.learning.schemes.schemes}/${id}`;
-    return this.http.delete<string>(URL);
+    return this.http.delete<DeletedElement>(URL);
   }
   
   public deleteMany(ids: number[]) {
@@ -61,8 +63,7 @@ export class SchemeService {
     return this.http.patch<IScheme>(URL, scheme);
   }
 
-  public create(scheme: IScheme, queryingDto?: QueryingDto) : Observable<IScheme> {
-    console.log(queryingDto)
+  public create(scheme: IScheme, queryingDto?: IQueryingDto) : Observable<IScheme> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);

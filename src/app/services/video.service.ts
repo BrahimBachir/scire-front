@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Routes } from '../common/config';
-import { QueryingDto, IIncomingEntity, IVideo } from '../common/models/interfaces';
+import { IQueryingDto, IIncomingEntity, IVideo, IncomingNavigableEntity } from '../common/models/interfaces';
 import { buildParams } from '../common/utils';
 
 
@@ -15,7 +15,7 @@ export class VideoService {
     private http: HttpClient,
   ) {}
 
-  public getAll(queryingDto?: QueryingDto): Observable<IIncomingEntity> {
+  public getAll(queryingDto?: IQueryingDto): Observable<IIncomingEntity> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);
@@ -28,8 +28,20 @@ export class VideoService {
     return this.http.get<IVideo>(URL);
   }
 
+  /**
+   * 
+   * @param ruleCode 
+   * @param artiCode 
+   * @returns 
+   * @deprecated
+   */
   public getByRule(ruleCode: string, artiCode: string): Observable<IVideo> {
     let URL = `${environment.api_base_url}${this.routes.api.learning.videos.byRule}`.replace(':ruleCode', ruleCode).replace(':artiCode',artiCode);
+    return this.http.get<IVideo>(URL);
+  }
+
+  public getByArticle(articleId: number): Observable<IVideo> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.videos.byArticle}`.replace(':articleId', articleId.toString());
     return this.http.get<IVideo>(URL);
   }
   
@@ -48,13 +60,22 @@ export class VideoService {
     return this.http.patch<IVideo>(URL, video);
   }
 
-  public create(video: IVideo, queryingDto?: QueryingDto) : Observable<IVideo> {
-    console.log(queryingDto)
+  public create(video: IVideo, queryingDto?: IQueryingDto) : Observable<IVideo> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);
     let URL = `${environment.api_base_url}${this.routes.api.learning.videos.videos}`;
 
     return this.http.post<IVideo>(URL, video, {params});
+  }
+
+  public navigate(articleId: number, queryingDto?: IQueryingDto): Observable<IncomingNavigableEntity> {
+    let params = new HttpParams();
+    if(queryingDto)
+      params = buildParams(queryingDto, params);
+
+    let URL = `${environment.api_base_url}${this.routes.api.learning.videos.navigate}`.
+      replace(':articleId', articleId.toString());
+    return this.http.get<IncomingNavigableEntity>(URL, { params });
   }
 }

@@ -1,4 +1,4 @@
-import { IArticle, IGazette,  IRuleAmbit,  IRuleType } from ".";
+import { IArticle, IRuleGazette,  IRuleAmbit,  IRuleType } from ".";
 
 export interface IRule {
     id: number;
@@ -15,7 +15,7 @@ export interface IRule {
     repealDate?: Date;
     effectiveDate?: Date;
     type?: IRuleType | null;
-    gazette?: IGazette | null;
+    gazette?: IRuleGazette | null;
     ambit?: IRuleAmbit | null;
     readingTime?: number;
 }

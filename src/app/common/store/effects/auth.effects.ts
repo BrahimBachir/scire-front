@@ -32,7 +32,6 @@ export class AuthEffects {
           map(res => {
             const data_parsed = Object.create(res);
             let detokenized = getDecodedAccessToken(data_parsed.token);
-            console.log("User from the back: ",detokenized)
             return loginCompleted(data_parsed.token,detokenized.sub);
           }),
           catchError( () => {
@@ -49,9 +48,7 @@ export class AuthEffects {
         exhaustMap((action) => this.authService.createUserLogin(action.user)
         .pipe(
           map(res => {
-            console.log("Response: ", res);
             const user = res as IUser & { token: string };
-            console.log("Response: ", user);
             return logedUserLoaded(user, user.token); 
           }),
           catchError(() => of({ type: LOGIN_ERROR }))
@@ -67,7 +64,6 @@ export class AuthEffects {
         .pipe(
           //map(logingInfo => ({ type: loginCompleted, payload: logingInfo })),
           map(res => {
-            console.log("Response: ", res);
             const user = res as IUser & { token: string };
             return logedUserLoaded(user, user.token);
           }),
@@ -86,20 +82,4 @@ export class AuthEffects {
       })
     )
   });
-
-    /* loadSelectedCourse$ = createEffect(
-      () =>
-        this.actions$.pipe(
-          ofType(logedUserLoaded),
-          concatMap(({ course }) =>
-            from(this.router.navigate([`student/courses/${course.id}/details`])).pipe(
-              catchError((error) => {
-                console.error('[LEARNING] Error:', error); 
-                return EMPTY;
-              })
-            )
-          )
-        ),
-      { dispatch: false }
-    ); */
 }

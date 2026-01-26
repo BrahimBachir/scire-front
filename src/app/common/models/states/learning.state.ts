@@ -1,7 +1,7 @@
-import { ICategory, ICourse, IQuestion, ISection, ITopic } from "../interfaces";
+import { ITopicCategory, ICourse, IQuestion, ISection, ITopic, IArticle, IRule, IScheme } from "../interfaces";
 
 export interface LearningState {
-  categories: ICategory[] | null;
+  categories: ITopicCategory[] | null;
   sections: ISection[] | null;
   topics: ITopic[] | null;
   questions: IQuestion[] | null;
@@ -9,5 +9,10 @@ export interface LearningState {
   selectedCourse: ICourse | null;
   logedIn?: boolean;
   verifying?: boolean;
+  selectedArticle?: IArticle
+  allSelectedArticle?: IArticle[];
+  selectedRule?: IRule
+  selectedScheme?: IScheme
+  selectedTopic?: ITopic
 }
 

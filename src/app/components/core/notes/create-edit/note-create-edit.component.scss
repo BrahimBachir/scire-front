@@ -92,3 +92,13 @@
 }
 
 
+/* ::ng-deep .NgxEditor__Wrapper .NgxEditor  {
+  max-height: 300px;
+  overflow: scroll;
+} */
+
+::ng-deep .NgxEditor  { //TODO: Review if changes has broken anything.
+  max-height: 300px;
+  min-height: 300px;
+  overflow-y: scroll;
+}

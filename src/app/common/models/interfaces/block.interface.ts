@@ -1,11 +1,11 @@
-import { IGazette,  IRuleAmbit,  IRule } from ".";
+import { IRuleGazette,  IRuleAmbit,  IRule } from ".";
 
 export interface IBlock {
     id: number;
     description: string;
     articles: IBlockArticles[];
     rule?: IRule | null;
-    gazette?: IGazette | null;
+    gazette?: IRuleGazette | null;
     ambit?: IRuleAmbit | null;
 }
 

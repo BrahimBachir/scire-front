@@ -1,0 +1,17 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <app-filters-orchestrator [config]="filtersConfig" (filtersChange)="onFiltersChanged($event)">
+    </app-filters-orchestrator>
+  </mat-card-content>
+</mat-card>
+<mat-card class="cardWithShadow">
+    <mat-card-header class="b-b-1 justify-content-end">
+        <button mat-mini-fab class="bg-primary text-white" [matTooltip]="'BUTTONS.CREATE.COURSE' | translate"
+            [aria-label]="'BUTTONS.CREATE.COURSE' | translate" (click)="create()">
+            <i-tabler name="plus" class="icon-20 d-flex"></i-tabler>
+        </button>
+    </mat-card-header>
+      <mat-card-content> 
+    <app-scheme-navigation  [ruleId]="articleId" [articleId]="articleId"></app-scheme-navigation>
+  </mat-card-content>
+</mat-card>

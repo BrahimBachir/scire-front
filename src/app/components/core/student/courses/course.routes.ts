@@ -7,6 +7,12 @@ import { AppKanbanComponent } from '../../kanban/kanban.component';
 import { AppFullcalendarComponent } from '../../fullcalendar/fullcalendar.component';
 import { AppTestComponent } from '../test/test.component';
 import { AppDashboardComponent } from 'src/app/components/generic/dashboard/dashboard.component';
+import { FlashcardWrapperComponent } from './common/flashcard/flashcard-wrapper.component';
+import { VideoWrapperComponent } from './common/video/video-wrapper.component';
+import { SchemeWrapperComponent } from './common/scheme/scheme-wrapper.component';
+import { SchemeFormComponent } from './common/scheme/form/scheme-form.component';
+import { AppCourseTopicsComponent } from './course-topics/course-topics.component';
+import { AddCourseComponent } from './add-course/add-course.component';
 
 
 export const CourseRoutes: Routes = [
@@ -31,6 +37,18 @@ export const CourseRoutes: Routes = [
           urls: [
             { title: 'Academia', url: '/student' },
             { title: 'Detalle del curso' },
+          ],
+        }
+      },
+      {
+        path: 'courses/:courseId/topics',
+        component: AppCourseTopicsComponent,
+        data: {
+          title: 'Temas del curse',
+          urls: [
+            { title: 'Academia', url: '/student' },
+            { title: 'Curso', url: 'student/courses/:courseId/details' },
+            { title: 'Temas del curso' },
           ],
         }
       },
@@ -86,11 +104,11 @@ export const CourseRoutes: Routes = [
         path: 'courses/:courseId/dashboard',
         component: AppDashboardComponent,
         data: {
-          title: 'Dashboard',
+          title: 'Estadística',
           urls: [
             { title: 'Academia', url: '/student' },
             { title: 'Curso', url: 'student/courses/:courseId/details' },
-            { title: 'Dashboard' },
+            { title: 'Estadística' },
           ],
         },
       },
@@ -103,6 +121,28 @@ export const CourseRoutes: Routes = [
             { title: 'Academia', url: '/student' },
             { title: 'Curso', url: 'student/courses/:courseId/details' },
             { title: 'Tests' },
+          ],
+        },
+      },
+      {
+        path: 'courses/new',
+        component: AddCourseComponent,
+        data: {
+          title: 'Nuevo curso',
+          urls: [
+            { title: 'Academia', url: '/student' },
+            { title: 'Crear' },
+          ],
+        },
+      },
+      {
+        path: 'courses/:courseId/edit',
+        component: AddCourseComponent,
+        data: {
+          title: 'Editar curso',
+          urls: [
+            { title: 'Academia', url: '/student' },
+            { title: 'Editar' },
           ],
         },
       },

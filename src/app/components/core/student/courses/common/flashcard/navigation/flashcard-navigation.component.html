@@ -1,0 +1,71 @@
+<mat-card class="card shadow-none b-1 rounded theme-card m-t-15">
+    @if(fromScreen()){
+    <mat-card-header class="justify-content-end">
+        <button mat-mini-fab class="bg-primary text-white" [matTooltip]="'BUTTONS.CREATE.COURSE' | translate"
+            [aria-label]="'BUTTONS.CREATE.COURSE' | translate" (click)="create()">
+            <i-tabler name="plus" class="icon-20 d-flex"></i-tabler>
+        </button>
+    </mat-card-header>
+    }
+    @if(flashcard()){
+    <mat-card-content class="b-t-1 d-flex d-col justify-content-center">
+        <div class="wrapper" [class.flipped]="isFlipped" (click)="flipCard()">
+            <mat-card
+                class="cardWithShadow front fc theme-card d-flex d-col align-items-center justify-content-center m-t-16 min-h">
+                <mat-card-content>
+                    <div class="row">
+                        <p class="p-boxed-acctions">{{flashcard()?.question}}</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card
+                class="cardWithShadow back fc bg-secondary theme-card d-flex d-col align-items-center justify-content-center m-t-16 min-h">
+                <mat-card-content>
+                    <div class="row">
+                        <p class="p-boxed-acctions">{{flashcard()?.answer}}</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <div class="text-center p-y-8 p-x-12 flashcard-actions">
+                @if( (flashcard()?.creatorId || 0 | myOwnElement) | async ) {
+                <button mat-mini-fab class="cart-btn-overlay bg-error text-white" matTooltip="Delete"
+                    (click)=" deleteItem(); $event.stopPropagation()">
+                    <i-tabler name="trash" class="icon-16 d-flex"></i-tabler>
+                </button>
+                }
+                @if((flashcard()?.creatorId || 0 | myOwnElement) | async ) {
+                <button mat-mini-fab class="cart-btn-overlay bg-primary text-white" matTooltip="Edit"
+                    (click)="updateItem()">
+                    <i-tabler name="pencil" class="icon-16 d-flex"></i-tabler>
+                </button>
+                }
+            </div>
+        </div>
+    </mat-card-content>
+    <app-element-navigation class="m-t-15" [canGoNext]="navigationState.hasNext"
+        [canGoPrevious]="navigationState.hasPrevious" (next)="goNext()"
+        (previous)="goPrevious()"></app-element-navigation>
+
+    <mat-divider></mat-divider>
+    <div class="d-flex align-items-center justify-content-between m-10">
+        <app-reactions [content]="flashcard" [featureType]="featureType"></app-reactions>
+        <div>|</div>
+        <i-tabler [matTooltip]="'Generado por: ' + flashcard()?.creationType?.description || ''" class="icon-20 d-flex"
+            [name]="flashcard()?.creationType?.icon || ''"></i-tabler>
+    </div>
+    } @else if(fromScreen()){
+    <mat-card-content class="b-t-1 d-flex d-col justify-content-center">
+        <app-banner-no-filters [bannerText]="bannerText"></app-banner-no-filters>
+    </mat-card-content>
+    } @else {
+    <div class="d-flex col align-items-center justify-content-center text-center m-y-15">
+        <p>No hay tarjetas de memorización registrados para este artículo. Por favor, considera ayudar a la
+            comunidad apoartando alguna/s.</p>
+        <p>!Muchas gracias de antemano!</p>
+        <button mat-mini-fab [matTooltip]="creationAction.tooltip" [class]="creationAction.buttonClass"
+            [attr.aria-label]="creationAction.label" (click)="createElement(creationAction.entity)">
+            <i-tabler class="icon-20 d-flex" [name]="creationAction.icon"></i-tabler>
+        </button>
+    </div>
+    }
+</mat-card>

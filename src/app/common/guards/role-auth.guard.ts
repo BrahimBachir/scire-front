@@ -13,6 +13,6 @@ export const RoleGuard: CanMatchFn = (route, state) => {
         router.navigate([FRONT_ROUTE_TOKEN_EMPTY]);
       return role.code === route.data?.['role'];
     },
-    error: (error) => console.error(error),
+    //error: (error) => console.error(error),
   }) ? true: false;
 };

@@ -13,6 +13,7 @@ export interface ITopic {
     tasks?: IGanttTask[];
     blocks?: IBlock[];
     isEnded?: boolean;
+    progress?: number;
 }
 
 

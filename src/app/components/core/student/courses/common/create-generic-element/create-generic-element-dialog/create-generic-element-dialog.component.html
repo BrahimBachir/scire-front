@@ -1,23 +1,80 @@
+<form [formGroup]="form" class="d-flex col h-100">
+  <!-- HEADER -->
+  <div class="d-flex align-items-center justify-content-between m-t-10">
+    <h3 mat-dialog-title class="p-0">
+      {{ mode === 'EDITING' ? 'Editar' : 'Crear' }} elemento
+    </h3> <button mat-icon-button mat-dialog-close class="d-flex justify-content-center m-l-20 bg-error text-white">
+      <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
+    </button>
+  </div>
+
+  <!-- CONTENT -->
+  <mat-dialog-content class="flex-grow-1 p-x-0 w-100">
+
+    <!-- COMMON FIELDS -->
+    <div formGroupName="common">
+      <rule-filter formControlName="ruleId" [mode]="mode"></rule-filter>
+      <app-multi-select formControlName="articlesIds" [mode]="mode" [rule]="selectedRule"></app-multi-select>
+    </div>
+
+    <!-- FEATURE FORM -->
+    <ng-container formGroupName="feature">
+      <ng-container *ngComponentOutlet="
+      featureComponent;
+      inputs: { form: form.get('feature') }
+    ">
+      </ng-container>
+    </ng-container>
+
+    <!-- ERROR -->
+     @if(error){
+       <mat-error class="m-t-10">
+         {{ error }}
+        </mat-error>
+      }
+
+  </mat-dialog-content>
+
+  <!-- ACTIONS -->
+  <mat-dialog-actions align="end" class="p-x-0">
+    <button mat-button mat-dialog-close>
+      Cancelar
+    </button>
+
+    <button mat-raised-button color="primary" [disabled]="form.invalid || loading" (click)="submit()">
+
+      {{ loading ? 'Guardando...' : 'Guardar' }}
+    </button>
+  </mat-dialog-actions>
+</form>
+
+
+<!-- <div [formGroup]="form">
 <div class="d-flex align-items-center justify-content-between m-r-20">
-  <h3 mat-dialog-title>Crear nuevo elemento</h3>
+  <h3 mat-dialog-title>{{action}} elemento</h3>
   <button mat-icon-button mat-dialog-close class="d-flex justify-content-center m-l-20 bg-error text-white">
     <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
   </button>
 </div>
 <mat-dialog-content>
   <div class="m-b-15">
-    <h5 class="f-s-14 f-w-500 col-xl-12 m-b-10">{{rule.description}}</h5>
-    <span class="p-l-15" >{{article.title}}</span>
+    <rule-filter [mode]="modeToSend" formControlName="ruleId"></rule-filter>
+    @if(feature === 'VIDEO') {
+      <article-filter [mode]="modeToSend" formControlName="articleId"></article-filter>
+    } @else {
+      <app-multi-select  [rule]="ruleToPass()" [(selectedItemIds)]="articlesFromDropDown" [incomingIds]="articlesToDropDown()"></app-multi-select>
+    }
   </div>
   @if(feature === 'FLASHCARD'){
-    <app-flashcard-create-edit (closeDialog)="dialogRef.close()" [article]="article" [rule]="rule"></app-flashcard-create-edit>
-  } @else if(feature === 'DIAGRAM'){
-    <app-scheme-create-edit (closeDialog)="dialogRef.close()" [article]="article" [rule]="rule"></app-scheme-create-edit>
+    <app-flashcard-create-edit (closeDialog)="dialogRef.close()"  [(selectedArticlesIds)]="articlesFromDropDown" [rule]="ruleToPass" [(flashcard)]="flashcardToPass"></app-flashcard-create-edit>
   } @else if(feature === 'VIDEO') {
-    <app-video-create-edit (closeDialog)="dialogRef.close()" [article]="article" [rule]="rule"></app-video-create-edit>
+    <app-video-create-edit (closeDialog)="dialogRef.close()" [rule]="ruleToPass" [article]="articleToPass"></app-video-create-edit>
   } @else if(feature === 'NOTE') {
-    <app-note-create-edit (closeDialog)="dialogRef.close()" [article]="article" [rule]="rule"></app-note-create-edit>
+    <app-note-create-edit (closeDialog)="dialogRef.close()" [(selectedArticlesIds)]="articlesFromDropDown" [rule]="ruleToPass" [(selectedNote)]="noteToPass"></app-note-create-edit>
   } @else if(feature === 'AI') {
-    <app-ai-element-create (closeDialog)="dialogRef.close()" [article]="article" [rule]="rule"></app-ai-element-create>
+    <app-ai-element-create (closeDialog)="dialogRef.close()" [rule]="ruleToPass"></app-ai-element-create>
+  } @else if(feature === 'QUESTION') {
+    <app-question-create-edit (closeDialog)="dialogRef.close()" [(selectedArticlesIds)]="articlesFromDropDown" [rule]="ruleToPass" [(question)]="questionToPass"></app-question-create-edit >
   } 
 </mat-dialog-content>
+</div> -->

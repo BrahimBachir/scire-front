@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Routes } from '../common/config';
-import { QueryingDto, ITopic } from '../common/models/interfaces';
+import { IQueryingDto, ITopic } from '../common/models/interfaces';
 import { buildParams } from '../common/utils';
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +11,7 @@ export class GanttService {
   routes = Routes;
   constructor(private http: HttpClient) {}
 
-  public getGanttData(queryingDto?: QueryingDto): Observable<ITopic[]> {
+  public getGanttData(queryingDto?: IQueryingDto): Observable<ITopic[]> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);

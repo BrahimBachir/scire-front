@@ -1,0 +1,27 @@
+  <div class="row p-x-15">
+    <mat-card class="shadow-none b-1 rounded p-15  col-xl-12">
+      <div class="d-flex row justify-content-between m-l-0 m-r-0">
+        <h4>Temas</h4>
+        <tabler-icon name="calculator" class="m-r-5"></tabler-icon>
+      </div>
+      <mat-card class="shadow-none b-1 rounded p-15 ">
+        <mat-card-content>
+          <div class="table-responsive">
+            <div>
+              Aquí irá la tabla
+            </div>
+            <mat-divider></mat-divider>
+            <mat-paginator [pageSizeOptions]="[5, 8, 10]" showFirstLastButtons></mat-paginator>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <div class="w-50">
+        <button mat-flat-button class="bg-light-primary text-primary m-l-0">
+          <div class="d-flex align-items-center">
+            <tabler-icon name="plus" class="m-r-5"></tabler-icon>
+            <span class="mt-3"> Add another variations</span>
+          </div>
+        </button>
+      </div>
+    </mat-card>
+  </div>

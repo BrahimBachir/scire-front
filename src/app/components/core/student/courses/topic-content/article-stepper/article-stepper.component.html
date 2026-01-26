@@ -1,0 +1,89 @@
+<mat-vertical-stepper [selectedIndex]="currentStepIndex" (selectionChange)="onStepChange($event)">
+
+  <!-- TEXT -->
+  <mat-step label="text" [completed]="progress.selectedArticleProgress()?.text_reviewed">
+    <ng-template matStepLabel>Contenido</ng-template>
+    @if(currentStepIndex === 0) {
+      <ng-container>
+        <app-article-content [paragraphs]="paragraphs"></app-article-content>
+      </ng-container>
+    }
+
+    <button mat-flat-button matStepperNext>Siguiente</button>
+  </mat-step>
+
+  <!-- VIDEO -->
+  <mat-step label="videos" [completed]="progress.selectedArticleProgress()?.video_reviewed">
+    <ng-template matStepLabel>Vídeo</ng-template>
+    @if(currentStepIndex === 1) {
+      <ng-container>
+        <app-video [ruleId]="ruleId" [articleId]="articleId" (entityToCreate)="handleEntityCreationOutput($event)"></app-video>
+      </ng-container>
+    }
+    <div class="d-flex gap-12">
+      <button mat-flat-button matStepperPrevious class="bg-secondary">Previo</button>
+      <button mat-flat-button matStepperNext>Siguiente</button>
+    </div>
+  </mat-step>
+
+  <!-- DIAGRAMS -->
+  <mat-step label="diagrams" [completed]="progress.selectedArticleProgress()?.diagrams_reviewed">
+    <ng-template matStepLabel>Diagrama y resúmenes</ng-template>
+    @if(currentStepIndex === 2) {
+    <ng-container>
+      <app-scheme-navigation [ruleId]="ruleId" [articleId]="articleId" (entityToCreate)="handleEntityCreationOutput($event)">
+      </app-scheme-navigation>
+    </ng-container>
+    }
+    <div class="d-flex gap-12">
+      <button mat-flat-button matStepperPrevious class="bg-secondary">Previo</button>
+      <button mat-flat-button matStepperNext>Siguiente</button>
+    </div>
+  </mat-step>
+
+  <!-- FLASHCARDS -->
+  <mat-step label="flashcards" [completed]="progress.selectedArticleProgress()?.flashcards_reviewed">
+    <ng-template matStepLabel>Tarjetas de memorización</ng-template>
+    @if(currentStepIndex === 3) {
+    <ng-container>
+      <app-flashcard-navigation [ruleId]="articleId" [articleId]="articleId" (entityToCreate)="handleEntityCreationOutput($event)">
+      </app-flashcard-navigation>
+    </ng-container>
+    }
+    <div class="d-flex gap-12">
+      <button mat-flat-button matStepperPrevious class="bg-secondary">Previo</button>
+      <button mat-flat-button matStepperNext>Siguiente</button>
+    </div>
+  </mat-step>
+
+  <!-- QUESTIONS -->
+  <mat-step label="questions" [completed]="progress.selectedArticleProgress()?.questions_reviewed">
+    <ng-template matStepLabel>Preguntas de repaso</ng-template>
+    @if(currentStepIndex === 4) {
+    <ng-container>
+      <app-question [ruleId]="ruleId" [articleId]="articleId" (entityToCreate)="handleEntityCreationOutput($event)">
+      </app-question>
+    </ng-container>
+    }
+    <div class="d-flex gap-12">
+      <button mat-flat-button matStepperPrevious class="bg-secondary">Previo</button>
+      <button mat-flat-button matStepperNext>Siguiente</button>
+    </div>
+  </mat-step>
+
+  <!-- FINAL -->
+  <mat-step label="final">
+    <ng-template matStepLabel>¡Felicitaciones!</ng-template>
+    @if(currentStepIndex === 5) {
+      <ng-container>
+        <h3>¡Artículo superado!</h3>
+        <p>A por el siguiente 🙂</p>
+      </ng-container>
+    }
+    <div class="d-flex align-items-center gap-12">
+      <button mat-flat-button matStepperPrevious class="bg-secondary">Previo</button>
+      <button mat-flat-button class="bg-error" (click)="resetStepper()">Reiniciar</button>
+      <button mat-stroked-button class="text-primary" [disabled]="lastArticle" (click)="goNextArticle()">Siguiente artículo</button>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>

@@ -14,7 +14,8 @@ export * from './query.interface';
 export * from './town.interface';
 export * from './email.interface';
 export * from './menu-option.interface';
-export * from './category.interface';
+export * from './topic-category.interface';
+export * from './course-category.interface';
 export * from './section.interface';
 export * from './topic.interface';
 export * from './question.interface';
@@ -48,4 +49,7 @@ export * from './reaction.interface';
 export * from './review.interface';
 export * from './note.interface';
 export * from './dialog-data.interface';
-export * from './feat-vote-types';
+export * from './feature-types';
+export * from './comment.interface'
+export * from './course-status.interface'
+export * from './generated-by.interface';

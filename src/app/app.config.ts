@@ -9,6 +9,7 @@ import {
   HTTP_INTERCEPTORS,
   HttpClient,
   provideHttpClient,
+  withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { routes } from './app.routes';
@@ -52,6 +53,9 @@ import { HeadersInterceptor } from './common/interceptors/jwt.interceptor';
 import { LearningEffects } from './common/store/effects/learning.effects';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { SPANISH_DATE_FORMATS } from './common/config/constants';
+import { MyPaginatorIntl } from './services';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { dateInterceptor } from './common/interceptors';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -82,7 +86,9 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding()
     ),
     provideHttpClient(withInterceptorsFromDi()),
-    //provideClientHydration(),
+    provideHttpClient(
+      withInterceptors([dateInterceptor])
+    ),
     provideAnimationsAsync(),
     provideStoreDevtools({
       maxAge: 25,
@@ -108,6 +114,7 @@ export const appConfig: ApplicationConfig = {
         },
       })
     ),
+    { provide: MatPaginatorIntl, useClass: MyPaginatorIntl },
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
     { provide: MAT_DATE_FORMATS, useValue: SPANISH_DATE_FORMATS },

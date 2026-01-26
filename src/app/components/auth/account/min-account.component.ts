@@ -104,7 +104,7 @@ export class MinimumAccountComponent implements OnInit {
         this.selectedGender = genders.find(g => g.by_default) || genders[0];
         if (this.selectedGender) this.form.get('gender')?.setValue(this.selectedGender.id);
       },
-      error: (error) => console.error(error)
+      //error: (error) => console.error(error)
     })
   }
   
@@ -115,7 +115,7 @@ export class MinimumAccountComponent implements OnInit {
         this.selectedRole = roles.find(r => r.by_default) || roles[0];
         if(this.selectedRole) this.form.get('role')?.setValue(this.selectedRole.id);
       },
-      error: (error) => console.error(error)
+      //error: (error) => console.error(error)
     })
   }
 
@@ -130,6 +130,5 @@ export class MinimumAccountComponent implements OnInit {
       second_surname: formValues.second_surname!,
       code: this.userCode,
     };
-    console.log(this.user);
   }
 }

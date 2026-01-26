@@ -41,7 +41,6 @@ export class AppReactionsComponent /* implements OnInit */ {
         
         // Check if content exists and has an ID before fetching data
         if (currentContent && currentContent.id) {
-            console.log("Content signal changed or component initialized with new content:", currentContent);
             this.getUserVote();
             this.getVoteState();
         } else {
@@ -51,15 +50,7 @@ export class AppReactionsComponent /* implements OnInit */ {
             this.dislikeCount.set(0);
         }
     });
-
-/*     ngOnInit(): void {
-        this.getUserVote();
-        this.getVoteState();
-        console.log("Provided featureType element: ", this.content)
-
-    } */
-
-
+    
     react(voteType: 'LIKE' | 'DISLIKE') {
         if (voteType === 'DISLIKE') {
             const dialogRef = this.dialog.open(AppFeedbackDialogComponent, {
@@ -67,7 +58,6 @@ export class AppReactionsComponent /* implements OnInit */ {
             });
             dialogRef.afterClosed().subscribe(res => {
                 if (res.feedback) {
-                    console.log("Reaction feeedback: ", res.feedback)
                     this.sendReaction(voteType, res.feedback);
                 }
             });
@@ -89,7 +79,6 @@ export class AppReactionsComponent /* implements OnInit */ {
     getUserVote() {
         if (this.content) this.reactService.getMyVote({ featureId: this.content()?.id, featureType: this.featureType }
         ).subscribe(response => {
-            console.log("Get user vote: ", response)
             this.userVote.set(response.voteType ?? '');
         });
     }
@@ -97,7 +86,6 @@ export class AppReactionsComponent /* implements OnInit */ {
     getVoteState() {
         if (this.content) this.reactService.getVoteState({ featureId: this.content()?.id, featureType: this.featureType }
         ).subscribe(response => {
-            console.log("Get user vote: ", response)
             this.likeCount.set(response.likeCount ?? 0);
             this.dislikeCount.set(response.dislikeCount ?? 0);
         });

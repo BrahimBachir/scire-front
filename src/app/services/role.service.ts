@@ -20,7 +20,6 @@ export class RoleService {
   ) {}
     getAll(): Observable<IRole[]> {
         let URL = `${environment.api_base_url}${this.routes.api.roles.all}`;
-        console.log("URL: ", URL)
         return this.http.get<IRole[]>(URL);
     }
 

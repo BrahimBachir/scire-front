@@ -54,6 +54,7 @@ export class ResponseInterceptor implements HttpInterceptor {
                 });
                 break;
               case 403: // Forbidden
+                //if (['ERROR_999', 'ERROR_650'].find((code) => code === error.error.errorCode)) {
                 if (error.error.errorCode === 'ERROR_999') {
                 //TODO: Display a dialog to the user so tehy can change their plan.
                   console.log("Error code sutebla e to user changing plan to Next Level: Silver or Gold!", error)
@@ -64,7 +65,8 @@ export class ResponseInterceptor implements HttpInterceptor {
                 }
                 break;
               case 404: // Not found
-                console.log(error)
+                if (!['ERROR_999', 'ERROR_650'].includes(error.error.errorCode))
+                //if(error.error.message !== "ERROR_666") 
                 this.toastService.error(`${error.error.message}`, ERROR, {
                   timeOut: 3000,
                 });

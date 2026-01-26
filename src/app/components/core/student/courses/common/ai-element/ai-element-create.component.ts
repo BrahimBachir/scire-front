@@ -23,11 +23,11 @@ import { FeatureType, IRule, IArticle, IQuestion } from 'src/app/common/models/i
   templateUrl: './ai-element-create.component.html',
   styleUrl: './ai-element-create.component.scss'
 })
-export class AppQuestionCreateEditComponent {
+export class AiFormComponent {
   private service = inject(QuestionService)
   featureType: FeatureType = 'QUESTION';
 
-  @Input() rule!: IRule;
+  @Input() rule = signal<IRule | null>(null);
   @Input() article!: IArticle;
 
   @Output() closeDialog: EventEmitter<void> = new EventEmitter<void>();
@@ -35,12 +35,10 @@ export class AppQuestionCreateEditComponent {
   question = signal<IQuestion | null>(null);
 
   setElementSelected(element: any) {
-    console.log(element.value)
   }
 
 
   onChipSelection(event: MatChipSelectionChange) {
-    console.log(event.source.value)
     const selectedValue = event;
 
 /*     switch (selectedValue) {

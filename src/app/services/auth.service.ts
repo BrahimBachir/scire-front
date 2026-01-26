@@ -41,7 +41,6 @@ export class AuthService {
 
   public resendCode(userCode: string): Observable<any>{
     let URL = `${environment.auth_base_url}${this.routes.auth.resend}`.replace(':userCode', userCode)
-    console.log("URL: ", URL);
     
     return this.http.post(URL, {});
   }

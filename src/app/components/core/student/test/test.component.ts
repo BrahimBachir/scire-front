@@ -20,7 +20,7 @@ import { TablerIconsModule } from 'angular-tabler-icons';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Test } from './test';
-import { ITest, QueryingDto } from 'src/app/common/models/interfaces';
+import { ITest, IQueryingDto } from 'src/app/common/models/interfaces';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TestService } from 'src/app/services';
 import { AppTestDialogContentComponent } from './test-dialog/test-dialog-content';
@@ -44,7 +44,7 @@ export class AppTestComponent implements AfterViewInit {
 
 
   dataSource = new MatTableDataSource<ITest>([]);  
-  paginationDTO: QueryingDto = {
+  paginationDTO: IQueryingDto = {
     skip: 0,
     take: 5,
     searchTerm: '',
@@ -76,7 +76,7 @@ export class AppTestComponent implements AfterViewInit {
         this.paginationDTO.totalCount = tests.total; 
 
       },
-      error: (error) => console.error(error)
+      //error: (error) => console.error(error)
     })
   }
   ngAfterViewInit(): void {

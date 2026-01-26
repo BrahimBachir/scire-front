@@ -1,0 +1,31 @@
+<form #form="ngForm">
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Artículo</mat-label>
+    <mat-chip-grid #chipGrid>
+      @for (item of selectedItems(); track item.boeId) {
+      <mat-chip-row [removable]="rule" (removed)="remove(item)">
+        {{ item.boeId }}
+        @if(rule){
+        <button matChipRemove>
+          <i-tabler name="x" class="icon-15 d-flex"></i-tabler>
+        </button>
+        }
+      </mat-chip-row>
+      }
+      <input matInput placeholder="Buscar artículo" [formControl]="control" [matAutocomplete]="ArticleAuto"
+        [matChipInputFor]="chipGrid" [matChipInputAddOnBlur]="false" />
+    </mat-chip-grid>
+      <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
+      <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+    </mat-icon>
+    <mat-autocomplete #ArticleAuto="matAutocomplete">
+      @for (item of filteredItems(); track item.boeId) {
+      <mat-option>
+        <mat-checkbox [checked]="isSelected(item)" (change)="toggleSelection(item)">
+          {{ item.title }}
+        </mat-checkbox>
+      </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

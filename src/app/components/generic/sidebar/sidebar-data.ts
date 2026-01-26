@@ -20,6 +20,12 @@ export const navItems: NavItem[] = [
     navCap: 'Curso',
   },
   {
+    displayName: 'Temario',
+    iconName: 'file-description',
+    route: 'courses/:courseId/topics',
+    type: 'TOPIC',
+  },
+  {
     displayName: 'Estadísticas',
     iconName: 'chart-pie',
     route: 'courses/:courseId/dashboard',

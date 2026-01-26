@@ -1,13 +1,16 @@
-import { IArticle } from "./article.interface";
-import { IRule } from "./rule.interface";
-import { ITopic } from "./topic.interface";
+import { IArticle, IRule, IGeneratedBy, ICreationType } from ".";
 
 export interface IFlashcard {
-  id: number;
+  id?: number;
   question: string;
   answer: string;
-  topic: { id: number };
+  topic?: { id: number };
   rule?: IRule;
   article?: IArticle;
+  articles?: string[] | null;
   creatorId?: number;
+  ruleId?: number;
+  generatedBy?: IGeneratedBy;
+  creationType?: ICreationType;
+    articlesIds?: number[];
 }

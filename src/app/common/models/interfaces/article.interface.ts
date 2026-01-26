@@ -1,3 +1,6 @@
+import { IArticleProgress } from "./course.interface";
+import { IRule } from "./rule.interface";
+
 export interface IParagraph {
     "#text": string;
     "@_class": string
@@ -8,12 +11,15 @@ export interface IArticle {
     boeId?: string;
     title: string;
     articleNumber?: string;
-    versions: ArticleVersion[];
+    versions: IArticleVersion[];
     repealed?: boolean;
     lastUpdate?: Date;
+    selected?: boolean;
+    rule?: IRule;
+    progress?: IArticleProgress;
 }
 
-export interface ArticleVersion {
+export interface IArticleVersion {
     id: number;
     boeNormaId: string;
     publicationDate: string;

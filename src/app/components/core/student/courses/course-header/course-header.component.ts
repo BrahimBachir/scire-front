@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, input, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { TablerIconsModule } from 'angular-tabler-icons';
@@ -17,6 +17,9 @@ import { CourseService } from 'src/app/services';
 import { ICourse, ITopic } from 'src/app/common/models/interfaces';
 import { ToastrService } from 'ngx-toastr';
 import { ERROR, SUCCESS, WARNING } from 'src/app/common/config/constants';
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-course-header',
   templateUrl: './course-header.component.html',
@@ -32,6 +35,7 @@ import { ERROR, SUCCESS, WARNING } from 'src/app/common/config/constants';
     MatSlideToggleModule,
     MatSelectModule,
     MatTooltipModule,
+    ClipboardModule
   ],
   styleUrl: './course-header.component.scss'
 
@@ -40,7 +44,8 @@ export class AppCourseHeaderComponent implements OnInit {
   @Input() course!: ICourse;
   favourite: boolean = false;
   joined: boolean = false;
-
+  percentage = input<number>(0)
+  url: string = `${environment.front_base_url}/${this.router.url}`;
 
   constructor(
     public activatedRouter: ActivatedRoute,
@@ -48,7 +53,8 @@ export class AppCourseHeaderComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public toastService: ToastrService,
-    
+    private snackBar: MatSnackBar
+
   ) {
     
   }
@@ -80,7 +86,6 @@ export class AppCourseHeaderComponent implements OnInit {
   }
 
     goToCourseContent() {
-    //console.log('Navigating to course content...', this.id());
     //this.router.navigate(['/apps/courses/:id/content'.replace(':id', this.id())]);
   }
 
@@ -101,7 +106,7 @@ export class AppCourseHeaderComponent implements OnInit {
   }
 
   shareCourse() {
-    throw new Error(`Method not implemented. ${environment.front_base_url}/${this.router.url}`);
+    this.showSnackbar('Elemento copiado en el portapapeles!');
   }
 
   joinUnjoinCourse() {
@@ -146,5 +151,13 @@ export class AppCourseHeaderComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate([this.route?.snapshot.data['role'].toLowerCase()]);
+  }
+
+  showSnackbar(message: string): void {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 2000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
   }
 }

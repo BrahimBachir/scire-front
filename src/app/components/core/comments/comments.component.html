@@ -1,0 +1,85 @@
+<div>
+  <mat-card-content>
+    <div class="d-flex justify-content-between">
+      <mat-card-title class="m-b-24 f-s-21">Dudas</mat-card-title>
+      <button mat-mini-fab class="bg-primary text-white" [matTooltip]="'BUTTONS.CREATE.COMMENT' | translate"
+        [aria-label]="'BUTTONS.CREATE.COMMENT' | translate" (click)="toggleComment()">
+        <i-tabler [name]="!isCommenting() ? 'plus' : 'minus'" class="icon-20 d-flex"></i-tabler>
+      </button>
+    </div>
+    <div [hidden]="!isCommenting()" class="m-b-30">
+      <form class="m-t-30 p-t-30" [formGroup]="form" (ngSubmit)="create()">
+        <mat-form-field appearance="outline" class="w-100">
+          <textarea matInput required formControlName="control" rows="5"></textarea>
+        </mat-form-field>
+        <div class="d-flex justify-content-end">
+          <button mat-flat-button color="primary" [disabled]="!form.valid">Guardar</button>
+        </div>
+      </form>
+    </div>
+    <mat-card-title class="f-s-18 d-flex align-items-center">Comentarios
+      <span
+        class="text-primary p-x-12 p-y-4 rounded bg-light-primary f-w-600 m-l-8 f-s-18">{{length}}</span></mat-card-title>
+    @for(comment of comments(); track comment.id){
+    <!-- ----------------------------------------------------------------- -->
+    <!-- comment -->
+    <!-- ----------------------------------------------------------------- -->
+    <div class="bg-light rounded p-24 m-t-24">
+      <div class="d-flex align-items-center">
+        <img src="{{comment.creator?.image}}" alt="user" width="35" class="rounded-circle" />
+        <span class="f-s-16 f-w-600 m-l-12">{{comment.creator?.full_name}}</span>
+        <span class="m-l-12 f-s-12 d-flex align-items-center">
+          <i-tabler class="icon-15 op-5 d-flex m-r-4" name="calendar"></i-tabler>
+          {{ comment.createdAt | date:'dd/MM/yy'}}
+        </span>
+      </div>
+      <p class="f-s-14 m-t-16">
+        {{comment.content}}
+      </p>
+
+      <div class="row d-flex w-100 justify-content-between m-l-0">
+        <button mat-mini-fab class="bg-primary text-white icon-30 m-t-16" matTooltip="Responder" (click)="toggleReply(comment)">
+          <i-tabler [name]="isReplying() && comment.id === selectedComment()?.id ? 'corner-down-left-double' : 'corner-down-right-double'" class="icon-18 d-flex"></i-tabler>
+        </button>
+        @if(comment.replies && comment.replies.length > 0){
+          <button mat-mini-fab class="text-primary icon-30 m-t-16" matTooltip="Ver respuestas" (click)="toggleRrepliesDisplayed(comment)">
+            <i-tabler [name]="repliesDisplayed() && comment.id === selectedComment()?.id ? 'circle-arrow-up' : 'circle-arrow-down'" class="icon-18 d-flex"></i-tabler>
+          </button>
+        }
+      </div>
+    </div>
+    <!-- ----------------------------------------------------------------- -->
+    <!-- add comment -->
+    <!-- ----------------------------------------------------------------- -->
+    <div [hidden]="!isReplying() || comment.id !== selectedComment()?.id">
+      <form class="d-flex align-items-center m-y-24" [formGroup]="form" (ngSubmit)="create()">
+        <img src="{{loggedUser()?.image}}" alt="user" width="35" class="rounded-circle" />
+        <mat-form-field appearance="outline" class="w-100 hide-hint m-l-16">
+          <input matInput placeholder="Responder" formControlName="control" />
+        </mat-form-field>
+        <button mat-flat-button color="primary" class="m-l-16" [disabled]="!form.valid">Responder</button>
+      </form>
+    </div>
+      <!-- ----------------------------------------------------------------- -->
+      <!-- comment responses -->
+      <!-- ----------------------------------------------------------------- -->
+       @if(comment.replies && repliesDisplayed() && comment.id === selectedComment()?.id){
+        @for(replay of comment.replies; track replay.id){
+        <div class="bg-light rounded p-24 m-t-24" style="margin-left: 30px;">
+          <div class="d-flex align-items-center">
+            <img src="{{replay.creator?.image}}" alt="user" width="35" class="rounded-circle" />
+            <span class="f-s-16 f-w-600 m-l-12">{{replay.creator?.full_name}}</span>
+            <span class="m-l-12 f-s-12 d-flex align-items-center">
+              <i-tabler class="icon-15 op-5 d-flex m-r-4" name="calendar"></i-tabler>
+              {{ replay.createdAt | date:'dd/MM/yy'}}
+            </span>
+          </div>
+          <p class="f-s-14 m-t-16">
+            {{replay.content}}
+          </p>
+        </div>
+        }
+      }
+    }
+  </mat-card-content>
+</div>

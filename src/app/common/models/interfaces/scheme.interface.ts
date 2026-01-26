@@ -1,12 +1,16 @@
-import { IRule } from "./rule.interface";
+import { ICreationType, IGeneratedBy, IRule } from ".";
 
 export interface IScheme {
-  id: number;
+  id?: number;
   code?: string
   description?: string;
-  rule: IRule;
+  rule?: IRule;
+  ruleId?: number;
   url?: string;
   articles?: string[];
   snippet?: string;
   creatorId?: number;
+  generatedBy?: IGeneratedBy;
+  creationType?: ICreationType;
+  articlesIds?: number[];
 }

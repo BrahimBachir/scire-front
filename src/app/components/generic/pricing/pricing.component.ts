@@ -45,7 +45,6 @@ export class AppPricingComponent implements OnInit{
     this.pricingService.getPlanes().subscribe({
       next: (planes) => {
         this.planes.set(planes);
-        console.log("Planes",this.planes())
       },
     })
   }

@@ -1,4 +1,4 @@
-import { ITestQuestion, IQuestion, ITopic, IUser, ITaskType, ITestType, IDifficulty, ISection, ICategory } from '.';
+import { ITestQuestion, IQuestion, ITopic, IUser, ITaskType, ITestType, IDifficulty, ISection, ITopicCategory } from '.';
 
 export interface ITest {
   id: number; // ID del examen
@@ -17,7 +17,7 @@ export interface ITest {
   completed?: boolean; // Indica si el examen ha sido completado
   timed?: boolean;
   user: IUser;
-  category?: ICategory;
+  category?: ITopicCategory;
   difficulty?: IDifficulty;
   section?: ISection;
   type?: ITestType;

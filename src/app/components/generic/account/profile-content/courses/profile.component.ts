@@ -48,7 +48,6 @@ export class ProfileComponent implements OnInit {
     const files = input.files;
 
     if (files && files.length > 0) {
-      console.log('Selected file:', files[0]);
       // Handle file (e.g., upload or display preview)
     }
   }

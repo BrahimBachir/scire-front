@@ -54,7 +54,7 @@ export interface breadcrumbOption {
   templateUrl: './breadcrumb.component.html',
   styleUrls: [],
 })
-export class AppBreadcrumbComponent implements OnInit {
+export class AppBreadcrumbComponent {
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   course: ICourse | null;
 
@@ -227,47 +227,5 @@ export class AppBreadcrumbComponent implements OnInit {
         },
       },
     };
-
-    // for breadcrumb
-/*     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .pipe(map(() => this.route))
-      .pipe(
-        map((route) => {
-          while (route.firstChild) {
-            route = route.firstChild;
-          }
-          return route;
-        })
-      )
-      .pipe(filter((route) => route.outlet === 'primary'))
-      .pipe(mergeMap((route) => route.data))
-      // tslint:disable-next-line - Disables all
-      .subscribe((event) => {
-        // tslint:disable-next-line - Disables all
-        this.titleService.setTitle(event['title'] + ' - Angular 20');
-        this.pageInfo = event;
-      }); */
-  }
-
-  ngOnInit(): void {
-    /* this.store.select(selectChoosenCourse).subscribe({
-      next: (course) => {
-        this.course = course
-        //this.setRouteTitle();
-      }
-    }) */
-  }
-  
-  setRouteTitle(){
-    /* this.route.data.subscribe(data => {
-      console.log(data['urls'])
-    });
-    const currentRoute = this.route.snapshot.data;
-    console.log ("Esto no ",this.route.snapshot.data['urls'])
-    if (currentRoute && currentRoute['urls'] && Array.isArray(currentRoute['urls'])) {
-      this.route.snapshot.data['urls'][this.route.snapshot.data['urls'].length - 1].title = this.course?.description;
-      console.log ("Esto no ",this.route.snapshot.data['urls'][this.route.snapshot.data['urls'].length - 1])
-    }   */  
   }
 }

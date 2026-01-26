@@ -1,0 +1,53 @@
+<div [formGroup]="form">
+    <div class="row">
+        <div class="col-xl-12">
+            <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Pregunta</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+                <textarea matInput required rows="3" formControlName="text"></textarea>
+                @if(form.get('text')?.hasError('required')){
+                <mat-error>
+                    La pregunta es obligatoria
+                </mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="col-xl-12 p-l-0 p-r-30" formArrayName="answers">
+            @for(answer of answers.controls; track $index){
+            <div class="d-flex" [formGroupName]="$index">
+                <div class="col-lg-9">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Respuesta {{ $index + 1}} </mat-label>
+                        <input type="text" matInput required aria-label="Respuesta {{ $index + 1 }}" formControlName="text" placeholder="Respuesta {{ $index + 1 }}" />
+                    </mat-form-field>
+                </div>
+                <div class="col-s-30">
+                    <mat-slide-toggle id="isCorrect" name="isCorrect" class="w-100" formControlName="isCorrect"
+                        (change)="onCorrectChange($index)">¿Correcta?</mat-slide-toggle>
+                </div>
+            </div>
+            }
+        </div>
+        @if(form.get('text')?.hasError('singleCorrect')){
+        <mat-error>
+            Debe haber una sola respuesta correcta
+        </mat-error>
+        }
+
+        <div class="col-xl-12">
+            <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Explicación</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+                <textarea matInput required rows="3" formControlName="explanation"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="d-flex col-xl-12">
+            <div class="col-lg-6">
+                <difficulty-filter formControlName="difficultyId"></difficulty-filter>
+            </div>
+            <div class="col-lg-6 p-l-0">
+                <mat-slide-toggle id="real" name="real" class="w-100" formControlName="real">¿De examen
+                    real?</mat-slide-toggle>
+            </div>
+        </div>
+    </div>
+</div>

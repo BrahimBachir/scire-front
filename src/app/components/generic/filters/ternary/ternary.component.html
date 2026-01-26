@@ -1,0 +1,11 @@
+<mat-form-field appearance="outline" class="w-100">
+    <mat-label>{{config?.label}}</mat-label>
+  <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
+    <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+  </mat-icon>
+    <mat-select (selectionChange)="value.set($event.value)" [value]="value() ?? null">
+        @for(option of config?.items; track option.description){
+            <mat-option [value]="option.value">{{option.description}}</mat-option>
+        }
+    </mat-select>
+</mat-form-field>

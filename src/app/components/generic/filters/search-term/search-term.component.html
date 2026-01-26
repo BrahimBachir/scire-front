@@ -1,0 +1,11 @@
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>Buscar</mat-label>
+  <input matInput type="text" placeholder="Buscar elemento..." [value]="search() ?? ''"
+    (input)="raw.set($any($event.target).value)" />
+  <mat-icon matPrefix class="d-flex justify-content-center align-items-center">
+    <i-tabler name="search" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+  </mat-icon>
+  <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
+    <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+  </mat-icon>
+</mat-form-field>

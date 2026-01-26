@@ -1,0 +1,56 @@
+<div [formGroup]="form">
+  <div class="row p-x-15">
+    <mat-card class="shadow-none b-1 rounded p-15 col-xl-12">
+      <div class="d-flex row justify-content-between m-l-0 m-r-0 m-b-15">
+        <h4>Detalles adicionales</h4>
+        <tabler-icon name="info-circle" class="m-r-5"></tabler-icon>
+      </div>
+      <div class="row justify-content-start">
+        <div class="col-sm-4">
+          <course-type-filter [mode]="modeToSend" formControlName="typeId" 
+            class="m-t-15"></course-type-filter>
+        </div>
+        <div class="col-sm-4">
+          <course-category-filter [(selectedItem)]="selectedCategory" [filtering]="false" [required]="true"
+            class="m-t-15"></course-category-filter>
+        </div>
+        <div class="col-sm-4">
+          <calling-org-filter formControlName="callerId" [required]="true"
+            class="m-t-15"></calling-org-filter>
+        </div>
+        <div class="col-sm-4 m-t-15">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Número de plazas</mat-label>
+            <input type="number" matInput required aria-label="Plazas ofertadas" id="vacancies" name="vacancies"
+              [formControl]="vacanciesControl" placeholder="Plazas ofertadas" />
+            <mat-hint [class]="vacanciesControl.errors?.['required'] ? 'text-error' : ''">Elemento
+              requerido.*</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-8 m-t-15">
+          <app-courses-tags [(selectedTags)]="selectedTags" class="m-t-15"></app-courses-tags>
+        </div>
+        <div class="col-sm-4 m-t-15">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>URL oficial</mat-label>
+            <input type="text" matInput aria-label="URL de la oposición" id="url" name="url" [formControl]="urlControl"
+              placeholder="URL de la oposición" />
+            <mat-hint [class]="urlControl.errors?.['required'] ? 'text-error' : ''">Pr favor, inserte la URL donde se ha
+              publicado la convocatoria oficial</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4 m-t-15">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Fecha del examen</mat-label>
+            <input matInput [matDatepicker]="picker" [formControl]="examDateControl" placeholder="Choose a date" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4 m-t-15">
+          <app-year-picker [(year)]="callingYear"></app-year-picker>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

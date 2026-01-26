@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
-import { QueryingDto } from '../models/interfaces';
+import { IQueryingDto } from '../models/interfaces';
 
-export function buildParams(queryingDto: QueryingDto, params: HttpParams): HttpParams {
+export function buildParams(queryingDto: IQueryingDto, params: HttpParams): HttpParams {
     if (queryingDto.skip && queryingDto.skip > 0)
         params = params.append('skip', queryingDto.skip);
 
@@ -14,20 +14,20 @@ export function buildParams(queryingDto: QueryingDto, params: HttpParams): HttpP
     if (queryingDto.parentId && queryingDto.parentId > 0)
         params = params.append('parentId', queryingDto.parentId);
 
-    if (queryingDto.ruleAmbit && queryingDto.ruleAmbit > 0)
-        params = params.append('ruleAmbit', queryingDto.ruleAmbit);
+    if (queryingDto.ruleAmbitId && queryingDto.ruleAmbitId > 0)
+        params = params.append('ruleAmbitId', queryingDto.ruleAmbitId);
 
-    if (queryingDto.ruleType && queryingDto.ruleType > 0)
-        params = params.append('ruleType', queryingDto.ruleType);
+    if (queryingDto.ruleId && queryingDto.ruleId > 0)
+        params = params.append('ruleId', queryingDto.ruleId);
+    
+    if (queryingDto.ruleTypeId && queryingDto.ruleTypeId > 0)
+        params = params.append('ruleTypeId', queryingDto.ruleTypeId);
 
-    if (queryingDto.ruleGazette && queryingDto.ruleGazette > 0)
-        params = params.append('ruleGazette', queryingDto.ruleGazette);
+    if (queryingDto.ruleGazetteId && queryingDto.ruleGazetteId > 0)
+        params = params.append('ruleGazetteId', queryingDto.ruleGazetteId);
 
     if (queryingDto.ruleCode && queryingDto.ruleCode.trim() !== '')
         params = params.append('ruleCode', queryingDto.ruleCode.trim());
-
-    if (queryingDto.artiCode && queryingDto.artiCode.trim() !== '')
-        params = params.append('artiCode', queryingDto.artiCode.trim());
 
     if (queryingDto.maxDifficulty && queryingDto.maxDifficulty > 0)
         params = params.append('maxDifficulty', queryingDto.maxDifficulty);
@@ -62,6 +62,9 @@ export function buildParams(queryingDto: QueryingDto, params: HttpParams): HttpP
     if (queryingDto.flashcardId && queryingDto.flashcardId >= 0)
         params = params.append('flashcardId', queryingDto.flashcardId);
 
+    if (queryingDto.videoId && queryingDto.videoId >= 0)
+        params = params.append('videoId', queryingDto.videoId);
+
     if (queryingDto.schemeId && queryingDto.schemeId >= 0)
         params = params.append('schemeId', queryingDto.schemeId);
 
@@ -70,6 +73,33 @@ export function buildParams(queryingDto: QueryingDto, params: HttpParams): HttpP
 
     if (queryingDto.noteId && queryingDto.noteId >= 0)
         params = params.append('noteId', queryingDto.noteId);
+
+    if (queryingDto.courseCategoryId && queryingDto.courseCategoryId >= 0)
+        params = params.append('courseCategoryId', queryingDto.courseCategoryId);
+
+    if (queryingDto.courseTypeId && queryingDto.courseTypeId >= 0)
+        params = params.append('courseTypeId', queryingDto.courseTypeId);
+
+    if (queryingDto.callerId && queryingDto.callerId >= 0)
+        params = params.append('callerId', queryingDto.callerId);
+
+    if (queryingDto.favorite !== undefined && queryingDto.favorite !== null)
+        params = params.append('favorite', ''+queryingDto.favorite);
+
+    if (queryingDto.userId && queryingDto.userId >= 0)
+        params = params.append('userId', queryingDto.userId);
+
+    if (queryingDto.topicId && queryingDto.topicId >= 0)
+        params = params.append('topicId', queryingDto.topicId);
+
+    if (queryingDto.blockId && queryingDto.blockId >= 0)
+        params = params.append('blockId', queryingDto.blockId);
+
+    if (queryingDto.courseId && queryingDto.courseId >= 0)
+        params = params.append('courseId', queryingDto.courseId);
+
+    if (queryingDto.articleId && queryingDto.articleId >= 0)
+        params = params.append('articleId', queryingDto.articleId);
 
     return params;
 }

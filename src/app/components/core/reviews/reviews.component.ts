@@ -42,7 +42,6 @@ export class AppReviewsComponent implements OnInit {
   ]; */
 
   ngOnInit(): void {
-    console.log("Feature: ", this.featureType, "FeatureID: ", this.featureId)
     this.loadReviewData();
   }
 
@@ -56,7 +55,6 @@ export class AppReviewsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // 'result' contains { rating: number, reviewText: string }
-        console.log('Review submitted:', result);
         this.submitReview(result.rating, result.reviewText);
       }
     });
@@ -66,7 +64,6 @@ export class AppReviewsComponent implements OnInit {
     this.reviewService.getReviewSummary({ featureId: this.featureId, featureType: this.featureType }).subscribe(summary => {
       this.averageRating = Number(summary.averageRating);
       this.ratingCount = summary.ratingCount;
-      console.log("Start Distribution: ", summary)
 
       this.ratings = Object.keys(summary.starDistribution).map(key => {
         const count = summary.starDistribution[Number(key)];
@@ -81,11 +78,9 @@ export class AppReviewsComponent implements OnInit {
       }).sort((a, b) => b.label - a.label);
 
 
-      console.log(this.ratings)
     });
 
     this.reviewService.getLatestReviews({ featureId: this.featureId, featureType: this.featureType, take: this.take, skip: this.skip }).subscribe(reviews => {
-      console.log("Reviews: ", reviews)
       this.latestReviews = reviews;
     });
   }
@@ -103,7 +98,7 @@ export class AppReviewsComponent implements OnInit {
         this.loadReviewData();
       },
       error: (err) => {
-        console.error(err)
+        //console.error(err)
         //alert(`Error al enviar reseña: ${err.error.message || 'Inténtalo de nuevo.'}`);
       }
     });

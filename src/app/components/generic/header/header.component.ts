@@ -107,7 +107,7 @@ export class HeaderComponent {
     private store: Store<AppState>,
     private router: Router,
   ) {
-    translate.setDefaultLang('en');
+    translate.setDefaultLang('es');
   }
 
   ngOnInit(): void {
@@ -116,8 +116,6 @@ export class HeaderComponent {
   }
 
   goToLink(route: profiledd) {
-    //if(route.title === 'FAQs') this.router.navigate([route.link]);
-
     const currentUrl = this.router.url;
     const baseRoleUrl = currentUrl.split('/')[1];
     this.router.navigate([baseRoleUrl,route.link]);

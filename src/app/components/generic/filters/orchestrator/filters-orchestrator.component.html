@@ -1,0 +1,56 @@
+<div class="row justify-content-start">
+    @for (filter of config; let i = $index; track filter.key) {
+        <div class="col-sm-3" [class.d-none]="!isVisible(i)">
+            @switch (filter.kind) {
+                @case ('searchTerm') {
+                    <search-term-filter #filter [(search)]="searchTerm"></search-term-filter>
+                }
+                @case ('ruleAmbitId') {
+                    <rule-ambit-filter (valueChange)="update('ruleAmbitId',$event)" #filter></rule-ambit-filter>
+                }
+                @case ('ruleGazetteId') {
+                    <rule-gazette-filter (valueChange)="update('ruleGazetteId',$event)" #filter></rule-gazette-filter>
+                }
+                @case ('ruleTypeId') {
+                    <rule-type-filter (valueChange)="update('ruleTypeId',$event)" #filter></rule-type-filter>
+                }
+                @case ('rule') {
+                    <rule-filter (valueChange)="update('ruleId',$event)" #filter></rule-filter>
+                }
+                @case ('article') {
+                    <article-filter (valueChange)="update('articleId',$event)" #filter></article-filter>
+                }
+                @case ('ternary') {
+                    <ternary-filter [config]="options.ternaryFilterConfig" [(value)]="favorite" #filter></ternary-filter>
+                }
+                @case ('callerId') {
+                    <calling-org-filter (valueChange)="update('callerId',$event)" #filter></calling-org-filter>
+                }
+                @case ('courseTypeId') {
+                    <course-type-filter (valueChange)="update('typeId',$event)" #filter></course-type-filter>
+                }
+                @case ('courseCategoryId') {
+                    <course-category-filter (valueChange)="update('courseCategoryId',$event)" #filter></course-category-filter>
+                }
+            }
+        </div>
+    }
+</div>
+
+<div class="d-flex justify-content-end">
+    @if(config.length > maxVisbleFields){
+        <button mat-mini-fab matTooltip="{{ showAll() ? 'Ver menos filtros' : 'Ver más filtros' }}" class="text-primary" aria-label="Ver más/menos filtros" (click)="toggleFilters()">
+            <i-tabler class="icon-20 d-flex" [name]="showAll() ? 'adjustments-minus' : 'adjustments-plus'"></i-tabler>
+        </button>
+    }
+    @if(options.applyMode === 'manual'){
+    <button mat-mini-fab class="bg-secondary text-white m-l-10" matTooltip="Filtrar" aria-label="Filtrar"
+        (click)="apply()">
+        <i-tabler name="filter" class="icon-20 d-flex"></i-tabler>
+    </button>
+    }
+    <button mat-mini-fab class="bg-error text-white m-l-10" matTooltip="Limpiar filtros" aria-label="Limpiar filtros"
+        (click)="clear()">
+        <i-tabler name="filter-cancel" class="icon-20 d-flex"></i-tabler>
+    </button>
+</div>

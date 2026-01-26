@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Routes } from '../common/config';
-import { QueryingDto } from '../common/models/interfaces';
+import { IQueryingDto } from '../common/models/interfaces';
 import { UsersState } from '../common/models/states';
 import { environment } from 'src/environments/environment';
 import { buildParams } from '../common/utils';
@@ -15,7 +15,7 @@ export class UsersService {
     private http: HttpClient,
   ) {}
 
-  public getAllUsers(queryingDto: QueryingDto): Observable<UsersState> {
+  public getAllUsers(queryingDto: IQueryingDto): Observable<UsersState> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);

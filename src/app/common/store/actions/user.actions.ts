@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IUser, QueryingDto } from '../../models/interfaces';
+import { IUser, IQueryingDto } from '../../models/interfaces';
 
 export const CREATE_USER = '[USERS] Create user';
 export const USER_CREATED = '[USERS] Create user';
@@ -46,7 +46,7 @@ export const userDeleted = createAction(USER_DELETED);
 export const manyUsersDeleted = createAction(USERS_DELETED);
 export const usersDeletingError = createAction(USERS_DELETIN_GERROR);
 
-export const loadAllUsers = createAction(LOAD_ALL_USERS, (queryingDto: QueryingDto) => ({
+export const loadAllUsers = createAction(LOAD_ALL_USERS, (queryingDto: IQueryingDto) => ({
   queryingDto,
 }));
 

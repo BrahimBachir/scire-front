@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Routes } from "../common/config";
-import { QueryingDto, IReview, IReviewSummary } from "../common/models/interfaces";
+import { IQueryingDto, IReview, IReviewSummary } from "../common/models/interfaces";
 import { buildParams } from "../common/utils";
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +12,6 @@ export class ReviewsService {
     constructor(private http: HttpClient) { }
 
     public createReview(reviewDto: IReview): Observable<IReview> {
-        console.log(reviewDto)
         return this.http.post<IReview>(
             environment.api_base_url + this.routes.api.reviews.base, reviewDto
         );
@@ -23,7 +22,7 @@ export class ReviewsService {
      * @param queryingDto 
      * @returns IReviewSummary
      */
-    public getReviewSummary(queryingDto: QueryingDto): Observable<IReviewSummary> {
+    public getReviewSummary(queryingDto: IQueryingDto): Observable<IReviewSummary> {
         let params = new HttpParams();
         if (queryingDto)
             params = buildParams(queryingDto, params);
@@ -32,7 +31,7 @@ export class ReviewsService {
         )
     }
 
-    public getLatestReviews(queryingDto: QueryingDto): Observable<IReview[]> {
+    public getLatestReviews(queryingDto: IQueryingDto): Observable<IReview[]> {
         let params = new HttpParams();
         if (queryingDto)
             params = buildParams(queryingDto, params);

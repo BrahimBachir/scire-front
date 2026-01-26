@@ -70,14 +70,11 @@ export class AppRegisterComponent implements OnInit {
     this.service.createLogin({ username: username, password: password }).subscribe({
       next: (data) =>{
         this.creating = false;
-        console.log(data)
         // If I recive a Bad request exception I want to display a dialog
         // If a recieve a 200 response I want to redirect to:
         this.router.navigate([`/auth/email-verification/${data.code}`]);
       },
-      error: (error) => {
-        console.log(error)
-      }
+      //error: (error) => { console.error(error)}
     })
   }
 

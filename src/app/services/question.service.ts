@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Routes } from '../common/config';
-import { QueryingDto, IIncomingEntity, IQuestion } from '../common/models/interfaces';
+import { IQueryingDto, IIncomingEntity, IQuestion, DeletedElement, IncomingNavigableEntity } from '../common/models/interfaces';
 import { buildParams } from '../common/utils';
 
 
@@ -15,7 +15,7 @@ export class QuestionService {
     private http: HttpClient,
   ) {}
 
-  public getAll(queryingDto?: QueryingDto): Observable<IIncomingEntity> {
+  public getAll(queryingDto?: IQueryingDto): Observable<IIncomingEntity> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);
@@ -35,22 +35,25 @@ export class QuestionService {
     return this.http.get<IQuestion[]>(URL);
   }
 
-  public navigate(ruleCode: string, artiCode: string, queryingDto: QueryingDto): Observable<IQuestion> {
+  public getByArticle(articleId: number): Observable<IQuestion> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.questions.byArticle}`.replace(':articleId', articleId.toString());
+    return this.http.get<IQuestion>(URL);
+  }
+
+    public navigate(articleId: number, queryingDto?: IQueryingDto): Observable<IncomingNavigableEntity> {
     let params = new HttpParams();
     if(queryingDto)
-        params = buildParams(queryingDto, params);
-
-    console.log("Data to be sent: ",queryingDto.direction, queryingDto.questionId)
+      params = buildParams(queryingDto, params);
 
     let URL = `${environment.api_base_url}${this.routes.api.learning.questions.navigate}`
-      .replace(':ruleCode', ruleCode || '')
-      .replace(':artiCode', artiCode || '');
-    return this.http.get<IQuestion>(URL, { params });
+      .replace(':articleId', articleId.toString());
+
+    return this.http.get<IncomingNavigableEntity>(URL, { params });
   }
   
-  public delete(id: number): Observable<string> {
+  public delete(id: number): Observable<DeletedElement> {
     let URL = `${environment.api_base_url}${this.routes.api.learning.questions.questions}/${id}`;
-    return this.http.delete<string>(URL);
+    return this.http.delete<DeletedElement>(URL);
   }
   
   public deleteMany(ids: number[]) {
@@ -63,11 +66,8 @@ export class QuestionService {
     return this.http.patch<IQuestion>(URL, question);
   }
 
-  public create(question: IQuestion, queryingDto?: QueryingDto) : Observable<IQuestion> {
-    console.log(queryingDto)
+  public create(question: IQuestion) : Observable<IQuestion> {
     let params = new HttpParams();
-    if(queryingDto)
-        params = buildParams(queryingDto, params);
     let URL = `${environment.api_base_url}${this.routes.api.learning.questions.questions}`;
 
     return this.http.post<IQuestion>(URL, question, {params});

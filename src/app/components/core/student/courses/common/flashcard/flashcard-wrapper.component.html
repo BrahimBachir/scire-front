@@ -1,0 +1,9 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <app-filters-orchestrator [config]="filtersConfig" (filtersChange)="onFiltersChanged($event)">
+    </app-filters-orchestrator>
+  </mat-card-content>
+</mat-card>
+<div>
+    <app-flashcard-navigation [fromScreen]="true" [ruleId]="articleId" [articleId]="articleId"></app-flashcard-navigation>
+</div>

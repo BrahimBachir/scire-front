@@ -6,18 +6,22 @@
       </a>
       {{ course.description }}
     </mat-card-title>
-
-    <div class="start-course">
-      <button class="text-white" mat-icon-button (click)="goToCourseContent()" matTooltip="Empezar/reanudar curso">
+    
+    <div class="d-flex start-course align-items-center">
+      <button class="text-white" mat-icon-button (click)="goToCourseContent()" matTooltip="Ver temario">
+        <i-tabler name="eye" class="icon-18"></i-tabler>
+      </button>
+      <button class="text-white m-r-10" mat-icon-button (click)="goToCourseContent()" matTooltip="Empezar/reanudar curso">
         <i-tabler name="player-play" class="icon-18"></i-tabler>
       </button>
+      <i-tabler class="icon-20 m-l-5" [matTooltip]="'Avance: '+percentage().toString() +'%'" [name]="'percentage-'+percentage().toString()" ></i-tabler>
     </div>
   </div>
-  <div class="general-actions d-flex align-items-center gap-10 p-3 justify-content-end">
+  <div class="general-actions d-flex align-items-center gap-10 p-3 justify-content-end p-r-15">
     <button mat-icon-button class="text-muted" (click)="addToFavorites()" [matTooltip]="favourite ? 'Quitar de favoritos' : 'Aádir a favoritos'">
       <i-tabler [name]="favourite ? 'star-filled' : 'star'" class="icon-18"></i-tabler>
     </button>
-    <button mat-icon-button class="text-muted" (click)="shareCourse()" matTooltip="Compartir curso">
+    <button mat-icon-button class="text-muted" matTooltip="Compartir curso" [cdkCopyToClipboard]="url" (click)="shareCourse()">
       <i-tabler name="share" class="icon-18"></i-tabler>
     </button>
     <button mat-icon-button class="text-muted" (click)="joinUnjoinCourse()" [matTooltip]="joined ? 'Abandonar curso' : 'Unirse al curso'">

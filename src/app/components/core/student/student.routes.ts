@@ -8,6 +8,10 @@ import { AppAccountSettingComponent } from '../../generic/account-setting/accoun
 import { ProfileContentComponent } from '../../generic/account/profile-content/profile-content.component';
 import { AppFaqComponent } from '../../generic/faq/faq.component';
 import { AppPricingComponent } from '../../generic/pricing/pricing.component';
+import { FlashcardWrapperComponent } from './courses/common/flashcard/flashcard-wrapper.component';
+import { SchemeFormComponent } from './courses/common/scheme/form/scheme-form.component';
+import { SchemeWrapperComponent } from './courses/common/scheme/scheme-wrapper.component';
+import { VideoWrapperComponent } from './courses/common/video/video-wrapper.component';
 
 
 export const StudentRoutes: Routes = [
@@ -109,13 +113,70 @@ export const StudentRoutes: Routes = [
         },
       },
       {
-        path: 'modules/:ruleCode/details',
+        path: 'modules/:ruleId/details',
         component: AppTopicContentComponent,
         data: {
           title: 'Normas',
           urls: [
             { title: 'Academia', url: '/' },
             { title: 'Normas' },
+          ],
+        },
+      },
+      {
+        path: 'flashcards',
+        component: FlashcardWrapperComponent,
+        data: {
+          title: 'Flashcards',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Flashcards' },
+          ],
+        },
+      },
+      {
+        path: 'videos',
+        component: VideoWrapperComponent,
+        data: {
+          title: 'Vídeos',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Vídeos' },
+          ],
+        },
+      },
+      {
+        path: 'schemes',
+        component: SchemeWrapperComponent,
+        data: {
+          title: 'Diagramas',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Diagramas' },
+          ],
+        },
+      },
+      {
+        path: 'schemes/create',
+        component: SchemeFormComponent,
+        data: {
+          title: 'Crear diagrama',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Diagramas', url: 'student/schemes' },
+            { title: 'Crear' },
+          ],
+        },
+      },
+      {
+        path: 'schemes/:schemeId/edit',
+        component: SchemeFormComponent,
+        data: {
+          title: 'Editar diagrama',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Diagramas', url: 'student/schemes' },
+            { title: 'Editar' },
           ],
         },
       },

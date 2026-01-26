@@ -45,7 +45,7 @@ export class SidebarComponent implements OnInit {
         //this.store.dispatch(loadCourse(this.courses[0]));
       },
       error: (error) => {
-        console.error('There was an error!', error);
+        //console.error('There was an error!', error);
       }
     });
   }

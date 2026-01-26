@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Routes } from '../common/config';
-import { QueryingDto, IIncomingEntity, IFlashcard } from '../common/models/interfaces';
+import { IQueryingDto, IIncomingEntity, IFlashcard, DeletedElement, IncomingNavigableEntity } from '../common/models/interfaces';
 import { buildParams } from '../common/utils';
 
 
@@ -15,7 +15,7 @@ export class FlashcardService {
     private http: HttpClient,
   ) {}
 
-  public getAll(queryingDto?: QueryingDto): Observable<IIncomingEntity> {
+  public getAll(queryingDto?: IQueryingDto): Observable<IIncomingEntity> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);
@@ -35,22 +35,19 @@ export class FlashcardService {
     return this.http.get<IIncomingEntity>(URL);
   }
 
-  public navigate(ruleCode: string, artiCode: string, queryingDto: QueryingDto): Observable<IFlashcard> {
+  public navigate(articleId: number, queryingDto?: IQueryingDto): Observable<IncomingNavigableEntity> {
     let params = new HttpParams();
     if(queryingDto)
-        params = buildParams(queryingDto, params);
+      params = buildParams(queryingDto, params);
 
-    console.log("Data to be sent: ",queryingDto.direction, queryingDto.flashcardId)
-
-    let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.navigate}`
-      .replace(':ruleCode', ruleCode || '').
-      replace(':artiCode', artiCode || '');
-    return this.http.get<IFlashcard>(URL, { params });
+    let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.navigate}`.
+      replace(':articleId', articleId.toString());
+    return this.http.get<IncomingNavigableEntity>(URL, { params });
   }
   
-  public delete(id: number): Observable<string> {
+  public delete(id: number): Observable<DeletedElement> {
     let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.flashcards}/${id}`;
-    return this.http.delete<string>(URL);
+    return this.http.delete<DeletedElement>(URL);
   }
   
   public deleteMany(ids: number[]) {
@@ -63,8 +60,7 @@ export class FlashcardService {
     return this.http.patch<IFlashcard>(URL, flashcard);
   }
 
-  public create(flashcard: IFlashcard, queryingDto?: QueryingDto) : Observable<IFlashcard> {
-    console.log(queryingDto)
+  public create(flashcard: IFlashcard, queryingDto?: IQueryingDto) : Observable<IFlashcard> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);

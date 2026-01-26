@@ -1,14 +1,18 @@
-import { ICourse } from '.';
-
 export interface ICourseType {
-  id: number; // ID del examen
-  code: string; // Código del curso
-  description: string; // Descripción del curso
-  courses?: ICourse[]; // Cursos relacionados
+  id: number; 
+  code: string; 
+  description: string; 
 }
 
-export interface IIncomingCoursesTypes {
-    total: number;
-    rows: ICourseType[];
-}
+// Based on the given string, a function that ruturns the appropriate course type
+export function getDefaultCourseType(roleCode: string): string {
 
+  if (roleCode === 'SUPER') 
+    return 'PROP'
+  else if (roleCode === 'USER' || roleCode === 'STUDENT') 
+    return 'COM'
+  else if (roleCode === 'INSTRUCTOR') 
+    return 'TUT'
+
+  return 'PROP'
+}

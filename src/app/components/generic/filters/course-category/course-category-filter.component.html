@@ -1,0 +1,21 @@
+<form #form="ngForm">
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Categoría</mat-label>
+    <input type="text" placeholder="Buscar categoría" aria-label="Buscar categoría" matInput id="courseCategory" name="courseCategory"
+      [formControl]="control" [matAutocomplete]="RuleAuto" [matTooltip]="selectedItem()?.description" />
+    <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
+      <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+    </mat-icon>
+    <mat-autocomplete autoActiveFirstOption #RuleAuto="matAutocomplete" [displayWith]="displayName"
+      (optionSelected)="onSelected($event)">
+      @for(item of filteredItems(); track item.code) {
+      <mat-option [value]="item">
+        {{ item.description }}
+      </mat-option>
+      }
+    </mat-autocomplete>
+    @if(required()){
+      <mat-hint [class]="control.errors?.['required'] ? 'text-error' : ''" >Elemento requerido.*</mat-hint>
+    }
+  </mat-form-field>
+</form>

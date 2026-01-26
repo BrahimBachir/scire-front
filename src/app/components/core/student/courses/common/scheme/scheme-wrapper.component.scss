@@ -1,0 +1,38 @@
+.min-h {
+    min-height: 30vh;
+    min-width: 50vw;
+}
+
+.wrapper {
+    perspective: 1000px;
+    //position: relative;
+    min-height: 30vh;
+    min-width: 50vw;
+}
+
+.fc {
+    position: absolute;
+    transform-style: preserve-3d; // Crucial for 3D flip
+    transition: transform 0.6s; // Smooth transition for the flip
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    backface-visibility: hidden; // Hides the back of the element when facing the user
+}
+
+.back {
+    color: #ffffff;
+    transform: rotateY(180deg); // Initially rotated to be hidden
+}
+
+.wrapper.flipped .front {
+    transform: rotateY(180deg);
+}
+
+.wrapper.flipped .back {
+    transform: rotateY(360deg); // Rotate back to face the user
+}

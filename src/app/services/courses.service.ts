@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Routes } from '../common/config';
-import { QueryingDto, IIncomingEntity, ICourse, ICourseType, ICallingOrg, ITopic } from '../common/models/interfaces';
+import { IQueryingDto, IIncomingEntity, ICourse, ICourseType, ICaller, ICourseCategory, ICourseStatus } from '../common/models/interfaces';
 import { buildParams } from '../common/utils';
 
 
@@ -15,16 +15,16 @@ export class CourseService {
     private http: HttpClient,
   ) {}
 
-  public getAll(queryingDto?: QueryingDto): Observable<IIncomingEntity> {
+  public getAll(queryingDto?: IQueryingDto): Observable<IIncomingEntity> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);
     
-    return this.http.get<IIncomingEntity>(environment.api_base_url + this.routes.api.learning.courses.courses, { params });
+    return this.http.get<IIncomingEntity>(environment.api_base_url + this.routes.api.learning.courses.base, { params });
   }
 
   public getOne(id: number): Observable<ICourse> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.courses}/${id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.base}/${id}`;
     return this.http.get<ICourse>(URL);
   }
 
@@ -38,9 +38,24 @@ export class CourseService {
     return this.http.get<ICourseType[]>(URL);
   }
 
-  public getCallingOrgs(): Observable<ICallingOrg[]> {
+  public getTags(): Observable<string[]> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.tags}`;
+    return this.http.get<string[]>(URL);
+  }
+
+  public getStatuses(): Observable<ICourseStatus[]> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.statuses}`;
+    return this.http.get<ICourseStatus[]>(URL);
+  }
+
+  public getCaller(): Observable<ICaller[]> {
     let URL = `${environment.api_base_url}${this.routes.api.learning.courses.callingOrgs}`;
-    return this.http.get<ICallingOrg[]>(URL);
+    return this.http.get<ICaller[]>(URL);
+  }
+
+  public getCategories(): Observable<ICourseCategory[]> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.categories}`;
+    return this.http.get<ICourseCategory[]>(URL);
   }
 
   public getTopics(courseId: number): Observable<IIncomingEntity> {
@@ -74,26 +89,25 @@ export class CourseService {
   }
   
   public delete(id: number): Observable<string> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.courses}/${id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.base}/${id}`;
     return this.http.delete<string>(URL);
   }
   
   public deleteMany(ids: number[]) {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.courses}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.base}`;
     return this.http.post(URL, { ids });
   }
 
   public update(course: ICourse): Observable<ICourse> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.courses}/${course.id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.base}/${course.id}`;
     return this.http.patch<ICourse>(URL, course);
   }
 
-  public save(course: ICourse, queryingDto?: QueryingDto) : Observable<ICourse> {
-    console.log(queryingDto)
+  public create(course: ICourse, queryingDto?: IQueryingDto) : Observable<ICourse> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);
-    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.courses}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.base}`;
 
     return this.http.post<ICourse>(URL, course, {params});
   }
