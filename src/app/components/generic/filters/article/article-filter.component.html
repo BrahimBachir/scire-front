@@ -1,0 +1,40 @@
+<mat-form-field class="w-100" appearance="outline">
+  <mat-label>Artículo</mat-label>
+  <input matInput [formControl]="control" [matAutocomplete]="auto" (blur)="onTouched()" />
+  @if (control.value !== null) {
+    <mat-icon 
+      matSuffix 
+      class="d-flex justify-content-center align-items-center cursor-pointer" 
+      (click)="clean(); $event.stopPropagation()">
+      <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+    </mat-icon>
+  }
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
+    @for(item of filteredItems; track item.boeId) {
+    <mat-option [value]="item" (onSelectionChange)="onSelected(item)">
+      {{ item.title }}
+    </mat-option>
+    }
+  </mat-autocomplete>
+  @if (control.hasError('required')) {
+  <mat-error class="f-s-12">Requerido. *</mat-error>
+  }
+</mat-form-field>
+
+<!--  <form #form="ngForm">
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Artículo</mat-label>
+    <input type="text" placeholder="Buscar artículo" aria-label="Buscar artículo" matInput id="article" name="article"
+      [formControl]="control" [matAutocomplete]="ArticleAuto" [matTooltip]="selectedItem()?.title" />
+    <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
+      <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+    </mat-icon>
+    <mat-autocomplete autoActiveFirstOption #ArticleAuto="matAutocomplete" [displayWith]="displayName" (optionSelected)="onSelected($event)">
+      @for(item of filteredItems(); track item.boeId) {
+      <mat-option [value]="item">
+        {{ item.title }}
+      </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+</form> -->

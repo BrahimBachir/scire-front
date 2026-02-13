@@ -1,7 +1,7 @@
 <div class="d-flex">
-  <div class="user-profile profile-bar w-100"
+  <div class="user-profile profile-bar w-100 cursor-pointer"
      [ngStyle]="{'background-image': 'url(' + (course ? course.imgSrc : 'assets/images/backgrounds/user-info.jpg') + ')',
-                  'background-repeat': 'no-repeat'}">
+                  'background-repeat': 'no-repeat'}" (click)="course && goToCourseDetails(course)">
     <!-- User profile image -->
     <div class="profile-img">
       <img

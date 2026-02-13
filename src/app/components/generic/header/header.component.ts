@@ -8,7 +8,6 @@ import {
 import { CoreService } from 'src/app/services/core.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from 'src/app/material.module';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -19,11 +18,12 @@ import { Store } from '@ngrx/store';
 import { logoutAction } from 'src/app/common/store/actions';
 import { AppState } from 'src/app/common/store/app.store';
 import { createDefaultUser } from 'src/app/common/models/states';
-import { IMenuOption, IUser } from 'src/app/common/models/interfaces';
+import { IMenuOption, IPlan, IUser, IUserPricingPlan } from 'src/app/common/models/interfaces';
 import { Observable } from 'rxjs';
 import { UserMenu } from 'src/app/common/config';
-import { selectLogedIn, selectLogedUser } from 'src/app/common/store/selectors';
+import { selectLogedIn, selectLogedUser, selectUserActivePlan } from 'src/app/common/store/selectors';
 import { BrandingComponent } from '../branding/branding.component';
+import { IconModule } from 'src/app/icon/icon.module';
 
 interface profiledd {
   id: number;
@@ -38,7 +38,7 @@ interface profiledd {
     RouterModule,
     CommonModule,
     NgScrollbarModule,
-    TablerIconsModule,
+    IconModule,
     MaterialModule,
     BrandingComponent,
   ],
@@ -50,6 +50,7 @@ export class HeaderComponent {
   user: IUser = createDefaultUser();
   logedIn$!: Observable<boolean | undefined>;
   logedUser$!: Observable<IUser | undefined>;
+  plan$!: Observable<IPlan | undefined>;
   userMenu: IMenuOption[] = UserMenu;
   @Input() showToggle = true;
   @Input() toggleChecked = false;
@@ -107,17 +108,17 @@ export class HeaderComponent {
     private store: Store<AppState>,
     private router: Router,
   ) {
-    translate.setDefaultLang('en');
+    translate.setDefaultLang('es');
   }
 
   ngOnInit(): void {
     this.logedUser$ = this.store.select(selectLogedUser);
     this.logedIn$ = this.store.select(selectLogedIn);
+    this.plan$ = this.store.select(selectUserActivePlan);
+
   }
 
   goToLink(route: profiledd) {
-    //if(route.title === 'FAQs') this.router.navigate([route.link]);
-
     const currentUrl = this.router.url;
     const baseRoleUrl = currentUrl.split('/')[1];
     this.router.navigate([baseRoleUrl,route.link]);

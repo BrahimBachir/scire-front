@@ -8,3 +8,23 @@ export const selectChoosenCourse = createSelector(
   selectLearningState,
   (state: LearningState) => state.selectedCourse
 );
+
+export const getSelectedRule = createSelector(
+  selectLearningState,
+  (state: LearningState) => state.selectedRule
+);
+
+export const getSelectedArticle = createSelector(
+  selectLearningState,
+  (state: LearningState) => state.selectedArticle
+);
+
+export const getSelectedDiagram = createSelector(
+  selectLearningState,
+  (state: LearningState) => state.selectedDiagram
+);
+
+export const getAllSelectedArticles = createSelector(
+  selectLearningState,
+  (state: LearningState) => state.selectedArticlesIds
+);

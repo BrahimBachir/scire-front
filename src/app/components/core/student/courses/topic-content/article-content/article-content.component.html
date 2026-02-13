@@ -1,0 +1,7 @@
+@if (paragraphs?.length) {
+  <div class="article-content">
+    @for (paragraph of paragraphs; track $index) {
+      <p>{{ paragraph['#text'] }}</p>
+    }
+  </div>
+}

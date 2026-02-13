@@ -7,13 +7,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
   selector: 'app-account-setting',
-  imports: [MatCardModule, MatIconModule, TablerIconsModule, MatTabsModule, MatFormFieldModule, 
+  imports: [MatCardModule, MatIconModule,IconModule, MatTabsModule, MatFormFieldModule, 
     MatSlideToggleModule, MatSelectModule, MatInputModule, MatButtonModule, MatDividerModule, MatExpansionModule],
   templateUrl: './account-setting.component.html'
 })

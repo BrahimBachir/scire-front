@@ -8,14 +8,14 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { AppKanbanDialogComponent } from './kanban-dialog.component';
 import { AppOkDialogComponent } from './ok-dialog/ok-dialog.component';
-import { AppDeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { KanbanService } from 'src/app/services/apps/kanban/kanban.service';
 import { Todos } from './kanban';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { IconModule } from 'src/app/icon/icon.module';
+import { AppDeleteDialogComponent } from '../../generic/dialogs/delete-dialog/delete-dialog.component';
 // tslint:disable-next-line - Disables all
 
 @Component({
@@ -24,7 +24,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     imports: [
         MaterialModule,
         CommonModule,
-        TablerIconsModule,
+        IconModule,
         DragDropModule,
         NgScrollbarModule,
     ]

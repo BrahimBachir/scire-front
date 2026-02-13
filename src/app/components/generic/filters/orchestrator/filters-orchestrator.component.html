@@ -1,0 +1,63 @@
+<div [formGroup]="form">
+    <div class="row justify-content-start">
+        @for (filter of config; let i = $index; track filter.key) {
+        <div class="col-sm-3" [class.d-none]="!isVisible(i)">
+            @switch (filter.kind) {
+                @case ('searchTerm') {
+                <!-- <search-term-filter formControlName="searchTerm" #filter [(search)]="searchTerm"></search-term-filter> -->
+                    <search-term-filter formControlName="searchTerm" #filter></search-term-filter>
+                }
+                @case ('ruleAmbitId') {
+                    <rule-ambit-filter formControlName="ruleAmbitId" #filter></rule-ambit-filter>
+                }
+                @case ('ruleGazetteId') {
+                    <rule-gazette-filter formControlName="ruleGazetteId" #filter></rule-gazette-filter>
+                }
+                @case ('ruleTypeId') {
+                    <rule-type-filter formControlName="ruleTypeId" #filter></rule-type-filter>
+                }
+                @case ('ruleId') {
+                    <rule-filter formControlName="ruleId" filter></rule-filter>
+                }
+                @case ('articleId') {
+                    <article-filter formControlName="articleId" [parentId]="form.get('ruleId')?.value" #filter></article-filter>
+                }
+                @case ('favorite') {
+                    <ternary-filter formControlName="favorite" [config]="options.ternaryFilterConfig" #filter></ternary-filter>
+                }
+                @case ('callerId') {
+                    <calling-org-filter formControlName="callerId" #filter></calling-org-filter>
+                }
+                @case ('courseTypeId') {
+                    <course-type-filter formControlName="courseTypeId" [mode]="mode" #filter></course-type-filter>
+                }
+                @case ('courseCategoryId') {
+                    <course-category-filter formControlName="courseCategoryId" #filter></course-category-filter>
+                }
+                @case ('articlesIds') {
+                    <app-multi-select formControlName="articlesIds" #filter></app-multi-select>
+                }
+            }
+        </div>
+        }
+    </div>
+</div>
+
+<div class="d-flex justify-content-end">
+    @if(config.length > maxVisbleFields){
+    <button mat-mini-fab matTooltip="{{ showAll() ? 'Ver menos filtros' : 'Ver más filtros' }}" class="text-primary"
+        aria-label="Ver más/menos filtros" (click)="toggleFilters()">
+        <i-tabler class="icon-20 d-flex" [name]="showAll() ? 'adjustments-minus' : 'adjustments-plus'"></i-tabler>
+    </button>
+    }
+    @if(options.applyMode === 'manual'){
+    <button mat-mini-fab class="bg-secondary text-white m-l-10" matTooltip="Filtrar" aria-label="Filtrar"
+        (click)="apply()">
+        <i-tabler name="filter" class="icon-20 d-flex"></i-tabler>
+    </button>
+    }
+    <button mat-mini-fab class="bg-error text-white m-l-10" matTooltip="Limpiar filtros" aria-label="Limpiar filtros"
+        (click)="clear()">
+        <i-tabler name="filter-cancel" class="icon-20 d-flex"></i-tabler>
+    </button>
+</div>

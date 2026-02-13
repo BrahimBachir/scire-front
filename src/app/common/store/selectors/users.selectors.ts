@@ -10,9 +10,9 @@ export const selectLoadingUsers = createSelector(
 );
 
 export const selectUsersLoading = createSelector(
-    selectUsersState,
-    (state: UsersState) => state.loading
-  );
+  selectUsersState,
+  (state: UsersState) => state.loading
+);
 
 export const selectUsers = createSelector(
   selectUsersState,
@@ -25,6 +25,6 @@ export const selectTotalUsers = createSelector(
 );
 
 export const selectSelectedUser = createSelector(
-    selectUsersState,
-    (state: UsersState) => state.selected
-  );
+  selectUsersState,
+  (state: UsersState) => state.selected
+);

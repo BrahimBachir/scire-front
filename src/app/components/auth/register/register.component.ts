@@ -5,17 +5,17 @@ import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../material.module';
 import { map, Observable, startWith } from 'rxjs';
 import { matchPasswordsValidator } from 'src/app/common/helpers/confirm-password.helper';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { AuthService } from 'src/app/services';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { AppAuthBrandingComponent } from '../../generic/branding/auth-branding.component';
 import { PassInfoComponent } from '../../generic/pass-info/pass-info';
+import { IconModule } from 'src/app/icon/icon.module';
 
 
 @Component({
   selector: 'app-register',
-  imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule, AppAuthBrandingComponent, TablerIconsModule, PassInfoComponent, MatProgressBarModule],
+  imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule, AppAuthBrandingComponent, IconModule, PassInfoComponent, MatProgressBarModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -70,14 +70,11 @@ export class AppRegisterComponent implements OnInit {
     this.service.createLogin({ username: username, password: password }).subscribe({
       next: (data) =>{
         this.creating = false;
-        console.log(data)
         // If I recive a Bad request exception I want to display a dialog
         // If a recieve a 200 response I want to redirect to:
         this.router.navigate([`/auth/email-verification/${data.code}`]);
       },
-      error: (error) => {
-        console.log(error)
-      }
+      //error: (error) => { console.error(error)}
     })
   }
 

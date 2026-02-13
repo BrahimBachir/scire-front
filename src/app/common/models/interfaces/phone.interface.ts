@@ -8,4 +8,5 @@ export interface IPhone {
     number: string;
     active: boolean;
     by_default?: boolean;
+    has_whatsapp?: boolean;
 }

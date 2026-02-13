@@ -63,20 +63,16 @@ export class EmailVerificationComponent {
     const code = +Object.values(this.form.value).join('');
     this.authService.validateCode(this.userCode, code).subscribe({
       next: (valid) => {
-        console.log(valid)
         if(!valid) this.invalidCode = true;
         else {
           const data_parsed = Object.create(valid);
           let detokenized = this.getDecodedAccessToken(data_parsed.token);
-          console.log("Data at code validation: ",valid)
-          console.log("Data at code validation: ",detokenized)
-          console.log(detokenized);                      ;
           this.store.dispatch(verificationCompleted(data_parsed.token,detokenized.sub));
           this.router.navigate([`auth/profile/${this.userCode}`]);
         }
       },
       error: (error) => {
-        console.error(error)
+        //console.error(error)
         this.router.navigate([``]);
       }
     });
@@ -86,10 +82,9 @@ export class EmailVerificationComponent {
     this.codeResent = false;
     this.authService.resendCode(this.userCode).subscribe({
       next:(data) =>{
-        console.log(data)
         this.codeResent = true;
       },
-      error: (error) => console.error(error)
+      //error: (error) => console.error(error)
     });
   }
 

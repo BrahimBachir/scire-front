@@ -3,8 +3,8 @@ import { Component, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { IPlan, IPlanFeatures } from 'src/app/common/models/interfaces';
+import { IconModule } from 'src/app/icon/icon.module';
 import { ConfigService } from 'src/app/services/config.service';
 
 // card 1
@@ -26,7 +26,7 @@ interface pricecards {
 
 @Component({
     selector: 'app-pricing',
-    imports: [CommonModule,TablerIconsModule, MatCardModule, MatSlideToggleModule, MatButtonModule, MatSlideToggleModule],
+    imports: [CommonModule,IconModule, MatCardModule, MatSlideToggleModule, MatButtonModule, MatSlideToggleModule],
     templateUrl: './pricing.component.html',
 })
 export class AppPricingComponent implements OnInit{
@@ -45,7 +45,6 @@ export class AppPricingComponent implements OnInit{
     this.pricingService.getPlanes().subscribe({
       next: (planes) => {
         this.planes.set(planes);
-        console.log("Planes",this.planes())
       },
     })
   }

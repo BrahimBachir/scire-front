@@ -1,0 +1,51 @@
+<mat-form-field class="w-100" appearance="outline">
+  <mat-label>
+    Tipo
+    @if (control.hasError('required')) { <span>*</span> }
+  </mat-label>
+  <input matInput [formControl]="control" [matAutocomplete]="auto" (blur)="onTouched()" />
+
+  @if(control.enabled){
+  <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
+    <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+  </mat-icon>
+  }
+
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
+    @for(item of filteredItems; track item.code) {
+    <mat-option [value]="item" (onSelectionChange)="onSelected(item)">
+      {{ item.description }}
+    </mat-option>
+    }
+  </mat-autocomplete>
+  @if (control.hasError('required')) {
+  <mat-error class="f-s-12">Elemento requerido. *</mat-error>
+  }
+</mat-form-field>
+
+
+
+
+<!-- <form #form="ngForm">
+  <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Tipo</mat-label>
+    <input type="text" placeholder="Buscar tipo" aria-label="Buscar tipo" matInput id="courseType" name="courseType"
+      [formControl]="control" [matAutocomplete]="RuleAuto" [matTooltip]="selectedItem()?.description" />
+    @if(control.enabled){
+      <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
+        <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+      </mat-icon>
+    }
+    <mat-autocomplete autoActiveFirstOption #RuleAuto="matAutocomplete" [displayWith]="displayName"
+      (optionSelected)="onSelected($event)">
+      @for(item of filteredItems(); track item.code) {
+      <mat-option [value]="item">
+        {{ item.description }}
+      </mat-option>
+      }
+    </mat-autocomplete>
+    @if(required()){
+      <mat-hint [class]="control.errors?.['required'] ? 'text-error' : ''" >Elemento requerido.*</mat-hint>
+    }
+  </mat-form-field>
+</form>  -->

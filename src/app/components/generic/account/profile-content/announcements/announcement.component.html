@@ -1,0 +1,36 @@
+<div class="announcements-content">
+  <div class="header-content d-flex w-100 justify-content-between m-b-15">
+    <div class="d-flex align-items-center gap-15">
+      <h5 class="f-w-500 f-s-20">Anuncios</h5>
+
+      <div class="p-x-6 p-y-2 rounded-pill bg-secondary text-white">
+        <div class="f-s-14 lh-sm">{{ filteredCount() }}</div>
+      </div>
+    </div>
+    <mat-form-field appearance="outline" class="h-100 w-40 d-flex align-items-center m-b--15">
+      <mat-label>Buscar</mat-label>
+      <input matInput type="text" placeholder="Search anuncios" [(ngModel)]="searchText"/>
+
+      <mat-icon matPrefix class="d-flex justify-content-center align-items-center">
+        <i-tabler name="search" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+      </mat-icon>
+
+      @if (searchText) {
+      <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
+        <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+      </mat-icon>
+      }
+    </mat-form-field>
+  </div>
+  <div class="row">
+    @for(announ of filteredAnnouns(); track announ.id) {
+    <div class="col-sm-6 col-lg-4">
+      <mat-card class="cardWithShadow announ-card h-50 overflow-hidden">
+          <mat-card-content>
+            <div class="p-x-15 p-t-15 h-100" [innerHTML]="announ.content | safeHtml"></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    }
+  </div>
+</div>

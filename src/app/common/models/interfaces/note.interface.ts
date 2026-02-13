@@ -1,15 +1,18 @@
 import { IArticle, IRule, IUser } from ".";
 
 export interface INote {
-  id: number;
+  id?: number;
   content: any;
   color?: string | null;
   title?: string | null;
-  favourite?: boolean | null;
-  rule?: IRule;
-  article?: IArticle;
+  favorite?: boolean | null;
+  rule?: IRule | null;
+  ruleId?: number | null;
+  article?: IArticle | null;
+  articles?: string[] | null;
   creatorId?: number;
   createdAt?: Date;
   updatedAt?: Date;
-  creator: IUser;
+  creator?: IUser;
+  articlesIds: number[];
 }

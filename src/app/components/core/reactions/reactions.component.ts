@@ -1,14 +1,14 @@
 import { Component, effect, inject, Input, OnInit, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactionsService } from 'src/app/services';
-import { IRule, IScheme, IFlashcard, IQuestion, FeatureType } from 'src/app/common/models/interfaces';
+import { IRule, IDiagram, IFlashcard, IQuestion, FeatureType } from 'src/app/common/models/interfaces';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
 import { AppFeedbackDialogComponent } from './feedback/feedback-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
     selector: 'app-reactions',
@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
         CommonModule,
         MaterialModule,
         MatCardModule,
-        TablerIconsModule,
+        IconModule,
         MatIconModule,
         MatButtonModule,
     ],
@@ -26,8 +26,8 @@ export class AppReactionsComponent /* implements OnInit */ {
     private reactService = inject(ReactionsService)
     private dialog = inject(MatDialog);
 
-    @Input() content2: IScheme | IRule | IFlashcard | IQuestion | null;
-    @Input() content = signal<IScheme | IRule | IFlashcard | IQuestion | null>(null);
+    @Input() content2: IDiagram | IRule | IFlashcard | IQuestion | null;
+    @Input() content = signal<IDiagram | IRule | IFlashcard | IQuestion | null>(null);
     @Input() featureType: FeatureType;
 
     //protected user = signal<IUser | null>(null);
@@ -41,7 +41,6 @@ export class AppReactionsComponent /* implements OnInit */ {
         
         // Check if content exists and has an ID before fetching data
         if (currentContent && currentContent.id) {
-            console.log("Content signal changed or component initialized with new content:", currentContent);
             this.getUserVote();
             this.getVoteState();
         } else {
@@ -51,15 +50,7 @@ export class AppReactionsComponent /* implements OnInit */ {
             this.dislikeCount.set(0);
         }
     });
-
-/*     ngOnInit(): void {
-        this.getUserVote();
-        this.getVoteState();
-        console.log("Provided featureType element: ", this.content)
-
-    } */
-
-
+    
     react(voteType: 'LIKE' | 'DISLIKE') {
         if (voteType === 'DISLIKE') {
             const dialogRef = this.dialog.open(AppFeedbackDialogComponent, {
@@ -67,7 +58,6 @@ export class AppReactionsComponent /* implements OnInit */ {
             });
             dialogRef.afterClosed().subscribe(res => {
                 if (res.feedback) {
-                    console.log("Reaction feeedback: ", res.feedback)
                     this.sendReaction(voteType, res.feedback);
                 }
             });
@@ -89,7 +79,6 @@ export class AppReactionsComponent /* implements OnInit */ {
     getUserVote() {
         if (this.content) this.reactService.getMyVote({ featureId: this.content()?.id, featureType: this.featureType }
         ).subscribe(response => {
-            console.log("Get user vote: ", response)
             this.userVote.set(response.voteType ?? '');
         });
     }
@@ -97,7 +86,6 @@ export class AppReactionsComponent /* implements OnInit */ {
     getVoteState() {
         if (this.content) this.reactService.getVoteState({ featureId: this.content()?.id, featureType: this.featureType }
         ).subscribe(response => {
-            console.log("Get user vote: ", response)
             this.likeCount.set(response.likeCount ?? 0);
             this.dislikeCount.set(response.dislikeCount ?? 0);
         });

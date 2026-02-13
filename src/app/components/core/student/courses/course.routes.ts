@@ -7,6 +7,9 @@ import { AppKanbanComponent } from '../../kanban/kanban.component';
 import { AppFullcalendarComponent } from '../../fullcalendar/fullcalendar.component';
 import { AppTestComponent } from '../test/test.component';
 import { AppDashboardComponent } from 'src/app/components/generic/dashboard/dashboard.component';
+import { AppCourseTopicsComponent } from './course-syllabus/course-syllabus.component';
+import { AddCourseComponent } from './add-course/add-course.component';
+import { ProfileContentComponent } from 'src/app/components/generic/account/profile-content/profile-content.component';
 
 
 export const CourseRoutes: Routes = [
@@ -31,6 +34,30 @@ export const CourseRoutes: Routes = [
           urls: [
             { title: 'Academia', url: '/student' },
             { title: 'Detalle del curso' },
+          ],
+        }
+      },
+      {
+        path: 'courses/:courseId/contributors/:userId',
+        component: ProfileContentComponent,
+        data: {
+          title: 'Perfil',
+          urls: [
+            { title: 'Academia', url: '/student' },
+            { title: 'Curso', url: 'student/courses/:courseId/details' },
+            { title: 'Perfil del usuario' },
+          ],
+        }
+      },
+      {
+        path: 'courses/:courseId/topics',
+        component: AppCourseTopicsComponent,
+        data: {
+          title: 'Temas del curse',
+          urls: [
+            { title: 'Academia', url: '/student' },
+            { title: 'Curso', url: 'student/courses/:courseId/details' },
+            { title: 'Temas del curso' },
           ],
         }
       },
@@ -86,11 +113,11 @@ export const CourseRoutes: Routes = [
         path: 'courses/:courseId/dashboard',
         component: AppDashboardComponent,
         data: {
-          title: 'Dashboard',
+          title: 'Estadística',
           urls: [
             { title: 'Academia', url: '/student' },
             { title: 'Curso', url: 'student/courses/:courseId/details' },
-            { title: 'Dashboard' },
+            { title: 'Estadística' },
           ],
         },
       },
@@ -103,6 +130,28 @@ export const CourseRoutes: Routes = [
             { title: 'Academia', url: '/student' },
             { title: 'Curso', url: 'student/courses/:courseId/details' },
             { title: 'Tests' },
+          ],
+        },
+      },
+      {
+        path: 'courses/new',
+        component: AddCourseComponent,
+        data: {
+          title: 'Nuevo curso',
+          urls: [
+            { title: 'Academia', url: '/student' },
+            { title: 'Crear' },
+          ],
+        },
+      },
+      {
+        path: 'courses/:courseId/edit',
+        component: AddCourseComponent,
+        data: {
+          title: 'Editar curso',
+          urls: [
+            { title: 'Academia', url: '/student' },
+            { title: 'Editar' },
           ],
         },
       },

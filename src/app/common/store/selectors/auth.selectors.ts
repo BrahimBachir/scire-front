@@ -48,3 +48,19 @@ export const selectUserPermits = createSelector(
   selectLogin,
   (state: AuthState) => state.user.permits
 );
+
+
+export const selectUserPlans = createSelector(
+  selectLogin,
+  (state: AuthState) => state.user.user_plans
+);
+
+export const selectUserActivePlan = createSelector(
+  selectLogin,
+  (state: AuthState) => state.user.user_plans?.find(p => p.active)?.plan
+);
+
+export const selectUserSocialMedias = createSelector(
+  selectLogin,
+  (state: AuthState) => state.user.social_medias
+);

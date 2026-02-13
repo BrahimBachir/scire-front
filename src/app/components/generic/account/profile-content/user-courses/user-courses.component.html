@@ -1,0 +1,48 @@
+<div class="courses-contents">
+  <div class="header-content d-flex w-100 justify-content-between m-t-15 m-b-15">
+    <div class="d-flex align-items-center gap-15">
+      <h5 class="f-w-500 f-s-20">Cursos</h5>
+
+      <div class="p-x-6 p-y-2 rounded-pill bg-secondary text-white">
+        <div class="f-s-14 lh-sm">{{ filteredCount() }}</div>
+      </div>
+    </div>
+    <mat-form-field appearance="outline" class="h-100 w-40 d-flex align-items-center m-b--15">
+      <mat-label>Buscar</mat-label>
+      <input matInput type="text" placeholder="Search estudiante" [(ngModel)]="searchText" />
+
+      <mat-icon matPrefix class="d-flex justify-content-center align-items-center">
+        <i-tabler name="search" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+      </mat-icon>
+
+      @if (searchText) {
+      <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
+        <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+      </mat-icon>
+      }
+    </mat-form-field>
+  </div>
+  <div class="row">
+    @for(course of filteredCourses(); track course.id) {
+    <div class="col-lg-4">
+      <mat-card class="card overflow-hidden shadow-none b-1 cursor-pointer" (click)="goToCourseDetails(course)">
+        <img mat-card-image src="{{ course.imgSrc }}" alt="Imagen principal del curso" />
+        <div class="card-overlay h-100 d-flex align-items-center justify-content-end">
+          <mat-chip class="f-s-12 f-w-600 m-y-16 m-r-16 bg-white">{{ course.caller?.description }}</mat-chip>
+        </div>
+
+        <mat-card-content class="p-y-24">
+          <div class="d-flex justify-content-between actions">
+            <mat-chip class="f-s-12 m-y-16 f-w-600 bg-white "> {{course.category?.description}} </mat-chip>
+            <div class="text-center p-y-8 d-flex gap-10">
+            </div>
+          </div>
+          <mat-card-title>{{ course.description }}</mat-card-title>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    } @empty {
+    <app-banner-nof-found class="w-100" bannerText="No hay cursos que mostrar"
+      bannerTitle="Ups! Parece que algo ha ido mal."></app-banner-nof-found>
+    }
+  </div>

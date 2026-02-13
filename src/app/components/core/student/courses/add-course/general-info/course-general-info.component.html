@@ -1,0 +1,72 @@
+<div [formGroup]="form">
+  <div class="row">
+    <div class="col-lg-8">
+      <mat-card class="shadow-none b-1 rounded p-15">
+        <div class="d-flex row justify-content-between m-l-0 m-r-0">
+          <h4>General</h4>
+          <tabler-icon name="home" class="m-r-5"></tabler-icon>
+        </div>
+        <div class="row">
+          <div class="col-lg-9">
+            <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-20">Descripción<span class="text-error">*</span></mat-label>
+            <mat-form-field appearance="outline" class="w-100 p-0" color="primary">
+              <input type="text" matInput placeholder="Nombre del curso" formControlName="description" />
+              <mat-hint class="f-s-12">Se requiere un título para el curso
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3">
+            <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-20">Código<span class="text-error">*</span></mat-label>
+            <mat-form-field appearance="outline" class="w-100 p-0" color="primary">
+              <input type="text" matInput placeholder="Código del curso" formControlName="code" />
+              <mat-hint class="f-s-12">Requierido
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="f-s-14 f-w-600 m-b-8 d-block m-t-20">Detalles</div>
+        <div class="NgxEditor__Wrapper">
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+          <ngx-editor [editor]="editor" [placeholder]="'Escriba aquí...'" [formControl]="editorControl"
+            class="b-t-1"></ngx-editor>
+        </div>
+        <div class="f-s-12 m-t-2">
+          Por favor, proporcione una descripción detallada del curso.
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-4 p-l-0">
+      <mat-card class="shadow-none b-1 rounded p-15">
+        <div class="d-flex justify-content-between m-b-15">
+          <h4>Carátula</h4>
+          <tabler-icon name="polaroid"></tabler-icon>
+        </div>
+
+        <div class="image-wrapper">
+          <img [src]="imgSrc" alt="course image" class="w-100 h-100 rounded" />
+        </div>
+
+        <div class="d-flex row justify-content-between p-x-15 p-t-15">
+          <div class="f-s-12 m-t-5">
+            Imagen del curso.
+          </div>
+          <button mat-mini-fab class="bg-secondary text-white" matTooltip="Cambiar" aria-label="Cambiar"
+            (click)="getDefaultImage()">
+            <i-tabler name="arrows-shuffle" class="icon-20 d-flex"></i-tabler>
+          </button>
+        </div>
+      </mat-card>
+
+
+      <mat-card class="shadow-none b-1 rounded p-15">
+        <div class="d-flex row justify-content-between m-l-0 m-r-0 m-b-15">
+          <h4>Estado</h4>
+          <tabler-icon name="settings" class="m-r-5"></tabler-icon>
+        </div>
+        <course-status-filter  [mode]="modeToSend" formControlName="statusId">
+        </course-status-filter>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Routes } from '../common/config';
-import { QueryingDto, IIncomingEntity, INote } from '../common/models/interfaces';
+import { IQueryingDto, IIncomingEntity, INote, DeletedElement } from '../common/models/interfaces';
 import { buildParams } from '../common/utils';
 
 
@@ -15,16 +15,16 @@ export class NoteService {
     private http: HttpClient,
   ) {}
 
-  public getAll(queryingDto?: QueryingDto): Observable<IIncomingEntity> {
+  public getAll(queryingDto?: IQueryingDto): Observable<IIncomingEntity> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);
-    
-    return this.http.get<IIncomingEntity>(environment.api_base_url + this.routes.api.learning.notes.notes, { params });
+
+    return this.http.get<IIncomingEntity>(environment.api_base_url + this.routes.api.learning.notes.base, { params });
   }
 
   public getOne(id: number): Observable<INote> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.notes}/${id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.base}/${id}`;
     return this.http.get<INote>(URL);
   }
 
@@ -33,12 +33,10 @@ export class NoteService {
     return this.http.get<IIncomingEntity>(URL);
   }
 
-  public navigate(ruleCode: string, artiCode: string, queryingDto: QueryingDto): Observable<INote> {
+  public navigate(ruleCode: string, artiCode: string, queryingDto: IQueryingDto): Observable<INote> {
     let params = new HttpParams();
     if(queryingDto)
-        params = buildParams(queryingDto, params);
-
-    console.log("Data to be sent: ",queryingDto.direction, queryingDto.noteId)
+      params = buildParams(queryingDto, params);
 
     let URL = `${environment.api_base_url}${this.routes.api.learning.notes.navigate}`
       .replace(':ruleCode', ruleCode || '')
@@ -46,25 +44,24 @@ export class NoteService {
     return this.http.get<INote>(URL, { params });
   }
   
-  public delete(id: number): Observable<string> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.notes}/${id}`;
-    return this.http.delete<string>(URL);
+  public delete(id: number): Observable<DeletedElement> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.base}/${id}`;
+    return this.http.delete<DeletedElement>(URL);
   }
   
   public deleteMany(ids: number[]) {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.notes}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.base}`;
     return this.http.post(URL, { ids });
   }
 
   public update(note: INote): Observable<INote> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.notes}/${note.id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.base}/${note.id}`;
     return this.http.patch<INote>(URL, note);
   }
 
   public create(note: INote) : Observable<INote> {
-    console.log("Note from the front: ", note)
 
-    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.notes}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.base}`;
 
     return this.http.post<INote>(URL, note);
   }

@@ -1,12 +1,25 @@
-@if(question()){
-<mat-card class="cardWithShadow theme-card">
-    <div class="p-24">
-        <mat-card-title class="m-b-0">{{question()?.text}}</mat-card-title>
+@if(question() && question()?.id !== 0){
+<mat-card class="card shadow-none b-1 rounded theme-card m-t-15">
+  <div class="p-24">
+    <mat-card-title class="m-b-0">{{question()?.text}}</mat-card-title>
+  </div>
+  <mat-card-content class="b-t-1">
+    <div class="p-y-8 p-x-12 actions">
+      @if( (question()?.creatorId || 0 | myOwnContent) | async ) {
+      <button mat-mini-fab class="cart-btn-overlay bg-error text-white" matTooltip="Borrar"
+        (click)=" deleteItem(); $event.stopPropagation()">
+        <i-tabler name="trash" class="icon-16 d-flex"></i-tabler>
+      </button>
+      }
+      @if((question()?.creatorId || 0 | myOwnContent) | async ) {
+      <button mat-mini-fab class="cart-btn-overlay bg-primary text-white" matTooltip="Editar" (click)="updateItem()">
+        <i-tabler name="pencil" class="icon-16 d-flex"></i-tabler>
+      </button>
+      }
     </div>
-    <mat-card-content class="b-t-1">
-      <mat-chip-listbox class="mat-mdc-chip-set-stacked d-flex flex-wrap" aria-label="Cutest dog breeds">
-        @for (answer of question()?.answers; track answer.id) {
-          <mat-chip-option [value]="answer.id" [selected]="answer.selected" (click)="answerQuestion(answer)" [ngClass]="{
+    <mat-chip-listbox class="mat-mdc-chip-set-stacked d-flex flex-wrap" aria-label="Cutest dog breeds">
+      @for (answer of question()?.answers; track answer.id) {
+      <mat-chip-option [value]="answer.id" [selected]="answer.selected" (click)="answerQuestion(answer)" [ngClass]="{
             'correct':
             question()?.answered && question()?.isCorrect && answer.selected,
             'error':
@@ -14,32 +27,35 @@
             answer.selected &&
             !question()?.isCorrect
           }">{{answer.text}}</mat-chip-option>
-          }
-        </mat-chip-listbox>
-      </mat-card-content>
-      @if(question()?.answered){  
-        <mat-card-content class="b-t-1" >
-          <p>{{question()?.explanation}}</p>
-        </mat-card-content>
       }
-    <mat-card-actions class="d-flex d-raw gap-16 p-t-0">
-        <button mat-stroked-button color="warn" class="w-100" (click)="getNext()">
-          <i-tabler
-            name="chevron-left"
-            class="icon-18 d-flex text-primary"
-          ></i-tabler>
-        </button>
-        <button mat-stroked-button color="warn" class="w-100 d-flex d-raw" (click)="getPrevious()">
-          <i-tabler
-            name="chevron-right"
-            class="icon-18 d-flex text-primary"
-            label="Siguiente"
-          ></i-tabler>
-        </button>
-    </mat-card-actions>
-    <mat-divider></mat-divider>
-    <div class="d-flex align-items-center justify-content-between m-10">
-      <app-reactions [content]="question" [featureType]="featureType"></app-reactions>
-    </div>
+
+    </mat-chip-listbox>
+  </mat-card-content>
+  @if(question()?.answered){
+  <mat-card-content class="b-1 rounded m-15">
+    <p class="m-t-0">{{question()?.explanation}}</p>
+  </mat-card-content>
+  }
+  <app-element-navigation [canGoNext]="navigationState.hasNext"
+        [canGoPrevious]="navigationState.hasPrevious" (next)="goNext()"
+        (previous)="goPrevious()"></app-element-navigation>
+  <mat-divider></mat-divider>
+  <div class="d-flex align-items-center justify-content-between m-10">
+    <app-reactions [content]="question" [featureType]="featureType"></app-reactions>
+    <div>|</div>
+    <i-tabler [matTooltip]="'Generado por: ' + question()?.creationType?.description || ''" class="icon-20 d-flex" [name]="question()?.creationType?.icon || ''"></i-tabler>
+  </div>
+</mat-card>
+} @else {
+<mat-card class="shadow-none b-1 rounded m-y-15 p-b-15">
+  <div class="d-flex col align-items-center justify-content-center text-center">
+    <p>No hay preguntas registrados para este artículo. Por favor, considera ayudar a la comunidad apoartando alguna/s.
+    </p>
+    <p>!Muchas gracias de antemano!</p>
+    <button mat-mini-fab matTooltip="Crear una pregunta" class="bg-primary text-white" aria-label="Crear una pregunta"
+      (click)="createElement('QUESTION')">
+      <i-tabler class="icon-20 d-flex" name="help-circle"></i-tabler>
+    </button>
+  </div>
 </mat-card>
 }

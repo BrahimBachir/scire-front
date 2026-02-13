@@ -1,7 +1,6 @@
-import { Component, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, signal, effect, model, untracked } from '@angular/core';
+import { ActivatedRoute, NavigationStart } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,19 +11,22 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { IArticle, IBlock, IBlockArticles, IRate, IRule, IRuleIndex } from 'src/app/common/models/interfaces';
-import { LearningService, LegislationService, TopicService } from 'src/app/services';
+import { IArticle, IArticleProgress, IParagraph, IRule, IUser } from 'src/app/common/models/interfaces';
+import { ArticleProgressFacade, LegislationService, TopicService } from 'src/app/services';
 import { AppCreateGenericElementComponent } from '../common/create-generic-element/create-generic-element.component';
-import { FlashcardComponent } from '../common/flashcard/flashcard.component';
-import { QuestionComponent } from '../common/question/question.component';
-import { SchemeViewComponent } from '../common/scheme/scheme-view.component';
-import { VideoComponent } from '../common/video/video.component';
+import { ArticleTabsComponent } from './article-tabs/article-tabs.component';
+import { ArticleStepperComponent } from './article-stepper/article-stepper.component';
+import { AppState } from 'src/app/common/store/app.store';
+import { Store } from '@ngrx/store';
+import { selectLogedUser } from 'src/app/common/store/selectors';
+import { setAllSelectedArticles, setSelectedArticle, setSelectedRule } from 'src/app/common/store/actions';
+import { IconModule } from 'src/app/icon/icon.module';
 @Component({
   selector: 'app-topic-content',
   templateUrl: './topic-content.component.html',
   imports: [
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatStepperModule,
     MatInputModule,
     MatButtonModule,
@@ -34,161 +36,173 @@ import { VideoComponent } from '../common/video/video.component';
     MatSlideToggleModule,
     MatSelectModule,
     MatTooltipModule,
-    VideoComponent,
-    FlashcardComponent,
-    QuestionComponent,
-    SchemeViewComponent,
-    AppCreateGenericElementComponent
+    AppCreateGenericElementComponent,
+    ArticleTabsComponent,
+    ArticleStepperComponent
   ],
   styleUrl: 'topic-content.component.scss'
 })
 export class AppTopicContentComponent {
-  article: IArticle | null = null;
-  selectedTabIndex = 0;
-  currentStepIndex = 0;
+  article = signal<IArticle | null>(null);
+  paragraphs = signal<IParagraph[] | null>(null);
+  tabs = signal<IArticle[] | null>([]);
   selectedRule: IRule | null = null;
+  loggedUser = signal<IUser | null>(null);
 
-  ruleCode: string = '';
-  artiCode: string = '';
-  showActions: boolean = false;
-
-  tabs: IRuleIndex[] = [];
-  rowRuleIndex: IRuleIndex[] = [];
-
+  selectedTabIndex: number = 0;
   topicId: number = 0;
   courseId: number = 0;
-  blocks: IBlock[] = [];
-  rules: string[] = [];
-  articles: IBlockArticles[] = [];
-  courseDetail = signal<any>(null);
-  favorite: boolean = false;
-  joined: boolean = false;
-  featureToCreate: string = '';
-  favorite_class: string = 'star';
-  user_class: string = 'user-x';
-
+  ruleId: number = 0;
+  articleId: number = 0;
+  entityToCreate = model<string>('');
 
   constructor(
-    activatedRouter: ActivatedRoute,
-    private router: Router,
-    private legislationService: LegislationService,
+    route: ActivatedRoute,
+    private legislation: LegislationService,
     private topicService: TopicService,
+    public progress: ArticleProgressFacade,
+    private router: Router,
+    private store: Store<AppState>,
   ) {
-    this.topicId = Number(activatedRouter?.snapshot?.paramMap?.get('topicId')) || 0;
-    if (this.topicId)
-      this.getTopicBllocks();
-    else {
-      console.log("The alternative")
-      this.ruleCode = activatedRouter?.snapshot?.paramMap?.get('ruleCode') || '';
-      this.getRuleInformation();
+    this.topicId = Number(route.snapshot.paramMap.get('topicId'));
+    this.courseId = Number(route.snapshot.paramMap.get('courseId'));
+    this.ruleId = Number(route.snapshot.paramMap.get('ruleId'));
+    this.store.select(selectLogedUser).subscribe((user) => this.loggedUser.set(user))
+
+    this.loadTabs();
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.progress.flushIfDirty();
+      }
+    });
+
+  }
+
+  loadTabs() {
+    if (this.topicId) this.loadTopicArticles();
+    else this.loadRuleArticles();
+  }
+
+  loadTopicArticles() {
+    this.topicService.getArticles(this.topicId, { courseId: this.courseId })
+      .subscribe(articles => {
+        this.tabs.set(articles);
+        if (!articles || !articles.length) return;
+
+        const index = this.getInitialTabIndex();
+        this.selectedTabIndex = index;
+
+        const tab = articles[index];
+        if (tab) {
+          this.selectTab(tab);
+        }
+      });
+  }
+
+  loadRuleArticles() {
+    this.legislation.getRuleArticles(this.ruleId).subscribe(articles => {
+      this.tabs.set(articles);
+      if (!articles || !articles.length) return;
+
+      const index = this.getInitialTabIndex();
+      this.selectedTabIndex = index;
+
+      const tab = articles[index];
+      if (tab) {
+        this.selectTab(tab);
+      }
+    });
+  }
+
+  loadRule() {
+    this.legislation.getRuleById(this.ruleId).subscribe(rule => {
+      this.selectedRule = rule;
+    });
+  }
+
+
+  selectTab(tab: IArticle) {
+    if (!tab.progress) {
+      if (this.topicId) this.progress.getProgressByTopic(this.courseId, this.topicId, tab.id);
+      else this.progress.getProgressByRule(this.ruleId, tab.id);
+    } else {
+      this.progress.setSelectedArticleProgress(tab.progress)
     }
+
+    this.articleId = tab.id || 0;
+    this.ruleId = tab.rule?.id || 0;
+    this.getArticle();
   }
 
-  getRuleInformation() {
-    this.legislationService.getRuleByCode(this.ruleCode).subscribe({
-      next: (data) => {
-        this.selectedRule = data;
-        this.getIndexForRule();
-      }
-    });
+  getArticle(): void {
+    if (this.articleId !== 0)
+      this.legislation
+        .getArticle(this.articleId)
+        .subscribe(article => {
+          this.article.set(article);
+          if (article) {
+            const ids: number[] = [];
+            if (article.id)
+              ids.push(article.id)
+            this.store.dispatch(setSelectedArticle(article))
+            this.store.dispatch(setAllSelectedArticles(ids))
+          }
+
+          this.selectedRule = article.rule || null;
+
+          if (this.selectedRule)
+            this.store.dispatch(setSelectedRule(this.selectedRule))
+          this.paragraphs.set(article.versions[0].paragraphs);
+        });
   }
 
-  getTopicBllocks() {
-    this.topicService.getBlocks(this.topicId).subscribe({
-      next: (data) => {
-        this.blocks = data.rows as IBlock[];
-        this.getIndexForTopic();
-      },
-      error: (error) => {
-        console.error('There was an error!', error);
-      }
-    });
+  resetArticle() {
+    this.progress.resetCurrentArticleProgress();
   }
 
-  goBack(): void {
-    this.router.navigate(['']);
+  updateFrontTabProgress() {
+    const tabs = this.tabs();
+    if (!tabs) return;
+
+    const pro = this.progress.selectedArticleProgress();
+    if (!pro) return;
+
+    const updated = tabs.map(t =>
+      t.id === this.articleId
+        ? { ...t, progress: pro }
+        : t
+    );
+
+    this.tabs.set(updated);
   }
 
-  onTabChange(tabIndex: any) {
-    console.log(tabIndex)
-    this.selectedTabIndex = tabIndex;
+  goToNextTab() {
+    const tabs = this.tabs();
+    if (!tabs) return;
+    const currentIndex = tabs.findIndex(t => t.id === this.articleId);
+
+    if (currentIndex === -1) return;
+    this.updateFrontTabProgress();
+
+    const nextIndex = currentIndex + 1;
+    const nextTab = tabs[nextIndex];
+    if (!nextTab) return;
+
+    this.selectedTabIndex = nextIndex;
+
+    this.selectTab(nextTab);
   }
 
-  createElement(feature: string) {
-    this.featureToCreate = feature;
+  private getInitialTabIndex(): number {
+    const tabs = this.tabs();
+    if (!tabs) return 0;
+    const firstIncomplete = tabs.findIndex(
+      a => a.progress?.percentage !== 100
+    );
+    return firstIncomplete === -1 ? 0 : firstIncomplete;
   }
 
-  changeSelectedArticle(tabIndex: any) {
-    console.log(tabIndex)
-
-    let index = this.tabs.indexOf(tabIndex)
-    if (index >= this.tabs.length)
-      this.selectedTabIndex = index + 1
-  }
-
-
-  onStepChange(event: any) {
-    this.currentStepIndex = event.selectedIndex;
-  }
-
-  getArticle(tab: IRuleIndex) {
-    this.artiCode = tab.id;
-
-    if (!tab.ruleCode && this.ruleCode !== tab.url?.split('/')[7] || '')
-      this.ruleCode = tab.url?.split('/')[7] || '';
-
-    this.legislationService.getArticle({ ruleCode: this.ruleCode, artiCode: this.artiCode }).subscribe({
-      next: (data) => {
-        this.article = data;
-        this.article.versions[0].paragraphs = JSON.parse(data.versions[0].paragraphs.toString());
-        console.log("Article seted: ", this.article)
-      },
-      error: (error) => {
-        console.error('There was an error!', error);
-      }
-    });
-  }
-
-  getIndexForRule(): void {
-    this.tabs = [];
-    this.tabs = this.selectedRule?.boeIndex?.filter(item => item.id.startsWith("a")) || [];
-    this.getArticle({ id: this.tabs[0].id, ruleCode: this.ruleCode });
-  }
-
-  getIndexForTopic(): void {
-    this.tabs = [];
-    this.blocks.forEach(block => {
-      if (block.articles && block.articles.length > 0) block.articles.forEach(article => {
-        this.articles.push(article);
-      });
-
-      const articleCodesSet = this.getArticleCodesSet(block.rule?.code || '');
-
-      if (articleCodesSet.size === 0) {
-        return;
-      }
-
-      const newTabs = block.rule?.boeIndex?.filter(item => {
-        item.ruleCode = block.rule?.code;
-        const startsWithA = item.id.startsWith("a");
-        const isInArticles = articleCodesSet.has(item.id);
-
-        return startsWithA && isInArticles;
-      });
-      if (newTabs)
-        this.tabs = this.tabs.concat(newTabs);
-
-    });
-    this.artiCode = this.articles[0].code;
-    this.ruleCode = this.articles[0].ruleCode;
-    this.getArticle({ id: this.articles[0].code, ruleCode: this.articles[0].ruleCode });
-  }
-
-  private getArticleCodesSet(ruleCode: string): Set<string> {
-    const articleCodes = new Set<string>();
-    this.articles
-      .filter(article => article.ruleCode === ruleCode)
-      .forEach(article => articleCodes.add(article.code));
-    return articleCodes;
+  handleEntityCreationInput(value: string) {
+    this.entityToCreate.set(value);
   }
 }

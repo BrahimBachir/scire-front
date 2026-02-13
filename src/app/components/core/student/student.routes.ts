@@ -8,6 +8,11 @@ import { AppAccountSettingComponent } from '../../generic/account-setting/accoun
 import { ProfileContentComponent } from '../../generic/account/profile-content/profile-content.component';
 import { AppFaqComponent } from '../../generic/faq/faq.component';
 import { AppPricingComponent } from '../../generic/pricing/pricing.component';
+import { FlashcardWrapperComponent } from './courses/common/flashcard/flashcard-wrapper.component';
+import { VideoWrapperComponent } from './courses/common/video/video-wrapper.component';
+import { TopicBlocksComponent } from './courses/add-course/topics/topic-blocks/topic-blocks.component';
+import { DiagramFormComponent } from './courses/common/diagram/form/diagram-form.component';
+import { DiagramWrapperComponent } from './courses/common/diagram/diagram-wrapper.component';
 
 
 export const StudentRoutes: Routes = [
@@ -109,13 +114,81 @@ export const StudentRoutes: Routes = [
         },
       },
       {
-        path: 'modules/:ruleCode/details',
+        path: 'modules/:ruleId/details',
         component: AppTopicContentComponent,
         data: {
           title: 'Normas',
           urls: [
             { title: 'Academia', url: '/' },
             { title: 'Normas' },
+          ],
+        },
+      },
+      {
+        path: 'flashcards',
+        component: FlashcardWrapperComponent,
+        data: {
+          title: 'Flashcards',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Flashcards' },
+          ],
+        },
+      },
+      {
+        path: 'videos',
+        component: VideoWrapperComponent,
+        data: {
+          title: 'Vídeos',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Vídeos' },
+          ],
+        },
+      },
+      {
+        path: 'diagrams',
+        component: DiagramWrapperComponent,
+        data: {
+          title: 'Diagramas',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Diagramas' },
+          ],
+        },
+      },
+      {
+        path: 'diagrams/create',
+        component: DiagramFormComponent,
+        data: {
+          title: 'Crear diagrama',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Diagramas', url: 'student/diagrams' },
+            { title: 'Crear' },
+          ],
+        },
+      },
+      {
+        path: 'diagrams/:diagramId/edit',
+        component: DiagramFormComponent,
+        data: {
+          title: 'Editar diagrama',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Diagramas', url: 'student/diagrams' },
+            { title: 'Editar' },
+          ],
+        },
+      },
+      {
+        path: 'topics/:topicId/edit',
+        component: TopicBlocksComponent,
+        data: {
+          title: 'Tema',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Editar tema' },
           ],
         },
       },

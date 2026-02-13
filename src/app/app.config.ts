@@ -9,6 +9,7 @@ import {
   HTTP_INTERCEPTORS,
   HttpClient,
   provideHttpClient,
+  withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { routes } from './app.routes';
@@ -18,16 +19,11 @@ import {
   withInMemoryScrolling,
 } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideClientHydration } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { ToastrModule } from 'ngx-toastr';
 import { provideToastr } from 'ngx-toastr';
-
-// icons
-import { TablerIconsModule } from 'angular-tabler-icons';
-import * as TablerIcons from 'angular-tabler-icons/icons';
 
 // perfect scrollbar
 import { NgScrollbarModule } from 'ngx-scrollbar';
@@ -52,6 +48,9 @@ import { HeadersInterceptor } from './common/interceptors/jwt.interceptor';
 import { LearningEffects } from './common/store/effects/learning.effects';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { SPANISH_DATE_FORMATS } from './common/config/constants';
+import { MyPaginatorIntl } from './services';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { dateInterceptor } from './common/interceptors';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -82,8 +81,9 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding()
     ),
     provideHttpClient(withInterceptorsFromDi()),
-    //provideClientHydration(),
-    provideAnimationsAsync(),
+    provideHttpClient(
+      withInterceptors([dateInterceptor])
+    ),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
@@ -94,7 +94,6 @@ export const appConfig: ApplicationConfig = {
       ReactiveFormsModule,
       MaterialModule,
       NgxPermissionsModule.forRoot(),
-      TablerIconsModule.pick(TablerIcons),
       NgScrollbarModule,
       CalendarModule.forRoot({
         provide: DateAdapter,
@@ -108,6 +107,7 @@ export const appConfig: ApplicationConfig = {
         },
       })
     ),
+    { provide: MatPaginatorIntl, useClass: MyPaginatorIntl },
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
     { provide: MAT_DATE_FORMATS, useValue: SPANISH_DATE_FORMATS },

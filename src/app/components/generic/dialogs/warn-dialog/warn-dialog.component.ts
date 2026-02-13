@@ -21,8 +21,8 @@ import { MaterialModule } from 'src/app/material.module';
   templateUrl: './warn-dialog.component.html',
   styleUrl: './warn-dialog.component.scss',
 })
-export class DeleteDialogComponent {
-  readonly dialogRef = inject(MatDialogRef<DeleteDialogComponent>);
+export class AppDeleteDialogComponent {
+  readonly dialogRef = inject(MatDialogRef<AppDeleteDialogComponent>);
   readonly data = inject(MAT_DIALOG_DATA);
 
   get itemCount(): number {

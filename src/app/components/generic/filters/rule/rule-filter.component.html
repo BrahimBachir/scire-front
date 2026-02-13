@@ -1,0 +1,23 @@
+<!-- TODO: Tooltip the complete name of the rule -->
+<mat-form-field class="w-100" appearance="outline">
+    <mat-label>Norma legislativa</mat-label>
+  <input matInput [formControl]="control" [matTooltip]="" [matAutocomplete]="auto" (blur)="onTouched()" />
+  @if (control.value !== null) {
+    <mat-icon 
+      matSuffix 
+      class="d-flex justify-content-center align-items-center cursor-pointer" 
+      (click)="clean(); $event.stopPropagation()">
+      <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+    </mat-icon>
+  }
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
+    @for(item of filteredItems; track item.code) {
+    <mat-option [value]="item" (onSelectionChange)="onSelected(item)"  >
+      {{ item.description }}
+    </mat-option>
+    }
+  </mat-autocomplete>
+  @if (control.hasError('required')) {
+  <mat-error class="f-s-12">Requerido. *</mat-error>
+  }
+</mat-form-field>

@@ -21,7 +21,7 @@ import { AppInvoiceViewComponent } from './invoice/invoice-view/invoice-view.com
 import { AppEditInvoiceComponent } from './invoice/edit-invoice/edit-invoice.component';
 import { AppContactListComponent } from './contact-list/contact-list.component';
 import { ProfileContentComponent } from './profile-content/profile-content.component';
-import { FollowersComponent } from './profile-content/followers/followers.component';
+import { StudentsComponent } from './profile-content/followers/followers.component';
 import { GalleryComponent } from './profile-content/gallery/gallery.component';
 import { FriendsComponent } from './profile-content/friends/friends.component';
 import { ProductComponent } from './ecommerce/ecommerce.component';
@@ -270,7 +270,7 @@ export const AppsRoutes: Routes = [
       },
       {
         path: 'profile-details/followers',
-        component: FollowersComponent,
+        component: StudentsComponent,
         data: {
           title: 'Followers',
           urls: [

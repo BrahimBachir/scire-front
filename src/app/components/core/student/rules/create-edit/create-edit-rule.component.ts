@@ -1,12 +1,11 @@
 import { CommonModule } from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject, Inject, OnInit, Optional, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from "@angular/core";
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { TablerIconsModule } from "angular-tabler-icons";
 import { MaterialModule } from "src/app/material.module";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { IRule, DialogData, IRuleType, IRuleAmbit, IGazette, IMetadataSource, IRuleIndex } from "src/app/common/models/interfaces";
+import { IRule, IRuleType, IRuleAmbit, IRuleGazette, IMetadataSource, IRuleIndex } from "src/app/common/models/interfaces";
 import { LegislationService } from "src/app/services";
 import { parseDate } from "src/app/common/utils/parse-date.util";
 import { startWith, debounceTime } from "rxjs";
@@ -22,6 +21,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { IconModule } from "src/app/icon/icon.module";
 
 @Component({
   selector: 'app-create-edit-rule',
@@ -31,7 +31,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    TablerIconsModule,
+    IconModule,
     MatFormFieldModule,
     MatSelectModule,
     MatDividerModule,
@@ -63,13 +63,13 @@ export class AppCreateEditRuleComponent implements OnInit {
   protected filteredAmbits = signal<IRuleAmbit[]>([]);
   protected selectedAmbit = signal<IRuleAmbit | null>(null);
 
-  protected gazettes = signal<IGazette[]>([]);
-  protected filteredGazettes = signal<IGazette[]>([]);
-  protected selectedGazettes = signal<IGazette | null>(null);
+  protected gazettes = signal<IRuleGazette[]>([]);
+  protected filteredGazettes = signal<IRuleGazette[]>([]);
+  protected selectedGazettes = signal<IRuleGazette | null>(null);
 
   protected typeControl = new FormControl<IRuleType | string>('');
   protected ambitControl = new FormControl<IRuleAmbit | string>('');
-  protected gazetteControl = new FormControl<IGazette | string>('');
+  protected gazetteControl = new FormControl<IRuleGazette | string>('');
   protected descControl = new FormControl<string>('');
   protected codeControl = new FormControl<string>('');
   protected internalControl = new FormControl<boolean | null>(false);
@@ -87,9 +87,6 @@ export class AppCreateEditRuleComponent implements OnInit {
   protected boeRuleLocated = signal<boolean | null>(null);
   protected internalRuleLocated = signal<boolean | null>(null);
 
-  //protected isLegalRule = new FormControl<boolean | null>(null);
-  //protected ruleCodeControl = new FormControl<string>({value: '', disabled: !this.isLegalRule.value});
-  //protected inBOE = new FormControl<boolean>({ value: false, disabled: !this.isLegalRule.value });
   private router = inject(Router)
   private route = inject(ActivatedRoute);
 
@@ -155,7 +152,6 @@ export class AppCreateEditRuleComponent implements OnInit {
   seachBoeRule() {
     let code: string = this.locateRuleForm.get('ruleCodeControl')?.value || '';
     this.ruleService.getMetadata({ ruleCode: code.trim() }).subscribe(source => {
-      console.log("Get metadata: ", source)
       if (source?.id) {
         this.local_data = source as IRule;
         this.internalRuleLocated.set(true);
@@ -178,12 +174,10 @@ export class AppCreateEditRuleComponent implements OnInit {
 
   saveRule() {
     this.savingRule = true;
-    console.log("Rule created: ", this.local_data as IRule)
     this.ruleService.createRule(this.local_data as IRule).subscribe({
       next: (data) => {
-        console.log("Rule created: ", data)
         this.openSnackBar('Norma creada con éxito!', 'Close');
-        this.goToRule();
+        this.goToRule(data.id);
       },
       error: (err) => {
         console.error('Error creating rule:', err);
@@ -243,7 +237,7 @@ export class AppCreateEditRuleComponent implements OnInit {
       } as IRuleAmbit,
       gazette: {
         description: source.diario,
-      } as IGazette,
+      } as IRuleGazette,
       repealDate: undefined,
       lastArticle: undefined,
       internal: false,
@@ -256,11 +250,9 @@ export class AppCreateEditRuleComponent implements OnInit {
     let code: string = this.locateRuleForm.get('ruleCodeControl')?.value || '';
 
     this.ruleService.getIndex({ ruleCode: code.trim() }).subscribe(articles => {
-      console.log("Get articles: ", articles)
       if (articles && articles.length > 0) {
         this.local_data.boeIndex = articles;
         this.boeIndex = articles.filter(a => a.id?.startsWith('a'));
-        console.log("Filtered articles: ", this.boeIndex);
       }
     });
   }
@@ -275,12 +267,12 @@ export class AppCreateEditRuleComponent implements OnInit {
     return this.types().filter((item) => item.code.toLowerCase().includes(filterValue));
   }
 
-  private _filterGazettes(value: IGazette | string | null): IGazette[] {
+  private _filterGazettes(value: IRuleGazette | string | null): IRuleGazette[] {
     const filterValue = this._getFilterValue(value);
     return this.gazettes().filter((item) => item.code.toLowerCase().includes(filterValue));
   }
 
-  private _getFilterValue(value: IRuleAmbit | IRuleType | IGazette | string | null): string {
+  private _getFilterValue(value: IRuleAmbit | IRuleType | IRuleGazette | string | null): string {
     if (typeof value === 'string') {
       return value.toLowerCase();
     }
@@ -290,7 +282,7 @@ export class AppCreateEditRuleComponent implements OnInit {
     return '';
   }
 
-  displayEntityName = (entity: IRuleAmbit | IRuleType | IGazette | string | null): string => {
+  displayEntityName = (entity: IRuleAmbit | IRuleType | IRuleGazette | string | null): string => {
     return (entity && typeof entity !== 'string' && entity.description) ? entity.description : (entity as string || '');
   };
 
@@ -305,7 +297,7 @@ export class AppCreateEditRuleComponent implements OnInit {
   }
 
   onGazetteSelected(event: MatAutocompleteSelectedEvent): void {
-    const selected = event.option.value as IGazette;
+    const selected = event.option.value as IRuleGazette;
     this.selectedGazettes.set(selected);
   }
 
@@ -316,7 +308,7 @@ export class AppCreateEditRuleComponent implements OnInit {
         this.types.set(data);
         this.filteredTypes.set(data);
       },
-      error: (err) => console.error('Error fetching categories:', err),
+      //error: (err) => console.error('Error fetching categories:', err),
     });
   }
 
@@ -327,7 +319,7 @@ export class AppCreateEditRuleComponent implements OnInit {
         this.ambits.set(data);
         this.filteredAmbits.set(data);
       },
-      error: (err) => console.error('Error fetching categories:', err),
+      //error: (err) => console.error('Error fetching categories:', err),
     });
   }
 
@@ -338,17 +330,15 @@ export class AppCreateEditRuleComponent implements OnInit {
         this.gazettes.set(data);
         this.filteredGazettes.set(data);
       },
-      error: (err) => console.error('Error fetching categories:', err),
+      //error: (err) => console.error('Error fetching categories:', err),
     });
   }
 
-  goToRule() {
-    let code: string = this.locateRuleForm.get('ruleCodeControl')?.value || '';
-    
+  goToRule(id: number) {
     this.savingRule = false;
     this.router.navigate([
-      `${this.route?.snapshot.data['role'].toLowerCase()}/modules/:ruleCode/details`
-        .replace(':ruleCode', code.trim())
+      `${this.route?.snapshot.data['role'].toLowerCase()}/modules/:ruleId/details`
+        .replace(':ruleId', id.toString())
     ]);
   }
 
@@ -364,7 +354,7 @@ export class AppCreateEditRuleComponent implements OnInit {
     description: 'Todos'
   }
 
-  allGazzete: IGazette = {
+  allGazzete: IRuleGazette = {
     id: 0,
     code: 'ALL',
     description: 'Todos'

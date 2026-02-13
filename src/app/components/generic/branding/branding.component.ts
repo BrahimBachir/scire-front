@@ -10,7 +10,7 @@ import { CoreService } from 'src/app/services/core.service';
     <div class="branding d-none d-lg-flex align-items-center text-decoratin-none">
       <a [routerLink]="['/']" class="d-flex">
         <img
-          src="./assets/images/scire/scire-logo.png"
+          src="./assets/images/scire/scire_mc_logo_white.png"
           class="align-middle m-2"
           alt="logo"
           width="30"

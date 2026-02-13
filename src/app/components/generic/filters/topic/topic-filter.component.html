@@ -1,0 +1,19 @@
+<mat-form-field class="w-100" appearance="outline">
+  <mat-label>Tema</mat-label>
+  <input matInput [formControl]="control" [matAutocomplete]="auto" (blur)="onTouched()" />
+  @if(control.enabled){
+  <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
+    <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+  </mat-icon>
+  }
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
+    @for(item of filteredItems; track item.id) {
+    <mat-option [value]="item" (onSelectionChange)="onSelected(item)">
+      {{item.name}} - {{ item.description }}
+    </mat-option>
+    }
+  </mat-autocomplete>
+  @if (control.hasError('required')) {
+  <mat-error class="f-s-12">Requerido. *</mat-error>
+  }
+</mat-form-field>

@@ -1,7 +1,6 @@
 import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,23 +13,31 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { environment } from 'src/environments/environment';
 import { CourseService } from 'src/app/services';
-import { FeatureType, ICourse, ITopic } from 'src/app/common/models/interfaces';
+import { FeatureType, ICourse, ICourseProgress, ITopic } from 'src/app/common/models/interfaces';
 import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatExpansionPanelActionRow } from '@angular/material/expansion';
 import { MatList, MatListItem } from "@angular/material/list";
 import { ToastrService } from 'ngx-toastr';
 import { ERROR, SUCCESS } from 'src/app/common/config/constants';
 import { AppCourseHeaderComponent } from "../course-header/course-header.component";
-import { switchMap } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/common/store/app.store';
-import { selectChoosenCourse } from 'src/app/common/store/selectors/learning.selectors';
 import { AppReviewsComponent } from '../../../reviews/reviews.component';
+import { AppCommentsComponent } from '../../../comments/comments.component';
+import { IconModule } from 'src/app/icon/icon.module';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { CourseTopicsComponent } from '../add-course/topics/course-topics.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+import { MaterialModule } from 'src/app/material.module';
+import { ContributorsContentComponent } from '../course-contributors/contributors-content.component';
+import { AppAnnouncementsComponent } from '../announcements/announcements.component';
 @Component({
   selector: 'app-course-detail',
   templateUrl: './course-detail.component.html',
   imports: [
+    CommonModule,
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatStepperModule,
     MatInputModule,
     MatButtonModule,
@@ -40,36 +47,55 @@ import { AppReviewsComponent } from '../../../reviews/reviews.component';
     MatSlideToggleModule,
     MatSelectModule,
     MatTooltipModule,
-    MatAccordion,
-    MatExpansionPanel,
-    MatExpansionPanelHeader,
-    MatExpansionPanelTitle,
-    MatExpansionPanelDescription,
-    MatExpansionPanelActionRow,
-    MatList,
-    MatListItem,
     AppCourseHeaderComponent,
-    AppReviewsComponent
+    AppReviewsComponent,
+    AppCommentsComponent,
+    ContributorsContentComponent,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgScrollbarModule,
+    TranslateModule,
+    AppAnnouncementsComponent,
   ],
   styleUrl: './course-detail.component.scss'
 
 })
 export class AppCourseDetailComponent implements OnInit {
   featureType: FeatureType = 'COURSE';
-  goToTopicContent(courseId: number, topicId: number) {
-    this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/courses/:courseId/topic/:topicId/content`.replace(':courseId', courseId.toString()).replace(':topicId', topicId.toString())]);
-  }
-  getTopicBlocks(id: number) {
-    console.log('Fetching blocks for topic ID:', id);
-  }
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   panelOpenState = false;
+  topics: ITopic[] = [];
   courseGeneralPartTopics: ITopic[] = [];
   courseSpecificPartTopics: ITopic[] = [];
+  courseId: number = 0;
+  course!: ICourse;
+  favorite: boolean = false;
+  joined: boolean = false;
+  favorite_class: string = 'star';
+  user_class: string = 'user-x';
+  courseProgress = signal<ICourseProgress | null>(null);
+  displayedColumns = ['name', 'description', 'category', 'section'];
 
+  safeHtml: SafeHtml = '';
 
-  // 3 accordian
+  constructor(
+    activatedRouter: ActivatedRoute,
+    public courseService: CourseService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public toastService: ToastrService,
+    private sanitizer: DomSanitizer
+  ) {
+    this.courseId = Number(activatedRouter?.snapshot?.paramMap?.get('courseId')) || 0;
+
+  }
+  ngOnInit(): void {
+    this.getCourseDetail();
+    this.getCourseTopics();
+  }
+
   step = 0;
 
   setStep(index: number) {
@@ -84,14 +110,13 @@ export class AppCourseDetailComponent implements OnInit {
     this.step--;
   }
 
-  goToCourseContent() {
-    //console.log('Navigating to course content...', this.id());
-    //this.router.navigate(['/apps/courses/:id/content'.replace(':id', this.id())]);
+  goToTopicContent(courseId: number, topicId: number) {
+    this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/courses/:courseId/topic/:topicId/content`.replace(':courseId', courseId.toString()).replace(':topicId', topicId.toString())]);
   }
 
   addToFavorites() {
     this.favorite = !this.favorite;
-    this.courseService.manageCourseFavourite(this.id, this.favorite).subscribe({
+    this.courseService.manageCourseFavourite(this.courseId, this.favorite).subscribe({
       next: () => {
         this.toastService.success('Curso actualizado correctamente!', SUCCESS, {
           timeOut: 3000,
@@ -123,46 +148,16 @@ export class AppCourseDetailComponent implements OnInit {
     }
   }
 
-  id: number = 0;
-  course!: ICourse;
-  favorite: boolean = false;
-  joined: boolean = false;
-  favorite_class: string = 'star';
-  user_class: string = 'user-x';
-
-
-  constructor(
-    public courseService: CourseService,
-    private router: Router,
-    private route: ActivatedRoute,
-    public toastService: ToastrService,
-    private store: Store<AppState>,
-  ) {
-
-  }
-  ngOnInit(): void {
-    this.route.paramMap
-      .pipe(
-        switchMap(params => {
-          this.id = Number(params.get('courseId')) || 0; // or 'id', depending on your route config
-          return this.store.select(selectChoosenCourse);
-        })
-      )
-      .subscribe(() => {
-        this.getCourseDetail();
-        this.getCourseTopics();
-      });
-  }
-
   getCourseDetail() {
-    this.courseService.getOne(this.id).subscribe({
+    this.courseService.getOne(this.courseId).subscribe({
       next: (res) => {
         this.course = res;
+        this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(this.course?.details ?? '');
         this.setCourseColour();
         //this.updateBreadcrumbTitle();
       },
       error: (error) => {
-        console.error('There was an error!', error);
+        //console.error('There was an error!', error);
       }
     });
   }
@@ -172,14 +167,13 @@ export class AppCourseDetailComponent implements OnInit {
   }
 
   getCourseTopics(): void {
-    this.courseService.getTopics(this.id).subscribe({
+    this.courseService.getTopics(this.courseId).subscribe({
       next: (data) => {
-        let rows = data.rows as ITopic[];
-        this.courseGeneralPartTopics = rows.filter(topic => topic.section?.category?.code === 'GEN');
-        this.courseSpecificPartTopics = rows.filter(topic => topic.section?.category?.code === 'SPEC');
+        this.topics = data.rows as ITopic[];
+        //this.getCourseProgress();
       },
       error: (error) => {
-        console.error('There was an error!', error);
+        //console.error('There was an error!', error);
       }
     });
   }

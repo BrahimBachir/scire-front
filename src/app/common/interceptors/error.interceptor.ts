@@ -16,7 +16,7 @@ export class ResponseInterceptor implements HttpInterceptor {
   constructor(
     private store: Store<AppState>,
     private readonly router: Router,
-    public toastService: ToastrService,
+    public toaster: ToastrService,
   ) { }
 
   intercept(
@@ -29,14 +29,15 @@ export class ResponseInterceptor implements HttpInterceptor {
           if (error.error instanceof ErrorEvent) {
             // Client-side error
           } else {
+            console.log(error.error)
             // Server-side error
             switch (error.status) {
               case 400:
                 if (error.error.message.startsWith('ERROR_003')) {
                   this.store.dispatch(logoutAction());
-                  this.router.navigate(['/auth/register'])
+                  //this.router.navigate(['/auth/register'])
                 }
-                this.toastService.error(`${error.error.message}`, ERROR, {
+                this.toaster.error(`${error.error.message}`, ERROR, {
                   timeOut: 3000,
                 });
                 break;
@@ -44,38 +45,40 @@ export class ResponseInterceptor implements HttpInterceptor {
                 if (error.error.message.startsWith('ERROR_012')) {
                   this.store.dispatch(logoutAction());
                 }
-                this.toastService.error(`${error.error.message}`, ERROR, {
+                this.toaster.error(`${error.error.message}`, ERROR, {
                   timeOut: 3000,
                 });
                 break;
               case 402:
-                this.toastService.error(`${error.error.message}`, ERROR, {
+                this.toaster.error(`${error.error.message}`, ERROR, {
                   timeOut: 3000,
                 });
                 break;
               case 403: // Forbidden
+                //if (['ERROR_999', 'ERROR_650'].find((code) => code === error.error.errorCode)) {
                 if (error.error.errorCode === 'ERROR_999') {
                 //TODO: Display a dialog to the user so tehy can change their plan.
                   console.log("Error code sutebla e to user changing plan to Next Level: Silver or Gold!", error)
                 } else {
-                  this.toastService.error(`${error.error.message}`, ERROR, {
+                  this.toaster.error(`${error.error.message}`, ERROR, {
                     timeOut: 3000,
                   });
                 }
                 break;
               case 404: // Not found
-                console.log(error)
-                this.toastService.error(`${error.error.message}`, ERROR, {
+                if (!['ERROR_999', 'ERROR_650'].includes(error.error.errorCode))
+                //if(error.error.message !== "ERROR_666") 
+                this.toaster.error(`${error.error.message}`, ERROR, {
                   timeOut: 3000,
                 });
                 break;
               case 503: // Server error
-                this.toastService.error(`${error.error.message}`, ERROR, {
+                this.toaster.error(`${error.error.message}`, ERROR, {
                   timeOut: 3000,
                 });
                 break;
               case 500: // Server error
-                this.toastService.error(`${error.error.message}`, ERROR, {
+                this.toaster.error(`${error.error.message}`, ERROR, {
                   timeOut: 3000,
                 });
                 break;

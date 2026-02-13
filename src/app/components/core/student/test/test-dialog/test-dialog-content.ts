@@ -1,10 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { Component, Inject, OnInit, Optional, signal } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { TablerIconsModule } from "angular-tabler-icons";
-import { ICategory, IDifficulty, IQuestion, ISection, ITest, ITestType, ITopic, IUser, QueryingDto } from "src/app/common/models/interfaces";
+import { ITopicCategory, IDifficulty, IQuestion, ISection, ITest, ITestType, ITopic, IUser, IQueryingDto } from "src/app/common/models/interfaces";
 import { createDefaultTest } from "src/app/common/models/states";
 import { MaterialModule } from "src/app/material.module";
 import { LearningService, TestService } from "src/app/services";
@@ -13,6 +12,7 @@ import { TestDialogData } from "src/app/common/models/interfaces/test-data.inter
 import { debounceTime, startWith } from "rxjs";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { IconModule } from "src/app/icon/icon.module";
 
 @Component({
   selector: 'app-dialog-content',
@@ -22,7 +22,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    TablerIconsModule,
+    IconModule,
   ],
   templateUrl: 'test-dialog-content.html',
 })
@@ -35,9 +35,9 @@ export class AppTestDialogContentComponent implements OnInit {
   protected filteredDifficulties = signal<IDifficulty[]>([]);
   protected selectedDifficulty = signal<IDifficulty | null>(null);
 
-  protected categories = signal<ICategory[]>([]);
-  protected filteredCategories = signal<ICategory[]>([]);
-  protected selectedCategory = signal<ICategory | null>(null);
+  protected categories = signal<ITopicCategory[]>([]);
+  protected filteredCategories = signal<ITopicCategory[]>([]);
+  protected selectedCategory = signal<ITopicCategory | null>(null);
 
   protected sections = signal<ISection[]>([]);
   protected filteredSections = signal<ISection[]>([]);
@@ -49,7 +49,7 @@ export class AppTestDialogContentComponent implements OnInit {
 
   protected testTypeControl = new FormControl<IDifficulty | string>('');
   protected difficultyControl = new FormControl<IDifficulty | string>('');
-  protected categoryControl = new FormControl<ICategory | string>('');
+  protected categoryControl = new FormControl<ITopicCategory | string>('');
   protected sectionControl = new FormControl<ISection | string>('');
   protected topicControl = new FormControl<ITopic | string>('');
   protected numQuestions = new FormControl<number>(0);
@@ -59,7 +59,7 @@ export class AppTestDialogContentComponent implements OnInit {
   minDifficulty: number = 6;
   testUser!: IUser;
   test: ITest = createDefaultTest();
-  queryingDTO!: QueryingDto;
+  queryingDTO!: IQueryingDto;
 
   showFilters: boolean = true;
   protected questions!: IQuestion[];
@@ -155,9 +155,6 @@ export class AppTestDialogContentComponent implements OnInit {
   }
 
   saveTest() {
-    console.log("Topic", this.topicControl.value);
-    console.log("Timed?", this.timed.value);
-    console.log("Number of questions?", this.numQuestions.value);
   }
 
   getCategories(): void {
@@ -166,7 +163,7 @@ export class AppTestDialogContentComponent implements OnInit {
         this.categories.set(data);
         this.filteredCategories.set(data);
       },
-      error: (err) => console.error('Error fetching categories:', err),
+      //error: (err) => console.error('Error fetching categories:', err),
     });
   }
 
@@ -176,7 +173,7 @@ export class AppTestDialogContentComponent implements OnInit {
         this.sections.set(data);
         this.filteredSections.set(data);
       },
-      error: (err) => console.error('Error fetching sections:', err),
+      //error: (err) => console.error('Error fetching sections:', err),
     });
   }
 
@@ -186,7 +183,7 @@ export class AppTestDialogContentComponent implements OnInit {
         this.difficulties.set(data);
         this.filteredDifficulties.set(data);
       },
-      error: (err) => console.error('Error fetching difficulties:', err),
+      //error: (err) => console.error('Error fetching difficulties:', err),
     });
   }
 
@@ -196,29 +193,28 @@ export class AppTestDialogContentComponent implements OnInit {
         this.testTypes.set(data);
         this.filteredTestTypes.set(data);
       },
-      error: (err) => console.error('Error fetching types:', err),
+      //error: (err) => console.error('Error fetching types:', err),
     });
   }
 
   getTopics(): void {
     if (this.local_data.section && this.local_data.section.id) this.learningService.getTopics({ parentId: this.local_data.section?.id }).subscribe({
       next: (data) => {
-        this.topics.set(data.rows);
-        this.filteredTopics.set(data.rows);
+        this.topics.set(data.rows as ITopic[]);
+        this.filteredTopics.set(data.rows as ITopic[]);
       },
-      error: (err) => console.error('Error fetching topics:', err),
+      //error: (err) => console.error('Error fetching topics:', err),
     });
     else this.learningService.getTopics().subscribe({
       next: (data) => {
-        this.topics.set(data.rows);
-        this.filteredTopics.set(data.rows);
-        console.log('Topics loaded:', data);
+        this.topics.set(data.rows as ITopic[]);
+        this.filteredTopics.set(data.rows as ITopic[]);
       },
-      error: (err) => console.error('Error fetching topics:', err),
+      //error: (err) => console.error('Error fetching topics:', err),
     });
   }
 
-  private _getFilterValue(value: ICategory | ISection | ITopic | IDifficulty | ITestType | string | null): string {
+  private _getFilterValue(value: ITopicCategory | ISection | ITopic | IDifficulty | ITestType | string | null): string {
     if (typeof value === 'string') {
       return value.toLowerCase();
     }
@@ -228,19 +224,19 @@ export class AppTestDialogContentComponent implements OnInit {
     return '';
   }
 
-  private _filterCategories(value: ICategory | string | null): ICategory[] {
+  private _filterCategories(value: ITopicCategory | string | null): ITopicCategory[] {
     const filterValue = this._getFilterValue(value);
 
     return this.categories().filter((c) => c.name.toLowerCase().includes(filterValue));
   }
 
-  private _filterSections(value: ICategory | string | null): ISection[] {
+  private _filterSections(value: ISection | string | null): ISection[] {
     const filterValue = this._getFilterValue(value);
 
     return this.sections().filter((s) => s.name.toLowerCase().includes(filterValue));
   }
 
-  private _filterTopics(value: ICategory | string | null): ITopic[] {
+  private _filterTopics(value: ITopicCategory | string | null): ITopic[] {
     const filterValue = this._getFilterValue(value);
 
     return this.topics().filter((t) => t.name.toLowerCase().includes(filterValue));
@@ -258,37 +254,32 @@ export class AppTestDialogContentComponent implements OnInit {
     return this.testTypes().filter((t) => t.name.toLowerCase().includes(filterValue));
   }
 
-  displayEntityName = (entity: ICategory | ISection | ITopic | string | null): string => {
+  displayEntityName = (entity: ITopicCategory | ISection | ITopic | string | null): string => {
     return (entity && typeof entity !== 'string' && entity.name) ? entity.name : (entity as string || '');
   };
 
   onTestTypeSelected(event: MatAutocompleteSelectedEvent): void {
     const selected = event.option.value as ITestType;
     this.selectedTestTypes.set(selected);
-    console.log('Selected testType:', selected);
   }
 
   onDifficultySelected(event: MatAutocompleteSelectedEvent): void {
     const selected = event.option.value as IDifficulty;
     this.selectedDifficulty.set(selected);
-    console.log('Selected difficulty:', selected);
   }
 
   onCategorySelected(event: MatAutocompleteSelectedEvent): void {
-    const selected = event.option.value as ICategory;
+    const selected = event.option.value as ITopicCategory;
     this.selectedCategory.set(selected);
-    console.log('Selected Category:', selected);
   }
 
   onSectionSelected(event: MatAutocompleteSelectedEvent): void {
     const selected = event.option.value as ISection;
     this.selectedSection.set(selected);
-    console.log('Selected section:', selected);
   }
 
   onTopicSelected(event: MatAutocompleteSelectedEvent): void {
     const selected = event.option.value as ITopic;
     this.selectedTopic.set(selected);
-    console.log('Selected topic:', selected);
   }
 }

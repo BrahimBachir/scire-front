@@ -1,0 +1,66 @@
+<!-- HEADER -->
+<div class="d-flex align-items-center justify-content-between m-t-10 m-x-15">
+  <h3 mat-dialog-title class="p-0">
+    {{ mode === 'EDITING' ? 'Editar' : 'Crear' }} elemento
+  </h3> <button mat-icon-button mat-dialog-close class="d-flex justify-content-center m-l-20 bg-error text-white">
+    <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
+  </button>
+</div>
+@if(aiResponseRecived) {
+<div class="d-flex w-100 p-x-15">
+  <div class="w-100">
+    <ng-container *ngComponentOutlet="
+      featureComponent;
+      inputs: { form: featureForm }
+      ">
+    </ng-container>
+  </div>
+</div>
+} @else {
+<form [formGroup]="form" class="d-flex col h-100 w-100">
+
+  <!-- CONTENT -->
+  <mat-dialog-content class="flex-grow-1 p-x-0 w-100">
+
+    <!-- COMMON FIELDS -->
+    <div>
+      <rule-filter formControlName="ruleId" [mode]="mode"></rule-filter>
+      <app-multi-select formControlName="articlesIds" [mode]="mode"
+        [parentId]="form.get('ruleId')?.value"></app-multi-select>
+    </div>
+    <app-ai-element-create (valueChange)="buildFeatForm($event)"></app-ai-element-create>
+  </mat-dialog-content>
+
+</form>
+  @if(creatingAIElement){
+  <div>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  }
+}
+<!-- ACTIONS -->
+<div class="d-flex justify-content-between align-items-center">
+  <!-- ERROR -->
+  <div>
+    @if(error){
+    <mat-error class="f-s-12 m-l-15 m-t-10">
+      {{ error }}
+    </mat-error>
+    }
+  </div>
+  <div class="d-flex justify-content-end m-15">
+    <button mat-flat-button mat-dialog-close class="bg-light-primary text-primary m-r-15">
+      Cancelar
+    </button>
+
+    @if(aiResponseRecived){
+      <button mat-flat-button color="primary" [disabled]="form.invalid || loading" (click)="submit()">
+        {{ loading ? 'Guardando...' : 'Guardar' }}
+      </button>
+    } @else {
+      <button mat-flat-button color="primary" [disabled]="form.invalid || creatingAIElement" (click)="aiSubmit()">
+        {{ creatingAIElement ? 'Generando...' : 'Generar' }}
+      </button>
+    }
+  </div>
+</div>

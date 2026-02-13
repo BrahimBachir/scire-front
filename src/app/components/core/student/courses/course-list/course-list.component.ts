@@ -15,13 +15,21 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CourseService } from 'src/app/services/courses.service';
-import { ICallingOrg, ICourse, ICourseType } from 'src/app/common/models/interfaces';
+import { FilterConfig, FiltersOptions, ICaller, ICourse, ICourseType, IFilters, IQueryingDto } from 'src/app/common/models/interfaces';
 import { ControlAccessPipe } from 'src/app/common/pipe/actions-access.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { distinctUntilChanged, Observable } from 'rxjs';
 import { AppBannersNotFoundComponent } from 'src/app/components/generic/banners/not-found/banner-not-found.component';
-import { DeleteDialogComponent } from 'src/app/components/generic/dialogs/confirm-dialog/delete-dialog.component';
+import { CourseFiltersData } from 'src/app/common/data/filters/course-filter-items';
+import { TranslateModule } from '@ngx-translate/core';
+import { PageEvent } from '@angular/material/paginator';
+import { AppFiltersOrchestratorComponent } from 'src/app/components/generic/filters/orchestrator/filters-orchestrator.component';
+import { AppDeleteDialogComponent } from 'src/app/components/generic/dialogs/delete-dialog/delete-dialog.component';
+import { MyOwnContentPipe } from 'src/app/common/pipe/my-own-content.pipe';
 
+
+//TODO: 3. Actions (create, edit, delete --> decide logic)
+//TODO: 6. OrderBy functionality
 
 export interface Section {
   name: string;
@@ -33,13 +41,15 @@ export interface Section {
   imports: [
     CommonModule,
     MaterialModule,
+    TranslateModule,
     IconModule,
     FormsModule,
     NgScrollbarModule,
-    //ControlAccessPipe,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     AppBannersNotFoundComponent,
+    AppFiltersOrchestratorComponent,
+    MyOwnContentPipe
   ],
   templateUrl: './course-list.component.html',
   styleUrl: './course-list.component.scss',
@@ -49,11 +59,21 @@ export class AppCourseListComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   private cdr = inject(ChangeDetectorRef);
   private _snackBar = inject(MatSnackBar);
+  private service = inject(CourseService);
+  private activatedRouter = inject(ActivatedRoute);
 
-    protected courses = signal<ICourse[]>([]);
-    protected filteredCourses = signal<ICourse[]>([]);
-    protected selectedCourse = signal<ICourse | null>(null);
 
+  protected courses = signal<ICourse[]>([]);
+  protected filteredCourses = signal<ICourse[] | null>(null);
+  protected selectedCourse = signal<ICourse | null>(null);
+
+  filtersConfig: FilterConfig[] = CourseFiltersData;
+  length!: number;
+  pageSize: number = 10;
+  currentPageIndex: number = 0;
+  pageSizeOptions: number[] = [5, 10, 25, 50, 100]
+
+  filters!: IQueryingDto;
 
   mobileQuery: MediaQueryList;
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: 1199px)`);
@@ -62,29 +82,20 @@ export class AppCourseListComponent implements OnInit {
   loading: boolean = false;
 
   callingOrgControl = new FormControl('');
-  filteredCallingOrgs: ICallingOrg[];
+  filteredCallingOrgs: ICaller[];
   filtersForm!: FormGroup;
 
 
   courseTypes: ICourseType[] = [];
   selectedCourseType: ICourseType | null = null;
-  callingOrgs: ICallingOrg[] = [];
-  selectedCallingOrg: ICallingOrg | null = null;
+  callingOrgs: ICaller[] = [];
+  selectedCallingOrg: ICaller | null = null;
 
-  notes: Section[] = [
-    { name: 'newest', icon: 'calendar' },
-    { name: 'Price: High-Low', icon: 'sort-descending' },
-    { name: 'Price: Low-High', icon: 'sort-ascending' },
-    { name: 'discounted', icon: 'percentage' },
-  ];
-  selectedSortBy: string = this.notes[0].name;
-  selectedColor: string | null = null;
   isMobileView = false;
 
   constructor(
-    private courseService: CourseService,
     private fb: FormBuilder,
-     private route: ActivatedRoute,
+    private route: ActivatedRoute,
   ) {
     const media = inject(MediaMatcher);
     this.mobileQuery = media.matchMedia('(max-width: 1199px)');
@@ -95,183 +106,58 @@ export class AppCourseListComponent implements OnInit {
     });
 
     this.filtersForm = this.fb.group({
-      callingOrg: [''],
+      caller: [''],
       description: [''],
-    }); 
+    });
+  }
+
+  onPageChange(event: PageEvent) {
+    this.currentPageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getItems();
+  }
+
+  onFiltersChanged(filters: IQueryingDto) {
+    this.filters = filters;
+    this.getItems();
+  }
+
+  create() {
+    this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/courses/new`]);
+
   }
 
   ngOnInit(): void {
-    this.getCourseTypes();
-    this.getCallingOrgs()
-    this.getCourseList();
-
-      this.filtersForm.get('topic')?.valueChanges
-      .pipe(
-        distinctUntilChanged() // Optional: Only emit when the value is truly different
-      )
-      .subscribe((value) => {
-        this.filteredCallingOrgs = this._filter(value);
-      });
+    this.getItems();
   }
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.filteredCourses.set(this.filter(filterValue));
-  }
-
-  filter(value: string): ICourse[] {
-    return this.courses()
-      .filter(
-        (r) => r.description.toLowerCase().indexOf(value.toLowerCase()) !== -1 || r.code.toLowerCase().indexOf(value.toLowerCase()) !== -1
-      );
-  }
-
-  getCallingOrgs() {
-    this.courseService.getCallingOrgs().subscribe({
-      next: (data) => {
-        this.callingOrgs = data;
-        this.filteredCallingOrgs = data;
-        this.selectedCallingOrg = this.callingOrgs.filter(org => org.code.toLowerCase() === 'all')[0];
-      },
-      error: (error) => {
-        console.error('There was an error!', error); 
-      }
-    });
-  }
-  getCourseTypes() {
-    this.courseService.getTypes().subscribe({
-      next: (data) => {
-        this.courseTypes = data;
-      },
-      error: (error) => {
-        console.error('There was an error!', error);
-      }
-    });
-  }
-  
-  getCourseList() {
-    this.loading = true;
-    this.courseService.getAll().subscribe({
-      next: (data) => {
-        this.loading = false;
-        this.courses.set(data.rows as ICourse[]);
-        this.filteredCourses.set(data.rows as ICourse[]);
-      },
-      error: (error) => {
-        console.error('There was an error!', error);
-      }
-    });
-  }
-
-  
-/*   getCallingOrg(callingOrg: ICallingOrg): void {
-    this.selectedCallingOrg = callingOrg;
-    if (callingOrg.code.toLowerCase() === 'all') {
-      this.filteredCourses = [...this.courses];
-    } else {
-      this.filteredCourses = this.courses.filter((course) =>
-        course.calling_org?.id === callingOrg.id
-      );
+  getItems() {
+    this.filters = {
+      ...this.filters,
+      take: this.pageSize,
+      skip: this.pageSize * this.currentPageIndex
     }
-  } */
-  
-
-/*   getSorted(name: string): void {
-    this.selectedSortBy = name; // ✅ Add this line to track selection
-
-    const nameLower = name.toLowerCase();
-
-    switch (nameLower) {
-      case 'newest':
-        this.filteredCourses = [...this.courses].sort((a, b) => {
-          const dateA = new Date(a.calling_year);
-          const dateB = new Date(b.calling_year);
-          return dateB.getTime() - dateA.getTime(); // Newest first
-        });
-        break;
-      default:
-        this.filteredCourses = [...this.courses];
-    }
-  } */
-
-/*   filterByCourseType(courseType: ICourseType): void {
-    if (courseType.code.toLowerCase() === 'all') {
-      this.filteredCourses = [...this.courses];
-    } else {
-      this.filteredCourses = this.courses.filter(
-        (course) => course.type?.code === courseType.code
-      );
-    }
-  } */
-  
-  private _filter(value: string): ICallingOrg[] {
-    return this.callingOrgs.filter((option) =>
-      option.description.toLowerCase().includes(value.toLowerCase())
-    );
-  }
-
-  getProductList() {
-    this.searchText = '';
-  }
-
-  isOver(): boolean {
-    return this.mediaMatcher.matches;
-  }
-
-  getAddProductRoute() {
-    this.router.navigate(['apps/product/add-product']);
-  }
-  openDialog(idOrIds: number | number[]): void {
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: {
-        ids: Array.isArray(idOrIds) ? idOrIds : [idOrIds], // Always pass as array
+    this.filteredCourses.set(null);
+    this.service.getAll(this.filters).subscribe({
+      next: (res) => {
+        this.courses.set(res.rows as ICourse[]);
+        console.log(this.courses())
+        this.length = res.total;
+        this.filteredCourses.set(res.rows as ICourse[]);
       },
-      width: '400px',
-      enterAnimationDuration: '0ms',
-      exitAnimationDuration: '0ms',
-    });
-
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result === 'delete') {
-        if (Array.isArray(idOrIds)) {
-        } else {
-          this.getDeletedById(idOrIds); // ⬅️ Handle single deletion
-        }
-      }
-    });
-  }
-  getDeletedById(id: number) {
-/*     this.filteredCourses = this.filteredCourses.filter(
-      (product) => product.id !== id
-    );
-
-    this.cdr.detectChanges(); // Optional if view updates correctly
-    this.openSnackBar('Product deleted successfully!'); */
-  }
-  openSnackBar(message: string) {
-    this._snackBar.open(message, 'Close', {
-      duration: this.durationInSeconds * 1000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
+      //error: (error) => { console.error('There was an error!', error)}
     });
   }
 
-  getCourseDetails(course: ICourse) {
-    //this.router.navigate(['apps/product/product-details']);
-    this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/courses/:courseId/details`.replace(':courseId', course.id.toString())]);
+  goToCourseDetails(course: ICourse) {
+    if (course.id) this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/courses/:courseId/details`.replace(':courseId', course.id.toString())]);
   }
 
-  toggleColor(color: string): void {
-    this.selectedColor = this.selectedColor === color ? null : color;
-  }
-  getEditedProduct(course: ICourse) {
-    this.router.navigate(['apps/product/edit-product']);
-  }
   getStarClass(index: number, rating?: number): string {
-    const safeRating = rating ?? 0 ; // Fallback if undefined
+    const safeRating = rating ?? 0; // Fallback if undefined
     const fullStars = Math.floor(safeRating); // Full stars
     const partialStars = safeRating % 1 !== 0; // Whether there is a partial star
-  
+
     if (index < fullStars) {
       return 'fill-warning'; // full star
     } else if (index === fullStars && partialStars) {
@@ -280,7 +166,34 @@ export class AppCourseListComponent implements OnInit {
       return ''; // empty star, no class
     }
   }
-  
-  
-  
+
+  remove(id: number) {
+    const dialogRef = this.dialog.open(AppDeleteDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'delete') {
+        this.service.delete(id || 0).subscribe({
+          next: (res) => {
+            this.getItems();
+            this.showSnackbar(res.message);
+          },
+          //error: (error) => console.error(error)
+        })
+      }
+    });
+  }
+
+  update(id: number) {
+    const courseId: string = id.toString() || '';
+    this.router.navigate([`${this.activatedRouter?.snapshot.data['role'].toLowerCase()}/courses/:courseId/edit`.replace(':courseId', courseId)]);
+  }
+
+  showSnackbar(message: string): void {
+    this._snackBar.open(message, 'Close', {
+      duration: 2000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
+
 }

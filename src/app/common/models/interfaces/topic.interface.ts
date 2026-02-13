@@ -1,10 +1,12 @@
-import { Source, IGanttTask, ISection, IMermaid, IVideo, IBlock } from ".";
+import { Source, IGanttTask, ISection, IMermaid, IVideo, IBlock, ITopicProgress } from ".";
 
 export interface ITopic {
     id: number;
     name: string;
+    code?: string;
     description: string;
     section?: ISection;
+    sectionId?: number;
     summary: string;
     sources: Source[];
     mermaids: IMermaid[];
@@ -13,10 +15,6 @@ export interface ITopic {
     tasks?: IGanttTask[];
     blocks?: IBlock[];
     isEnded?: boolean;
-}
-
-
-export interface IIncomingTopics {
-    total: number;
-    rows: ITopic[];
+    progress?: ITopicProgress;
+    courseId?: number;
 }

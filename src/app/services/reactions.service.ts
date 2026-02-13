@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Routes } from "../common/config";
-import { QueryingDto, IReaction, IFlashcard, IQuestion, IRule, IScheme, IUser, ReactionResponse } from "../common/models/interfaces";
+import { IQueryingDto, IReaction, IFlashcard, IQuestion, IRule, IDiagram, IUser, ReactionResponse } from "../common/models/interfaces";
 import { buildParams } from "../common/utils";
 
 @Injectable({ providedIn: 'root' })
@@ -19,11 +19,10 @@ export class ReactionsService {
      * @returns 
      */
     public processReaction(
-        content: IScheme | IRule | IFlashcard | IQuestion,
-        queryingDto?: QueryingDto,
+        content: IDiagram | IRule | IFlashcard | IQuestion,
+        queryingDto?: IQueryingDto,
         feedback?: string
     ): Observable<IReaction> {
-        console.log("DTO querying: ", queryingDto)
         let params = new HttpParams();
         if (queryingDto)
             params = buildParams(queryingDto, params);
@@ -38,9 +37,8 @@ export class ReactionsService {
      * @returns string: the user's vote on the feature 
      */
     public getMyVote(
-        queryingDto?: QueryingDto,
+        queryingDto?: IQueryingDto,
     ): Observable<ReactionResponse> {
-        console.log("DTO querying: ", queryingDto)
         let params = new HttpParams();
         if (queryingDto)
             params = buildParams(queryingDto, params);
@@ -55,9 +53,8 @@ export class ReactionsService {
      * @returns likeCount (number) && dislikeCount (number)
      */
     public getVoteState(
-        queryingDto?: QueryingDto,
+        queryingDto?: IQueryingDto,
     ): Observable<ReactionResponse> {
-        console.log("DTO querying: ", queryingDto)
         let params = new HttpParams();
         if (queryingDto)
             params = buildParams(queryingDto, params);

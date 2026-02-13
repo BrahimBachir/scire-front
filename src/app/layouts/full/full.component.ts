@@ -11,14 +11,14 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { AppBreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { CustomizerComponent } from './shared/customizer/customizer.component';
-import { AppAuthBrandingComponent } from 'src/app/common/shared/branding/auth-branding.component';
-import { AppNavItemComponent } from 'src/app/common/shared/sidebar/nav-item/nav-item.component';
-import { SidebarComponent } from 'src/app/common/shared/sidebar/sidebar.component';
-import { HeaderComponent } from 'src/app/common/shared/header/header.component';
-import { navItems } from 'src/app/common/shared/sidebar/sidebar-data';
+import { AppAuthBrandingComponent } from 'src/app/components/generic/branding/auth-branding.component';
+import { HeaderComponent } from 'src/app/components/generic/header/header.component';
+import { AppNavItemComponent } from 'src/app/components/generic/sidebar/nav-item/nav-item.component';
+import { navItems } from 'src/app/components/generic/sidebar/sidebar-data';
+import { SidebarComponent } from 'src/app/components/generic/sidebar/sidebar.component';
+import { IconModule } from 'src/app/icon/icon.module';
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
 const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
@@ -50,7 +50,7 @@ interface quicklinks {
     CommonModule,
     SidebarComponent,
     NgScrollbarModule,
-    TablerIconsModule,
+    IconModule,
     HeaderComponent,
     AppBreadcrumbComponent,
     CustomizerComponent,

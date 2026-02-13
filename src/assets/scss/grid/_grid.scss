@@ -8,6 +8,15 @@
   margin-left: variables.$grid-gutter * -.5;
 }
 
+.col {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  //gap: variables.$grid-gutter;
+  padding-right: variables.$grid-gutter * .5;
+  padding-left: variables.$grid-gutter * .5;
+}
+
 .no-gutters {
   margin-right: 0;
   margin-left: 0;

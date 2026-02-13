@@ -17,7 +17,6 @@ import {
   trigger,
 } from '@angular/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
 import { NavService } from 'src/app/services/nav.service';
@@ -25,10 +24,11 @@ import { ICourse } from 'src/app/common/models/interfaces';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/common/store/app.store';
 import { selectChoosenCourse } from 'src/app/common/store/selectors/learning.selectors';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
   selector: 'app-nav-item',
-  imports: [TranslateModule, TablerIconsModule, MaterialModule, CommonModule],
+  imports: [TranslateModule, IconModule, MaterialModule, CommonModule],
   templateUrl: './nav-item.component.html',
   styleUrls: [],
   animations: [
@@ -94,7 +94,6 @@ export class AppNavItemComponent implements OnChanges {
   }
 
   onSubItemSelected(item: NavItem) {
-    console.log(item)
     if (!item.children || !item.children.length) {
       if (this.expanded && window.innerWidth < 1024) {
         this.notify.emit();
@@ -118,7 +117,7 @@ export class AppNavItemComponent implements OnChanges {
 
     const baseRoleUrl = currentUrl.split('/')[1];
     if (item.type && item.type === 'GEN') this.route = `/${baseRoleUrl}/${item.route}`;
-    else if (this.selectedCourse) this.route = `/${baseRoleUrl}/${item.route?.replace(':courseId', this.selectedCourse?.id.toString())}`;
+    else if (this.selectedCourse && this.selectedCourse?.id) this.route = `/${baseRoleUrl}/${item.route?.replace(':courseId', this.selectedCourse?.id.toString())}`;
   }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppInitState } from '../models/states';
+import { AppInitState } from '../common/models/states';
 
 @Injectable()
 export class TokenStorageService {

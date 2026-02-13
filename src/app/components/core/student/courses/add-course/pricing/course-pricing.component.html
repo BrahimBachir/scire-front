@@ -1,0 +1,82 @@
+<form [formGroup]="AddProduct" (ngSubmit)="getAddProduct(AddProduct.value)">
+  <div class="row p-x-15">
+    <mat-card class="shadow-none b-1 rounded p-15 col-xl-12">
+      <h4>Pricing</h4>
+      <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-20">Base Price <span class="text-error">*</span></mat-label>
+      <mat-form-field appearance="outline" class="w-100 p-0" color="primary">
+        <input type="text" formControlName="base_price" placeholder="Base Price " aria-label="text" matInput />
+        <mat-hint class="f-s-12">Set the product price.</mat-hint>
+      </mat-form-field>
+
+      <div class="f-s-14 f-w-600 m-b-8 d-block m-t-20">
+        Discount Type<span class="text-error">*</span>
+      </div>
+      <mat-radio-group [value]="selectedOption" aria-labelledby="example-radio-group-label"
+        class="d-flex flex-wrap gap-24 justify-content-start 100 mt-2">
+        @for (season of seasons; track season) {
+        <mat-card class="shadow-none b-1 rounded d-flex gap-30 align-items-center flex-row">
+          <mat-radio-button class="p-r-16 p-l-6 p-y-2" color="primary" [value]="season">
+            {{ season }}
+          </mat-radio-button>
+        </mat-card>
+        }
+      </mat-radio-group>
+
+      <ng-container [ngSwitch]="selectedOption">
+        <div *ngSwitchCase="'Percentage %'" output>
+          <div class="f-s-14 f-w-500 mt-4">
+            Set Discount Percentage<span class="text-error">*</span>
+          </div>
+          <mat-slider class="m-b-10">
+            <input formControlName="set_discount_percentage" matSliderThumb min="0" max="100" step="1" value="30" />
+          </mat-slider>
+          <div>
+            <mat-hint class="f-s-12">Set a percentage discount to be applied on this
+              product.</mat-hint>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'Fixed Price'" class="w-100">
+          <div>
+            <div class="f-s-14 f-w-500 m-b-5">
+              Fixed Discounted Price <span class="text-error">*</span>
+            </div>
+            <mat-form-field class="w-100 m-b-10" appearance="outline">
+              <input formControlName="fixed_discounted_price" type="text" placeholder="Fixed Discounted Price"
+                aria-label="text" matInput />
+              <mat-hint class="f-s-12">Set the discounted product price. The product will be
+                reduced at the determined fixed price.
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-container>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="f-s-14 f-w-600 m-b-8 d-block">
+            Tax Class<span class="text-error">*</span>
+          </div>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select formControlName="tax_class" disableOptionCentering placeholder="Tax Class">
+              @for (taxClass of taxClasses; track taxClass) {
+              <mat-option [value]="taxClass">
+                {{ taxClass }}
+              </mat-option>
+              }
+            </mat-select>
+            <mat-hint class="f-s-12">Set the product tax class.</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <div class="f-s-14 f-w-600 m-b-8 d-block">
+            VAT Amount (%)<span class="text-error">*</span>
+          </div>
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="text" placeholder="Product name" formControlName="VAT_amount" matInput />
+            <mat-hint class="f-s-12">Set the product VAT about.</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</form>

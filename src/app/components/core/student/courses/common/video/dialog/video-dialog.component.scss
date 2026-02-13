@@ -1,0 +1,18 @@
+.table-container {
+  width: 100%;      
+  overflow-x: auto; 
+  white-space: nowrap;
+}
+
+.arti-feat-table {
+  width: 100%;      
+  border-collapse: collapse;
+}
+
+.start-field, .end-field {
+    width: 80px;
+}
+
+.article {
+    width: 110px !important;
+}

@@ -1,8 +1,10 @@
-import { ICategory } from "./category.interface";
+import { ITopicCategory } from "./topic-category.interface";
 
 export interface ISection {
   id: number;
   name: string;
+  description: string;
   code?: string;
-  category: ICategory;
+  category: ITopicCategory;
+  categoryId?: number;
 }

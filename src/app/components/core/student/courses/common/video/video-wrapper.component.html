@@ -1,0 +1,42 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <app-filters-orchestrator [config]="filtersConfig" (filtersChange)="onFiltersChanged($event)">
+    </app-filters-orchestrator>
+  </mat-card-content>
+</mat-card>
+<div>
+    <app-video [fromScreen]="true" [ruleId]="articleId" [articleId]="articleId"></app-video>
+</div>
+
+<!-- <mat-card class="cardWithShadow">
+    <mat-card-content>
+        <app-filters-orchestrator [config]="filtersConfig" (filtersChange)="onFiltersChanged($event)">
+        </app-filters-orchestrator>
+    </mat-card-content>
+</mat-card>
+<mat-card class="cardWithShadow m-b-0">
+    <mat-card-header class="b-b-1 justify-content-end">
+        <button mat-mini-fab class="bg-primary text-white" [matTooltip]="'BUTTONS.CREATE.VIDEO' | translate"
+            [aria-label]="'BUTTONS.CREATE.VIDEO' | translate" (click)="create()">
+            <i-tabler name="plus" class="icon-20 d-flex"></i-tabler>
+        </button>
+    </mat-card-header>
+    @if(video()){
+        <mat-card-content class="module-list">
+
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions class="d-flex d-raw gap-16">
+            <button mat-stroked-button color="warn" class="w-100" (click)="getPrevious()">
+                <i-tabler name="chevron-left" class="icon-18 d-flex text-primary"></i-tabler>
+            </button>
+            <button mat-stroked-button color="warn" class="w-100" (click)="getNext()">
+                <i-tabler name="chevron-right" class="icon-18 d-flex text-primary"></i-tabler>
+            </button>
+        </mat-card-actions>
+        } @else {
+    <mat-card-content class="b-t-1 d-flex d-col justify-content-center">
+        <app-banner-no-filters [bannerText]="bannerText"></app-banner-no-filters>
+    </mat-card-content>
+    }
+</mat-card> -->

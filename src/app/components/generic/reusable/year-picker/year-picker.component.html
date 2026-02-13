@@ -1,0 +1,11 @@
+<mat-form-field appearance="outline" class="w-100">
+    <mat-label>Año de la convocatoria</mat-label>
+    <input matInput [matDatepicker]="picker" [formControl]="date" [min]="minDate" placeholder="Seleccione un año" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker startView="multi-year" (yearSelected)="chosenYearHandler($event, picker)"></mat-datepicker>
+    @if(date.hasError('required')){
+    <mat-error>
+        Elemento requerido *
+    </mat-error>
+    }
+</mat-form-field>

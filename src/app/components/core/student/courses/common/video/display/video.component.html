@@ -1,0 +1,58 @@
+<mat-card class="card shadow-none b-1 rounded theme-card m-t-15">
+    @if(fromScreen()){
+    <mat-card-header class="justify-content-end">
+        <button mat-mini-fab class="bg-primary text-white" [matTooltip]="'BUTTONS.CREATE.COURSE' | translate"
+            [aria-label]="'BUTTONS.CREATE.COURSE' | translate" (click)="create()">
+            <i-tabler name="plus" class="icon-20 d-flex"></i-tabler>
+        </button>
+    </mat-card-header>
+    }
+    @if(video() && video()?.id !== 0){
+    <mat-card-content class="b-t-1 d-flex d-col justify-content-center">
+        <youtube-player class="rounded d-flex align-items-center justify-content-center m-y-15"
+            [videoId]="video()?.code" [startSeconds]="video()?.startSeconds" [endSeconds]="video()?.endSeconds"
+            [height]="videoHeight" [width]="videoWidth"></youtube-player>
+        <div class="text-center p-y-8 p-x-12 actions">
+            @if( (video()?.creatorId || 0 | myOwnContent) | async ) {
+            <button mat-mini-fab class="cart-btn-overlay bg-error text-white"
+                [matTooltip]="'DELETE.VIDEO' | translate" (click)=" deleteItem(); $event.stopPropagation()">
+                <i-tabler name="trash" class="icon-16 d-flex"></i-tabler>
+            </button>
+            }
+            @if((video()?.creatorId || 0 | myOwnContent) | async ) {
+            <button mat-mini-fab class="cart-btn-overlay bg-primary text-white"
+                [matTooltip]="'EDIT.VIDEO' | translate" (click)="updateItem()">
+                <i-tabler name="pencil" class="icon-16 d-flex"></i-tabler>
+            </button>
+            }
+        </div>
+    </mat-card-content>
+    <app-element-navigation class="m-t-15" [canGoNext]="navigationState.hasNext"
+        [canGoPrevious]="navigationState.hasPrevious" (next)="goNext()"
+        (previous)="goPrevious()"></app-element-navigation>
+
+    <mat-divider></mat-divider>
+    <div class="d-flex align-items-center justify-content-between m-10">
+        <app-reactions [content]="video" [featureType]="featureType"></app-reactions>
+        <div>|</div>
+        <i-tabler [matTooltip]="'Generado por: ' + video()?.creationType?.description || ''" class="icon-20 d-flex"
+            [name]="video()?.creationType?.icon || ''"></i-tabler>
+    </div>
+    } @else if(fromScreen()){
+    <mat-card-content class="b-t-1 d-flex d-col justify-content-center">
+        <app-banner-no-filters [bannerText]="bannerText"></app-banner-no-filters>
+    </mat-card-content>
+    } @else {
+    <mat-card class="shadow-none">
+        <div class="d-flex col align-items-center justify-content-center text-center">
+            <p>No hay videos registrados para este artículo. Por favor, considera ayudar a la comunidad apoartando
+                alguno.
+            </p>
+            <p>!Muchas gracias de antemano!</p>
+            <button mat-mini-fab [matTooltip]="creationAction.tooltip" [class]="creationAction.buttonClass"
+                [attr.aria-label]="creationAction.label" (click)="createElement(creationAction.entity)">
+                <i-tabler class="icon-20 d-flex" [name]="creationAction.icon"></i-tabler>
+            </button>
+        </div>
+    </mat-card>
+    }

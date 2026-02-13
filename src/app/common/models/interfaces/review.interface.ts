@@ -1,11 +1,11 @@
-import { FeatureType, ICourse, IFlashcard, IQuestion, IRule, IScheme, IUser } from ".";
+import { FeatureType, ICourse, IFlashcard, IQuestion, IRule, IDiagram, IUser } from ".";
 
 export interface IReview {
     id?: number;
     user?: IUser;
     userId?: number;
     featureId: number;
-    scheme?: IScheme;
+    diagram?: IDiagram;
     flashcard?: IFlashcard;
     course?: ICourse;
     question?: IQuestion;

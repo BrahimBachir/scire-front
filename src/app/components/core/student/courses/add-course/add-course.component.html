@@ -1,0 +1,26 @@
+<mat-card class="cardWithShadow p-15">
+  <app-course-general-info
+    [form]="form.controls.general"
+    [isEditMode]="isEditMode">
+  </app-course-general-info>
+
+    <app-course-extra-info
+    [form]="form.controls.extra"
+    [isEditMode]="isEditMode">
+  </app-course-extra-info>
+
+  @if(isEditMode){
+  <app-course-exercises></app-course-exercises>
+  <app-course-topics></app-course-topics>
+  <app-course-pricing></app-course-pricing>
+  }
+  <div class="d-flex justify-content-end">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="save()"
+      [disabled]="form.invalid">
+      Guardar
+    </button>
+  </div>
+</mat-card>

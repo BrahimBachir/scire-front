@@ -5,7 +5,7 @@ import {
   LearningState,
   UsersState,
 } from '.';
-import { IAddress, ICategory, ICourse, IEmail, IGender, IPermit, IPhone, IQuestion, IRole, ISection, ITest, ITopic, IUser } from '../interfaces';
+import { IAddress, ITopicCategory, ICourse, IEmail, IGender, IPermit, IPhone, IQuestion, IRole, ISection, ITest, ITopic, IUser, IArticle, IRule } from '../interfaces';
 
 export const DEFAULT_ROLE: IRole = {
   id: 0,
@@ -95,15 +95,17 @@ export const DEFAULT_USERS: IUser[] = [{
   ...createDefaultUser()
 }]
 
-export const DEFAULT_CATEGORY: ICategory = {
+export const DEFAULT_CATEGORY: ITopicCategory = {
   id: 0,
-  name: ''
+  name: '',
+  description: ''
 }
 
 export const DEFAULT_SECTION: ISection = {
   id: 0,
   name: '',
-  category: DEFAULT_CATEGORY
+  category: DEFAULT_CATEGORY,
+  description: ''
 }
 
 export const DEFAULT_TOPIC: ITopic = {
@@ -114,7 +116,8 @@ export const DEFAULT_TOPIC: ITopic = {
   sources: [],
   mermaids: [],
   videos: [],
-  scaffolder: ''
+  scaffolder: '',
+  sectionId: 0
 }
 
 export const DEFAULT_QUESTION: IQuestion = {
@@ -129,11 +132,24 @@ export const DEFAULT_COURSE: ICourse = {
   id: 0,
   code: '',
   description: '',
-  calling_org: undefined,
-  calling_year: '',
+  caller: undefined,
+  calling_year: 0,
   examDate: undefined,
   type: undefined,
   vacancies: 0
+}
+
+export const DEFAULT_ARTICLE: IArticle = {
+  title: '',
+  versions: [],
+  id: 0,
+  description: ''
+}
+
+export const DEFAULT_RULE: IRule = {
+  id: 0,
+  code: '',
+  description: ''
 }
 
 export function createDefaultTest(): ITest {
@@ -168,7 +184,10 @@ export const InitialLearningState: LearningState = {
   topics: [DEFAULT_TOPIC],
   questions: [DEFAULT_QUESTION],
   courses: [DEFAULT_COURSE],
-  selectedCourse: DEFAULT_COURSE
+  selectedCourse: DEFAULT_COURSE,
+  selectedArticle: DEFAULT_ARTICLE,
+  selectedTopic: DEFAULT_TOPIC,
+  selectedRule: DEFAULT_RULE
 }
 
 export const InitialAuthState: AuthState = {

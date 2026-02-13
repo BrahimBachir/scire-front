@@ -90,3 +90,15 @@
     }
   }
 }
+
+::ng-deep html .mat-mdc-card .mat-mdc-card-header {
+    padding: 15px 15px !important;
+}
+
+::ng-deep .ng-scroll-viewport > .ng-scroll-content {
+    width: auto !important;
+}
+
+.actions {
+  margin-top: -46px;
+}

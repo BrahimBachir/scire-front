@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Routes } from '../common/config';
-import { QueryingDto,IMetadataSource, IRuleType, IRuleAmbit, IRule, IParagraph, IRuleIndex, IGazette, IArticle } from '../common/models/interfaces';
+import { IQueryingDto,IMetadataSource, IRuleType, IRuleAmbit, IRule, IParagraph, IRuleIndex, IRuleGazette, IArticle, IIncomingEntity } from '../common/models/interfaces';
 import { buildParams } from '../common/utils';
 
 @Injectable({ providedIn: 'root' })
@@ -11,21 +11,33 @@ export class LegislationService {
   routes = Routes;
   constructor(private http: HttpClient) {}
 
-  public getArticle(queryingDto?: QueryingDto): Observable<IArticle> {
+  /**
+   * 
+   * @param queryingDto 
+   * @returns 
+   */
+  public getArticle(articleId: number): Observable<IArticle> {
     return this.http.get<IArticle>(
       environment.api_base_url + 
-      this.routes.api.rule.articles.replace(':ruleCode', queryingDto?.ruleCode || '')
-        .replace(':artiCode', queryingDto?.artiCode ? queryingDto.artiCode : '' )
+      this.routes.api.rule.article
+        .replace(':articleId', ''+articleId )
     );
   }
 
-  public getIndex(queryingDto?: QueryingDto): Observable<IRuleIndex[]> {
+  public getRuleArticles(ruleId: number): Observable<IArticle[]> {
+    return this.http.get<IArticle[]>(
+      environment.api_base_url + 
+      this.routes.api.rule.articles.replace(':ruleId', ruleId.toString())
+    );
+  }
+
+  public getIndex(queryingDto?: IQueryingDto): Observable<IRuleIndex[]> {
     return this.http.get<IRuleIndex[]>(
       environment.api_base_url + this.routes.api.rule.index.replace(':ruleCode', queryingDto?.ruleCode || '')
     );
   }
 
-  public getMetadata(queryingDto?: QueryingDto): Observable<IMetadataSource | IRule> {
+  public getMetadata(queryingDto?: IQueryingDto): Observable<IMetadataSource | IRule> {
     return this.http.get<IMetadataSource | IRule>(
       environment.api_base_url + this.routes.api.rule.metadata.replace(':ruleCode', queryingDto?.ruleCode || '')
     );
@@ -43,18 +55,18 @@ export class LegislationService {
     );
   }
 
-  public getRuleGazettes(): Observable<IGazette[]> {
-    return this.http.get<IGazette[]>(
+  public getRuleGazettes(): Observable<IRuleGazette[]> {
+    return this.http.get<IRuleGazette[]>(
       environment.api_base_url + this.routes.api.rule.gazettes
     );
   }
 
-  public getRules(queryingDto?: QueryingDto): Observable<IRule[]> {
+  public getRules(queryingDto?: IQueryingDto): Observable<IIncomingEntity> {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);
 
-    return this.http.get<IRule[]>(
+    return this.http.get<IIncomingEntity>(
       environment.api_base_url + this.routes.api.rule.base, {params}
     );
   }
@@ -72,12 +84,12 @@ export class LegislationService {
   }
 
   public createRule(rule: IRule): Observable<IRule> {
-    console.log("Creating rule: ", rule);
+    console.log("Creating rule at service: ", rule)
     return this.http.post<IRule>(environment.api_base_url + this.routes.api.rule.base, rule)
   }
 
-  public updateRule(id: number, rule: IRule): Observable<IRule> {
-    return this.http.patch<IRule>(`${environment.api_base_url + this.routes.api.rule.base}/${id}`, rule)
+  public updateRule(rule: IRule): Observable<IRule> {
+    return this.http.patch<IRule>(`${environment.api_base_url + this.routes.api.rule.base}/${rule.id}`, rule)
   }
 
   public deleteRule(id: number){

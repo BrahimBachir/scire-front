@@ -15,7 +15,6 @@ export class GendersService {
   ) {}
     getAll(): Observable<IGender[]> {
         let URL = `${environment.api_base_url}${this.routes.api.genders.all}`;
-        console.log("URL: ", URL)
         return this.http.get<IGender[]>(URL);
     }
 

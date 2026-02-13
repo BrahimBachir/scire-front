@@ -1,0 +1,8 @@
+<mat-form-field appearance="outline" class="w-100">
+  <input matInput 
+         placeholder="00:00" 
+         [value]="displayValue" 
+         [disabled]="isDisabled"
+         (input)="onInputChange($event)"
+         (blur)="onTouched()">
+</mat-form-field>

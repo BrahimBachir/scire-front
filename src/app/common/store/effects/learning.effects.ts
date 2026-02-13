@@ -22,7 +22,7 @@ export class LearningEffects {
         concatMap(({ course }) =>
           from(this.router.navigate([`student/courses/${course.id}/details`])).pipe(
             catchError((error) => {
-              console.error('[LEARNING] Error:', error); 
+              //console.error('[LEARNING] Error:', error); 
               return EMPTY;
             })
           )
