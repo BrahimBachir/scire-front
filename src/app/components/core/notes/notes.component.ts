@@ -1,12 +1,11 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NoteService } from 'src/app/services';
-import { FilterConfig, FiltersOptions, INote, IFilters, TernaryFilterConfig, TernaryItem, IQueryingDto } from 'src/app/common/models/interfaces';
+import { FilterConfig, FiltersOptions, INote, TernaryFilterConfig, IQueryingDto } from 'src/app/common/models/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateGenericElementDialogComponent } from '../student/courses/common/create-generic-element/create-generic-element-dialog/create-generic-element-dialog.component';
 import { AppDeleteDialogComponent } from '../../generic/dialogs/delete-dialog/delete-dialog.component';
@@ -14,6 +13,7 @@ import { AppFiltersOrchestratorComponent } from '../../generic/filters/orchestra
 import { NoteFavoOptions, NoteFiltersData } from 'src/app/common/data/filters/note-filter-items';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { TranslateModule } from '@ngx-translate/core';
+import { IconModule } from 'src/app/icon/icon.module';
 
 //TODO: Error when the rule dropdown of the create/edit component is overlaping with the filters component (named the same, of course)
 
@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     CommonModule,
     NgScrollbarModule,
-    TablerIconsModule,
+    IconModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
@@ -42,6 +42,7 @@ export class AppNotesComponent implements OnInit {
   pageSize: number = 10;
   pageSizeOptions: number[] = [5, 10, 25, 50, 100]
   currentPageIndex: number = 0;
+  firstLoad: boolean = true;
 
   filters!: IQueryingDto;
 
@@ -88,6 +89,7 @@ export class AppNotesComponent implements OnInit {
 
   createNote() {
     const dialogRef = this.dialog.open(CreateGenericElementDialogComponent, {
+      width: '70vw',
       data: {
         action: 'CREAR',
         feature: this.feature,
@@ -109,11 +111,12 @@ export class AppNotesComponent implements OnInit {
   }
 
   getNotes() {
-       this.filters = {
+    this.filters = {
       ...this.filters,
       take: this.pageSize,
       skip: this.pageSize * this.currentPageIndex
     }
+
     this.service.getAll(this.filters).subscribe({
       next: (res) => {
         this.notes.set(res.rows as INote[])
@@ -178,19 +181,14 @@ export class AppNotesComponent implements OnInit {
   }
 
   editeNote() {
+    const note = this.selectedNote();
     const dialogRef = this.dialog.open(CreateGenericElementDialogComponent, {
       data: {
         action: 'EDITAR',
         feature: this.feature,
-        rule: {
-          isEditable: false,
-          element: null
-        },
-        article: {
-          isEditable: false,
-          element: null
-        },
-        element: this.selectedNote()
+        ruleId: note?.ruleId,
+        articlesIds: note?.articlesIds,
+        element: note
       },
       //autoFocus: true, 
     });

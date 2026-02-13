@@ -1,0 +1,112 @@
+<form [formGroup]="form" class="d-flex col h-100">
+  <!-- HEADER -->
+  <div class="d-flex align-items-center justify-content-between m-t-10">
+    <h3 mat-dialog-title class="p-0">
+      {{ mode === 'EDITING' ? 'Editar' : 'Crear' }} ejercicio
+    </h3> <button mat-icon-button mat-dialog-close class="d-flex justify-content-center m-l-20 bg-error text-white">
+      <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
+    </button>
+  </div>
+
+  <!-- CONTENT -->
+  <mat-dialog-content class="flex-grow-1 p-x-0 w-100">
+
+    <div class="row p-b-15">
+      <mat-form-field appearance="outline" class="w-100 col-xl-12">
+        <mat-label>Descripción</mat-label>
+        <input type="text" matInput required aria-label="Descripción" id="description" name="description"
+          formControlName="description" placeholder="Descripción">
+        @if(form.get('description')?.hasError('required')){
+        <mat-error class="p-b-15">Requerido.*</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="row p-b-15">
+      <exercise-type-filter [mode]="mode" formControlName="typeId" class="col-lg-6"></exercise-type-filter>
+      <question-type-filter [mode]="mode" formControlName="questionsTypeId" class="col-lg-6"></question-type-filter>
+    </div>
+    <div class="row p-b-15">
+      <mat-form-field appearance="outline" class="w-100 col-4">
+        <mat-label>Núm. preguntas</mat-label>
+        <input type="number" matInput required aria-label="Núm. preguntas" id="questionCount" name="questionCount"
+          formControlName="questionCount" placeholder="Número de preguntas">
+        @if(form.get('questionCount')?.hasError('required')){
+        <mat-error class="p-b-15">Requerido.*</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 col-4">
+        <mat-label>Tiempo x preg.</mat-label>
+        <input type="number" matInput required aria-label="Tiempo x preg." id="timePerQuestion" name="timePerQuestion"
+          formControlName="timePerQuestion" placeholder="Tiempo x preg.">
+        @if(form.get('timePerQuestion')?.hasError('required')){
+        <mat-error class="p-b-15">Requerido.*</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 col-4">
+        <mat-label>Pensalización</mat-label>
+        <input type="number" step="0.01" matInput required aria-label="Pensalización" id="penaltyPerWrongAnswer" name="penaltyPerWrongAnswer"
+          formControlName="penaltyPerWrongAnswer" placeholder="Pensalización">
+        @if(form.get('penaltyPerWrongAnswer')?.hasError('required')){
+        <mat-error class="p-b-15">Requerido.*</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline" class="w-100 col-6">
+        <mat-label>Puntos totales</mat-label>
+        <input type="number" matInput required aria-label="Puntos totales" id="totalPoints" name="totalPoints"
+          formControlName="totalPoints" placeholder="Puntos totales">
+        @if(form.get('totalPoints')?.hasError('required')){
+        <mat-error class="p-b-15">Requerido.*</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 col-6">
+        <mat-label>Puntos para aprobar</mat-label>
+        <input type="number" matInput required aria-label="Puntos para aprobar" id="pointsToPass" name="pointsToPass"
+          formControlName="pointsToPass" placeholder="Puntos para aprobar">
+        @if(form.get('pointsToPass')?.hasError('required')){
+        <mat-error class="p-b-15">Requerido.*</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline" class="w-100 col-6">
+        <mat-label>Preg. temario general</mat-label>
+        <input type="number" matInput required aria-label="Preg. temario general" id="generalQuestNum" name="generalQuestNum"
+          formControlName="generalQuestNum" placeholder="Preg. temario general">
+        @if(form.get('generalQuestNum')?.hasError('required')){
+        <mat-error class="p-b-15">Requerido.*</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 col-6">
+        <mat-label>Preg. temario específico</mat-label>
+        <input type="number" matInput required aria-label="Preg. temario específico" id="specificQuestNum" name="specificQuestNum"
+          formControlName="specificQuestNum" placeholder="Preg. temario específico">
+        @if(form.get('specificQuestNum')?.hasError('required')){
+        <mat-error class="p-b-15">Requerido.*</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+
+  <!-- ACTIONS -->
+  <mat-dialog-actions class="d-flex p-x-0 justify-content-between">
+    <div>
+      @if(error){
+      <mat-error class="m-t-10">
+        {{ error }}
+      </mat-error>
+      }
+    </div>
+    <div class="d-flex justify-content-end">
+      <button mat-button mat-dialog-close>
+        Cancelar
+      </button>
+
+      <button mat-flat-button color="primary" [disabled]="form.invalid || loading" (click)="submit()">
+        {{ loading ? 'Guardando...' : 'Guardar' }}
+      </button>
+    </div>
+  </mat-dialog-actions>
+</form>

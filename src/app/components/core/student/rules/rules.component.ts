@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +18,7 @@ import { AppFiltersOrchestratorComponent } from 'src/app/components/generic/filt
 import { PageEvent } from '@angular/material/paginator';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { TranslateModule } from '@ngx-translate/core';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
   selector: 'app-courses',
@@ -27,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     MaterialModule,
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,

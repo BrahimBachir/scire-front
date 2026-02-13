@@ -45,21 +45,21 @@
   </button>
   <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow dd-notifications">
     <div class="p-x-16 p-y-20 b-b-1">
-      <div class="d-flex align-items-center cursor-pointer">
+      <div class="d-flex align-items-center">
         @if(logedUser$ | async; as user){
         <img [src]="user.image" class="rounded-circle" width="50" height="50" />
         }
         <div class="m-l-16">
-          <h6 class="f-s-14 f-w-600 m-0 d-flex align-items-center">
+          <h6 class="f-s-14 f-w-600 m-0 m-b-10 d-flex align-items-center">
             {{ (logedUser$ | async)?.full_name }}
           </h6>
-          <!-- <span>info&#64;kaptya.com</span> -->
+          <span class="{{ (plan$ | async)?.style }} p-x-8 p-y-4 item-chip f-w-500 rounded-pill ">{{ (plan$ | async)?.description }}</span>
         </div>
       </div>
     </div>
-    <div class="p-16">
+    <div class="p-15 b-b-1">
       @for(profile of profiledd; track profile.title) {
-      <a class="p-8 text-decoration-none d-block text-hover-primary" (click)="goToLink(profile)">
+      <a class="p-y-10 text-decoration-none d-block text-hover-primary" (click)="goToLink(profile)">
         <div class="d-flex align-items-center cursor-pointer">
           <h5 class="f-s-14 f-w-500 m-0 textprimary hover-text">
             {{ profile.title }}
@@ -70,13 +70,13 @@
         </div>
       </a>
       }
-      <mat-divider></mat-divider>
-      <a class="p-8 text-decoration-none d-block text-hover-primary cursor-pointer" (click)="logout()">
-        <div class="d-flex align-items-center gap-10">
-          <i-tabler class="d-flex icon-22" name="logout"></i-tabler>
-          <h5 class="f-s-14 f-w-500 m-0 textprimary hover-text">Cerrar sesión</h5>
-        </div>
-      </a>
+      <!-- <mat-divider></mat-divider> -->
     </div>
+    <a class="p-15 text-decoration-none d-block text-hover-primary cursor-pointer " (click)="logout()">
+      <div class="d-flex align-items-center gap-10">
+        <i-tabler class="d-flex icon-22" name="logout"></i-tabler>
+        <h5 class="f-s-14 f-w-500 m-0 textprimary hover-text">Cerrar sesión</h5>
+      </div>
+    </a>
   </mat-menu>
 </mat-toolbar>

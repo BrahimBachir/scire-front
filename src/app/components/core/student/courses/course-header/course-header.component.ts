@@ -1,7 +1,6 @@
-import { Component, input, Input, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, input, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,18 +13,19 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { environment } from 'src/environments/environment';
 import { CourseService } from 'src/app/services';
-import { ICourse, ITopic } from 'src/app/common/models/interfaces';
+import { ICourse } from 'src/app/common/models/interfaces';
 import { ToastrService } from 'ngx-toastr';
 import { ERROR, SUCCESS, WARNING } from 'src/app/common/config/constants';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
   selector: 'app-course-header',
   templateUrl: './course-header.component.html',
   imports: [
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatStepperModule,
     MatInputModule,
     MatButtonModule,
@@ -64,7 +64,7 @@ export class AppCourseHeaderComponent implements OnInit {
   }
 
   isFavorite() {
-     this.courseService.isFavourite(this.course.id).subscribe({
+    if(this.course.id) this.courseService.isFavourite(this.course.id).subscribe({
       next: (favourite) => this.favourite = favourite,
       error: (error) => {
         this.toastService.error(`${error.error.message}`, ERROR, {
@@ -75,7 +75,7 @@ export class AppCourseHeaderComponent implements OnInit {
   }
 
   isUserJoined() {
-         this.courseService.isJoined(this.course.id).subscribe({
+    if(this.course.id) this.courseService.isJoined(this.course.id).subscribe({
       next: (joined) => this.joined = joined,
       error: (error) => {
         this.toastService.error(`${error.error.message}`, ERROR, {
@@ -91,7 +91,7 @@ export class AppCourseHeaderComponent implements OnInit {
 
   addToFavorites() {
     this.favourite = !this.favourite;
-    this.courseService.manageCourseFavourite(this.course.id, this.favourite).subscribe({
+    if(this.course.id) this.courseService.manageCourseFavourite(this.course.id, this.favourite).subscribe({
       next: () => {
         this.toastService.success('Curso actualizado correctamente!', SUCCESS, {
           timeOut: 3000,
@@ -118,7 +118,7 @@ export class AppCourseHeaderComponent implements OnInit {
 
   joinCourse(){
     this.joined = true;
-    this.courseService.joinCourse(this.course.id).subscribe({
+    if(this.course.id) this.courseService.joinCourse(this.course.id).subscribe({
       next: () => {
         this.toastService.success('Te has unido al curso!', SUCCESS, {
           timeOut: 3000,
@@ -134,7 +134,7 @@ export class AppCourseHeaderComponent implements OnInit {
   
   unJoinCourse(){
     this.joined = false;
-    this.courseService.unJoinCourse(this.course.id).subscribe({
+    if(this.course.id)this.courseService.unJoinCourse(this.course.id).subscribe({
       next: () => {
         this.toastService.warning('Has salido!', WARNING, {
           timeOut: 3000,

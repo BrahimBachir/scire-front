@@ -1,6 +1,5 @@
 import { Component, effect, EventEmitter, forwardRef, inject, input, Input, model, OnInit, Output, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ControlValueAccessor, FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
@@ -19,20 +18,18 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/common/store/app.store';
 import { getSelectedRule } from 'src/app/common/store/selectors/learning.selectors';
 import { setSelectedRule } from 'src/app/common/store/actions';
+import { IconModule } from 'src/app/icon/icon.module';
+import { BaseFilterDirective } from 'src/app/common/directives';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'rule-filter',
   templateUrl: './rule-filter.component.html',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => RuleFilterComponent),
-    multi: true,
-  }],
   imports: [
     CommonModule,
     MaterialModule,
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
@@ -43,9 +40,41 @@ import { setSelectedRule } from 'src/app/common/store/actions';
     MatInputModule,
     MatButtonModule,
     MatAutocomplete,
+    MatTooltipModule
   ],
 })
-export class RuleFilterComponent  implements ControlValueAccessor, OnInit {
+export class RuleFilterComponent extends BaseFilterDirective<IRule> {
+  private service = inject(LegislationService);
+  private state = inject(Store<AppState>);
+
+  loadData(): void {
+    this.service.getRules().subscribe(data => {
+      this.items = data.rows as IRule[];
+      this.filteredItems = data.rows as IRule[];
+      this.applyCurrentValue();
+    });
+  }
+
+  private applyCurrentValue(): void {
+    if (this.value != null) {
+      this.syncInternalControl();
+      return;
+    }
+
+    /* if (this.mode === 'CREATING') {
+      this.state.select(getSelectedRule).subscribe(rule => {
+        if (rule) {
+          this.writeValue(rule.id);
+          this.onChange(rule.id);
+          this.control.disable({ emitEvent: false });
+        }
+      });
+    } */
+  }
+}
+
+
+/*  implements ControlValueAccessor, OnInit {
   private service = inject(LegislationService);
   private state = inject(Store<AppState>);
   @Output() valueChange = new EventEmitter<number | null>();
@@ -68,11 +97,6 @@ export class RuleFilterComponent  implements ControlValueAccessor, OnInit {
       .subscribe(value => {
         this.filteredItems = this.filter(value);
       });
-
-/*     this.state.select(getSelectedRule).subscribe((rule) => {
-      if(rule)
-        this.writeValue(rule.id)
-      }); */
   }
 
   writeValue(value: number | null): void {
@@ -156,8 +180,7 @@ clean() {
       });
     }
   }
-
-}
+} */
 
 /* export class RuleFilterComponent implements OnInit {
 

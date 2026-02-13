@@ -1,0 +1,53 @@
+<mat-card class="cardWithShadow">
+    <mat-card-content>
+        @if(form){
+        <form [formGroup]="form" class="w-100">
+            <div class="row p-b-15 w-100 m-x-0">
+                <app-topic-category-filter formControlName="categoryId"
+                    class="col-md-4 p-x-0"></app-topic-category-filter>
+                <app-topic-section-filter formControlName="sectionId" class="col-md-4 p-r-0"
+                    [parentId]="form.get('categoryId')?.value ?? null"></app-topic-section-filter>
+                <mat-form-field appearance="outline" class="w-100 col-md-4 p-r-0">
+                    <mat-label>Nombre</mat-label>
+                    <input type="text" matInput [matTooltip]="form.get('name')?.value" required aria-label="Nombre"
+                        id="name" name="name" formControlName="name" placeholder="Nombre">
+                    @if(form.get('name')?.hasError('required')){
+                    <mat-error class="p-b-15">Requerido.*</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="d-flex w-100 row justify-content-between p-b-15 m-x-0">
+                <mat-form-field appearance="outline" class="w-100 col-xl-12 p-x-0">
+                    <mat-label>Descripción</mat-label>
+                    <input type="text" matInput [matTooltip]="form.get('description')?.value" required
+                        aria-label="Descripción" id="description" name="description" formControlName="description"
+                        placeholder="Descripción">
+                    @if(form.get('description')?.hasError('required')){
+                    <mat-error class="p-b-15">Requerido.*</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="d-flex m-x-0 row justify-content-between p-b-15">
+                <div class="w-100">
+                    <ng-container *ngComponentOutlet="blocksComponent; inputs: { form: getBlocksArray() }">
+                    </ng-container>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="d-flex justify-content-between">
+            <div>
+                @if(error){
+                <mat-error class="m-t-10">
+                    {{ error }}
+                </mat-error>
+                }
+            </div>
+            <button mat-flat-button color="primary" [disabled]="form.invalid || loading" (click)="submit()">
+                {{ loading ? 'Guardando...' : 'Guardar' }}
+            </button>
+        </div>
+        }
+    </mat-card-content>
+</mat-card>

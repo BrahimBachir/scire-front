@@ -1,0 +1,47 @@
+<div class="followers-contents w-100">
+  <div class="header-content d-flex w-100 justify-content-between m-b-15">
+    <div class="d-flex align-items-center gap-15">
+      <h5 class="f-w-500 f-s-20">Estudiantes</h5>
+      
+      <div class="p-x-6 p-y-2 rounded-pill bg-secondary text-white">
+        <div class="f-s-14 lh-sm">{{ filteredCount() }}</div>
+      </div>
+    </div>
+    <mat-form-field appearance="outline" class="h-100 w-40 d-flex align-items-center m-b--15">
+      <mat-label>Buscar</mat-label>
+      <input matInput type="text" placeholder="Search estudiante" [(ngModel)]="searchText"/>
+    
+      <mat-icon matPrefix class="d-flex justify-content-center align-items-center">
+        <i-tabler name="search" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+      </mat-icon>
+    
+      @if (searchText) {
+      <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
+        <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
+      </mat-icon>
+      }
+    </mat-form-field>
+  </div>
+    <div class="row"> 
+      @for(student of filteredStudents(); track student.id){
+        <div class="col-sm-6 col-lg-6">
+          <mat-card class="cardWithShadow">
+            <mat-card-content>
+              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                  <img src="{{ student.image }}" width="40" alt="user" class="rounded-circle" />
+                  <div class="m-l-16">
+                    <h6 class="m-0 f-w-600 f-s-16">{{ student.full_name }}</h6>
+                    <span class="d-flex align-items-center f-s-14">{{ student.brief_description }}</span>
+                  </div>
+                </div>
+                <button mat-flat-button color="primary" class="m-l-auto">
+                  Contactar
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      }
+    </div>
+</div>

@@ -1,6 +1,6 @@
-import { IScheme } from "../../models/interfaces";
+import { IDiagram } from "../../models/interfaces";
 
-export const DiagramsSamples: IScheme[] = [
+export const DiagramsSamples: IDiagram[] = [
   {
     id: 1,
     code: 'flowchart',

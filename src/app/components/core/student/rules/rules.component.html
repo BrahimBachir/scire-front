@@ -7,13 +7,13 @@
 </mat-card>
 <mat-card class="cardWithShadow m-b-0">
   <mat-card-header class="b-b-1 justify-content-end">
-    <button mat-mini-fab class="bg-primary text-white" [matTooltip]="'BUTTONS.CREATE.MODULE' | translate"
+    <button mat-mini-fab class="bg-primary text-white " [matTooltip]="'BUTTONS.CREATE.MODULE' | translate"
       [aria-label]="'BUTTONS.CREATE.MODULE' | translate" (click)="create()">
       <i-tabler name="plus" class="icon-20 d-flex"></i-tabler>
     </button>
   </mat-card-header>
   <mat-card-content class="module-list">
-    <ng-scrollbar class="position-relative" style="height: 50vh">
+    <ng-scrollbar class="position-relative" style="height: 46vh">
       <div class="row">
         @for(rule of filteredRules(); track rule.id) {
         <div class="col-lg-4" id="rule-item">

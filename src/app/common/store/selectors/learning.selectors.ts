@@ -19,12 +19,12 @@ export const getSelectedArticle = createSelector(
   (state: LearningState) => state.selectedArticle
 );
 
-export const getSelectedScheme = createSelector(
+export const getSelectedDiagram = createSelector(
   selectLearningState,
-  (state: LearningState) => state.selectedScheme
+  (state: LearningState) => state.selectedDiagram
 );
 
 export const getAllSelectedArticles = createSelector(
   selectLearningState,
-  (state: LearningState) => state.allSelectedArticle
+  (state: LearningState) => state.selectedArticlesIds
 );

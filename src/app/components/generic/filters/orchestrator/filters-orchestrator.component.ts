@@ -1,5 +1,4 @@
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
@@ -8,8 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
-import { Component, computed, effect, EventEmitter, Input, Output, QueryList, signal, ViewChild, ViewChildren } from '@angular/core';
-import { IRule, IArticle, FilterConfig, FilterState, FiltersOptions, IRuleAmbit, IRuleGazette, IRuleType, ICourseType, ICourseCategory, ICaller, IQueryingDto, IFieldMode } from 'src/app/common/models/interfaces';
+import { Component, computed, effect, EventEmitter, Input, Output, QueryList, signal, ViewChildren } from '@angular/core';
+import { FilterConfig, FilterState, FiltersOptions, IQueryingDto, IFieldMode } from 'src/app/common/models/interfaces';
 import { AppArticleFilterComponent } from '../article/article-filter.component';
 import { RuleFilterComponent } from '../rule/rule-filter.component';
 import { RuleAmbitFilterComponent } from '../rule-ambits/rule-ambit-filter.component';
@@ -19,7 +18,10 @@ import { AppSearchTermFilterComponent } from '../search-term/search-term.compone
 import { AppTernaryFilterComponent } from '../ternary/ternary.component';
 import { CallerFilterComponent } from '../calling-org/calling-org-filter.component';
 import { CourseTypeFilterComponent } from '../course-type/course-type-filter.component';
-import { AppCourseCategryFilterComponent } from '../course-category/course-category-filter.component';
+import { CourseCategryFilterComponent } from '../course-category/course-category-filter.component';
+import { IconModule } from 'src/app/icon/icon.module';
+import { AppMultiSelectComponent } from '../../reusable/multi-select/multi-select.component';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-filters-orchestrator',
@@ -27,8 +29,10 @@ import { AppCourseCategryFilterComponent } from '../course-category/course-categ
   imports: [
     CommonModule,
     MaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatFormFieldModule,
     MatSelectModule,
     MatDividerModule,
@@ -44,13 +48,14 @@ import { AppCourseCategryFilterComponent } from '../course-category/course-categ
     AppTernaryFilterComponent,
     CallerFilterComponent,
     CourseTypeFilterComponent,
-    AppCourseCategryFilterComponent,
+    CourseCategryFilterComponent,
+    AppMultiSelectComponent
   ],
 })
 export class AppFiltersOrchestratorComponent {
   @ViewChildren('filter')
   filters!: QueryList<{ clean(): void }>;
-
+  form!: FormGroup;
   mode: IFieldMode = 'FILTERING';
 
   @Input({ required: true })
@@ -66,69 +71,30 @@ export class AppFiltersOrchestratorComponent {
 
   maxVisbleFields!: number;
 
-  readonly state = signal<FilterState>({});
-
-  readonly rule = signal<IRule | null>(null);
-  readonly article = signal<IArticle | null>(null);
-
-  readonly ruleCode = signal<string | null>(null);
-  readonly artiCode = signal<string | null>(null);
-
-  readonly searchTerm = signal<string | null>(null);
-
-  readonly ruleId = signal<number | null>(null);
-  readonly ruleAmbitId = signal<number | null>(null);
-  readonly ruleGazetteId = signal<number | null>(null);
-  readonly ruleTypeId = signal<number | null>(null);
-  readonly articleId = signal<number | null>(null);
-  readonly courseTypeId = signal<number | null>(null);
-  readonly courseCategoryId = signal<number | null>(null);
-  readonly callerId = signal<number | null>(null);
-  readonly favorite = signal<boolean | null>(null);
+  state: FilterState = {};
 
   @Output()
   filtersChange = new EventEmitter<IQueryingDto>();
 
   ngOnInit(): void {
-    const initialState: FilterState = {};
-    this.config.forEach(f => {
-      initialState[f.key] = f.defaultValue ?? null;
-    });
-    this.state.set(initialState);
+    this.buildForm();
 
     this.maxVisbleFields = this.options?.maxVisbleFields || 4;
-  }
 
-  update(key: string, value: unknown): void {
-    this.state.update(s => ({ ...s, [key]: value }));
-    //console.log("State: ", this.state)
-  }
-
-  valueOf<T>(key: string): T | null {
-    return (this.state()[key] as T) ?? null;
+    if(this.options.applyMode === 'auto')
+      this.form.valueChanges.subscribe(value => {
+        this.filtersChange.emit(value);
+        console.log(value)
+      })
   }
 
   apply(): void {
-    this.filtersChange.emit(this.state());
+    this.filtersChange.emit(this.form.value);
   }
 
   clear(): void {
-    const cleared: FilterState = {};
-
-    this.config.forEach(f => {
-      cleared[f.key] = f.defaultValue ?? null;
-    });
-
-    this.state.set(cleared);
-    this.filters.forEach(f => f.clean());
-
-    this.filtersChange.emit(cleared);
+    this.form.reset();
   }
-
-  readonly appliedFilters = computed(() => {
-    const s = this.state();
-    return s;
-  });
 
   toggleFilters(): void {
     this.showAll.update(v => !v);
@@ -139,42 +105,21 @@ export class AppFiltersOrchestratorComponent {
   }
 
   constructor() {
-    effect(() => {
-      const state = this.state();
+  }
 
-      this.config.forEach(filter => {
-        if (!filter.dependsOn) return;
-
-        const dependencyValue = state[filter.dependsOn];
-        const currentValue = state[filter.key];
-
-        if (!dependencyValue && currentValue !== null) {
-          this.update(filter.key, null);
-        }
-      });
-    });
-
-    effect(() => this.update('rule', this.rule()));
-    effect(() => this.update('ruleCode', this.ruleCode()));
-    effect(() => this.update('ruleId', this.ruleId()));
-    effect(() => this.update('article', this.article()));
-    effect(() => this.update('articleId', this.articleId()));
-    effect(() => this.update('artiCode', this.artiCode()));
-    effect(() => this.update('ruleTypeId', this.ruleTypeId()));
-    effect(() => this.update('ruleAmbitId', this.ruleAmbitId()));
-    effect(() => this.update('ruleGazetteId', this.ruleGazetteId()));
-    effect(() => this.update('favorite', this.favorite()));
-    effect(() => this.update('searchTerm', this.searchTerm()));
-    effect(() => this.update('callerId', this.callerId()));
-    effect(() => this.update('courseTypeId', this.courseTypeId()));
-    effect(() => this.update('courseCategoryId', this.courseCategoryId()));
-
-    effect(() => {
-      if (this.options.applyMode !== 'auto') return;
-
-      this.appliedFilters();
-
-      this.filtersChange.emit(this.state());
-    });
+  buildForm(){
+    this.form = new FormGroup({
+      searchTerm: new FormControl<string | null>(''),
+      favorite: new FormControl<boolean | null>(null),
+      ruleId: new FormControl<number | null>(null),
+      articlesIds: new FormControl<number[]>([]),
+      articleId: new FormControl<number | null>(null),
+      ruleTypeId: new FormControl<number | null>(null),
+      ruleAmbitId: new FormControl<number | null>(null),
+      ruleGazetteId: new FormControl<number | null>(null),
+      callerId: new FormControl<number | null>(null),
+      courseTypeId: new FormControl<number | null>(null),
+      courseCategoryId: new FormControl<number | null>(null),
+    })
   }
 }

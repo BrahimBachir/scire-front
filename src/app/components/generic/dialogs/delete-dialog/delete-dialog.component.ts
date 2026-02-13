@@ -7,7 +7,7 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { TablerIconsModule } from 'angular-tabler-icons';
+import { IconModule } from 'src/app/icon/icon.module';
 import { MaterialModule } from 'src/app/material.module';
 
 @Component({
@@ -18,7 +18,7 @@ import { MaterialModule } from 'src/app/material.module';
     MatDialogTitle,
     MatDialogContent,
     MaterialModule,
-    TablerIconsModule,
+    IconModule,
   ],
   templateUrl: './delete-dialog.component.html',
   styleUrl: './delete-dialog.component.scss',

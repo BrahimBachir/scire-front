@@ -8,20 +8,26 @@ export const FlashcardFiltersData: FilterConfig[] = [
     minLength: 3
   },
 /*   {
-    key: 'topic',
-    kind: 'topic',
+    key: 'topicId',
+    kind: 'topicId',
     label: 'Tema'
+  }, 
+  {
+    key: 'blockId',
+    kind: 'blockId',
+    label: 'Tema'
+    dependsOn: 'topicId'
   }, */
   {
-    key: 'rule',
-    kind: 'rule',
+    key: 'ruleId',
+    kind: 'ruleId',
     label: 'Norma',
-    //dependsOn: 'topic'
+    //dependsOn: 'topicId'
   },
   {
-    key: 'article',
-    kind: 'article',
+    key: 'articleId',
+    kind: 'articleId',
     label: 'Artículo',
-    dependsOn: 'rule'
+    dependsOn: 'ruleId'
   },
 ]

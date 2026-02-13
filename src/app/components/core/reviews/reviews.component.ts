@@ -23,7 +23,7 @@ export class AppReviewsComponent implements OnInit {
   private reviewService = inject(ReviewsService)
   private dialog = inject(MatDialog)
   @Input() featureId: number;
-  @Input() featureType: FeatureType;
+  @Input() featureType: FeatureType = 'COURSE';
   private take: number = 5;
   private skip: number = 0;
 
@@ -42,6 +42,7 @@ export class AppReviewsComponent implements OnInit {
   ]; */
 
   ngOnInit(): void {
+    console.log("Load reviews: ", this.featureId, this.featureType)
     this.loadReviewData();
   }
 

@@ -128,7 +128,7 @@ export class AddCoursePricingComponent implements OnInit {
 
   }
   ngOnDestroy() {
-    this.editor.destroy();
+    this.editor?.destroy();
     // Optional: Clear product data when leaving the component
   }
 

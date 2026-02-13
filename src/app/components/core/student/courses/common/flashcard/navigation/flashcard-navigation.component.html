@@ -7,7 +7,7 @@
         </button>
     </mat-card-header>
     }
-    @if(flashcard()){
+    @if(flashcard() && flashcard()?.id !== 0){
     <mat-card-content class="b-t-1 d-flex d-col justify-content-center">
         <div class="wrapper" [class.flipped]="isFlipped" (click)="flipCard()">
             <mat-card
@@ -27,14 +27,14 @@
                 </mat-card-content>
             </mat-card>
             <div class="text-center p-y-8 p-x-12 flashcard-actions">
-                @if( (flashcard()?.creatorId || 0 | myOwnElement) | async ) {
-                <button mat-mini-fab class="cart-btn-overlay bg-error text-white" matTooltip="Delete"
+                @if( (flashcard()?.creatorId || 0 | myOwnContent) | async ) {
+                <button mat-mini-fab class="cart-btn-overlay bg-error text-white" [matTooltip]="'DELETE.FLASHCARD' | translate"
                     (click)=" deleteItem(); $event.stopPropagation()">
                     <i-tabler name="trash" class="icon-16 d-flex"></i-tabler>
                 </button>
                 }
-                @if((flashcard()?.creatorId || 0 | myOwnElement) | async ) {
-                <button mat-mini-fab class="cart-btn-overlay bg-primary text-white" matTooltip="Edit"
+                @if((flashcard()?.creatorId || 0 | myOwnContent) | async ) {
+                <button mat-mini-fab class="cart-btn-overlay bg-primary text-white" [matTooltip]="'EDIT.FLASHCARD' | translate"
                     (click)="updateItem()">
                     <i-tabler name="pencil" class="icon-16 d-flex"></i-tabler>
                 </button>

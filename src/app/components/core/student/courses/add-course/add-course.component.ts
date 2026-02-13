@@ -6,11 +6,11 @@ import { NgxDropzoneModule } from "ngx-dropzone";
 import { IconModule } from "src/app/icon/icon.module";
 import { MaterialModule } from "src/app/material.module";
 import { CourseService } from "src/app/services";
-import { AddCourseExercisesComponent } from "./exercises/course-exercises.component";
+import { CourseExercisesComponent } from "./exercises/course-exercises.component";
 import { AddCourseExtraInfoComponent } from "./extra-info/course-extra-info.component";
 import { CourseGeneralInfoComponent } from "./general-info/course-general-info.component";
 import { AddCoursePricingComponent } from "./pricing/course-pricing.component";
-import { AddCourseTopicsComponent } from "./topics/course-topics.component";
+import { CourseTopicsComponent } from "./topics/course-topics.component";
 import { ICourse } from "src/app/common/models/interfaces";
 
 @Component({
@@ -24,8 +24,8 @@ import { ICourse } from "src/app/common/models/interfaces";
     NgxDropzoneModule,
     CourseGeneralInfoComponent,
     AddCourseExtraInfoComponent,
-    AddCourseExercisesComponent,
-    AddCourseTopicsComponent,
+    CourseExercisesComponent,
+    CourseTopicsComponent,
     AddCoursePricingComponent
   ],
   templateUrl: './add-course.component.html',
@@ -37,31 +37,32 @@ export class AddCourseComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  courseId = Number(this.route.snapshot.paramMap.get('courseId'));
+  courseId = Number(this.route.snapshot.paramMap.get('courseId')) || null;
   isEditMode = !!this.courseId;
 
   course!: ICourse;
 
-form = this.fb.group({
-  general: this.fb.group({
-    code: this.fb.control<string>('', { nonNullable: true, validators: Validators.required }),
-    description: this.fb.control<string>('', { nonNullable: true, validators: Validators.required }),
-    details: this.fb.control<string | null>(null),
-    imgSrc: this.fb.control<string | null>(null),
-    statusId: this.fb.control<number | null>({ value: null, disabled: !this.isEditMode }, Validators.required),
-  }),
+  form = this.fb.group({
+    general: this.fb.group({
+      id: this.fb.control<number | null>(null),
+      code: this.fb.control<string>('', { nonNullable: true, validators: Validators.required }),
+      description: this.fb.control<string>('', { nonNullable: true, validators: Validators.required }),
+      details: this.fb.control<string | null>(null),
+      imgSrc: this.fb.control<string | null>(null),
+      statusId: this.fb.control<number | null>(null, Validators.required),
+    }),
 
-  extra: this.fb.group({
-    calling_year: this.fb.control<number | null>(null, Validators.required),
-    examDate: this.fb.control<Date | null>(null),
-    vacancies: this.fb.control<number | null>(null),
-    official_call_url: this.fb.control<string | null>(null),
-    tags: this.fb.control<string[]>([]),
-    callerId: this.fb.control<number | null>(null, Validators.required),
-    typeId: this.fb.control<number | null>(null, Validators.required),
-    categoryId: this.fb.control<number | null>(null, Validators.required),
-  }),
-});
+    extra: this.fb.group({
+      calling_year: this.fb.control<number | null>(null, Validators.required),
+      examDate: this.fb.control<Date | null>(null),
+      vacancies: this.fb.control<number | null>(null),
+      official_call_url: this.fb.control<string | null>(null),
+      tags: this.fb.control<string[]>([]),
+      callerId: this.fb.control<number | null>(null, Validators.required),
+      typeId: this.fb.control<number | null>(null, Validators.required),
+      categoryId: this.fb.control<number | null>(null, Validators.required),
+    }),
+  });
 
 
 
@@ -69,52 +70,56 @@ form = this.fb.group({
     if (this.isEditMode) {
       this.loadCourse();
     }
+
+    this.form.valueChanges.subscribe(value => console.log(value))
   }
 
-save(): void {
-  if (this.form.invalid) return;
-  const course = this.mapFormToCourse();
-  const request$ = this.isEditMode
-    ? this.service.update(course)
-    : this.service.create(course);
+  save(): void {
+    if (this.form.invalid) return;
+    const course = this.mapFormToCourse();
+    const request$ = this.isEditMode
+      ? this.service.update(course)
+      : this.service.create(course);
 
-  request$.subscribe(saved => {
-    if(!this.isEditMode)
-      this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/courses/:courseId/edit`.replace(':courseId', saved.id.toString())]);
-  });
-}
-
-
-private loadCourse(): void {
-  this.service.getOne(this.courseId).subscribe(course => {
-    this.form.patchValue({
-      general: {
-        code: course.code,
-        description: course.description,
-        details: course.details,
-        imgSrc: course.imgSrc,
-        statusId: course.statusId ,
-      },
-      extra: {
-        calling_year: course.calling_year,
-        examDate: course.examDate,
-        vacancies: course.vacancies,
-        official_call_url: course.official_call_url,
-        tags: course.tags ?? [],
-        callerId: course.callerId,
-        typeId: course.typeId,
-        categoryId: course.categoryId,
-      },
+    request$.subscribe(saved => {
+      if (!this.isEditMode && saved.id)
+        this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/courses/:courseId/edit`.replace(':courseId', saved.id.toString())]);
     });
-  });
-}
+  }
+
+
+  private loadCourse(): void {
+    if (this.courseId)
+      this.service.getOne(this.courseId).subscribe(course => {
+        this.form.patchValue({
+          general: {
+            id: course.id,
+            code: course.code,
+            description: course.description,
+            details: course.details,
+            imgSrc: course.imgSrc,
+            statusId: course.statusId,
+          },
+          extra: {
+            calling_year: course.calling_year,
+            examDate: course.examDate,
+            vacancies: course.vacancies,
+            official_call_url: course.official_call_url,
+            tags: course.tags ?? [],
+            callerId: course.callerId,
+            typeId: course.typeId,
+            categoryId: course.categoryId,
+          },
+        });
+      });
+  }
 
 
   private mapFormToCourse(): ICourse {
     const { general, extra } = this.form.getRawValue();
 
     return {
-      id: this.courseId ?? 0,
+      id: general.id,
       code: general.code || '',
       description: general.description || '',
       details: general.details || '',
@@ -154,8 +159,8 @@ import {
 import { ProductService } from 'src/app/services/apps/product.service';
 import { CourseGeneralInfoComponent } from './general-information/course-general-info.component';
 import { AddCourseExtraInfoComponent } from './extra-info/course-extra-info.component';
-import { AddCourseExercisesComponent } from './exercises/course-exercises.component';
-import { AddCourseTopicsComponent } from './topics/course-topics.component';
+import { CourseExercisesComponent } from './exercises/course-exercises.component';
+import { CourseTopicsComponent } from './topics/course-topics.component';
 import { AddCoursePricingComponent } from './pricing/course-pricing.component';
 import { ICourse, ICourseExtraInfo, ICourseGeneralInfo } from 'src/app/common/models/interfaces';
 import { CourseService } from 'src/app/services';
@@ -171,8 +176,8 @@ import { CourseService } from 'src/app/services';
     NgxDropzoneModule,
     CourseGeneralInfoComponent,
     AddCourseExtraInfoComponent,
-    AddCourseExercisesComponent,
-    AddCourseTopicsComponent,
+    CourseExercisesComponent,
+    CourseTopicsComponent,
     AddCoursePricingComponent
   ],
   templateUrl: './add-course.component.html',

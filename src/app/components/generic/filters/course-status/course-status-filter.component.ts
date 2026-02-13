@@ -25,9 +25,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Router, RouterModule } from '@angular/router';
-import { TablerIconsModule } from 'angular-tabler-icons';
+import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
+import { IconModule } from 'src/app/icon/icon.module';
+import { BaseFilterDirective } from 'src/app/common/directives';
 
 @Component({
   selector: 'course-status-filter',
@@ -36,7 +37,7 @@ import { MaterialModule } from 'src/app/material.module';
     CommonModule,
     MaterialModule,
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
@@ -48,15 +49,35 @@ import { MaterialModule } from 'src/app/material.module';
     MatButtonModule,
     MatAutocomplete,
   ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CourseStatusFilterComponent),
-      multi: true,
-    },
-  ],
 })
-export class CourseStatusFilterComponent implements ControlValueAccessor, OnInit {
+export class CourseStatusFilterComponent extends BaseFilterDirective<ICourseStatus> {
+  private service = inject(CourseService);
+
+  loadData(): void {
+    this.service.getStatuses().subscribe(data => {
+      this.items = data;
+      this.filteredItems = data;
+      this.applyCurrentValue();
+    });
+  }
+
+  private applyCurrentValue(): void {
+    if (this.value != null) {
+      this.syncInternalControl();
+      return;
+    }
+
+    if (this.mode === 'CREATING') {
+      const draft = this.items.find(s => s.code === 'DRAFT');
+      if (!draft) return;
+      this.writeValue(draft.id);
+      this.onChange(draft.id);
+      this.control.disable({ emitEvent: false });
+    }
+  }
+}
+
+/* export class CourseStatusFilterComponent implements ControlValueAccessor, OnInit {
   private service = inject(CourseService);
   @Input({ required: true }) mode: IFieldMode = 'FILTERING';
 
@@ -149,13 +170,11 @@ export class CourseStatusFilterComponent implements ControlValueAccessor, OnInit
       }
     }
   }
-
-}
+} */
 
 
 /* import { Component, effect, EventEmitter, inject, input, Input, model, OnInit, Output, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -178,7 +197,7 @@ import { ICourseStatus } from 'src/app/common/models/interfaces';
     CommonModule,
     MaterialModule,
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,

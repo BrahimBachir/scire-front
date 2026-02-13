@@ -15,6 +15,7 @@ export * from './town.interface';
 export * from './email.interface';
 export * from './menu-option.interface';
 export * from './topic-category.interface';
+export * from './topic-course.interface';
 export * from './course-category.interface';
 export * from './section.interface';
 export * from './topic.interface';
@@ -41,7 +42,7 @@ export * from './rule-types.interface';
 export * from './rule-ambit.interface';
 export * from './gazette.interface';
 export * from './block.interface';
-export * from './scheme.interface';
+export * from './diagram.interface';
 export * from './plan.interface';
 export * from './feature.interface';
 export * from './plan-features.interface';
@@ -53,3 +54,13 @@ export * from './feature-types';
 export * from './comment.interface'
 export * from './course-status.interface'
 export * from './generated-by.interface';
+export * from './exercises.interface';
+export * from './exercise-type.interface';
+export * from './question-type.interface';
+export * from './user-pricing-plans.interface'
+export * from './ai-generation.interface'
+export * from './articles-features.interface'
+export * from './announcement.interface'
+export * from './announcement-relevance.interface'
+export * from './social-media-brand.interface'
+export * from './social-media.interface'

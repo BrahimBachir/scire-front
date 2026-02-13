@@ -1,21 +1,21 @@
-import { Component, effect, inject, Input, OnChanges, OnInit, output, signal, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, OnChanges, OnInit, output, signal, SimpleChanges } from '@angular/core';
 import { QuestionService } from 'src/app/services';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { FeatureType, IQuestion, IAnswer, IncomingNavigableEntity } from 'src/app/common/models/interfaces';
 import { AppReactionsComponent } from 'src/app/components/core/reactions/reactions.component';
-import { MyOwnElementPipe } from 'src/app/common/pipe/my-own-element.pipe';
+import { MyOwnContentPipe } from 'src/app/common/pipe/my-own-content.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppDeleteDialogComponent } from 'src/app/components/generic/dialogs/delete-dialog/delete-dialog.component';
 import { CreateGenericElementDialogComponent } from '../create-generic-element/create-generic-element-dialog/create-generic-element-dialog.component';
 import { AppElementNavigationComponent } from '../element-navigation/element-navigation.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
   selector: 'app-question',
@@ -25,10 +25,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatChipsModule,
     MatButtonModule,
     MatIconModule,
-    TablerIconsModule,
+    IconModule,
     AppReactionsComponent,
     MatDividerModule,
-    MyOwnElementPipe,
+    MyOwnContentPipe,
     AppElementNavigationComponent,
     MatTooltipModule
   ],
@@ -77,7 +77,6 @@ export class QuestionComponent implements OnInit, OnChanges {
       .subscribe(res => {
         this.question.set(res.item as IQuestion);
         this.navigationState = res;
-        console.log("Question",this.question, "NAvigation state: ", this.navigationState)
       });
   }
 

@@ -97,13 +97,15 @@ export const DEFAULT_USERS: IUser[] = [{
 
 export const DEFAULT_CATEGORY: ITopicCategory = {
   id: 0,
-  name: ''
+  name: '',
+  description: ''
 }
 
 export const DEFAULT_SECTION: ISection = {
   id: 0,
   name: '',
-  category: DEFAULT_CATEGORY
+  category: DEFAULT_CATEGORY,
+  description: ''
 }
 
 export const DEFAULT_TOPIC: ITopic = {
@@ -114,7 +116,8 @@ export const DEFAULT_TOPIC: ITopic = {
   sources: [],
   mermaids: [],
   videos: [],
-  scaffolder: ''
+  scaffolder: '',
+  sectionId: 0
 }
 
 export const DEFAULT_QUESTION: IQuestion = {
@@ -138,7 +141,9 @@ export const DEFAULT_COURSE: ICourse = {
 
 export const DEFAULT_ARTICLE: IArticle = {
   title: '',
-  versions: []
+  versions: [],
+  id: 0,
+  description: ''
 }
 
 export const DEFAULT_RULE: IRule = {

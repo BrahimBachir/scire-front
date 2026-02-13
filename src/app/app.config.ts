@@ -19,16 +19,11 @@ import {
   withInMemoryScrolling,
 } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideClientHydration } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { ToastrModule } from 'ngx-toastr';
 import { provideToastr } from 'ngx-toastr';
-
-// icons
-import { TablerIconsModule } from 'angular-tabler-icons';
-import * as TablerIcons from 'angular-tabler-icons/icons';
 
 // perfect scrollbar
 import { NgScrollbarModule } from 'ngx-scrollbar';
@@ -89,7 +84,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([dateInterceptor])
     ),
-    provideAnimationsAsync(),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
@@ -100,7 +94,6 @@ export const appConfig: ApplicationConfig = {
       ReactiveFormsModule,
       MaterialModule,
       NgxPermissionsModule.forRoot(),
-      TablerIconsModule.pick(TablerIcons),
       NgScrollbarModule,
       CalendarModule.forRoot({
         provide: DateAdapter,

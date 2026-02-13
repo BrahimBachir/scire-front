@@ -1,7 +1,6 @@
 import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,19 +19,25 @@ import { MatList, MatListItem } from "@angular/material/list";
 import { ToastrService } from 'ngx-toastr';
 import { ERROR, SUCCESS } from 'src/app/common/config/constants';
 import { AppCourseHeaderComponent } from "../course-header/course-header.component";
-import { switchMap } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/common/store/app.store';
-import { selectChoosenCourse } from 'src/app/common/store/selectors/learning.selectors';
 import { AppReviewsComponent } from '../../../reviews/reviews.component';
 import { AppCommentsComponent } from '../../../comments/comments.component';
-import { CourseProgressService } from 'src/app/services/course-progress.service';
+import { IconModule } from 'src/app/icon/icon.module';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { CourseTopicsComponent } from '../add-course/topics/course-topics.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+import { MaterialModule } from 'src/app/material.module';
+import { ContributorsContentComponent } from '../course-contributors/contributors-content.component';
+import { AppAnnouncementsComponent } from '../announcements/announcements.component';
 @Component({
   selector: 'app-course-detail',
   templateUrl: './course-detail.component.html',
   imports: [
+    CommonModule,
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatStepperModule,
     MatInputModule,
     MatButtonModule,
@@ -42,17 +47,16 @@ import { CourseProgressService } from 'src/app/services/course-progress.service'
     MatSlideToggleModule,
     MatSelectModule,
     MatTooltipModule,
-    MatAccordion,
-    MatExpansionPanel,
-    MatExpansionPanelHeader,
-    MatExpansionPanelTitle,
-    MatExpansionPanelDescription,
-    MatExpansionPanelActionRow,
-    MatList,
-    MatListItem,
     AppCourseHeaderComponent,
     AppReviewsComponent,
-    AppCommentsComponent
+    AppCommentsComponent,
+    ContributorsContentComponent,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgScrollbarModule,
+    TranslateModule,
+    AppAnnouncementsComponent,
   ],
   styleUrl: './course-detail.component.scss'
 
@@ -72,7 +76,9 @@ export class AppCourseDetailComponent implements OnInit {
   favorite_class: string = 'star';
   user_class: string = 'user-x';
   courseProgress = signal<ICourseProgress | null>(null);
+  displayedColumns = ['name', 'description', 'category', 'section'];
 
+  safeHtml: SafeHtml = '';
 
   constructor(
     activatedRouter: ActivatedRoute,
@@ -80,8 +86,7 @@ export class AppCourseDetailComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public toastService: ToastrService,
-    private courseProgressService: CourseProgressService,    
-    private store: Store<AppState>,
+    private sanitizer: DomSanitizer
   ) {
     this.courseId = Number(activatedRouter?.snapshot?.paramMap?.get('courseId')) || 0;
 
@@ -89,18 +94,6 @@ export class AppCourseDetailComponent implements OnInit {
   ngOnInit(): void {
     this.getCourseDetail();
     this.getCourseTopics();
-  }
-
-  getCourseProgress() {
-    this.courseProgressService.getCourseProgress({courseId: this.courseId}).subscribe((res) => {
-      this.topics.forEach((t) => t.progress = res.topics.filter((top) => top.topicId === t.id)[0].topicProgress);
-      this.courseProgress.set(res);
-      
-    })
-  }
-
-  getPercentage(topic: ITopic): string {
-    return `percentage-${topic.progress}`
   }
 
   step = 0;
@@ -117,15 +110,10 @@ export class AppCourseDetailComponent implements OnInit {
     this.step--;
   }
 
-  goToCourseContent() {
-    //this.router.navigate(['/apps/courses/:id/content'.replace(':id', this.id())]);
-  }
-
-
   goToTopicContent(courseId: number, topicId: number) {
     this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/courses/:courseId/topic/:topicId/content`.replace(':courseId', courseId.toString()).replace(':topicId', topicId.toString())]);
   }
-  
+
   addToFavorites() {
     this.favorite = !this.favorite;
     this.courseService.manageCourseFavourite(this.courseId, this.favorite).subscribe({
@@ -164,6 +152,7 @@ export class AppCourseDetailComponent implements OnInit {
     this.courseService.getOne(this.courseId).subscribe({
       next: (res) => {
         this.course = res;
+        this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(this.course?.details ?? '');
         this.setCourseColour();
         //this.updateBreadcrumbTitle();
       },
@@ -181,9 +170,7 @@ export class AppCourseDetailComponent implements OnInit {
     this.courseService.getTopics(this.courseId).subscribe({
       next: (data) => {
         this.topics = data.rows as ITopic[];
-        this.getCourseProgress();
-            //this.courseGeneralPartTopics = rows.filter(topic => topic.section?.category?.code === 'GEN');
-        //this.courseSpecificPartTopics = rows.filter(topic => topic.section?.category?.code === 'SPEC');
+        //this.getCourseProgress();
       },
       error: (error) => {
         //console.error('There was an error!', error);

@@ -1,6 +1,5 @@
 import { Component, effect, EventEmitter, forwardRef, inject, Input, input, model, OnInit, Output, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ControlValueAccessor, FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +14,7 @@ import { debounceTime, startWith } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
 import { IFieldMode, IRuleAmbit } from 'src/app/common/models/interfaces';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
   selector: 'rule-ambit-filter',
@@ -28,7 +28,7 @@ import { IFieldMode, IRuleAmbit } from 'src/app/common/models/interfaces';
     CommonModule,
     MaterialModule,
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,

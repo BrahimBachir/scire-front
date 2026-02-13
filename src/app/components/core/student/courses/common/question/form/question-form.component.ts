@@ -1,19 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, model, OnChanges, OnInit, Output, signal, SimpleChanges } from '@angular/core';
-import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, FormArray } from '@angular/forms';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormArray } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { TablerIconsModule } from 'angular-tabler-icons';
-import { FeatureFormComponent, IAnswer, IDifficulty, IFlashcard, IQuestion, IRule } from 'src/app/common/models/interfaces';
-import { cleanObject } from 'src/app/common/utils';
-import { singleCorrectAnswerValidator } from 'src/app/common/utils/single-correct-answer.util';
+import { FeatureFormComponent } from 'src/app/common/models/interfaces';
 import { AppDifficultyFilterComponent } from 'src/app/components/generic/filters/difficulty/difficulty-filter';
+import { IconModule } from 'src/app/icon/icon.module';
 import { MaterialModule } from 'src/app/material.module';
-import { QuestionService } from 'src/app/services';
 
 @Component({
   selector: 'app-question-form',
@@ -27,7 +24,7 @@ import { QuestionService } from 'src/app/services';
     MaterialModule,
     MatExpansionModule,
     MatButtonModule,
-    TablerIconsModule,
+    IconModule,
     MatDividerModule,
     MatTooltipModule,
   ],

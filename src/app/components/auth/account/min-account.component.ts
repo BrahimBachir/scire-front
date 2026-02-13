@@ -17,10 +17,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { selectLogedIn } from 'src/app/common/store/selectors';
 import { FRONT_ROUTE_TOKEN_EMPTY } from 'src/app/common/config';
 import { AppAuthBrandingComponent } from '../../generic/branding/auth-branding.component';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
   selector: 'app-min-profile',
@@ -35,7 +35,7 @@ import { AppAuthBrandingComponent } from '../../generic/branding/auth-branding.c
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    TablerIconsModule,
+    IconModule,
     MatTabsModule,
     MatSlideToggleModule,
     MatDividerModule
@@ -77,6 +77,7 @@ export class MinimumAccountComponent implements OnInit {
     this.getRoles();
   }
 
+  // TODO: Clean aout the form
   form = new FormGroup(
     {
       name: new FormControl('Ibra', [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),

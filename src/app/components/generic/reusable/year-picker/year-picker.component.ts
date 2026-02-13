@@ -1,5 +1,5 @@
-import { Component, model, OnInit, signal } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, forwardRef, model, OnInit, signal } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,6 +25,11 @@ export const MY_NATIVE_FORMATS = {
   providers: [
     provideNativeDateAdapter(),
     { provide: MAT_DATE_FORMATS, useValue: MY_NATIVE_FORMATS },
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => YearPickerComponent),
+      multi: true,
+    },
   ],
   imports: [
     MatFormFieldModule, 
@@ -33,7 +38,57 @@ export const MY_NATIVE_FORMATS = {
     ReactiveFormsModule
   ],
 })
-export class YearPickerComponent implements OnInit {
+export class YearPickerComponent implements ControlValueAccessor {
+
+  /** Internal UI control */
+  date = new FormControl<Date | null>(null);
+
+  minDate = new Date(1900, 0, 1);
+
+  /** CVA value */
+  private value: number | null = null;
+
+  /** CVA callbacks */
+  private onChange: (value: number | null) => void = () => {};
+  private onTouched: () => void = () => {};
+
+  writeValue(year: number | null): void {
+    this.value = year;
+
+    if (year) {
+      this.date.setValue(new Date(year, 0, 1), { emitEvent: false });
+    } else {
+      this.date.setValue(null, { emitEvent: false });
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    isDisabled ? this.date.disable() : this.date.enable();
+  }
+
+  /** UI interaction */
+  chosenYearHandler(normalizedYear: Date, datepicker: MatDatepicker<Date>) {
+    const year = normalizedYear.getFullYear();
+
+    this.value = year;
+    this.onChange(year);
+    this.onTouched();
+
+    this.date.setValue(new Date(year, 0, 1), { emitEvent: false });
+    datepicker.close();
+  }
+}
+
+
+/* export class YearPickerComponent implements OnInit {
   date = new FormControl(new Date());
   year = model<number>(0);
   minDate = new Date();
@@ -48,55 +103,6 @@ export class YearPickerComponent implements OnInit {
   chosenYearHandler(normalizedYear: Date, datepicker: MatDatepicker<Date>) {
     this.date.setValue(normalizedYear);
     this.year.set(normalizedYear.getFullYear())
-    datepicker.close();
-  }
-}
-
-/* import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
-import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
-import { MaterialModule } from 'src/app/material.module';
-
-// Custom date formats for Year selection only
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'YYYY',
-  },
-  display: {
-    dateInput: 'YYYY',
-    monthYearLabel: 'YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'YYYY',
-  },
-};
-
-@Component({
-  selector: 'app-year-picker',
-  templateUrl: './year-picker.component.html',
-  standalone: true,
-  providers: [
-    provideMomentDateAdapter(MY_FORMATS),
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatDatepickerModule,
-    ReactiveFormsModule,
-    MaterialModule
-],
-})
-export class YearPickerComponent {
-  date = new FormControl();
-  year = signal<number>(0);
-
-  chosenYearHandler(normalizedYear: Date, datepicker: MatDatepicker<Date>) {
-    // Set the value of the control to the selected year
-    this.date.setValue(normalizedYear); 
-    this.year.set(normalizedYear.getFullYear())
-    
-    // Manually close the datepicker so it doesn't move to month selection
     datepicker.close();
   }
 } */

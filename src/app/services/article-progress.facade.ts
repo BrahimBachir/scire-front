@@ -7,30 +7,31 @@ export class ArticleProgressFacade {
   articlesProgress = signal<IAllArticlesProgress | null>(null);
   selectedArticleProgress = signal<IArticleProgress | null>(null);
 
-  //TODO: BUG Hay un error en algún punto y se está lanzando 2 veces un crear que en el back da error de clave dublicada 
-  // Pasa en los dos, tanto al estudiar una ley como al estudair un tema con varias leyes
-
   private dirty = false;
 
   constructor(private courseProgressService: CourseProgressService) { }
 
-  loadForCourse(courseId: number, topicId: number) {
+getProgressByTopic(courseId: number, topicId: number, articleId: number) {
     return this.courseProgressService
-      .getCourseArticlesProgress({ courseId, topicId })
+      .getProgressByTopic(courseId, topicId, articleId)
       .subscribe(res =>{
-        this.articlesProgress.set(res);
+        this.selectedArticleProgress.set(res);
       });
   }
 
-  loadForRule(ruleId: number) {
+getProgressByRule(ruleId: number, articleId: number) {
     return this.courseProgressService
-      .getRuleArticlesProgress({ ruleId })
+      .getProgressByRule(ruleId, articleId)
       .subscribe(res =>{
-        this.articlesProgress.set(res);
+        this.selectedArticleProgress.set(res);
       });
   }
 
-  loadArticleProgress(progress: IArticleProgress) {
+  setSelectedArticleProgress(progress: IArticleProgress) {
+    this.selectedArticleProgress.set(progress);
+  }
+
+  createProgress(progress: IArticleProgress) {
     this.courseProgressService.create(progress).subscribe(progress => {
       this.selectedArticleProgress.set(progress);
       this.dirty = false;
@@ -38,11 +39,23 @@ export class ArticleProgressFacade {
   }
 
   markStepCompleted(step: keyof IArticleProgress) {
-    const progress = this.selectedArticleProgress();
-    if (!progress || progress[step]) return;
+    let p = this.selectedArticleProgress();
+    if (!p || p[step]) return;
 
-    this.selectedArticleProgress.set({ ...progress, [step]: true });
-    this.dirty = true;
+    p = { ...p, [step]: true }
+    const newPeogress = {
+      id: p.id,
+      articleId: p.articleId,
+      text_reviewed: p.text_reviewed,
+      video_reviewed: p.video_reviewed,
+      diagrams_reviewed: p.diagrams_reviewed,
+      flashcards_reviewed: p.flashcards_reviewed,
+      questions_reviewed: p.questions_reviewed,
+    }
+
+    this.courseProgressService.update(newPeogress).subscribe(updated => {
+      this.selectedArticleProgress.set(updated);
+    });
   }
 
   flushIfDirty() {
@@ -64,14 +77,21 @@ export class ArticleProgressFacade {
     });
   }
 
-  getArticleProgressPercent(id: number): string {
-    const aps = this.articlesProgress();
-    return (
-      aps?.articles.find(a => a.id === id)?.articleProgress?.toString() ||
-      '0'
-    );
+  getProgressPercentage(): string {
+    const progress = this.selectedArticleProgress();
+    return progress?.percentage ? `percentage-${progress?.percentage}` : 'percentage-0';
   }
 
+  getProgressTooltip(): string {
+    const progress = this.selectedArticleProgress();
+    return progress?.percentage ? progress?.percentage  +'%' : '0%';
+  }
+  
+  getProgressColor(): string {
+    const progress = this.selectedArticleProgress();
+    return !progress?.percentage ? 'text-error' : progress?.percentage === 100 ? 'text-success': 'text-warning';
+  }
+  
   resetCurrentArticleProgress() {
     const p = this.selectedArticleProgress();
     if (!p?.id) return;

@@ -20,11 +20,11 @@ export class FlashcardService {
     if(queryingDto)
         params = buildParams(queryingDto, params);
     
-    return this.http.get<IIncomingEntity>(environment.api_base_url + this.routes.api.learning.flashcards.flashcards, { params });
+    return this.http.get<IIncomingEntity>(environment.api_base_url + this.routes.api.learning.flashcards.base, { params });
   }
 
   public getOne(id: number): Observable<IFlashcard> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.flashcards}/${id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.base}/${id}`;
     return this.http.get<IFlashcard>(URL);
   }
 
@@ -46,17 +46,17 @@ export class FlashcardService {
   }
   
   public delete(id: number): Observable<DeletedElement> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.flashcards}/${id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.base}/${id}`;
     return this.http.delete<DeletedElement>(URL);
   }
   
   public deleteMany(ids: number[]) {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.flashcards}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.base}`;
     return this.http.post(URL, { ids });
   }
 
   public update(flashcard: IFlashcard): Observable<IFlashcard> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.flashcards}/${flashcard.id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.base}/${flashcard.id}`;
     return this.http.patch<IFlashcard>(URL, flashcard);
   }
 
@@ -64,7 +64,7 @@ export class FlashcardService {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);
-    let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.flashcards}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.flashcards.base}`;
 
     return this.http.post<IFlashcard>(URL, flashcard, {params});
   }

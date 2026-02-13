@@ -1,8 +1,8 @@
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, model, Output } from '@angular/core';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
   selector: 'app-element-navigation',
@@ -10,7 +10,7 @@ import { Component, EventEmitter, Input, model, Output } from '@angular/core';
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    TablerIconsModule,
+    IconModule,
   ],
   templateUrl: './element-navigation.component.html',
   styleUrl: './element-navigation.component.scss'

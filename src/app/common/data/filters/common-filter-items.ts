@@ -6,22 +6,22 @@ export const CommonFiltersData: FilterConfig[] = [
     kind: 'searchTerm',
     label: 'Buscar',
     minLength: 3
-  },
+  }/* ,
   {
     key: 'topic',
     kind: 'topicId',
     label: 'Tema'
-  },
+  } */,
   {
-    key: 'rule',
-    kind: 'rule',
+    key: 'ruleId',
+    kind: 'ruleId',
     label: 'Norma',
     dependsOn: 'topic'
   },
   {
-    key: 'article',
-    kind: 'article',
+    key: 'articleId',
+    kind: 'articleId',
     label: 'Artículo',
-    dependsOn: 'rule'
+    dependsOn: 'ruleId'
   },
 ]

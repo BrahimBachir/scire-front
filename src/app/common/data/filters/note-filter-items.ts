@@ -8,19 +8,19 @@ export const NoteFiltersData: FilterConfig[] = [
     minLength: 3
   },
   {
-    key: 'rule',
-    kind: 'rule',
+    key: 'ruleId',
+    kind: 'ruleId',
     label: 'Norma'
   },
   {
-    key: 'article',
-    kind: 'article',
+    key: 'articleId',
+    kind: 'articleId',
     label: 'Artículo',
-    dependsOn: 'rule'
+    dependsOn: 'ruleId'
   },
   {
     key: 'favorite',
-    kind: 'ternary',
+    kind: 'favorite',
     label: 'Favorita/o'
   }
 ]

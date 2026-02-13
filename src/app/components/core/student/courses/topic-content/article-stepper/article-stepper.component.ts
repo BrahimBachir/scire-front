@@ -4,12 +4,12 @@ import { IParagraph, IArticleProgress } from "src/app/common/models/interfaces";
 import { ArticleProgressFacade } from "src/app/services";
 import { FlashcardNavigationComponent } from "../../common/flashcard/navigation/flashcard-navigation.component";
 import { QuestionComponent } from "../../common/question/question.component";
-import { SchemeNavigationComponent } from "../../common/scheme/navigation/scheme-navigation.component";
 import { VideoComponent } from "../../common/video/display/video.component";
 import { ArticleContentComponent } from "../article-content/article-content.component";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { CommonModule } from "@angular/common";
+import { DiagramNavigationComponent } from "../../common/diagram/navigation/diagram-navigation.component";
 
 @Component({
     selector: 'app-article-stepper',
@@ -19,7 +19,7 @@ import { CommonModule } from "@angular/common";
         MatStepperModule,
         VideoComponent,
         QuestionComponent,
-        SchemeNavigationComponent,
+        DiagramNavigationComponent,
         FlashcardNavigationComponent,
         ArticleContentComponent,
         MatButtonModule,

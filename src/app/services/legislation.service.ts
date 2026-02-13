@@ -84,11 +84,12 @@ export class LegislationService {
   }
 
   public createRule(rule: IRule): Observable<IRule> {
+    console.log("Creating rule at service: ", rule)
     return this.http.post<IRule>(environment.api_base_url + this.routes.api.rule.base, rule)
   }
 
-  public updateRule(id: number, rule: IRule): Observable<IRule> {
-    return this.http.patch<IRule>(`${environment.api_base_url + this.routes.api.rule.base}/${id}`, rule)
+  public updateRule(rule: IRule): Observable<IRule> {
+    return this.http.patch<IRule>(`${environment.api_base_url + this.routes.api.rule.base}/${rule.id}`, rule)
   }
 
   public deleteRule(id: number){

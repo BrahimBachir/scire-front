@@ -8,4 +8,5 @@ export interface IPlan {
     image: string;
     price: number;
     plan_features: IPlanFeatures[]
+    style?: string;
 }

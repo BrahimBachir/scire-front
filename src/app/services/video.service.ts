@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Routes } from '../common/config';
-import { IQueryingDto, IIncomingEntity, IVideo, IncomingNavigableEntity } from '../common/models/interfaces';
+import { IQueryingDto, IIncomingEntity, IVideo, IncomingNavigableEntity, DeletedElement } from '../common/models/interfaces';
 import { buildParams } from '../common/utils';
 
 
@@ -20,11 +20,11 @@ export class VideoService {
     if(queryingDto)
         params = buildParams(queryingDto, params);
     
-    return this.http.get<IIncomingEntity>(environment.api_base_url + this.routes.api.learning.videos.videos, { params });
+    return this.http.get<IIncomingEntity>(environment.api_base_url + this.routes.api.learning.videos.base, { params });
   }
 
   public getOne(id: number): Observable<IVideo> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.videos.videos}/${id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.videos.base}/${id}`;
     return this.http.get<IVideo>(URL);
   }
 
@@ -45,18 +45,18 @@ export class VideoService {
     return this.http.get<IVideo>(URL);
   }
   
-  public delete(id: number): Observable<string> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.videos.videos}/${id}`;
-    return this.http.delete<string>(URL);
+  public delete(id: number): Observable<DeletedElement> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.videos.base}/${id}`;
+    return this.http.delete<DeletedElement>(URL);
   }
   
   public deleteMany(ids: number[]) {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.videos.videos}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.videos.base}`;
     return this.http.post(URL, { ids });
   }
 
   public update(video: IVideo): Observable<IVideo> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.videos.videos}/${video.id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.videos.base}/${video.id}`;
     return this.http.patch<IVideo>(URL, video);
   }
 
@@ -64,7 +64,7 @@ export class VideoService {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);
-    let URL = `${environment.api_base_url}${this.routes.api.learning.videos.videos}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.videos.base}`;
 
     return this.http.post<IVideo>(URL, video, {params});
   }

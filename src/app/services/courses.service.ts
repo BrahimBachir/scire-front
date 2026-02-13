@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Routes } from '../common/config';
-import { IQueryingDto, IIncomingEntity, ICourse, ICourseType, ICaller, ICourseCategory, ICourseStatus } from '../common/models/interfaces';
+import { IQueryingDto, IIncomingEntity, ICourse, ICourseType, ICaller, ICourseCategory, ICourseStatus, IUser, DeletedElement } from '../common/models/interfaces';
 import { buildParams } from '../common/utils';
 
 
@@ -27,6 +27,11 @@ export class CourseService {
     let URL = `${environment.api_base_url}${this.routes.api.learning.courses.base}/${id}`;
     return this.http.get<ICourse>(URL);
   }
+
+/*   public getInstructor(courseId: number): Observable<IUser> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.instructor}/`.replace(':id', courseId.toString());
+    return this.http.get<IUser>(URL);
+  } */
 
   public getMyCourses(): Observable<ICourse[]> {
     let URL = `${environment.api_base_url}${this.routes.api.learning.courses.my_courses}`;
@@ -88,9 +93,9 @@ export class CourseService {
     return this.http.get<boolean>(URL);
   }
   
-  public delete(id: number): Observable<string> {
+  public delete(id: number): Observable<DeletedElement> {
     let URL = `${environment.api_base_url}${this.routes.api.learning.courses.base}/${id}`;
-    return this.http.delete<string>(URL);
+    return this.http.delete<DeletedElement>(URL);
   }
   
   public deleteMany(ids: number[]) {

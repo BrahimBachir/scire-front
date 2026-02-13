@@ -1,12 +1,11 @@
 import { CommonModule } from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject, Inject, OnInit, Optional, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from "@angular/core";
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { TablerIconsModule } from "angular-tabler-icons";
 import { MaterialModule } from "src/app/material.module";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { IRule, DialogData, IRuleType, IRuleAmbit, IRuleGazette, IMetadataSource, IRuleIndex } from "src/app/common/models/interfaces";
+import { IRule, IRuleType, IRuleAmbit, IRuleGazette, IMetadataSource, IRuleIndex } from "src/app/common/models/interfaces";
 import { LegislationService } from "src/app/services";
 import { parseDate } from "src/app/common/utils/parse-date.util";
 import { startWith, debounceTime } from "rxjs";
@@ -22,6 +21,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { IconModule } from "src/app/icon/icon.module";
 
 @Component({
   selector: 'app-create-edit-rule',
@@ -31,7 +31,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    TablerIconsModule,
+    IconModule,
     MatFormFieldModule,
     MatSelectModule,
     MatDividerModule,
@@ -87,9 +87,6 @@ export class AppCreateEditRuleComponent implements OnInit {
   protected boeRuleLocated = signal<boolean | null>(null);
   protected internalRuleLocated = signal<boolean | null>(null);
 
-  //protected isLegalRule = new FormControl<boolean | null>(null);
-  //protected ruleCodeControl = new FormControl<string>({value: '', disabled: !this.isLegalRule.value});
-  //protected inBOE = new FormControl<boolean>({ value: false, disabled: !this.isLegalRule.value });
   private router = inject(Router)
   private route = inject(ActivatedRoute);
 
@@ -183,7 +180,7 @@ export class AppCreateEditRuleComponent implements OnInit {
         this.goToRule(data.id);
       },
       error: (err) => {
-        //('Error creating rule:', err);
+        console.error('Error creating rule:', err);
         this.openSnackBar('Error al crear la norma. Inténtalo de nuevo.', 'Close');
       },
     });

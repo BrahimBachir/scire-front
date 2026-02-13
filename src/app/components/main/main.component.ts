@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { AppState } from 'src/app/common/store/app.store';
 import { Store } from '@ngrx/store';
 import { selectChoosenCourse } from 'src/app/common/store/selectors/learning.selectors';
@@ -23,6 +22,7 @@ import { NavItem } from '../generic/sidebar/nav-item/nav-item';
 import { AppNavItemComponent } from '../generic/sidebar/nav-item/nav-item.component';
 import { navItems } from '../generic/sidebar/sidebar-data';
 import { SidebarComponent } from '../generic/sidebar/sidebar.component';
+import { IconModule } from 'src/app/icon/icon.module';
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
 const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
@@ -38,7 +38,7 @@ const BELOWMONITOR = 'screen and (max-width: 1023px)';
     CommonModule,
     SidebarComponent,
     NgScrollbarModule,
-    TablerIconsModule,
+    IconModule,
     HeaderComponent,
     AppBreadcrumbComponent,
     AppAuthBrandingComponent,

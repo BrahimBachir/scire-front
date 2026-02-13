@@ -1,6 +1,42 @@
 import { HttpInterceptorFn, HttpRequest, HttpHandlerFn } from '@angular/common/http';
-
 export const dateInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
+  if (!req.body || typeof req.body !== 'object') {
+    return next(req);
+  }
+
+  // Deep clone and transform
+  const formatBody = (obj: any): any => {
+    if (obj === null || typeof obj !== 'object') return obj;
+
+    // Handle Arrays
+    if (Array.isArray(obj)) {
+      return obj.map(item => formatBody(item));
+    }
+
+    // Handle Date objects
+    if (obj instanceof Date) {
+      if (isNaN(obj.getTime())) return null; // Guard against Invalid Dates
+      const adjustedDate = new Date(obj);
+      adjustedDate.setHours(12, 0, 0, 0);
+      return adjustedDate.toISOString();
+    }
+
+    // Handle Objects
+    const newObj: any = {};
+    for (const key of Object.keys(obj)) {
+      newObj[key] = formatBody(obj[key]);
+    }
+    return newObj;
+  };
+
+  const clonedReq = req.clone({
+    body: formatBody(req.body)
+  });
+
+  return next(clonedReq);
+};
+
+/* export const dateInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   if (req.body) {
     // Clone the request and format the dates in the body
     const formatBody = (body: any): any => {
@@ -31,4 +67,4 @@ export const dateInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
   }
 
   return next(req);
-};
+}; */

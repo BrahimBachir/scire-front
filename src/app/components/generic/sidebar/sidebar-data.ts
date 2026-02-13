@@ -11,6 +11,12 @@ export const navItems: NavItem[] = [
     type: 'GEN',
   },
   {
+    displayName: 'Mis cursos',
+    iconName: 'briefcase',
+    route: '',
+    type: 'GEN',
+  },
+  {
     displayName: 'Módulos',
     iconName: 'hexagons',
     route: 'modules',
@@ -20,10 +26,16 @@ export const navItems: NavItem[] = [
     navCap: 'Curso',
   },
   {
-    displayName: 'Temario',
+    displayName: 'Detalles curso',
     iconName: 'file-description',
+    route: 'courses/:courseId/details',
+    type: 'COUR'
+  },
+  {
+    displayName: 'Temario',
+    iconName: 'book',
     route: 'courses/:courseId/topics',
-    type: 'TOPIC',
+    type: 'COUR'
   },
   {
     displayName: 'Estadísticas',
@@ -35,12 +47,6 @@ export const navItems: NavItem[] = [
     chipContent: 'PRO',
   },
   {
-    displayName: 'Temario',
-    iconName: 'book',
-    route: 'courses/:courseId/details',
-    type: 'COUR'
-  },
-  {
     displayName: 'Tests',
     iconName: 'devices-question',
     route: 'courses/:courseId/tests',
@@ -49,7 +55,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Memorización',
     iconName: 'flip-vertical',
-    route: 'courses/:courseId/flashcards',
+    route: '/flashcards',
     type: 'COUR'
   },
   {
@@ -61,13 +67,13 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Diagramas',
     iconName: 'schema',
-    route: 'courses/:courseId/schemes',
+    route: '/diagrams',
     type: 'COUR'
   },
   {
     displayName: 'Vídeos',
     iconName: 'video',
-    route: 'courses/:courseId/videos',
+    route: '/videos',
     type: 'COUR'
   },
   {

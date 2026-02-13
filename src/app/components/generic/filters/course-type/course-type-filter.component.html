@@ -1,5 +1,8 @@
 <mat-form-field class="w-100" appearance="outline">
-  <mat-label>Tipo</mat-label>
+  <mat-label>
+    Tipo
+    @if (control.hasError('required')) { <span>*</span> }
+  </mat-label>
   <input matInput [formControl]="control" [matAutocomplete]="auto" (blur)="onTouched()" />
 
   @if(control.enabled){
@@ -8,9 +11,9 @@
   </mat-icon>
   }
 
-  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName" (optionSelected)="onSelected($event)">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
     @for(item of filteredItems; track item.code) {
-    <mat-option [value]="item">
+    <mat-option [value]="item" (onSelectionChange)="onSelected(item)">
       {{ item.description }}
     </mat-option>
     }

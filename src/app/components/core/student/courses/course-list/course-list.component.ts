@@ -24,7 +24,8 @@ import { CourseFiltersData } from 'src/app/common/data/filters/course-filter-ite
 import { TranslateModule } from '@ngx-translate/core';
 import { PageEvent } from '@angular/material/paginator';
 import { AppFiltersOrchestratorComponent } from 'src/app/components/generic/filters/orchestrator/filters-orchestrator.component';
-import { AppDeleteDialogComponent } from '../../../kanban/delete-dialog/delete-dialog.component';
+import { AppDeleteDialogComponent } from 'src/app/components/generic/dialogs/delete-dialog/delete-dialog.component';
+import { MyOwnContentPipe } from 'src/app/common/pipe/my-own-content.pipe';
 
 
 //TODO: 3. Actions (create, edit, delete --> decide logic)
@@ -48,6 +49,7 @@ export interface Section {
     ReactiveFormsModule,
     AppBannersNotFoundComponent,
     AppFiltersOrchestratorComponent,
+    MyOwnContentPipe
   ],
   templateUrl: './course-list.component.html',
   styleUrl: './course-list.component.scss',
@@ -58,6 +60,7 @@ export class AppCourseListComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private _snackBar = inject(MatSnackBar);
   private service = inject(CourseService);
+  private activatedRouter = inject(ActivatedRoute);
 
 
   protected courses = signal<ICourse[]>([]);
@@ -88,14 +91,6 @@ export class AppCourseListComponent implements OnInit {
   callingOrgs: ICaller[] = [];
   selectedCallingOrg: ICaller | null = null;
 
-  notes: Section[] = [
-    { name: 'newest', icon: 'calendar' },
-    { name: 'Price: High-Low', icon: 'sort-descending' },
-    { name: 'Price: Low-High', icon: 'sort-ascending' },
-    { name: 'discounted', icon: 'percentage' },
-  ];
-  selectedSortBy: string = this.notes[0].name;
-  selectedColor: string | null = null;
   isMobileView = false;
 
   constructor(
@@ -146,6 +141,7 @@ export class AppCourseListComponent implements OnInit {
     this.service.getAll(this.filters).subscribe({
       next: (res) => {
         this.courses.set(res.rows as ICourse[]);
+        console.log(this.courses())
         this.length = res.total;
         this.filteredCourses.set(res.rows as ICourse[]);
       },
@@ -153,52 +149,10 @@ export class AppCourseListComponent implements OnInit {
     });
   }
 
-  openDialog(idOrIds: number | number[]): void {
-    const dialogRef = this.dialog.open(AppDeleteDialogComponent, {
-      data: {
-        ids: Array.isArray(idOrIds) ? idOrIds : [idOrIds], // Always pass as array
-      },
-      width: '400px',
-      enterAnimationDuration: '0ms',
-      exitAnimationDuration: '0ms',
-    });
-
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result === 'delete') {
-        if (Array.isArray(idOrIds)) {
-        } else {
-          this.getDeletedById(idOrIds); // ⬅️ Handle single deletion
-        }
-      }
-    });
-  }
-  getDeletedById(id: number) {
-    /*     this.filteredCourses = this.filteredCourses.filter(
-          (product) => product.id !== id
-        );
-    
-        this.cdr.detectChanges(); // Optional if view updates correctly
-        this.openSnackBar('Product deleted successfully!'); */
-  }
-  openSnackBar(message: string) {
-    this._snackBar.open(message, 'Close', {
-      duration: this.durationInSeconds * 1000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
-    });
+  goToCourseDetails(course: ICourse) {
+    if (course.id) this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/courses/:courseId/details`.replace(':courseId', course.id.toString())]);
   }
 
-  getCourseDetails(course: ICourse) {
-    //this.router.navigate(['apps/product/product-details']);
-    this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/courses/:courseId/details`.replace(':courseId', course.id.toString())]);
-  }
-
-  toggleColor(color: string): void {
-    this.selectedColor = this.selectedColor === color ? null : color;
-  }
-  getEditedProduct(course: ICourse) {
-    this.router.navigate(['apps/product/edit-product']);
-  }
   getStarClass(index: number, rating?: number): string {
     const safeRating = rating ?? 0; // Fallback if undefined
     const fullStars = Math.floor(safeRating); // Full stars
@@ -213,6 +167,33 @@ export class AppCourseListComponent implements OnInit {
     }
   }
 
+  remove(id: number) {
+    const dialogRef = this.dialog.open(AppDeleteDialogComponent);
 
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'delete') {
+        this.service.delete(id || 0).subscribe({
+          next: (res) => {
+            this.getItems();
+            this.showSnackbar(res.message);
+          },
+          //error: (error) => console.error(error)
+        })
+      }
+    });
+  }
+
+  update(id: number) {
+    const courseId: string = id.toString() || '';
+    this.router.navigate([`${this.activatedRouter?.snapshot.data['role'].toLowerCase()}/courses/:courseId/edit`.replace(':courseId', courseId)]);
+  }
+
+  showSnackbar(message: string): void {
+    this._snackBar.open(message, 'Close', {
+      duration: 2000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
 
 }

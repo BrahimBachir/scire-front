@@ -1,14 +1,13 @@
-import { Component, effect, EventEmitter, forwardRef, inject, input, Input, model, OnInit, Output, signal } from '@angular/core';
+import { Component, forwardRef, inject, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { ControlValueAccessor, FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { ArticlesService, LegislationService } from 'src/app/services';
+import { ArticlesService } from 'src/app/services';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { debounceTime, startWith } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -17,6 +16,8 @@ import { IArticle, IFieldMode, IRule } from 'src/app/common/models/interfaces';
 import { AppState } from 'src/app/common/store/app.store';
 import { Store } from '@ngrx/store';
 import { getSelectedRule } from 'src/app/common/store/selectors/learning.selectors';
+import { IconModule } from 'src/app/icon/icon.module';
+import { BaseFilterDirective } from 'src/app/common/directives';
 
 @Component({
   selector: 'article-filter',
@@ -25,7 +26,7 @@ import { getSelectedRule } from 'src/app/common/store/selectors/learning.selecto
     CommonModule,
     MaterialModule,
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
@@ -36,15 +37,21 @@ import { getSelectedRule } from 'src/app/common/store/selectors/learning.selecto
     MatButtonModule,
     MatAutocomplete,
   ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppArticleFilterComponent),
-      multi: true,
-    },
-  ],
 })
-export class AppArticleFilterComponent implements ControlValueAccessor, OnInit {
+export class AppArticleFilterComponent  extends BaseFilterDirective<IArticle> {
+  private service = inject(ArticlesService);
+
+
+  loadData(): void {
+    this.service.getArticlesByRule(this.parentId ?? 0).subscribe(data => {
+      this.items = data;
+      this.filteredItems = data;
+      this.syncInternalControl();
+    });
+  }
+}
+
+/* export class AppArticleFilterComponent implements ControlValueAccessor, OnInit {
   private service = inject(ArticlesService)
   private store = inject(Store<AppState>);
 
@@ -135,7 +142,7 @@ export class AppArticleFilterComponent implements ControlValueAccessor, OnInit {
       return;
     }
   }
-}
+} */
 
 /* export class AppArticleFilterComponent implements OnInit {
 private service = inject(ArticlesService)

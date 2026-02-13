@@ -20,11 +20,11 @@ export class NoteService {
     if(queryingDto)
         params = buildParams(queryingDto, params);
 
-    return this.http.get<IIncomingEntity>(environment.api_base_url + this.routes.api.learning.notes.notes, { params });
+    return this.http.get<IIncomingEntity>(environment.api_base_url + this.routes.api.learning.notes.base, { params });
   }
 
   public getOne(id: number): Observable<INote> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.notes}/${id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.base}/${id}`;
     return this.http.get<INote>(URL);
   }
 
@@ -45,23 +45,23 @@ export class NoteService {
   }
   
   public delete(id: number): Observable<DeletedElement> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.notes}/${id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.base}/${id}`;
     return this.http.delete<DeletedElement>(URL);
   }
   
   public deleteMany(ids: number[]) {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.notes}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.base}`;
     return this.http.post(URL, { ids });
   }
 
   public update(note: INote): Observable<INote> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.notes}/${note.id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.base}/${note.id}`;
     return this.http.patch<INote>(URL, note);
   }
 
   public create(note: INote) : Observable<INote> {
 
-    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.notes}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.notes.base}`;
 
     return this.http.post<INote>(URL, note);
   }

@@ -6,7 +6,7 @@ export interface IQueryingDto {
     skip?: number;
     take?: number;
     searchTerm?: string;
-    parentId?: number;
+    parentId?: number | null;
     sortedBy?: string;
     totalCount?: number; // Optional, to hold the total count of items for pagination
     orderBy?: string;
@@ -28,7 +28,7 @@ export interface IQueryingDto {
     featureId?: number;
     flashcardId?: number;
     videoId?: number;
-    schemeId?: number;
+    diagramId?: number;
     questionId?: number;
     noteId?: number;
     direction?: string;
@@ -40,6 +40,8 @@ export interface IQueryingDto {
     userId?: number;
     blockId?: number;
     courseCategoryId?: number;
+    categoryId?: number | null | undefined;
+    sectionId?: number | null | undefined;
 }
 
 export interface IFilters {
@@ -59,20 +61,19 @@ export interface IFilters {
   statusId?: number | null;
 }
 
-export type IFieldMode = 'EDITING' | 'CREATING' | 'FILTERING';
+export type IFieldMode = 'EDITING' | 'CREATING' | 'FILTERING' | 'SELECTING';
 
 export type FilterKind =
   | 'searchTerm'
   | 'ruleAmbitId'
   | 'ruleGazetteId'
   | 'ruleTypeId'
-  | 'rule'
   | 'ruleId'
   | 'ruleCode'
   | 'article'
   | 'articleId'
-  | 'artiCode'
-  | 'ternary'
+  | 'articlesIds'
+  | 'favorite'
   | 'courseId'
   | 'topicId'
   | 'topicCategoryId'

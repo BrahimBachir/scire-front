@@ -1,4 +1,4 @@
-import { IRule } from "./rule.interface";
+import { IRule, IArticlesFeatures, ICreationType } from ".";
 
 export interface IVideo {
   id: number;
@@ -14,5 +14,8 @@ export interface IVideo {
   topic?: { id: number };
   creatorId?: number;
   ruleId?: number;
+  creationType?: ICreationType;
+  creationTypeId?: number;
   articlesIds?: number[];
+  articles_features?: IArticlesFeatures[];
 }

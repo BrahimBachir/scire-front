@@ -14,7 +14,9 @@
     <!-- COMMON FIELDS -->
     <div formGroupName="common">
       <rule-filter formControlName="ruleId" [mode]="mode"></rule-filter>
-      <app-multi-select formControlName="articlesIds" [mode]="mode" [rule]="selectedRule"></app-multi-select>
+      @if(feature !== 'VIDEO'){
+        <app-multi-select formControlName="articlesIds" [mode]="mode" [parentId]="(this.data.ruleId || form.get('common.ruleId')?.value) ?? null"></app-multi-select>
+      }
     </div>
 
     <!-- FEATURE FORM -->
@@ -26,25 +28,29 @@
       </ng-container>
     </ng-container>
 
-    <!-- ERROR -->
-     @if(error){
-       <mat-error class="m-t-10">
-         {{ error }}
-        </mat-error>
-      }
-
+    
   </mat-dialog-content>
-
+  
   <!-- ACTIONS -->
-  <mat-dialog-actions align="end" class="p-x-0">
-    <button mat-button mat-dialog-close>
-      Cancelar
-    </button>
-
-    <button mat-raised-button color="primary" [disabled]="form.invalid || loading" (click)="submit()">
-
-      {{ loading ? 'Guardando...' : 'Guardar' }}
-    </button>
+  <mat-dialog-actions class="justify-content-between align-items-center p-x-0">
+    <div>
+      <!-- ERROR -->
+       @if(error){
+         <mat-error class="f-s-12 m-t-10">
+           {{ error }}
+          </mat-error>
+        }
+    </div>
+    <div class="justify-content-end d-flex">
+      <button mat-button mat-dialog-close>
+        Cancelar
+      </button>
+      
+      <button mat-flat-button color="primary" [disabled]="form.invalid || loading" (click)="submit()">
+        
+        {{ loading ? 'Guardando...' : 'Guardar' }}
+      </button>
+    </div>
   </mat-dialog-actions>
 </form>
 

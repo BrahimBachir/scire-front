@@ -4,7 +4,7 @@
     .profile-img-container {
 
       .profile-border-bg {
-        background-image: linear-gradient(#50b2fc, #f44c66);
+        background-image: linear-gradient(var(--mat-sys-primary), var(--mat-sys-secondary));
         width: 110px;
         height: 110px;
 
@@ -41,4 +41,8 @@
   .order-3{
     order: 3;
   }
+}
+
+.tab-content {
+  background: var(--mat-sys-background);
 }

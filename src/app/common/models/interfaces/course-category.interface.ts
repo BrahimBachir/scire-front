@@ -1,6 +1,6 @@
 
 export interface ICourseCategory {
     id: number;
-    description?: string;
+    description: string;
     code?: string;
 }

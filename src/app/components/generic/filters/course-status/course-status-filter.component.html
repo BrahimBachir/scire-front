@@ -6,15 +6,15 @@
     <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
   </mat-icon>
   }
-  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName" (optionSelected)="onSelected($event)">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
     @for(item of filteredItems; track item.code) {
-    <mat-option [value]="item">
+    <mat-option [value]="item" (onSelectionChange)="onSelected(item)">
       {{ item.description }}
     </mat-option>
     }
   </mat-autocomplete>
   @if (control.hasError('required')) {
-  <mat-error class="f-s-12">Elemento requerido. *</mat-error>
+  <mat-error class="f-s-12">Requerido. *</mat-error>
   }
 </mat-form-field>
 

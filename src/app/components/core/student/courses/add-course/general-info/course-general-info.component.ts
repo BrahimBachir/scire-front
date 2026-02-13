@@ -1,8 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { Editor, NgxEditorComponent, NgxEditorMenuComponent, Toolbar } from "ngx-editor";
-import { Subscription } from "rxjs";
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { Editor, NgxEditorComponent, NgxEditorMenuComponent, toDoc, toHTML, Toolbar } from "ngx-editor";
+import { filter, Subscription, take } from "rxjs";
 import { IFieldMode } from "src/app/common/models/interfaces";
 import { CourseStatusFilterComponent } from "src/app/components/generic/filters/course-status/course-status-filter.component";
 import { IconModule } from "src/app/icon/icon.module";
@@ -27,10 +27,10 @@ export class CourseGeneralInfoComponent implements OnInit {
   @Input({ required: true }) form!: FormGroup;
   modeToSend!: IFieldMode;
   @Input() isEditMode = false;
+  editorControl = new FormControl();
 
   editor = new Editor();
   html = '';
-  htmlContent1 = '';
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline'],
@@ -41,34 +41,72 @@ export class CourseGeneralInfoComponent implements OnInit {
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
 
-  get defaultImage() {
-    let image = 'assets/images/products/s:id.jpg';
-    return image.replace(':id', (Math.floor(Math.random() * 20) + 1).toString());
+  getDefaultImage() {
+    let image = 'assets/images/products/s:id.jpg'.replace(':id', (Math.floor(Math.random() * 20) + 1).toString());
+    this.form.get('imgSrc')?.setValue(image);
+    return image;
   }
 
-  imgSrc = this.defaultImage;
+  imgSrc: string;
 
-  private sub?: Subscription;
+  private subs?: Subscription;
 
   ngOnInit(): void {
     this.modeToSend = this.isEditMode ? 'EDITING' : 'CREATING';
+    this.setupImage();
+    const detailsControl = this.form.get('details');
 
-    const control = this.form.get('imgSrc');
+    // 1. Helper to set the editor value
+    const bootstrapEditor = (html: string) => {
+      if (html && html !== this.editorControl.value) {
+        this.editorControl.setValue(toDoc(html), { emitEvent: false });
+      }
+    };
 
-    this.imgSrc = control?.value || this.defaultImage;
+    // 2. Case A: Data is already there (Synchronous)
+    if (detailsControl?.value) {
+      bootstrapEditor(detailsControl.value);
+    }
 
-    this.sub = control?.valueChanges.subscribe(value => {
-      this.imgSrc = value || this.defaultImage;
-    });
+    // 3. Case B: Data arrives late (Asynchronous API call)
+    // We listen until we get the first non-null value, then stop listening.
+    this.subs?.add(
+      detailsControl?.valueChanges.pipe(
+        filter(val => !!val),
+        take(1)
+      ).subscribe(val => {
+        bootstrapEditor(val);
+      })
+    );
+
+
+    // 3. Listen for changes in the editor (JSON) and update main form (HTML)
+    this.subs?.add(
+      this.editorControl.valueChanges.subscribe((jsonValue) => {
+        const htmlString = toHTML(jsonValue);
+        // Update the hidden/main form control with the HTML string
+        this.form.get('details')?.setValue(htmlString, { emitEvent: false });
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    if(this.subs)
+      this.subs?.unsubscribe();
   }
 
-  setImage(src: string): void {
-    this.form.get('imgSrc')?.setValue(src);
+  setupImage(): void {
+    const control = this.form.get('imgSrc');
+
+    //this.imgSrc = control?.value || this.defaultImage;
+
+    this.subs = control?.valueChanges.subscribe(value => {
+      this.imgSrc = value || this.getDefaultImage();
+    });
+    //this.form.get('imgSrc')?.setValue(this.imgSrc);
   }
+
+
 
   removeImage(): void {
     this.form.get('imgSrc')?.setValue(null);
@@ -150,7 +188,6 @@ export class AddCourseGeneralInfoComponent implements OnInit {
     })
 
     effect(() => {
-      //console.log("General info object when status has changed: ", this.generalInfo())
       const status = this.selectedStatus();
 
       if(status)

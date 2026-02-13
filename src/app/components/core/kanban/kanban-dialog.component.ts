@@ -2,16 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, Optional } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from 'src/app/material.module';
 import { DatePipe } from '@angular/common';
+import { IconModule } from 'src/app/icon/icon.module';
 @Component({
     selector: 'app-kanban-dialog',
     templateUrl: './kanban-dialog.component.html',
     imports: [
         MaterialModule,
         CommonModule,
-        TablerIconsModule,
+        IconModule,
         FormsModule,
         ReactiveFormsModule,
     ],

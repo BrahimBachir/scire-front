@@ -1,37 +1,32 @@
-import { Component, effect, EventEmitter, forwardRef, inject, Input, input, model, OnInit, Output, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { ControlValueAccessor, FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CourseService } from 'src/app/services';
-import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
-import { debounceTime, startWith } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
-import { getDefaultCourseType, ICourseType, IFieldMode } from 'src/app/common/models/interfaces';
+import { getDefaultCourseType, ICourseType } from 'src/app/common/models/interfaces';
 import { AppState } from 'src/app/common/store/app.store';
 import { Store } from '@ngrx/store';
 import { selectUserRole } from 'src/app/common/store/selectors';
+import { BaseFilterDirective } from 'src/app/common/directives';
+import { IconModule } from 'src/app/icon/icon.module';
+import { Component, inject } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'course-type-filter',
   templateUrl: './course-type-filter.component.html',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => CourseTypeFilterComponent),
-    multi: true,
-  }],
   imports: [
     CommonModule,
     MaterialModule,
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
@@ -44,10 +39,45 @@ import { selectUserRole } from 'src/app/common/store/selectors';
     MatAutocomplete,
   ],
 })
-export class CourseTypeFilterComponent implements ControlValueAccessor, OnInit {
+export class CourseTypeFilterComponent extends BaseFilterDirective<ICourseType> {
+  roleCode: string = '';
+
+  private service = inject(CourseService);
+  store = inject(Store<AppState>).select(selectUserRole).subscribe( role => this.roleCode = role.code || '');
+
+  loadData(): void {
+    this.service.getTypes().subscribe(data => {
+      this.items = data;
+      this.filteredItems = data;
+      this.applyCurrentValue();
+    });
+  }
+
+  private applyCurrentValue(): void {
+    if (this.value != null) {
+      this.syncInternalControl();
+      return;
+    }
+
+    if (this.mode !== 'FILTERING') {
+      const type = this.items.find(s => s.code === getDefaultCourseType(this.roleCode));
+      
+      if (!type) return;
+      
+      this.writeValue(type.id);
+      this.onChange(type.id);
+
+      if (this.roleCode && this.roleCode !== 'SUPER')
+        this.control.disable({ emitEvent: false });
+    }
+  }
+}
+/* export class CourseTypeFilterComponent implements ControlValueAccessor, OnInit {
   private service = inject(CourseService);
   @Output() valueChange = new EventEmitter<number | null>();
   @Input() mode: IFieldMode = 'FILTERING'; //type IFieldMode = "EDITING" | "CREATING" | "FILTERING"
+  store = inject(Store<AppState>);
+  roleCode: string = '';
 
   control = new FormControl<ICourseType | string | null>(null);
 
@@ -59,6 +89,12 @@ export class CourseTypeFilterComponent implements ControlValueAccessor, OnInit {
   onTouched: () => void = () => { };
 
   ngOnInit(): void {
+    this.store.select(selectUserRole).subscribe((role) => {
+
+      if (role && role.code)
+        this.roleCode = role.code;
+    })
+
     this.getItems();
 
     this.control.valueChanges
@@ -100,7 +136,7 @@ export class CourseTypeFilterComponent implements ControlValueAccessor, OnInit {
     typeof entity === 'object' && entity ? entity.description : '';
 
   private getItems(): void {
-    this.service.getStatuses().subscribe(data => {
+    this.service.getTypes().subscribe(data => {
       this.items = data;
       this.filteredItems = data;
 
@@ -132,21 +168,24 @@ export class CourseTypeFilterComponent implements ControlValueAccessor, OnInit {
       return;
     }
 
-    if (this.mode === 'CREATING') {
-      const draft = this.items.find(s => s.code === 'DRAFT');
-      if (draft) {
-        this.control.setValue(draft, { emitEvent: false });
-        this.onChange(draft.id);
-      }
+    if (this.mode !== 'FILTERING') {
+      const type = this.items.find(s => s.code === getDefaultCourseType(this.roleCode));
+      if (!type) return;
+      this.control.setValue(type, { emitEvent: false });
+      this.onChange(type.id);
+
+      if (this.roleCode && this.roleCode !== 'SUPER')
+        this.control.disable({ emitEvent: false });
     }
   }
 
-}
+} */
 
 
 
 /* export class AppCourseTypeFilterComponent implements OnInit {
   store = inject(Store<AppState>);
+  roleCode: string = '';
   private service = inject(CourseService);
 
   protected items = signal<ICourseType[]>([]);
@@ -158,7 +197,6 @@ export class CourseTypeFilterComponent implements ControlValueAccessor, OnInit {
   filtering = input<boolean>(true);
   required = input<boolean>(false);
 
-  roleCode: string = '';
 
   protected control = new FormControl<ICourseType | string>('');
 

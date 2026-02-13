@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Routes } from "../common/config";
-import { IQueryingDto, IReaction, IFlashcard, IQuestion, IRule, IScheme, IUser, ReactionResponse } from "../common/models/interfaces";
+import { IQueryingDto, IReaction, IFlashcard, IQuestion, IRule, IDiagram, IUser, ReactionResponse } from "../common/models/interfaces";
 import { buildParams } from "../common/utils";
 
 @Injectable({ providedIn: 'root' })
@@ -19,7 +19,7 @@ export class ReactionsService {
      * @returns 
      */
     public processReaction(
-        content: IScheme | IRule | IFlashcard | IQuestion,
+        content: IDiagram | IRule | IFlashcard | IQuestion,
         queryingDto?: IQueryingDto,
         feedback?: string
     ): Observable<IReaction> {

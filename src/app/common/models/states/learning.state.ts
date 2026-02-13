@@ -1,4 +1,4 @@
-import { ITopicCategory, ICourse, IQuestion, ISection, ITopic, IArticle, IRule, IScheme } from "../interfaces";
+import { ITopicCategory, ICourse, IQuestion, ISection, ITopic, IArticle, IRule, IDiagram } from "../interfaces";
 
 export interface LearningState {
   categories: ITopicCategory[] | null;
@@ -10,9 +10,9 @@ export interface LearningState {
   logedIn?: boolean;
   verifying?: boolean;
   selectedArticle?: IArticle
-  allSelectedArticle?: IArticle[];
+  selectedArticlesIds?: number[];
   selectedRule?: IRule
-  selectedScheme?: IScheme
+  selectedDiagram?: IDiagram
   selectedTopic?: ITopic
 }
 

@@ -1,0 +1,93 @@
+<div class="d-flex col h-100 w-100">
+  <mat-dialog-content class="flex-grow-1 w-100 p-x-0">
+    <div class="d-flex w-100 align-items-center justify-content-between m-b-15">
+      <h3 mat-dialog-title class="p-0">
+        {{ mode === 'EDITING' ? 'Editar' : mode === 'CREATING' ? 'Crear' : 'Seleccionar' }} video
+      </h3> <button mat-icon-button mat-dialog-close class="d-flex justify-content-center m-l-20 bg-error text-white">
+        <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
+      </button>
+    </div>
+    <form [formGroup]="form" class="w-100">
+      <div>
+        <rule-filter formControlName="ruleId"></rule-filter>
+      </div>
+      <div class="col-12 p-x-0">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Código del vídeo</mat-label>
+          <input type="text" matInput required aria-label="Código del vídeo" id="code" name="code"
+            formControlName="code" placeholder="Código del vídeo" />
+        </mat-form-field>
+      </div>
+      <div class="table-container b-1 rounded">
+        <table class="table arti-feat-table w-100 text-left">
+          <thead>
+            <tr>
+              <th class="p-15">#</th>
+              <th class="p-15">Artículo</th>
+              <th class="p-15">Inicio (s)</th>
+              <th class="p-15">Fin (s)</th>
+              <th class="p-15">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(af of articlesFeatures.controls; track $index; let index = $index) {
+            <tr [formGroup]="$any(af)">
+              <td class="p-15">{{ index + 1 }}</td>
+
+              <td class="p-15 article">
+                <div class="article">
+                  <article-filter  class="w-100 article" formControlName="articleId" [parentId]="form.get('ruleId')?.value"></article-filter>
+                </div>
+              </td>
+
+                <td class="p-15">
+                  <div class="start-field">
+                    <time-mm-ss formControlName="startSeconds"></time-mm-ss>
+                  </div>
+                </td>
+
+                <td class="p-15">
+                  <div class="start-field">
+                    <time-mm-ss formControlName="endSeconds"></time-mm-ss>
+                  </div>
+                </td>
+
+              <td>
+                <button (click)="onAddRow()" [disabled]="form.invalid" mat-icon-button>
+                  <i-tabler name="circle-plus"></i-tabler>
+                </button>
+                @if(articlesFeatures.controls.length > 1) {
+                <button mat-icon-button (click)="onRemoveRow(index)">
+                  <i-tabler name="trash"></i-tabler>
+                </button>
+                }
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <!-- ACTIONS -->
+  <mat-dialog-actions class="d-flex p-x-0 justify-content-between">
+    <div>
+      @if(error){
+      <mat-error class="f-s-12 m-t-10">
+        {{ error }}
+      </mat-error>
+      }
+    </div>
+    <div class="d-flex justify-content-end">
+      <button mat-button mat-dialog-close>
+        Cancelar
+      </button>
+
+      <button mat-flat-button color="primary" [disabled]="form.invalid || loading" (click)="submit()">
+        {{ loading ? 'Creando...' : 'Crear' }}
+      </button>
+    </div>
+  </mat-dialog-actions>
+
+</div>

@@ -1,0 +1,22 @@
+.diagram-wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.diagram-container {
+  position: relative;
+  z-index: 1;
+}
+
+.diagram-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+  pointer-events: auto;
+}

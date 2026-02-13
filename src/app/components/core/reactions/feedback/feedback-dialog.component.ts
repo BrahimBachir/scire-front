@@ -1,12 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { Component, Inject, OnInit, Optional, signal } from "@angular/core";
+import { Component, Inject, OnInit, Optional } from "@angular/core";
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { TablerIconsModule } from "angular-tabler-icons";
 import { IReaction, DialogData } from "src/app/common/models/interfaces";
 import { MaterialModule } from "src/app/material.module";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { IconModule } from "src/app/icon/icon.module";
 
 @Component({
   selector: 'app-feedback-dialog-content',
@@ -16,7 +16,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    TablerIconsModule,
+    IconModule,
   ],
   templateUrl: 'feedback-dialog.component.html',
 })

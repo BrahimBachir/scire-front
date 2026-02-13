@@ -4,12 +4,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatDividerModule } from '@angular/material/divider';
 import { FeatureType, IFlashcard, IncomingNavigableEntity } from 'src/app/common/models/interfaces';
 import { AppReactionsComponent } from 'src/app/components/core/reactions/reactions.component';
 import { AppBannersNoFiltersComponent } from 'src/app/components/generic/banners/no-filters/banner-no-filters.component';
-import { MyOwnElementPipe } from 'src/app/common/pipe/my-own-element.pipe';
+import { MyOwnContentPipe } from 'src/app/common/pipe/my-own-content.pipe';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AppDeleteDialogComponent } from 'src/app/components/generic/dialogs/delete-dialog/delete-dialog.component';
@@ -19,6 +18,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from 'src/app/material.module';
 import { AppElementNavigationComponent } from '../../element-navigation/element-navigation.component';
 import { IElementAction, getElementActionByEntity } from 'src/app/common/data';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
   selector: 'app-flashcard-navigation',
@@ -30,12 +30,12 @@ import { IElementAction, getElementActionByEntity } from 'src/app/common/data';
     MatChipsModule,
     MatButtonModule,
     MatIconModule,
-    TablerIconsModule,
+    IconModule,
     AppReactionsComponent,
     MatDividerModule,
     AppBannersNoFiltersComponent,
     AppElementNavigationComponent,
-    MyOwnElementPipe
+    MyOwnContentPipe
   ],
   templateUrl: './flashcard-navigation.component.html',
   styleUrl: './flashcard-navigation.component.scss'

@@ -1,7 +1,7 @@
-import { ICourseType, ITopic, ICaller, ICourseCategory, ICourseStatus } from '.';
+import { ICourseType, ITopic, ICaller, ICourseCategory, ICourseStatus, IExercise, IUser, ICreationType } from '.';
 
 export interface ICourse {
-  id: number; // ID del examen
+  id: number | null;
   code: string; // Código del curso
   calling_year: number;
   examDate?: Date | null;
@@ -20,7 +20,7 @@ export interface ICourse {
 
   caller?: ICaller;
   callerId?: number;
-  orgDescription?: string;
+  callerDescription?: string;
 
   type?: ICourseType;
   typeId?: number;
@@ -29,11 +29,22 @@ export interface ICourse {
   status?: ICourseStatus;
   statusId?: number;
   statusDescription?: string;
-  
+
   category?: ICourseCategory;
   categoryDescription?: string;
   categoryId?: number;
 
+  exercisesIds?: number[];
+  exercises?: IExercise[];
+
+  creator?: IUser;
+  creatorId?: number;
+  contributors?: IUser[];
+
+
+  creationType?: ICreationType;
+  creationTypeDescription?: string;
+  creationTypeCode?: string;
 }
 
 export interface ICourseExtraInfo {
@@ -63,6 +74,8 @@ export interface ICourseProgress {
 
 export interface ITopicProgress {
   topicId: number;
+  totalArticlesInTopic: number;
+  completedArticlesInTopic: number;
   topicProgress: number;
 }
 
@@ -85,7 +98,7 @@ export interface IArticleProgress {
   flashcards_reviewed?: boolean;
   questions_reviewed?: boolean;
   completed?: boolean;
-  articleProgress?: number;
+  percentage?: number;
 }
 
 export const STEP_FIELD_MAP: Record<string, keyof IArticleProgress> = {

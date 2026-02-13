@@ -1,4 +1,14 @@
 <mat-card class="cardWithShadow">
+  <mat-card-content>
+    <app-filters-orchestrator [config]="filtersConfig" (filtersChange)="onFiltersChanged($event)">
+    </app-filters-orchestrator>
+  </mat-card-content>
+</mat-card>
+<div>
+    <app-video [fromScreen]="true" [ruleId]="articleId" [articleId]="articleId"></app-video>
+</div>
+
+<!-- <mat-card class="cardWithShadow">
     <mat-card-content>
         <app-filters-orchestrator [config]="filtersConfig" (filtersChange)="onFiltersChanged($event)">
         </app-filters-orchestrator>
@@ -29,4 +39,4 @@
         <app-banner-no-filters [bannerText]="bannerText"></app-banner-no-filters>
     </mat-card-content>
     }
-</mat-card>
+</mat-card> -->

@@ -65,8 +65,8 @@ export function buildParams(queryingDto: IQueryingDto, params: HttpParams): Http
     if (queryingDto.videoId && queryingDto.videoId >= 0)
         params = params.append('videoId', queryingDto.videoId);
 
-    if (queryingDto.schemeId && queryingDto.schemeId >= 0)
-        params = params.append('schemeId', queryingDto.schemeId);
+    if (queryingDto.diagramId && queryingDto.diagramId >= 0)
+        params = params.append('diagramId', queryingDto.diagramId);
 
     if (queryingDto.questionId && queryingDto.questionId >= 0)
         params = params.append('questionId', queryingDto.questionId);

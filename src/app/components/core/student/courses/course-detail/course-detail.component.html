@@ -1,5 +1,5 @@
 @if(course) {
-<app-course-header [percentage]="courseProgress()?.courseProgress || 0" [course]="course" ></app-course-header>
+<app-course-header [percentage]="courseProgress()?.courseProgress || 0" [course]="course"></app-course-header>
 
 <mat-card class="cardWithShadow">
   <mat-tab-group mat-stretch-tabs="false" animationDuration="0ms">
@@ -12,62 +12,30 @@
         </div>
         Descripción General
       </ng-template>
-      <mat-card-content >
-        <!-- <div class="row">
-            <p>Aquí irá la descripción general del curso así como su contenido</p>
-          </div> -->
-          <mat-accordion>
-            @for( topic of topics; track topic.id ) {
-              <mat-expansion-panel class="cardWithShadow" (opened)="setStep(topic.id)" hideToggle> 
-                <mat-expansion-panel-header>
-                  <mat-panel-title class="f-w-600"> {{ topic.section?.name }} </mat-panel-title>
-                  <mat-panel-description class="f-s-12 row-sb">
-                    {{topic.description.substring(0,50)}}...
-                    <div >
-
-                      <mat-icon class="m-l-auto m-r-8" matTooltip="Empezar estudio del tema" (click)="goToTopicContent(course.id,topic.id)">
-                        <i-tabler name="player-play" class="icon-20"></i-tabler>
-                      </mat-icon>
-                      @if(courseProgress()){
-                        <mat-icon class="m-l-auto m-r-8" [matTooltip]="'Avance: '+topic?.progress?.toString() +'%'">
-                          <i-tabler [name]="'percentage-'+topic?.progress?.toString()" class="icon-20" [class]="topic?.progress === 100 ? 'text-success' : (topic?.progress || 0) > 0 ? 'text-primary' : ''"></i-tabler>
-                        </mat-icon>
-                      }
-                    </div>
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-  
-                <div class="row">
-                  <div class="col-lg-12 col-sm-12">
-                    <h6 class="f-s-16"> {{topic.description }} </h6>
-                  </div>
-                </div>
-                @if(topic.blocks && topic.blocks.length > 0) {
-                  <mat-divider class="row m-t-16"></mat-divider>
-                  <div class="row m-t-16">
-                    <div class="col-lg-12 col-sm-12">
-                      @for( block of topic.blocks; track block.id ) {
-                        <mat-list>
-                          <mat-list-item >
-                            <!-- <span matListItemTitle class="f-s-16 f-w-600 col-lg-12 col-sm-12"> {{ block.description }} </span> -->
-                            <span matListItemLine class="f-s-14 col-lg-12 col-sm-12 text-wrap">{{ block.description }}</span>
-                          </mat-list-item>
-                        </mat-list>
-                      }
-                    </div>
-                  </div>
-                }
-                <mat-action-row>
-                  <button mat-flat-button color="warn" (click)="prevStep()">
-                    Previous
-                  </button>
-                  <button mat-flat-button color="primary" (click)="nextStep()">
-                    Next
-                  </button>
-                </mat-action-row>
-              </mat-expansion-panel>
-            }
-          </mat-accordion>
+      <mat-card-content>
+        <div class="row g-3 m-0 justify-content-start h-100">
+          <div class="col-lg-6 p-0">
+            <div class="p-x-15 rounded b-1 h-100" [innerHTML]="safeHtml"></div>
+          </div>
+          <div class="col-lg-6 p-r-0 h-100">
+            <div class="p-3 rounded b-1 h-100 p-x-15 m-b-15">
+              <p><strong>Estado:</strong> {{ course.status?.description }}</p>
+              <p><strong>Plazas:</strong> {{ course.vacancies }}</p>
+              <p><strong>Tipo:</strong> Curso {{ course.type?.description }}</p>
+              <p><strong>Convocante:</strong> {{ course.caller?.description }}</p>
+              <p><strong>Fecha examen:</strong> {{ (course.examDate | date:'dd/MM/yyyy') || 'Sin especificar' }}</p>
+            </div>
+            <div class="row rounded b-1 m-l-0 p-15 h-100 align-items-center w-100">
+              <div class="d-flex align-items-center">
+                <mat-icon class="d-flex align-items-center">
+                  <i-tabler name="external-link" class="text-primary icon-20 m-r-8 d-flex"></i-tabler>
+                </mat-icon>
+              </div>
+              <a class="text-decoration-none text-primary f-w-500 f-s-14" [href]="course.official_call_url"
+                target="_blank" rel="noopener noreferrer"> URL Oficial</a>
+            </div>
+          </div>
+        </div>
       </mat-card-content>
     </mat-tab>
     <!-- Instructor/es -->
@@ -80,15 +48,9 @@
         </div>
         Instructor/es
       </ng-template>
-      <mat-card-content>
-        <div class="row">
-          <mat-card>
-            <mat-card-content>
-              <p>Aquí irá la información genral relativa al/a los instructor/es</p>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </mat-card-content>
+      <ng-template matTabContent>
+        <app-contributors-list [contributors]="course.contributors || []"></app-contributors-list>
+      </ng-template>
     </mat-tab>
     <!-- Anuncios -->
     <mat-tab>
@@ -102,11 +64,9 @@
           Anuncios
         </p>
       </ng-template>
-      <mat-card-content>
-        <div class="row">
-          <p>Aquí irán los anuncios del curso</p>
-        </div>
-      </mat-card-content>
+      <ng-template matTabContent>
+        <app-announcements class="w-100"></app-announcements>
+      </ng-template>
     </mat-tab>
     <!-- Reseñas -->
     <mat-tab>
@@ -120,9 +80,9 @@
           Reseñas
         </p>
       </ng-template>
-      <mat-card-content>
+      <ng-template matTabContent>
         <app-reviews [featureType]="featureType" [featureId]="courseId"></app-reviews>
-      </mat-card-content>
+      </ng-template>
     </mat-tab>
     <!-- Dudas y respuestas -->
     <mat-tab>
@@ -136,9 +96,65 @@
           Dudas y respuestas
         </p>
       </ng-template>
-      <mat-card-content>
+      <ng-template matTabContent>
         <app-comments [featureType]="featureType" [featureId]="courseId"></app-comments>
-      </mat-card-content>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="d-flex align-items-center">
+          <mat-icon class="d-flex align-items-center">
+            <i-tabler name="book" class="icon-20 m-r-8 d-flex"></i-tabler>
+          </mat-icon>
+        </div>
+        <p>
+          Temas
+        </p>
+      </ng-template>
+      <ng-template matTabContent class="p-b-0">
+        <div class="table-responsive topics-container p-15 rounded b-1 m-b-15">
+          <table mat-table [dataSource]="topics" class="w-100">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="f-w-600  f-s-14">
+                {{ "LABELS.TOPIC.NAME" | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" class="f-s-14">
+                {{ element.name }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef class="f-w-600  f-s-14">
+                {{ "LABELS.TOPIC.DESCRIPTION" | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" class="f-s-14" [matTooltip]="element.description">
+                {{ element.description.substring(0,25) }}...
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="category">
+              <th mat-header-cell *matHeaderCellDef class="f-w-600  f-s-14">
+                {{ "LABELS.TOPIC.CATEGORY" | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" class="f-s-14" [matTooltip]="element.section.category.description">
+                {{ element.section.category.name }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="section">
+              <th mat-header-cell *matHeaderCellDef class="f-w-600  f-s-14">
+                {{ "LABELS.TOPIC.SECTION" | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" class="f-s-14">
+                {{ element.section.name }}
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+      </ng-template>
     </mat-tab>
   </mat-tab-group>
 </mat-card>

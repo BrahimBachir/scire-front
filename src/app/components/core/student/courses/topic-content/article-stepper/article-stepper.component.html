@@ -31,8 +31,8 @@
     <ng-template matStepLabel>Diagrama y resúmenes</ng-template>
     @if(currentStepIndex === 2) {
     <ng-container>
-      <app-scheme-navigation [ruleId]="ruleId" [articleId]="articleId" (entityToCreate)="handleEntityCreationOutput($event)">
-      </app-scheme-navigation>
+      <app-diagram-navigation [ruleId]="ruleId" [articleId]="articleId" (entityToCreate)="handleEntityCreationOutput($event)">
+      </app-diagram-navigation>
     </ng-container>
     }
     <div class="d-flex gap-12">
@@ -72,7 +72,7 @@
   </mat-step>
 
   <!-- FINAL -->
-  <mat-step label="final">
+  <mat-step label="final" [completed]="progress.selectedArticleProgress()?.completed">
     <ng-template matStepLabel>¡Felicitaciones!</ng-template>
     @if(currentStepIndex === 5) {
       <ng-container>

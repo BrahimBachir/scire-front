@@ -1,0 +1,24 @@
+<div class="profileContent p-b-0 p-x-15 p-t-15">
+  <div class="profileCard">
+    <mat-card class="shadow-none rounded b-1 overflow-hidden">
+      <div class="row align-items-center">
+      @for(contributor of contributors; track contributor.id){
+        <div class="col-lg-4 order-2">
+          <div class="profile-img-container  text-center m-t-15">
+            <div class="profile-border-bg  cursor-pointer d-flex align-items-center justify-content-center rounded-circle m-x-auto" (click)="goToContributorDetails(contributor.id)">
+              <div class="profile-border d-flex align-items-center justify-content-center rounded-circle">
+                <img [src]="contributor.image" class="profile-pic rounded-circle w-100 h-100 object-cover"
+                  alt="user" />
+              </div>
+            </div>
+            <div class="text-center m-t-2 m-b-15">
+              <h4 class="f-s-18 f-w-600">{{ contributor.full_name }}</h4>
+              <p class="m-y-0">{{ contributor.brief_description }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+    </mat-card>
+  </div>
+</div>

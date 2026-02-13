@@ -6,6 +6,8 @@ export interface IBlock {
     articles: IBlockArticles[];
     rule?: IRule | null;
     gazette?: IRuleGazette | null;
+    articlesIds?: number[];
+    ruleId?: number;
     ambit?: IRuleAmbit | null;
 }
 

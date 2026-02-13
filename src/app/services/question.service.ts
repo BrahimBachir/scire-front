@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Routes } from '../common/config';
-import { IQueryingDto, IIncomingEntity, IQuestion, DeletedElement, IncomingNavigableEntity } from '../common/models/interfaces';
+import { IQueryingDto, IIncomingEntity, IQuestion, DeletedElement, IncomingNavigableEntity, IQuestionType } from '../common/models/interfaces';
 import { buildParams } from '../common/utils';
 
 
@@ -20,11 +20,17 @@ export class QuestionService {
     if(queryingDto)
         params = buildParams(queryingDto, params);
     
-    return this.http.get<IIncomingEntity>(environment.api_base_url + this.routes.api.learning.questions.questions, { params });
+    return this.http.get<IIncomingEntity>(environment.api_base_url + this.routes.api.learning.questions.types, { params });
+  }
+
+
+  public getTypes(): Observable<IQuestionType[]> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.questions.types}`;
+    return this.http.get<IQuestionType[]>(URL);
   }
 
   public getOne(id: number): Observable<IQuestion> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.questions.questions}/${id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.questions.base}/${id}`;
     return this.http.get<IQuestion>(URL);
   }
 
@@ -52,23 +58,23 @@ export class QuestionService {
   }
   
   public delete(id: number): Observable<DeletedElement> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.questions.questions}/${id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.questions.base}/${id}`;
     return this.http.delete<DeletedElement>(URL);
   }
   
   public deleteMany(ids: number[]) {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.questions.questions}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.questions.base}`;
     return this.http.post(URL, { ids });
   }
 
   public update(question: IQuestion): Observable<IQuestion> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.questions.questions}/${question.id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.questions.base}/${question.id}`;
     return this.http.patch<IQuestion>(URL, question);
   }
 
   public create(question: IQuestion) : Observable<IQuestion> {
     let params = new HttpParams();
-    let URL = `${environment.api_base_url}${this.routes.api.learning.questions.questions}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.questions.base}`;
 
     return this.http.post<IQuestion>(URL, question, {params});
   }

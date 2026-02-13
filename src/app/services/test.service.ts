@@ -20,11 +20,11 @@ export class TestService {
     if(queryingDto)
         params = buildParams(queryingDto, params);
     
-    return this.http.get<IIncomingTests>(environment.api_base_url + this.routes.api.learning.tests.tests, { params });
+    return this.http.get<IIncomingTests>(environment.api_base_url + this.routes.api.learning.tests.base, { params });
   }
 
   public getOneTestById(id: number): Observable<ITest> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.tests.tests}/${id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.tests.base}/${id}`;
     return this.http.get<ITest>(URL);
   }
   
@@ -44,17 +44,17 @@ export class TestService {
   }
   
   public deleteTest(id: number): Observable<string> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.tests.tests}/${id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.tests.base}/${id}`;
     return this.http.delete<string>(URL);
   }
   
   public deleteManyTests(ids: number[]) {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.tests.tests}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.tests.base}`;
     return this.http.post(URL, { ids });
   }
 
   public updateTest(test: ITest): Observable<ITest> {
-    let URL = `${environment.api_base_url}${this.routes.api.learning.tests.tests}/${test.id}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.tests.base}/${test.id}`;
     return this.http.patch<ITest>(URL, test);
   }
 
@@ -67,7 +67,7 @@ export class TestService {
     let params = new HttpParams();
     if(queryingDto)
         params = buildParams(queryingDto, params);
-    let URL = `${environment.api_base_url}${this.routes.api.learning.tests.tests}`;
+    let URL = `${environment.api_base_url}${this.routes.api.learning.tests.base}`;
 
     return this.http.post<ITest>(URL, test, {params});
   }

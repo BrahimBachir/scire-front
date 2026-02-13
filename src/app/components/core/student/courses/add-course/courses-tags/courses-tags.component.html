@@ -1,9 +1,9 @@
 <form #form="ngForm">
   <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Etiquetas</mat-label>
+    <!-- <mat-label>Etiquetas</mat-label> -->
     <div>
       <mat-chip-grid #chipGrid>
-        @for(tag of selectedTags();track tag){
+        @for(tag of selectedTags ;track tag){
         <mat-chip [removable]="true" (removed)="removeTag(tag)">
           {{ tag }}
           <button matChipRemove>

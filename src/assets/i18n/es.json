@@ -106,6 +106,12 @@
     "LAST_PAGE": "Última página",
     "OF": "de"
   },
+  "ACTIONS":{
+    "CREATE": "Crear",
+    "DELETE": "Eliminar",
+    "EDIT": "Editar",
+    "VIEW": "Ver"
+  },
   "NOT_FOUND": {
     "NOTES": "No se han encontrado notas"
   },
@@ -113,17 +119,26 @@
     "NOTES": "Todavía no has creado notas!"
   },
   "TITLES": {
-    "NOTES" : {
-      "ALL":"Notas",
+    "NOTES": {
+      "ALL": "Notas",
       "MY_NOTES": "Mis notas"
     }
   },
   "LABELS": {
+    "ACTIONS": "Acciones",
     "NOTES": {
       "FAVORITE": "Favorita",
       "RULE": "Norma",
       "ARTICLE": "Artíclo",
       "COLOR": "Color"
+    },
+    "TOPIC": {
+      "NAME": "Nombre",
+      "code": "Código",
+      "DESCRIPTION": "Descripción",
+      "CATEGORY": "Categoría",
+      "SECTION": "Sección",
+      "ACTIONS": "Acciones"
     }
   },
   "BUTTONS": {
@@ -160,5 +175,25 @@
       "COURSE": "Eliminar curso",
       "COMMENT": "Eliminar comentario"
     }
+  },
+  "ERRORS": {
+    "NOT_FOUND": {
+
+    },
+    "AI": {
+
+    },
+    "LOGIN": {
+
+    },
+    "USER": {
+
+    },
+    "PRICING": {
+      "PLAN_LIMIT_REACHED": "Limite del plan superado"
+    }
+  },
+  "SUCCESS": {
+    "DELETED": "¡Elemento eliminado con éxito!"
   }
 }

@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { InitialLearningState } from "../../models/states";
-import { loadCourse, setAllSelectedArticles, setSelectedArticle, setSelectedRule, setSelectedScheme } from "../actions";
+import { loadCourse, setAllSelectedArticles, setSelectedArticle, setSelectedRule, setSelectedDiagram } from "../actions";
 
 
 export const learningReducers = createReducer(
@@ -17,10 +17,10 @@ export const learningReducers = createReducer(
       selectedArticle: article
     }
   }),
-  on(setAllSelectedArticles, (state, { articles }) => {
+  on(setAllSelectedArticles, (state, { selectedArticlesIds }) => {
     return {
       ...state,
-      allSelectedArticle: articles
+      selectedArticlesIds: selectedArticlesIds
     }
   }),
   on(setSelectedRule, (state, { rule }) => {
@@ -29,10 +29,10 @@ export const learningReducers = createReducer(
       selectedRule: rule
     }
   }),
-  on(setSelectedScheme, (state, { scheme }) => {
+  on(setSelectedDiagram, (state, { diagram }) => {
     return {
       ...state,
-      selectedScheme: scheme
+      selectedDiagram: diagram
     }
   })
 );

@@ -1,4 +1,4 @@
-import { IPhone, IEmail, IAddress, IRole, IPermit, IGender } from '.';
+import { IPhone, IEmail, IAddress, IRole, IPermit, IGender, IUserPricingPlan, ICourse, IAnnouncement, ISocialMedia } from '.';
 
 export interface IUser {
   id?: number;
@@ -19,4 +19,10 @@ export interface IUser {
   second_surname?: string;
   isSelected?: boolean;
   token?: string;
+  user_plans?: IUserPricingPlan[]
+  brief_description?: string;
+  students?: IUser[]
+  courses?: ICourse[];
+  announcements?: IAnnouncement[];
+  social_medias?: ISocialMedia[];
 }

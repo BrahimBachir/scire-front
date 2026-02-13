@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, model, OnInit, signal } from '@angular/core';
+import { Component, forwardRef, inject, model, OnInit, signal } from '@angular/core';
 import { IconModule } from 'src/app/icon/icon.module';
 import { MaterialModule } from 'src/app/material.module';
 
 import {
+  ControlValueAccessor,
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
+  NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -25,72 +27,98 @@ import {
 import { ProductService } from 'src/app/services/apps/product.service';
 import { PRODUCT_DATA } from 'src/app/services/apps/ecommerceData';
 import { CourseService } from 'src/app/services';
-import { TablerIconsModule } from 'angular-tabler-icons';
 
 @Component({
   selector: 'app-courses-tags',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => CoursesTagsComponent),
+    multi: true,
+  }],
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    TablerIconsModule,
+    IconModule,
     IconModule,
   ],
   templateUrl: './courses-tags.component.html',
   //styleUrl: './courses-tags.component.scss',
 })
-export class AppCoursesTagsComponent implements OnInit {
-  private service = inject(CourseService)
+export class CoursesTagsComponent
+  implements ControlValueAccessor, OnInit {
 
-  selectedTags = model<string[]>([]); // Selected tags
-  tags = signal<string[] | null>(null);
+  private service = inject(CourseService);
 
-  form!: FormGroup;
+  /** Available tags */
+  tags = signal<string[]>([]);
 
+  /** Internal value (CVA) */
+  private value: string[] = [];
+
+  /** Input control */
   control = new FormControl<string>('');
 
-  constructor() { }
+  /** CVA callbacks */
+  private onChange: (value: string[]) => void = () => {};
+  private onTouched = () => {};
 
   ngOnInit(): void {
     this.getTags();
   }
 
-  getTags() {
-    this.service.getTags().subscribe({
-      next: (tags) => this.tags.set(tags),
-      //error: (err) => console.error(err)
-    })
+  writeValue(value: string[] | null): void {
+    this.value = value ?? [];
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    isDisabled ? this.control.disable() : this.control.enable();
+  }
+
+  /** ---- domain logic ---- */
+
+  private updateValue(tags: string[]) {
+    this.value = tags;
+    this.onChange(tags);
+    this.onTouched();
+  }
+
+  get selectedTags(): string[] {
+    return this.value;
   }
 
   selectTag(tag: string) {
-    const currentTags = this.selectedTags();
-    if (!currentTags.includes(tag)) {
-      this.selectedTags.set([...currentTags, tag]);
+    if (!this.value.includes(tag)) {
+      this.updateValue([...this.value, tag]);
     }
-    /*     const tags = this.selectedTags();
-        if (!tags.includes(tag)) {
-          tags.push(tag);
-          this.selectedTags.set(tags);
-        } */
   }
 
   addTagFromInput(event: any) {
-    const input = event.input;
     const value = event.value?.trim();
-    const tags = this.selectedTags();
-
-    if (value && !tags.includes(value)) {
-      tags.push(value);
-      this.selectedTags.set(tags);
+    if (value && !this.value.includes(value)) {
+      this.updateValue([...this.value, value]);
     }
-
-    if (input) input.value = '';
+    if (event.input) {
+      event.input.value = '';
+    }
   }
 
   removeTag(tag: string) {
-    let tags = this.selectedTags();
-    tags = tags.filter((t) => t !== tag);
-    this.selectedTags.set(tags);
+    this.updateValue(this.value.filter(t => t !== tag));
+  }
+
+  private getTags() {
+    this.service.getTags().subscribe({
+      next: tags => this.tags.set(tags),
+    });
   }
 }

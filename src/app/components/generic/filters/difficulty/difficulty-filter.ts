@@ -1,14 +1,13 @@
 import { CommonModule } from "@angular/common";
-import { Component, effect, EventEmitter, forwardRef, inject, Input, input, model, OnInit, Output, signal } from "@angular/core";
-import { ControlValueAccessor, FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/forms";
-import { TablerIconsModule } from "angular-tabler-icons";
+import { Component, EventEmitter, forwardRef, inject, Input, OnInit, Output } from "@angular/core";
+import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/forms";
 import { IDifficulty, IFieldMode } from "src/app/common/models/interfaces";
 import { MaterialModule } from "src/app/material.module";
 import { debounceTime, startWith } from "rxjs";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { TestService } from "src/app/services";
 import { DifficultyService } from "src/app/services/difficulty.service";
+import { IconModule } from "src/app/icon/icon.module";
 
 @Component({
   selector: 'difficulty-filter',
@@ -23,7 +22,7 @@ import { DifficultyService } from "src/app/services/difficulty.service";
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    TablerIconsModule,
+    IconModule,
   ],
   templateUrl: 'difficulty-filter.html',
   standalone: true,

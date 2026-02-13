@@ -1,17 +1,17 @@
-@if(question()){
+@if(question() && question()?.id !== 0){
 <mat-card class="card shadow-none b-1 rounded theme-card m-t-15">
   <div class="p-24">
     <mat-card-title class="m-b-0">{{question()?.text}}</mat-card-title>
   </div>
   <mat-card-content class="b-t-1">
     <div class="p-y-8 p-x-12 actions">
-      @if( (question()?.creatorId || 0 | myOwnElement) | async ) {
+      @if( (question()?.creatorId || 0 | myOwnContent) | async ) {
       <button mat-mini-fab class="cart-btn-overlay bg-error text-white" matTooltip="Borrar"
         (click)=" deleteItem(); $event.stopPropagation()">
         <i-tabler name="trash" class="icon-16 d-flex"></i-tabler>
       </button>
       }
-      @if((question()?.creatorId || 0 | myOwnElement) | async ) {
+      @if((question()?.creatorId || 0 | myOwnContent) | async ) {
       <button mat-mini-fab class="cart-btn-overlay bg-primary text-white" matTooltip="Editar" (click)="updateItem()">
         <i-tabler name="pencil" class="icon-16 d-flex"></i-tabler>
       </button>

@@ -18,14 +18,10 @@ export class CourseProgressService {
   /**
  * @From GET /learning/courses/progress/:courseId
  */
-  public getCourseProgress(queryingDto?: IQueryingDto): Observable<ICourseProgress> {
-    let params = new HttpParams();
-    if (queryingDto)
-      params = buildParams(queryingDto, params);
+  public getCourseProgress(courseId: number): Observable<ICourseProgress> {
 
     return this.http.get<ICourseProgress>(
-      `${environment.api_base_url}${this.routes.api.learning.courses.progress.course}`.replace(':courseId', (queryingDto?.courseId || 0).toString())
-      , { params });
+      `${environment.api_base_url}${this.routes.api.learning.courses.progress.course}`.replace(':courseId', courseId.toString()));
   }
 
   /**
@@ -57,13 +53,13 @@ export class CourseProgressService {
   /**
    * @From GET /learning/courses/progress/:courseId/topic/:topicId/articles
    */
-  public getCourseArticlesProgress(queryingDto?: IQueryingDto): Observable<IAllArticlesProgress> {
+  public getTopicArticlesProgress(queryingDto?: IQueryingDto): Observable<IAllArticlesProgress> {
     let params = new HttpParams();
     if (queryingDto)
       params = buildParams(queryingDto, params);
 
     return this.http.get<IAllArticlesProgress>(
-      `${environment.api_base_url}${this.routes.api.learning.courses.progress.course_articles}`.replace(':topicId', (queryingDto?.topicId || 0).toString()).replace(':courseId', (queryingDto?.courseId || 0).toString())
+      `${environment.api_base_url}${this.routes.api.learning.courses.progress.topic_articles}`.replace(':topicId', (queryingDto?.topicId || 0).toString()).replace(':courseId', (queryingDto?.courseId || 0).toString())
       , { params });
   }
 
@@ -89,5 +85,21 @@ export class CourseProgressService {
     let URL = `${environment.api_base_url}${this.routes.api.learning.courses.progress.base}`;
 
     return this.http.post<IArticleProgress>(URL, progress);
+  }
+
+  /**
+   * @From GET /learning/courses/progress/:courseId/topic/:topicId/article/:articleId
+   */
+  public getProgressByTopic( courseId: number, topicId: number, articleId: number): Observable<IArticleProgress> {
+    return this.http.get<IArticleProgress>(
+      `${environment.api_base_url}${this.routes.api.learning.courses.progress.article_by_topic}`.replace(':topicId', (topicId || 0).toString()).replace(':courseId', (courseId || 0).toString()).replace(':articleId', (articleId || 0).toString()));
+  }
+
+  /**
+   * @From GET /learning/courses/progress/:ruleId/one-article
+   */
+  public getProgressByRule(ruleId: number, articleId: number): Observable<IArticleProgress> {
+    return this.http.get<IArticleProgress>(
+      `${environment.api_base_url}${this.routes.api.learning.courses.progress.article_by_rule}`.replace(':ruleId', (ruleId || 0).toString()).replace(':articleId', (articleId || 0).toString()));
   }
 }

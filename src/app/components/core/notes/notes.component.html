@@ -1,16 +1,15 @@
-<mat-card class="cardWithShadow p-r-20 p-t-20">
+<mat-card class="cardWithShadow">
   <mat-card-content>
-    <app-filters-orchestrator [config]="noteFiltersConfig" (filtersChange)="onFiltersChanged($event)"
-      [options]="filterOptions">
+    <app-filters-orchestrator [config]="noteFiltersConfig" (filtersChange)="onFiltersChanged($event)" [options]="filterOptions">
     </app-filters-orchestrator>
   </mat-card-content>
 </mat-card>
 
-<mat-card class="cardWithShadow">
+<mat-card class="cardWithShadow rounded">
   <mat-sidenav-container [ngClass]="{
       'side-panel-opened': sidePanelOpened(),
       'side-panel-closed': !sidePanelOpened()
-    }" class="h-100 bg-white">
+    }" class="h-100 bg-white rounded">
     <mat-sidenav #noteslist [mode]="isOver() ? 'over' : 'side'" [opened]="!isOver()" (open)="sidePanelOpened.set(true)"
       (close)="sidePanelOpened.set(false)" style="width: 290px">
       <h4 class="f-s-16 f-w-600 p-x-16 m-t-16">{{'TITLES.NOTES.MY_NOTES' | translate}}</h4>
@@ -83,7 +82,7 @@
                 (click)="editeNote()">
                 <i-tabler name="pencil" class="icon-20 d-flex"></i-tabler>
               </button>
-              <button mat-mini-fab class="bg-error text-white m-l-10" matTooltip="Editar nota" aria-label="Editar nota"
+              <button mat-mini-fab class="bg-error text-white m-l-10" matTooltip="Eliminar nota" aria-label="Eliminar nota"
                 (click)="deleteNote()">
                 <i-tabler name="trash" class="icon-20 d-flex"></i-tabler>
               </button>
@@ -102,5 +101,6 @@
       }
     </mat-card-content>
   </mat-sidenav-container>
-  <mat-paginator #paginator [pageSize]="pageSize" [length]="length" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true" class="b-t-1 p-x-48" (page)="onPageChange($event)"></mat-paginator>
+  <mat-divider></mat-divider>
+  <mat-paginator #paginator [pageSize]="pageSize" [length]="length" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true" class="p-x-48 rounded" (page)="onPageChange($event)"></mat-paginator>
 </mat-card>

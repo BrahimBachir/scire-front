@@ -45,7 +45,7 @@ import {
 } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TablerIconsModule } from 'angular-tabler-icons';
+import { IconModule } from 'src/app/icon/icon.module';
 
 const colors: any = {
   red: {
@@ -72,7 +72,8 @@ const colors: any = {
         CommonModule,
         MatNativeDateModule,
         MatDialogModule,
-        MatDatepickerModule,  TablerIconsModule
+        MatDatepickerModule,
+        IconModule
     ],
     providers: [provideNativeDateAdapter()],
     changeDetection: ChangeDetectionStrategy.OnPush

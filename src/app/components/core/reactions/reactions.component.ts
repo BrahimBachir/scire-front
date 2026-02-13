@@ -1,14 +1,14 @@
 import { Component, effect, inject, Input, OnInit, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactionsService } from 'src/app/services';
-import { IRule, IScheme, IFlashcard, IQuestion, FeatureType } from 'src/app/common/models/interfaces';
+import { IRule, IDiagram, IFlashcard, IQuestion, FeatureType } from 'src/app/common/models/interfaces';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
 import { AppFeedbackDialogComponent } from './feedback/feedback-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
     selector: 'app-reactions',
@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
         CommonModule,
         MaterialModule,
         MatCardModule,
-        TablerIconsModule,
+        IconModule,
         MatIconModule,
         MatButtonModule,
     ],
@@ -26,8 +26,8 @@ export class AppReactionsComponent /* implements OnInit */ {
     private reactService = inject(ReactionsService)
     private dialog = inject(MatDialog);
 
-    @Input() content2: IScheme | IRule | IFlashcard | IQuestion | null;
-    @Input() content = signal<IScheme | IRule | IFlashcard | IQuestion | null>(null);
+    @Input() content2: IDiagram | IRule | IFlashcard | IQuestion | null;
+    @Input() content = signal<IDiagram | IRule | IFlashcard | IQuestion | null>(null);
     @Input() featureType: FeatureType;
 
     //protected user = signal<IUser | null>(null);

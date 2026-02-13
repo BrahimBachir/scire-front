@@ -4,6 +4,7 @@ export interface IElementAction {
     entity: string;
     icon: string;
     buttonClass: string;
+    plans?: string[];
 }
 
 export const ADD_ELEMENTS_ACTIONS: IElementAction[] = [
@@ -12,14 +13,15 @@ export const ADD_ELEMENTS_ACTIONS: IElementAction[] = [
         label: "Crear una pregunta",
         entity: "QUESTION",
         icon: "help-circle",
-        buttonClass: 'bg-primary text-white'
+        buttonClass: 'bg-primary text-white',
     },
     {
         tooltip: "Crear un elemento con IA",
         label: "Crear un elemento con IA",
         entity: "AI",
         icon: "sparkles",
-        buttonClass: 'bg-success text-white'
+        buttonClass: 'bg-success text-white',
+        plans: ['SILVER', 'GOLD']
     },
     {
         tooltip: "Crear un esquema",

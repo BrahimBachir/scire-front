@@ -9,9 +9,10 @@ import { ProfileContentComponent } from '../../generic/account/profile-content/p
 import { AppFaqComponent } from '../../generic/faq/faq.component';
 import { AppPricingComponent } from '../../generic/pricing/pricing.component';
 import { FlashcardWrapperComponent } from './courses/common/flashcard/flashcard-wrapper.component';
-import { SchemeFormComponent } from './courses/common/scheme/form/scheme-form.component';
-import { SchemeWrapperComponent } from './courses/common/scheme/scheme-wrapper.component';
 import { VideoWrapperComponent } from './courses/common/video/video-wrapper.component';
+import { TopicBlocksComponent } from './courses/add-course/topics/topic-blocks/topic-blocks.component';
+import { DiagramFormComponent } from './courses/common/diagram/form/diagram-form.component';
+import { DiagramWrapperComponent } from './courses/common/diagram/diagram-wrapper.component';
 
 
 export const StudentRoutes: Routes = [
@@ -146,8 +147,8 @@ export const StudentRoutes: Routes = [
         },
       },
       {
-        path: 'schemes',
-        component: SchemeWrapperComponent,
+        path: 'diagrams',
+        component: DiagramWrapperComponent,
         data: {
           title: 'Diagramas',
           urls: [
@@ -157,26 +158,37 @@ export const StudentRoutes: Routes = [
         },
       },
       {
-        path: 'schemes/create',
-        component: SchemeFormComponent,
+        path: 'diagrams/create',
+        component: DiagramFormComponent,
         data: {
           title: 'Crear diagrama',
           urls: [
             { title: 'Academia', url: '/' },
-            { title: 'Diagramas', url: 'student/schemes' },
+            { title: 'Diagramas', url: 'student/diagrams' },
             { title: 'Crear' },
           ],
         },
       },
       {
-        path: 'schemes/:schemeId/edit',
-        component: SchemeFormComponent,
+        path: 'diagrams/:diagramId/edit',
+        component: DiagramFormComponent,
         data: {
           title: 'Editar diagrama',
           urls: [
             { title: 'Academia', url: '/' },
-            { title: 'Diagramas', url: 'student/schemes' },
+            { title: 'Diagramas', url: 'student/diagrams' },
             { title: 'Editar' },
+          ],
+        },
+      },
+      {
+        path: 'topics/:topicId/edit',
+        component: TopicBlocksComponent,
+        data: {
+          title: 'Tema',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Editar tema' },
           ],
         },
       },

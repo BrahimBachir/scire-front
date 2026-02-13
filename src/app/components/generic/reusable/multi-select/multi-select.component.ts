@@ -1,23 +1,20 @@
-import { Component, effect, EventEmitter, forwardRef, inject, Input, input, model, OnInit, Output, output, signal, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { ControlValueAccessor, FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormsModule, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ArticlesService } from 'src/app/services';
 import { MatAutocomplete } from '@angular/material/autocomplete';
-import { debounceTime, startWith } from 'rxjs';
+import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
-import { IArticle, IFieldMode, IRule } from 'src/app/common/models/interfaces';
+import { IArticle, IFieldMode } from 'src/app/common/models/interfaces';
 import { MatChipsModule } from '@angular/material/chips';
-import { Store } from '@ngrx/store';
-import { setAllSelectedArticles } from 'src/app/common/store/actions';
-import { AppState } from 'src/app/common/store/app.store';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
   selector: 'app-multi-select',
@@ -27,7 +24,7 @@ import { AppState } from 'src/app/common/store/app.store';
     CommonModule,
     MaterialModule,
     MatCardModule,
-    TablerIconsModule,
+    IconModule,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
@@ -39,65 +36,43 @@ import { AppState } from 'src/app/common/store/app.store';
     MatAutocomplete,
     MatChipsModule
   ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppMultiSelectComponent),
-      multi: true,
-    },
-  ],
 })
 export class AppMultiSelectComponent
   implements ControlValueAccessor {
-
   private service = inject(ArticlesService);
-  private state = inject(Store<AppState>);
 
-  @Input() rule: IRule | null | undefined;
   @Input() mode: IFieldMode = 'FILTERING';
+  @Input() parentId: number | null = null;
+  @Output() valueChange = new EventEmitter<number | null>();
 
-  /** 🔹 CVA VALUE (source of truth) */
-  private value: number[] = [];
+  public ngControl = inject(NgControl, { self: true, optional: true });
 
-  /** 🔹 UI STATE */
-  control = new FormControl('');
-  items = signal<IArticle[]>([]);
-  filteredItems = signal<IArticle[]>([]);
-  selectedItems = signal<IArticle[]>([]);
+  control = new FormControl<string | null>(null);
+
+  items: IArticle[] = [];
+  filteredItems: IArticle[] = [];
+  selectedItems: IArticle[] = [];
+
+  protected value: number[] = [];
+
 
   private onChange: (value: number[]) => void = () => { };
   private onTouched: () => void = () => { };
 
-  private previousRuleId: number | null = null;
-
   constructor() {
-    // Filter autocomplete
-    this.control.valueChanges
-      .pipe(startWith(''), debounceTime(200))
-      .subscribe(value => {
-        this.filteredItems.set(this.filter(value));
-      });
-
-/*     // React to rule changes
-    effect(() => {
-      const rule = this.rule;
-      if (!rule) {
-        this.reset();
-        return;
-      }
-
-      if (this.previousRuleId !== null && rule.id !== this.previousRuleId) {
-        this.reset();
-      }
-
-      this.previousRuleId = rule.id;
-      this.loadItems();
-    }); */
+    if (this.ngControl)
+      this.ngControl.valueAccessor = this;
   }
 
-  // ─────────────────────────────────────────────
-  // CVA IMPLEMENTATION
-  // ─────────────────────────────────────────────
+  ngOnInit(): void {
+    console.log("ArticlesIds: ",this.value)
+    this.loadData();
+
+    if (this.ngControl?.control) {
+      this.control.setValidators(this.ngControl.control.validator);
+      this.control.updateValueAndValidity({ emitEvent: false });
+    }
+  }
 
   writeValue(ids: number[] | null): void {
     this.value = ids ?? [];
@@ -117,10 +92,6 @@ export class AppMultiSelectComponent
       ? this.control.disable({ emitEvent: false })
       : this.control.enable({ emitEvent: false });
   }
-
-  // ─────────────────────────────────────────────
-  // UI BEHAVIOR
-  // ─────────────────────────────────────────────
 
   toggleSelection(article: IArticle): void {
     const exists = this.value.includes(article.id!);
@@ -147,222 +118,72 @@ export class AppMultiSelectComponent
   }
 
   clean(): void {
-    this.value = [];
-    this.onChange(this.value);
-    this.syncSelectedItems();
+    this.control.setValue('', { emitEvent: true });
+    this.value = [];                               
+    this.selectedItems = [];                       
+    this.filteredItems = [...this.items];          
+    this.onChange([]);
+    this.onTouched();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-  if (changes['rule']) {
-    const rule: IRule | null = changes['rule'].currentValue;
-    if (!rule) { this.reset(); return; }
+    console.log("ParentId: ", changes['parentId'])
+    if (changes['parentId']) {
+      if (this.parentId) {
+        this.control.enable({ emitEvent: false });
+      } else {
+        this.control.disable({ emitEvent: false });
+      }
 
-    if (this.previousRuleId !== null && rule.id !== this.previousRuleId) {
-      this.reset();
+      if (!changes['parentId'].firstChange) {
+        this.onParentChange();
+      }
     }
-
-    this.previousRuleId = rule.id;
-    this.loadItems();
   }
-}
 
-  // ─────────────────────────────────────────────
-  // DATA
-  // ─────────────────────────────────────────────
+  private onParentChange(): void {
+    this.clean();
+    this.loadData();
+  }
 
-  private loadItems(): void {
-    if (!this.rule || this.rule.code === 'ALL') return;
-
-    this.service.getArticlesByRule(this.rule.id)
+  private loadData(): void {
+    this.service.getArticlesByRule(this.parentId ?? 0)
       .subscribe(data => {
-        this.items.set(data);
-        this.filteredItems.set(data);
+        this.items = data;
+        this.filteredItems = data;
+        this.filter(this.control.value);
         this.syncSelectedItems();
       });
   }
 
   private syncSelectedItems(): void {
-    const resolved = this.items().filter(a =>
-      this.value.includes(a.id!)
+    if (!this.items.length || !this.value.length) {
+      this.selectedItems = [];
+      return;
+    }
+
+    const itemMap = new Map<number, IArticle>(
+      this.items.map(item => [item.id!, item])
     );
-    this.selectedItems.set(resolved);
-    this.state.dispatch(setAllSelectedArticles(resolved))
+
+    this.selectedItems = this.value
+      .map(id => itemMap.get(id))
+      .filter((item): item is IArticle => !!item);
   }
 
-  private reset(): void {
-    this.items.set([]);
-    this.filteredItems.set([]);
-    this.selectedItems.set([]);
-    this.value = [];
-    this.onChange([]);
-    this.onTouched();
-  }
+  /*   private filter(value: string | null): IArticle[] {
+      const filterValue = (value ?? '').toLowerCase();
+      return this.items.filter(item =>
+        item.title.toLowerCase().includes(filterValue) ||
+        item.boeId?.toLowerCase().includes(filterValue)
+      );
+    } */
 
-  private filter(value: string | null): IArticle[] {
-    const filterValue = (value ?? '').toLowerCase();
-    return this.items().filter(item =>
-      item.title.toLowerCase().includes(filterValue)
+  filter(searchValue: string | null): void {
+    const text = (searchValue ?? '').toLowerCase();
+    this.filteredItems = this.items.filter(item =>
+      item.title.toLowerCase().includes(text) ||
+      item.boeId?.toLowerCase().includes(text) // Helpful to filter by ID too!
     );
   }
 }
-
-/* export class AppMultiSelectComponent {
-  private service = inject(ArticlesService)
-  protected control = new FormControl<string>('');
-  private previousRuleId = signal<number | null>(null);
-
-  protected items = signal<IArticle[]>([]);
-  protected filteredItems = signal<IArticle[]>([]);
-  selectedItems = model<IArticle[]>([]);
-  incomingIds = input<string[] | null>(null);
-  selectedItemIds = model<string[] | null>();
-  @Input() mode: IFieldMode = 'FILTERING'; //type IFieldMode = "EDITING" | "CREATING" | "FILTERING"
-
-  rule = input<IRule | null | undefined>(null);
-
-  form!: FormGroup;
-
-  constructor() {
-    effect(() => {
-      const selected = this.selectedItems();
-      const ids = selected.map(a => a.boeId!);
-      this.selectedItemIds.set(ids);
-    });
-
-    effect(() => {
-      const rule = this.rule();
-      const prev = this.previousRuleId();
-
-      if (!rule) return;
-
-      if (prev !== null && rule.id !== prev) {
-        this.items.set([]);
-        this.selectedItems.set([]);
-      }
-
-      this.previousRuleId.set(rule.id);
-    });
-
-    effect(() => {
-      const rule = this.rule();
-      if (!rule || rule.code === 'ALL') return;
-
-      this.getItems();
-    });
-
-    effect(() => {
-      const rule = this.rule();
-
-      if (rule === null) {
-        this.items.set([]);
-        this.selectedItems.set([]);
-      }
-    });
-
-    effect(() => {
-      const items = this.items();
-      if (!items.length) return;
-
-      const ids = this.incomingIds();
-
-      if (!ids || !ids.length) return;
-
-      const resolved = items.filter(a =>
-        ids.includes(a.boeId!)
-      );
-
-      this.selectedItems.set(resolved);
-    });
-
-      this.control.valueChanges.pipe(
-        startWith(''),
-        debounceTime(200),
-      ).subscribe(value => {
-        this.filteredItems.set(this._filter(value));
-      });
-  }
-
-  private _filter(value: string | null): IArticle[] {
-    const filterValue = (value ?? '').toLowerCase();
-    return this.items().filter(item =>
-      item.title.toLowerCase().includes(filterValue)
-    );
-  }
-
-
-  getItems(): void {
-    this.service.getArticlesByRule({ ruleCode: this.rule()?.code }).subscribe({
-      next: (data) => {
-        this.items.set(data);
-        this.filteredItems.set(data);
-      },
-      //error: (err) => console.error('Error fetching categories:', err),
-    });
-  }
-
-  all: IArticle = {
-    id: 0,
-    boeId: 'ALL',
-    title: 'Todos',
-    versions: []
-  }
-
-  toggleSelection(article: IArticle): void {
-    const selected = this.selectedItems();
-    const exists = selected.some(a => a.boeId === article.boeId);
-
-    this.selectedItems.set(
-      exists
-        ? selected.filter(a => a.boeId !== article.boeId)
-        : [...selected, article]
-    );
-  }
-
-  isSelected(article: IArticle): boolean {
-    return this.selectedItems().some(a => a.boeId === article.boeId);
-  }
-
-  remove(article: IArticle): void {
-    this.selectedItems.set(
-      this.selectedItems().filter(a => a.boeId !== article.boeId)
-    );
-  }
-
-  clean(){
-    this.selectedItems.set([]);
-
-  } 
-
-}*/
-
-/**
-   @Input() rule!: IRule;
-
-  value: number[] = [];
-
-  private onChange = (value: number[]) => {};
-  private onTouched = () => {};
-
-  writeValue(value: number[] | null): void {
-    this.value = value ?? [];
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    // optional
-  }
-
-  // call this when selection changes
-  updateSelection(ids: number[]) {
-    this.value = ids;
-    this.onChange(ids);
-    this.onTouched();
-  }
- */

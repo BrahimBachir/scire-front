@@ -12,5 +12,6 @@ export interface IFlashcard {
   ruleId?: number;
   generatedBy?: IGeneratedBy;
   creationType?: ICreationType;
-    articlesIds?: number[];
+  creationTypeId?: number;
+  articlesIds?: number[];
 }

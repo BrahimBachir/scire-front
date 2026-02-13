@@ -1,11 +1,11 @@
 import { createAction } from "@ngrx/store";
-import { IArticle, ICourse, IRule, IScheme } from "../../models/interfaces";
+import { IArticle, ICourse, IRule, IDiagram } from "../../models/interfaces";
 
 export const LOAD_COURSE = '[LEARNING] Load course!';
 export const COURSE_LOADED = '[LEARNING] Course loaded!';
 
 export const SET_SELECTED_RULE = '[LEARNING] New selected rule';
-export const SET_SELECTED_SCHEME = '[LEARNING] New selected scheme';
+export const SET_SELECTED_DIAGRAM = '[LEARNING] New selected diagram';
 export const SET_SELECTED_ARTICLE = '[LEARNING] New selected article';
 export const SET_ALL_SELECTED_ARTICLES = '[LEARNING] New multiple selected articles';
 
@@ -26,11 +26,11 @@ export const setSelectedRule = createAction(
   ) => ({ rule })
 );
 
-export const setSelectedScheme = createAction(
-  SET_SELECTED_SCHEME,
+export const setSelectedDiagram = createAction(
+  SET_SELECTED_DIAGRAM,
   (
-    scheme: IScheme
-  ) => ({ scheme })
+    diagram: IDiagram
+  ) => ({ diagram })
 );
 
 export const setSelectedArticle = createAction(
@@ -43,6 +43,6 @@ export const setSelectedArticle = createAction(
 export const setAllSelectedArticles = createAction(
   SET_ALL_SELECTED_ARTICLES,
   (
-    articles: IArticle[]
-  ) => ({ articles })
+    selectedArticlesIds: number[]
+  ) => ({ selectedArticlesIds })
 );

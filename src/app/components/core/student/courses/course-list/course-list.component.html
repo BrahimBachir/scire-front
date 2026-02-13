@@ -1,7 +1,6 @@
 <mat-card class="cardWithShadow">
   <mat-card-content>
-    <app-filters-orchestrator [config]="filtersConfig" (filtersChange)="onFiltersChanged($event)"
-      >
+    <app-filters-orchestrator [config]="filtersConfig" (filtersChange)="onFiltersChanged($event)">
     </app-filters-orchestrator>
   </mat-card-content>
 </mat-card>
@@ -13,36 +12,46 @@
     </button>
   </mat-card-header>
   <mat-card-content class="module-list">
-    <ng-scrollbar class="position-relative" style="height: 50vh" >
+    <ng-scrollbar class="position-relative" style="height: 50vh">
       @if(filteredCourses()) {
       <div class="row">
         @for(course of filteredCourses(); track course.id) {
         <div class="col-lg-4">
-          <mat-card class="card overflow-hidden shadow-none b-1 cursor-pointer" (click)="getCourseDetails(course)">
+          <mat-card class="card overflow-hidden shadow-none b-1 cursor-pointer" (click)="goToCourseDetails(course)">
             <img mat-card-image src="{{ course.imgSrc }}" alt="Imagen principal del curso" />
-            <div class="card-overlay h-100 d-flex align-items-end justify-content-end">
-              <mat-chip class="f-s-12 f-w-600 m-y-16 m-r-16 bg-white">{{
-                course.orgDescription
-                }}</mat-chip>
+            <div class="card-overlay h-100 d-flex align-items-center justify-content-end">
+              <mat-chip class="f-s-12 f-w-600 m-y-16 m-r-16 bg-white">{{ course.callerDescription }}</mat-chip>
             </div>
-
+            
             <mat-card-content class="p-y-24">
-              <div class="user-category">
-                <mat-chip class="f-s-12 m-y-16 f-w-600 bg-white ">
-                  {{course.categoryDescription}}
-                </mat-chip>
+              <div class="d-flex justify-content-between actions">
+                <mat-chip class="f-s-12 m-y-16 f-w-600 bg-white "> {{course.categoryDescription}} </mat-chip>
+                <div class="text-center p-y-8 d-flex gap-10">
+                  @if(course?.creationTypeCode === 'COM' || ((course?.creatorId || 0 | myOwnContent) | async)) {
+                  <button mat-mini-fab class="cart-btn-overlay bg-secondary text-white" matTooltip="Edit"
+                    (click)="course.id && update(course.id)">
+                    <i-tabler name="pencil" class="icon-16 d-flex"></i-tabler>
+                  </button>
+                  }
+                  @if(course?.creationTypeCode === 'COM' || ((course?.creatorId || 0 | myOwnContent) | async)){
+                  <button mat-mini-fab class="cart-btn-overlay bg-error text-white" matTooltip="Borrar"
+                    (click)="course.id && remove(course.id); $event.stopPropagation()">
+                    <i-tabler name="trash" class="icon-16 d-flex"></i-tabler>
+                  </button>
+                  }
+                </div>
               </div>
               <mat-card-title>{{ course.description }}</mat-card-title>
               <div class="d-flex align-items-center justify-content-center m-t-24">
                 <div class="d-flex align-items-center">
                   <span class="m-r-12 f-s-14 d-flex align-items-center"><i-tabler name="users-group"
                       class="icon-18 m-r-4"></i-tabler>
-                      {{ course.students }}
-                    </span>
+                    {{ course.students }}
+                  </span>
                   <span class="f-s-14 d-flex align-items-center"><i-tabler name="message-2"
                       class="icon-18 m-r-4"></i-tabler>
-                      {{ course.commentsCount }}
-                    </span>
+                    {{ course.commentsCount }}
+                  </span>
                 </div>
                 <span class="m-l-auto f-s-14 d-flex align-items-center">
                   <i-tabler name="calendar" class="icon-14 m-r-4 d-flex"></i-tabler>

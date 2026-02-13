@@ -1,0 +1,41 @@
+<table class="table table-hover w-100 b-1 rounded text-left">
+  <thead>
+    <tr>
+      <th class="p-15">#</th>
+      <th class="p-15">Descripción</th>
+      <th class="p-15">Artículos</th>
+      <th class="p-15">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for(blockGroup of form.controls; track $index; let index = $index) {
+    <tr [formGroup]="$any(blockGroup)">
+      <td class="p-15">{{ index + 1 }}</td>
+
+      <td class="col p-15">
+        <mat-form-field appearance="outline" class="w-100 m-t-10">
+          <mat-label>Descripción</mat-label>
+          <input type="text" matInput formControlName="description" placeholder="Descripción" />
+        </mat-form-field>
+        <rule-filter formControlName="ruleId" [mode]="mode"></rule-filter>
+      </td>
+
+      <td class="p-15">
+        <app-multi-select formControlName="articlesIds" [mode]="mode"
+          [parentId]="blockGroup.get('ruleId')?.value"></app-multi-select>
+      </td>
+
+      <td>
+        <button (click)="onAddRow()" [disabled]="form.invalid" mat-icon-button>
+          <i-tabler name="circle-plus"></i-tabler>
+        </button>
+        @if(form.length > 1) {
+        <button mat-icon-button (click)="onRemoveRow(index)">
+          <i-tabler name="trash"></i-tabler>
+        </button>
+        }
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>

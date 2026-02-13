@@ -8,6 +8,7 @@ import { AppBannersNoFiltersComponent } from 'src/app/components/generic/banners
 import { AppFiltersOrchestratorComponent } from 'src/app/components/generic/filters/orchestrator/filters-orchestrator.component';
 import { IconModule } from 'src/app/icon/icon.module';
 import { MaterialModule } from 'src/app/material.module';
+import { VideoComponent } from './display/video.component';
 
 @Component({
   selector: 'app-video-wrapper',
@@ -16,20 +17,20 @@ import { MaterialModule } from 'src/app/material.module';
     MaterialModule,
     MatCardModule,
     AppFiltersOrchestratorComponent,
-        TranslateModule,
-        IconModule,
-    AppBannersNoFiltersComponent,
+    TranslateModule,
+    IconModule,
+    VideoComponent,
+    //AppBannersNoFiltersComponent,
   ],
   templateUrl: './video-wrapper.component.html',
   styleUrl: './video-wrapper.component.scss'
 })
 export class VideoWrapperComponent implements OnInit, OnChanges {
-create() {
-throw new Error('Method not implemented.');
-}
+  create() {
+    throw new Error('Method not implemented.');
+  }
   filtersConfig: FilterConfig[] = CommonFiltersData;
   filters!: IQueryingDto;
-  direction: string = 'FORWARD';
   video = signal<IVideo | null>(null);
   bannerText: string = 'Por favor, seleccione, al menos, un filtro.';
 
@@ -38,7 +39,7 @@ throw new Error('Method not implemented.');
 
   ngOnInit(): void {
   }
-  
+
   onFiltersChanged(filters: IQueryingDto) {
     this.filters = filters;
     this.ruleId = this.filters?.ruleId || 0;
@@ -46,7 +47,7 @@ throw new Error('Method not implemented.');
   }
 
   getNext() {
- 
+
   }
 
   getItems() {
@@ -54,7 +55,6 @@ throw new Error('Method not implemented.');
   }
 
   getPrevious() {
-    this.direction = 'BACKWARD';
     this.getItems();
   }
 

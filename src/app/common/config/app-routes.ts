@@ -11,7 +11,8 @@ export const Routes = {
     users: {
       new_login: 'users/new-login',
       logged: 'users/loged',
-      all: 'users'
+      all: 'users',
+      contributor: 'users/contributor/:id',
     },
     config: {
       pricing_planes: 'configs/pricing-planes',
@@ -27,19 +28,22 @@ export const Routes = {
       categories: 'learning/categories',
       sections: 'learning/sections',
       topics: {
-        topics: 'learning/topics',
+        base: 'learning/topics',
+        by_course: 'learning/topics/course/:courseId',
+        syllabus: 'learning/topics/syllabus/:courseId',
         blocks: 'learning/topics/:id/blocks',
         articles: 'learning/topics/:topicId/articles',
       },
       tasks: 'learning/topics/tasks',
       questions: {
-        questions: 'learning/questions',
+        base: 'learning/questions',
+        types: 'learning/questions/types',
         byRule: 'learning/questions/rule/:ruleCode/article/:articleId',
         byArticle: 'learning/questions/article/:articleId',
         navigate: 'learning/questions/article/:articleId/navigate'
       },
       tests: {
-        tests: 'learning/tests',
+        base: 'learning/tests',
         lastTest: 'learning/tests/last',
         testQuestion: 'learning/tests/questions',
         difficulties: 'learning/tests/difficulties',
@@ -49,20 +53,24 @@ export const Routes = {
         base: 'learning/difficulties',
       },
       flashcards: {
-        flashcards: 'learning/flashcards',
+        base: 'learning/flashcards',
         byRule: 'learning/flashcards/rule/:ruleCode/article/:articleId',
         byArticle: 'learning/flashcards/article/:articleId',
-        //navigate: 'learning/flashcards/rule/:ruleCode/article/:articleId/navigate',
         navigate: 'learning/flashcards/article/:articleId/navigate',
       },
       notes: {
-        notes: 'learning/notes',
+        base: 'learning/notes',
         byRule: 'learning/notes/rule/:ruleCode/article/:articleId',
         navigate: 'learning/notes/article/:articleId/navigate',
       },
       tracker: 'learning/tracker',
       stats: {
         dashboard: 'learning/stats/dashboard',
+      },
+      exercises: {
+        base: 'learning/courses/exercises',
+        by_course: 'learning/courses/exercises/:courseId',
+        types: 'learning/courses/exercises/types',
       },
       courses: {
         base: 'learning/courses',
@@ -82,23 +90,30 @@ export const Routes = {
           base: 'learning/courses/progress',
           course: 'learning/courses/progress/:courseId',
           topic: 'learning/courses/progress/:courseId/topic/:topicId',
-          course_articles: 'learning/courses/progress/:courseId/topic/:topicId/articles',
+          topic_articles: 'learning/courses/progress/:courseId/topic/:topicId/articles',
           rule_articles: 'learning/courses/progress/:ruleId/articles',
+          article_by_topic: 'learning/courses/progress/:courseId/topic/:topicId/article/:articleId',
+          article_by_rule: 'learning/courses/progress/:ruleId/article/:articleId',
           article: 'learning/courses/progress/article/:articleId',
         }
       },
       videos: {
-        videos: "learning/videos",
+        base: "learning/videos",
         byRule: 'learning/videos/rule/:ruleCode/article/:articleId',
         byArticle: 'learning/videos/article/:articleId',
         navigate: 'learning/videos/article/:articleId/navigate'
       },
-      schemes: {
-        schemes: 'learning/schemes',
-        byRule: 'learning/schemes/rule/:ruleCode/article/:articleId',
-        byArticle: 'learning/schemes/article/:articleId',
-        navigate: 'learning/schemes/article/:articleId/navigate'
+      diagrams: {
+        base: 'learning/diagrams',
+        byRule: 'learning/diagrams/rule/:ruleCode/article/:articleId',
+        byArticle: 'learning/diagrams/article/:articleId',
+        navigate: 'learning/diagrams/article/:articleId/navigate'
       },
+      announcements: {
+        base: 'learning/announcements',
+        by_course: 'learning/announcements/:courseId',
+        views: 'learning/announcements/:id/views',
+      }
     },
     seed: {
       categories: 'seed/categories',
@@ -107,7 +122,7 @@ export const Routes = {
       questions: 'seed/questions',
       flashcards: 'seed/flashcards',
       videos: 'seed/videos',
-      schemes: 'seed/schemes',
+      diagrams: 'seed/diagrams',
     },
     rule: {
       base: 'rules',
@@ -137,6 +152,9 @@ export const Routes = {
     },
     comments: {
       base: 'comments'
+    },
+    ai: {
+      base: 'auto-generate',
     }
   }
 };

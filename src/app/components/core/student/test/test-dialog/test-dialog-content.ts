@@ -1,9 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { Component, Inject, OnInit, Optional, signal } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { TablerIconsModule } from "angular-tabler-icons";
 import { ITopicCategory, IDifficulty, IQuestion, ISection, ITest, ITestType, ITopic, IUser, IQueryingDto } from "src/app/common/models/interfaces";
 import { createDefaultTest } from "src/app/common/models/states";
 import { MaterialModule } from "src/app/material.module";
@@ -13,6 +12,7 @@ import { TestDialogData } from "src/app/common/models/interfaces/test-data.inter
 import { debounceTime, startWith } from "rxjs";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { IconModule } from "src/app/icon/icon.module";
 
 @Component({
   selector: 'app-dialog-content',
@@ -22,7 +22,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    TablerIconsModule,
+    IconModule,
   ],
   templateUrl: 'test-dialog-content.html',
 })
@@ -200,15 +200,15 @@ export class AppTestDialogContentComponent implements OnInit {
   getTopics(): void {
     if (this.local_data.section && this.local_data.section.id) this.learningService.getTopics({ parentId: this.local_data.section?.id }).subscribe({
       next: (data) => {
-        this.topics.set(data.rows);
-        this.filteredTopics.set(data.rows);
+        this.topics.set(data.rows as ITopic[]);
+        this.filteredTopics.set(data.rows as ITopic[]);
       },
       //error: (err) => console.error('Error fetching topics:', err),
     });
     else this.learningService.getTopics().subscribe({
       next: (data) => {
-        this.topics.set(data.rows);
-        this.filteredTopics.set(data.rows);
+        this.topics.set(data.rows as ITopic[]);
+        this.filteredTopics.set(data.rows as ITopic[]);
       },
       //error: (err) => console.error('Error fetching topics:', err),
     });
@@ -230,7 +230,7 @@ export class AppTestDialogContentComponent implements OnInit {
     return this.categories().filter((c) => c.name.toLowerCase().includes(filterValue));
   }
 
-  private _filterSections(value: ITopicCategory | string | null): ISection[] {
+  private _filterSections(value: ISection | string | null): ISection[] {
     const filterValue = this._getFilterValue(value);
 
     return this.sections().filter((s) => s.name.toLowerCase().includes(filterValue));

@@ -7,12 +7,9 @@ import { AppKanbanComponent } from '../../kanban/kanban.component';
 import { AppFullcalendarComponent } from '../../fullcalendar/fullcalendar.component';
 import { AppTestComponent } from '../test/test.component';
 import { AppDashboardComponent } from 'src/app/components/generic/dashboard/dashboard.component';
-import { FlashcardWrapperComponent } from './common/flashcard/flashcard-wrapper.component';
-import { VideoWrapperComponent } from './common/video/video-wrapper.component';
-import { SchemeWrapperComponent } from './common/scheme/scheme-wrapper.component';
-import { SchemeFormComponent } from './common/scheme/form/scheme-form.component';
-import { AppCourseTopicsComponent } from './course-topics/course-topics.component';
+import { AppCourseTopicsComponent } from './course-syllabus/course-syllabus.component';
 import { AddCourseComponent } from './add-course/add-course.component';
+import { ProfileContentComponent } from 'src/app/components/generic/account/profile-content/profile-content.component';
 
 
 export const CourseRoutes: Routes = [
@@ -37,6 +34,18 @@ export const CourseRoutes: Routes = [
           urls: [
             { title: 'Academia', url: '/student' },
             { title: 'Detalle del curso' },
+          ],
+        }
+      },
+      {
+        path: 'courses/:courseId/contributors/:userId',
+        component: ProfileContentComponent,
+        data: {
+          title: 'Perfil',
+          urls: [
+            { title: 'Academia', url: '/student' },
+            { title: 'Curso', url: 'student/courses/:courseId/details' },
+            { title: 'Perfil del usuario' },
           ],
         }
       },

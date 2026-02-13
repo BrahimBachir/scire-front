@@ -1,14 +1,24 @@
 <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedIndexChange)="onTabIndexChanged($event)">
     @for(tab of tabs; track tab.id) {
-        <mat-tab>
-            <ng-template mat-tab-label>
+    <mat-tab>
+        <ng-template mat-tab-label>
             <span (click)="tabSelected.emit(tab)">
                 {{ tab.title || tab?.boeId?.toUpperCase() }}
             </span>
-            <i-tabler  class="icon-18 m-l-5" [matTooltip]="tab.progress?.articleProgress ? tab.progress?.articleProgress  +'%' : '0%'"
-                [name]="tab.progress?.articleProgress ? 'percentage-' + tab.progress?.articleProgress :  'percentage-0'">
-            </i-tabler>
-            </ng-template>
-        </mat-tab>
-        }
+            @if(tab.id === progress.selectedArticleProgress()?.articleId){
+                <i-tabler class="icon-18 m-l-5"
+                    [ngClass]="!articleProgress()?.percentage ? 'text-error' : articleProgress()?.percentage === 100 ? 'text-success': 'text-warning'"
+                    [matTooltip]="articleProgress()?.percentage ? articleProgress()?.percentage  +'%' : '0%'"
+                    [name]="articleProgress()?.percentage ? 'percentage-' + articleProgress()?.percentage :  'percentage-0'">
+                </i-tabler>
+            } @else {
+                <i-tabler class="icon-18 m-l-5"
+                    [ngClass]="!tab.progress?.percentage ? 'text-error' : tab.progress?.percentage === 100 ? 'text-success': 'text-warning'"
+                    [matTooltip]="tab.progress?.percentage ? tab.progress?.percentage  +'%' : '0%'"
+                    [name]="tab.progress?.percentage ? 'percentage-' + tab.progress?.percentage :  'percentage-0'">
+                </i-tabler>
+            }
+        </ng-template>
+    </mat-tab>
+    }
 </mat-tab-group>

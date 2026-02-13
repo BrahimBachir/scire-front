@@ -8,7 +8,7 @@
         </div>
         <div class="row">
           <div class="col-lg-9">
-            <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-20">Título<span class="text-error">*</span></mat-label>
+            <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-20">Descripción<span class="text-error">*</span></mat-label>
             <mat-form-field appearance="outline" class="w-100 p-0" color="primary">
               <input type="text" matInput placeholder="Nombre del curso" formControlName="description" />
               <mat-hint class="f-s-12">Se requiere un título para el curso
@@ -24,10 +24,10 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="f-s-14 f-w-600 m-b-8 d-block m-t-20">Descripción</div>
+        <div class="f-s-14 f-w-600 m-b-8 d-block m-t-20">Detalles</div>
         <div class="NgxEditor__Wrapper">
           <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
-          <ngx-editor [editor]="editor" [placeholder]="'Escriba aquí...'" formControlName="details"
+          <ngx-editor [editor]="editor" [placeholder]="'Escriba aquí...'" [formControl]="editorControl"
             class="b-t-1"></ngx-editor>
         </div>
         <div class="f-s-12 m-t-2">
@@ -52,7 +52,7 @@
             Imagen del curso.
           </div>
           <button mat-mini-fab class="bg-secondary text-white" matTooltip="Cambiar" aria-label="Cambiar"
-            (click)="setImage(defaultImage)">
+            (click)="getDefaultImage()">
             <i-tabler name="arrows-shuffle" class="icon-20 d-flex"></i-tabler>
           </button>
         </div>

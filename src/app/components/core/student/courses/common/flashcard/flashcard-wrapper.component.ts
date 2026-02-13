@@ -1,16 +1,14 @@
-import { Component, inject, Input, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
-import { FlashcardService } from 'src/app/services';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatDividerModule } from '@angular/material/divider';
-import { FeatureType, FilterConfig, IFilters, IFlashcard, IQueryingDto } from 'src/app/common/models/interfaces';
-import { AppReactionsComponent } from 'src/app/components/core/reactions/reactions.component';
 import { AppFiltersOrchestratorComponent } from 'src/app/components/generic/filters/orchestrator/filters-orchestrator.component';
 import { FlashcardFiltersData } from 'src/app/common/data/filters/flashcard-filter-items';
 import { FlashcardNavigationComponent } from './navigation/flashcard-navigation.component';
+import { Component, Input } from '@angular/core';
+import { FilterConfig, IQueryingDto } from 'src/app/common/models/interfaces';
+import { IconModule } from 'src/app/icon/icon.module';
 
 @Component({
   selector: 'app-flashcard-wrapper',
@@ -19,7 +17,7 @@ import { FlashcardNavigationComponent } from './navigation/flashcard-navigation.
     MatChipsModule,
     MatButtonModule,
     MatIconModule,
-    TablerIconsModule,
+    IconModule,
     AppFiltersOrchestratorComponent,
     MatDividerModule,
     FlashcardNavigationComponent

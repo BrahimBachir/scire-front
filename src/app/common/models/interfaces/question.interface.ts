@@ -19,5 +19,6 @@ export interface IQuestion {
     creatorId?: number;
     ruleId?: number;
     generatedBy?: IGeneratedBy;
-    creationType?: ICreationType;
+  creationType?: ICreationType;
+  creationTypeId?: number;
 }
