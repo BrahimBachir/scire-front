@@ -1,5 +1,10 @@
-.topics-container {
+.readiness-container {
   min-height: 250px;
   max-height: 250px;
   overflow: auto;
+}
+
+.empty-state {
+  font-size: 13px;
+  color: var(--mat-sys-surface-container-lowest);
 }

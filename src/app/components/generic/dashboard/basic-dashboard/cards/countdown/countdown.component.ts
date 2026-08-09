@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs';
-import { ICourseProgress, IExamReadiness, ITopicProgress } from 'src/app/common/models/interfaces';
+import { finalize, forkJoin } from 'rxjs';
+import { ICourseMetrics, IExamReadiness } from 'src/app/common/models/interfaces';
 import { IconModule } from 'src/app/icon/icon.module';
 import { MaterialModule } from 'src/app/material.module';
 import { BasicMetricsService } from 'src/app/services';
@@ -29,7 +29,8 @@ export class AppBDCountdownComponent implements OnInit {
 
   courseId: number | null = Number(this.route.snapshot.paramMap.get('courseId')) || null;
 
-  countdown: any[];
+  overview: ICourseMetrics | null = null;
+  readiness: IExamReadiness[] = [];
 
   ngOnInit(): void {
     this.loadData();
@@ -37,15 +38,19 @@ export class AppBDCountdownComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.service.getReadiness(this.courseId ?? 0)
+    // getOverviewMetrics feeds the "days to exam" countdown, getReadiness feeds the
+    // per-exercise pass-strategy breakdown.
+    forkJoin({
+      overview: this.service.getOverviewMetrics(this.courseId ?? 0),
+      readiness: this.service.getReadiness(this.courseId ?? 0),
+    })
       .pipe(finalize(() => this.loading = false))
       .subscribe({
-        next: (res) => {
-          // TODO: bind res (IExamReadiness) to the template - neither `progress`
-          // nor a readiness field exist on this component yet.
+        next: ({ overview, readiness }) => {
+          this.overview = overview;
+          this.readiness = readiness;
         },
-        error: (error) => console.error(error)
-      })
-
+        error: (error) => console.error(error),
+      });
   }
 }
