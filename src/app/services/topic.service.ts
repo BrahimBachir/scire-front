@@ -80,13 +80,4 @@ export class TopicService {
 
     return this.http.post<ITopicCourse>(URL, toco);
   }
-
-  /*   public save(topic: ITopic, queryingDto?: IQueryingDto) : Observable<ITopic> {
-      let params = new HttpParams();
-      if(queryingDto)
-          params = buildParams(queryingDto, params);
-      let URL = `${environment.api_base_url}${this.routes.api.learning.topics.base}`;
-  
-      return this.http.post<ITopic>(URL, topic, {params});
-    } */
 }

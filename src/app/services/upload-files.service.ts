@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+/* import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { API_ROUTE_BASE_URL } from "../common/config/constants";
 
@@ -16,4 +16,4 @@ uploadImage(file: File) {
     
     return this.http.post(URL, formData);
   }
-}
+} */

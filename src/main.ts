@@ -7,5 +7,5 @@ import localeEs from '@angular/common/locales/es';
 registerLocaleData(localeEs, 'es')
 
 bootstrapApplication(AppComponent, appConfig).catch((err) =>
-  console.error(err)
+  console.error("Error at boostrap: ",err)
 );

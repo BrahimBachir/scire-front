@@ -53,6 +53,6 @@ export class MyPaginatorIntl extends MatPaginatorIntl implements OnDestroy {
       Math.min(startIndex + pageSize, length) : 
       startIndex + pageSize;
     
-    return `${startIndex + 1} ${endIndex} ${this.translate.instant('PAGINATOR.OF')} ${length}`;
+    return `${startIndex + 1} - ${endIndex} ${this.translate.instant('PAGINATOR.OF')} ${length}`;
   };
 }
