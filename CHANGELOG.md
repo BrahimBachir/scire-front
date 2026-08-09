@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/BrahimBachir/scire-front/compare/v2.0.0...v2.0.1) (2026-08-09)
+
+
+### Bug Fixes
+
+* **theme,dashboard:** persist theme preference; bind readiness/countdown card ([2ffcd76](https://github.com/BrahimBachir/scire-front/commit/2ffcd76140c3606ef786eca5a1451d7e7659668f))
+
 # [2.0.0](https://github.com/BrahimBachir/scire-front/compare/v1.1.0...v2.0.0) (2026-08-09)
 
 
