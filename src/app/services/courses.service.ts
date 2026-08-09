@@ -33,9 +33,13 @@ export class CourseService {
     return this.http.get<IUser>(URL);
   } */
 
-  public getMyCourses(): Observable<ICourse[]> {
+  public getMyCourses(queryingDto?: IQueryingDto): Observable<IIncomingEntity> {
+    let params = new HttpParams();
+    if(queryingDto)
+        params = buildParams(queryingDto, params);
+
     let URL = `${environment.api_base_url}${this.routes.api.learning.courses.my_courses}`;
-    return this.http.get<ICourse[]>(URL);
+    return this.http.get<IIncomingEntity>(URL, { params });
   }
   
   public getTypes(): Observable<ICourseType[]> {
