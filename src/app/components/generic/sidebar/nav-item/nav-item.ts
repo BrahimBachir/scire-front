@@ -1,3 +1,5 @@
+import { Planes } from 'src/app/common/enums/planes.enum';
+
 export interface NavItem {
     displayName?: string;
     disabled?: boolean;
@@ -13,4 +15,5 @@ export interface NavItem {
     children?: NavItem[];
     ddType?: string;
     type?: string;
+    requiresPlan?: Planes[];
 }

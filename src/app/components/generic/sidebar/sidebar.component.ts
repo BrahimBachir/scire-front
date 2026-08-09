@@ -37,13 +37,13 @@ export class SidebarComponent implements OnInit {
     this.store.select(selectChoosenCourse).subscribe({
       next: (course) => this.course = course,
     })
-    this.getCourseTypes();
+    this.getMyCourses();
   }
 
-  getCourseTypes() {
+  getMyCourses() {
     this.courseService.getMyCourses().subscribe({
       next: (data) => {
-        this.courses = data;
+        this.courses = data.rows as ICourse[];
         //this.store.dispatch(loadCourse(this.courses[0]));
       },
       error: (error) => {
@@ -52,7 +52,7 @@ export class SidebarComponent implements OnInit {
     });
   }
 
-  setSelectedCourse(course: ICourse){
+  setSelectedCourse(course: ICourse) {
     this.store.dispatch(loadCourse(course))
   }
 

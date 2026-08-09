@@ -11,6 +11,7 @@
 </div>
 
 <div class="row m-t-32 p-t-32">
+  @if (activePlan$ | async; as activePlan) {
   @for(plan of planes(); track plan.code) {
   <div class="col-sm-6 col-lg-4">
     <mat-card class="cardWithShadow">
@@ -38,6 +39,7 @@
               </h2>
               <span class="f-s-16 per-month">/año</span>
             </div>
+            <span class="d-block f-s-12 f-w-500 text-success m-b-16">Ahorras un 10%</span>
           </div>
           } @else {
           <div class="d-flex">
@@ -73,18 +75,20 @@
               <span class="f-s-14 f-w-500"> {{ plan_feat.feature.description }} ({{ plan_feat.monthly_limit }} por
                 mes)</span>
               }@else if (!plan_feat.feat_available) {
-              <span class="f-s-14 f-w-500"> {{ plan_feat.feature.description }} (no disponibl)</span>
+              <span class="f-s-14 f-w-500"> {{ plan_feat.feature.description }} (no disponible)</span>
               } @else {
               <span class="f-s-14 f-w-500"> {{ plan_feat.feature.description }} (sin límite)</span>
               }
           </div>
         </div>
         }
-        <button mat-flat-button color="primary" class="w-100 m-t-24">
-          Elegir {{ plan.description }}
+        <button mat-flat-button color="primary" class="w-100 m-t-24" [disabled]="plan.code === activePlan.code"
+          (click)="choosePlan(plan.code)">
+          {{ plan.code === activePlan.code ? 'Plan actual' : 'Elegir ' + plan.description }}
         </button>
       </mat-card-content>
     </mat-card>
   </div>
+  }
   }
 </div>

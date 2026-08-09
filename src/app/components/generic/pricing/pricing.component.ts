@@ -1,8 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/common/store/app.store';
+import { changeUserPlan } from 'src/app/common/store/actions';
+import { selectUserActivePlan } from 'src/app/common/store/selectors';
 import { IPlan, IPlanFeatures } from 'src/app/common/models/interfaces';
 import { IconModule } from 'src/app/icon/icon.module';
 import { ConfigService } from 'src/app/services/config.service';
@@ -30,7 +34,10 @@ interface pricecards {
     templateUrl: './pricing.component.html',
 })
 export class AppPricingComponent implements OnInit{
+  private store = inject(Store<AppState>);
+
   protected planes = signal<IPlan[]>([]);
+  activePlan$ = this.store.select(selectUserActivePlan);
 
   show = false;
 
@@ -47,5 +54,9 @@ export class AppPricingComponent implements OnInit{
         this.planes.set(planes);
       },
     })
+  }
+
+  choosePlan(planCode: string): void {
+    this.store.dispatch(changeUserPlan({ planCode }));
   }
 }

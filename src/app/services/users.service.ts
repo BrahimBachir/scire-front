@@ -51,4 +51,14 @@ export class UsersService {
     let URL = `${environment.api_base_url}${this.routes.api.users.all}`;
     return this.http.patch(URL, user);
   }
+
+  public changePlan(planCode: string) {
+    let URL = `${environment.api_base_url}${this.routes.api.users.plan}`;
+    return this.http.patch(URL, { planCode });
+  }
+
+  public resetPlan() {
+    let URL = `${environment.api_base_url}${this.routes.api.users.plan_reset}`;
+    return this.http.post(URL, {});
+  }
 }

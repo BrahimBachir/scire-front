@@ -1,32 +1,28 @@
 import { inject } from '@angular/core';
 import { Router, CanActivateFn } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Roles } from '../enums';
+import { Planes, Roles } from '../enums';
 import {
   FRONT_ROUTE_TOKEN_SUPER,
   FRONT_ROUTE_TOKEN_STUDENT,
   FRONT_ROUTE_TOKEN_INSTRUCTOR,
 } from '../config';
 import { AppState } from '../store/app.store';
-import { selectUserRole } from '../store/selectors';
+import { selectUserActivePlan } from '../store/selectors';
 
-export const RedirectGuard: CanActivateFn = (route, state) => {
+export const PlanRedirectGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
-  let destination = '/auth';
+  let destination = '/basic-dashboard';
   let valid = false;
 
   return inject(Store<AppState>)
-    .select(selectUserRole)
+    .select(selectUserActivePlan)
     .subscribe({
-      next: (role) => {
-        if (role.code === Roles.SUPER) {
-          destination = state.url + FRONT_ROUTE_TOKEN_SUPER;
+      next: (plan) => {
+        if (plan && plan.code === Planes.SILVER || plan && plan.code === Planes.GOLD) {
+          destination = 'advanced-dashboard';
           valid = true;
-        } else if (role.code === Roles.STUDENT) {
-          destination = state.url + FRONT_ROUTE_TOKEN_STUDENT;
-          valid = true;
-        }else if (role.code === Roles.INSTRUCTOR) {
-          destination = state.url + FRONT_ROUTE_TOKEN_INSTRUCTOR;
+        } else if (plan && plan.code === Planes.BRONZE) {
           valid = true;
         } else {
           return valid;

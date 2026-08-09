@@ -286,6 +286,10 @@
         opacity: 0.38;
       }
 
+      &.locked {
+        opacity: 0.6;
+      }
+
       .item-chip {
         height: 24px;
         display: flex;

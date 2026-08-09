@@ -3,7 +3,7 @@ import { IElementAction } from '../data';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.store';
 import { selectUserPlans } from '../store/selectors';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Pipe({
   name: 'planFilter',
@@ -12,38 +12,27 @@ import { map } from 'rxjs';
 export class PlanFilterPipe implements PipeTransform {
     store = inject(Store<AppState>)
 
-  transform(actions: IElementAction[]): IElementAction[] {
-      if (!actions) {
-        return [];
-      }
-      
-      let filteredActions: IElementAction[] = [];
-      
-      this.store.select(selectUserPlans).pipe(
+  transform(actions: IElementAction[]): Observable<IElementAction[]> {
+      return this.store.select(selectUserPlans).pipe(
           map(userPlans => {
-              return userPlans?.flatMap(up => {
-                  // If no plan info yet, just return actions that are available to everyone
-                  if (!up || !up.plan) {
-                      return actions.filter(a => !a.plans);
-                    }
-                if(up.active){
-                    return actions.filter(action => {
-                      // If action has no plans restriction → visible to everyone
-                      if (!action.plans || action.plans.length === 0) {
-                        return true;
-                      }
-                
-                      // Otherwise check if user plan is allowed
-                      return action.plans.includes(up.plan.code);
-                    });                    
-                }
+              if (!actions) {
                 return [];
-            }) || [];
-          })
-        ).subscribe(result => {
-          filteredActions = result;
-        });
+              }
 
-      return filteredActions;
+              const activePlanCodes = (userPlans ?? [])
+                .filter(up => up?.active && up.plan)
+                .map(up => up.plan.code);
+
+              return actions.filter(action => {
+                // If action has no plans restriction → visible to everyone
+                if (!action.plans || action.plans.length === 0) {
+                  return true;
+                }
+
+                // Otherwise check if any of the user's active plans is allowed
+                return activePlanCodes.some(code => action.plans!.includes(code));
+              });
+          })
+        );
   }
 }
