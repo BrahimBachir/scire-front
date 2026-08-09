@@ -15,8 +15,6 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { TranslateModule } from '@ngx-translate/core';
 import { IconModule } from 'src/app/icon/icon.module';
 
-//TODO: Error when the rule dropdown of the create/edit component is overlaping with the filters component (named the same, of course)
-
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
@@ -28,9 +26,9 @@ import { IconModule } from 'src/app/icon/icon.module';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
+    TranslateModule,
     AppFiltersOrchestratorComponent,
     MatPaginatorModule,
-    TranslateModule,
   ]
 })
 export class AppNotesComponent implements OnInit {

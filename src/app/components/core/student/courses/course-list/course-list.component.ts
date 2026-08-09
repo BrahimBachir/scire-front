@@ -93,6 +93,8 @@ export class AppCourseListComponent implements OnInit {
 
   isMobileView = false;
 
+  private showOnlyMyCourses: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -104,6 +106,8 @@ export class AppCourseListComponent implements OnInit {
     this.mobileQuery.addEventListener('change', (e) => {
       this.isMobileView = e.matches;
     });
+
+    this.showOnlyMyCourses = !!this.route.snapshot.data['myCourses'];
 
     this.filtersForm = this.fb.group({
       caller: [''],
@@ -138,10 +142,12 @@ export class AppCourseListComponent implements OnInit {
       skip: this.pageSize * this.currentPageIndex
     }
     this.filteredCourses.set(null);
-    this.service.getAll(this.filters).subscribe({
+    const request$ = this.showOnlyMyCourses
+      ? this.service.getMyCourses(this.filters)
+      : this.service.getAll(this.filters);
+    request$.subscribe({
       next: (res) => {
         this.courses.set(res.rows as ICourse[]);
-        console.log(this.courses())
         this.length = res.total;
         this.filteredCourses.set(res.rows as ICourse[]);
       },
