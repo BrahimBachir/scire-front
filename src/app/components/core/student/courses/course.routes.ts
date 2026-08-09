@@ -6,11 +6,15 @@ import { AppTopicContentComponent } from './topic-content/topic-content.componen
 import { AppKanbanComponent } from '../../kanban/kanban.component';
 import { AppFullcalendarComponent } from '../../fullcalendar/fullcalendar.component';
 import { AppTestComponent } from '../test/test.component';
-import { AppDashboardComponent } from 'src/app/components/generic/dashboard/dashboard.component';
 import { AppCourseTopicsComponent } from './course-syllabus/course-syllabus.component';
 import { AddCourseComponent } from './add-course/add-course.component';
 import { ProfileContentComponent } from 'src/app/components/generic/account/profile-content/profile-content.component';
-
+import { AppTestSimulatorComponent } from '../test/simulator/simulator.component';
+import { AppTestResultsComponent } from '../test/test-results/test-results.component';
+import { PlanGuard } from 'src/app/common/guards/plan-auth.guard';
+import { AppAdvancedDashboardComponent } from 'src/app/components/generic/dashboard/advanced-dashboard/advanced-dashboard.component';
+import { Planes } from 'src/app/common/enums';
+import { AppBasicDashboardComponent } from 'src/app/components/generic/dashboard/basic-dashboard/basic-dashboard.component';
 
 export const CourseRoutes: Routes = [
   {
@@ -21,9 +25,7 @@ export const CourseRoutes: Routes = [
         component: AppCourseListComponent,
         data: {
           title: 'Academia',
-          urls: [
-            { title: 'Academia' },
-          ],
+          urls: [{ title: 'Academia' }],
         },
       },
       {
@@ -35,7 +37,7 @@ export const CourseRoutes: Routes = [
             { title: 'Academia', url: '/student' },
             { title: 'Detalle del curso' },
           ],
-        }
+        },
       },
       {
         path: 'courses/:courseId/contributors/:userId',
@@ -47,7 +49,7 @@ export const CourseRoutes: Routes = [
             { title: 'Curso', url: 'student/courses/:courseId/details' },
             { title: 'Perfil del usuario' },
           ],
-        }
+        },
       },
       {
         path: 'courses/:courseId/topics',
@@ -59,7 +61,7 @@ export const CourseRoutes: Routes = [
             { title: 'Curso', url: 'student/courses/:courseId/details' },
             { title: 'Temas del curso' },
           ],
-        }
+        },
       },
       {
         path: 'courses/:courseId/topic/:topicId/content',
@@ -71,7 +73,7 @@ export const CourseRoutes: Routes = [
             { title: 'Curso', url: 'student/courses/:courseId/details' },
             { title: 'Tema' },
           ],
-        }
+        },
       },
       {
         path: 'courses/:courseId/notes',
@@ -84,11 +86,13 @@ export const CourseRoutes: Routes = [
             { title: 'Notas' },
           ],
         },
-      },      
+      },
       {
         path: 'courses/:courseId/kanban',
         component: AppKanbanComponent,
+        canActivate: [PlanGuard],
         data: {
+          planes: [Planes.SILVER, Planes.GOLD],
           title: 'Kanban',
           urls: [
             { title: 'Academia', url: '/student' },
@@ -100,7 +104,9 @@ export const CourseRoutes: Routes = [
       {
         path: 'courses/:courseId/calendar',
         component: AppFullcalendarComponent,
+        canActivate: [PlanGuard],
         data: {
+          planes: [Planes.SILVER, Planes.GOLD],
           title: 'Calendario',
           urls: [
             { title: 'Academia', url: '/student' },
@@ -110,9 +116,25 @@ export const CourseRoutes: Routes = [
         },
       },
       {
-        path: 'courses/:courseId/dashboard',
-        component: AppDashboardComponent,
+        path: 'courses/:courseId/dashboard/basic',
+        component: AppBasicDashboardComponent,
+        canActivate: [PlanGuard],
         data: {
+          planes: [Planes.BRONZE],
+          title: 'Estadística',
+          urls: [
+            { title: 'Academia', url: '/student' },
+            { title: 'Curso', url: 'student/courses/:courseId/details' },
+            { title: 'Estadística' },
+          ],
+        },
+      },
+      {
+        path: 'courses/:courseId/dashboard/advanced',
+        component: AppAdvancedDashboardComponent,
+        canActivate: [PlanGuard],
+        data: {
+          planes: [Planes.SILVER, Planes.GOLD],
           title: 'Estadística',
           urls: [
             { title: 'Academia', url: '/student' },
@@ -134,14 +156,37 @@ export const CourseRoutes: Routes = [
         },
       },
       {
+        path: 'courses/:courseId/tests/:testId/simulator',
+        component: AppTestSimulatorComponent,
+        data: {
+          title: 'Simulador',
+          urls: [
+            { title: 'Academia', url: '/student' },
+            { title: 'Curso', url: 'student/courses/:courseId/details' },
+            { title: 'Tests', url: 'student/courses/:courseId/tests' },
+            { title: 'Simulador' },
+          ],
+        },
+      },
+      {
+        path: 'courses/:courseId/tests/:testId/results',
+        component: AppTestResultsComponent,
+        data: {
+          title: 'Resultados del test',
+          urls: [
+            { title: 'Academia', url: '/student' },
+            { title: 'Curso', url: 'student/courses/:courseId/details' },
+            { title: 'Tests', url: 'student/courses/:courseId/tests' },
+            { title: 'Resultados' },
+          ],
+        },
+      },
+      {
         path: 'courses/new',
         component: AddCourseComponent,
         data: {
           title: 'Nuevo curso',
-          urls: [
-            { title: 'Academia', url: '/student' },
-            { title: 'Crear' },
-          ],
+          urls: [{ title: 'Academia', url: '/student' }, { title: 'Crear' }],
         },
       },
       {
@@ -149,12 +194,9 @@ export const CourseRoutes: Routes = [
         component: AddCourseComponent,
         data: {
           title: 'Editar curso',
-          urls: [
-            { title: 'Academia', url: '/student' },
-            { title: 'Editar' },
-          ],
+          urls: [{ title: 'Academia', url: '/student' }, { title: 'Editar' }],
         },
       },
     ],
   },
-]; 
+];
