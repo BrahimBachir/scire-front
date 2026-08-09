@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatAutocomplete } from '@angular/material/autocomplete';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
-import { IExercise, IExerciseType } from 'src/app/common/models/interfaces';
+import { IExercise, IExerciseType, IFieldMode } from 'src/app/common/models/interfaces';
 import { BaseFilterDirective } from 'src/app/common/directives';
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +17,7 @@ import { IconModule } from 'src/app/icon/icon.module';
 import { ExerciseService } from 'src/app/services/exercise.service';
 
 @Component({
-  selector: 'exercise-filter',
+  selector: 'app-exercise-filter',
   templateUrl: './exercise-filter.component.html',
   imports: [
     CommonModule,
@@ -40,10 +40,23 @@ export class ExerciceFilterComponent extends BaseFilterDirective<IExercise> {
   private service = inject(ExerciseService);
 
   loadData(): void {
-    this.service.getAll().subscribe(data => {
+    if (this.parentId === null && this.mode !== 'FILTERING') {
+      this.items = [];
+      this.filteredItems = [];
+      return;
+    }
+
+    this.service.getAllByCourse(this.parentId ?? 0).subscribe(data => {
       this.items = data;
       this.filteredItems = data;
-      this.syncInternalControl();
+      this.applyCurrentValue();
     });
+  }
+
+  private applyCurrentValue(): void {
+    if (this.value != null) {
+      this.syncInternalControl();
+      return;
+    }
   }
 }

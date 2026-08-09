@@ -1,6 +1,6 @@
 <mat-form-field class="w-100" appearance="outline">
   <mat-label>
-    Tipo de ejercicio
+    Tipo
     @if (control.hasError('required')) { <span class="text-error">*</span> }
   </mat-label>
   <input matInput [formControl]="control" [matAutocomplete]="auto" (blur)="onTouched()" />

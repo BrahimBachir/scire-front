@@ -92,6 +92,15 @@ export function buildParams(queryingDto: IQueryingDto, params: HttpParams): Http
     if (queryingDto.topicId && queryingDto.topicId >= 0)
         params = params.append('topicId', queryingDto.topicId);
 
+    if (queryingDto.topicCategoryId && queryingDto.topicCategoryId >= 0)
+        params = params.append('topicCategoryId', queryingDto.topicCategoryId);
+
+    if (queryingDto.sectionId && queryingDto.sectionId >= 0)
+        params = params.append('sectionId', queryingDto.sectionId);
+
+    if(queryingDto.testTypeId && queryingDto.testTypeId >= 0)
+        params = params.append('testTypeId', queryingDto.testTypeId);
+
     if (queryingDto.blockId && queryingDto.blockId >= 0)
         params = params.append('blockId', queryingDto.blockId);
 

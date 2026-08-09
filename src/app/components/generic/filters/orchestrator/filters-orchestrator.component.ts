@@ -22,6 +22,10 @@ import { CourseCategryFilterComponent } from '../course-category/course-category
 import { IconModule } from 'src/app/icon/icon.module';
 import { AppMultiSelectComponent } from '../../reusable/multi-select/multi-select.component';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TopicCategoryFilterComponent } from '../topic-category/topic-category-filter.component';
+import { TopicSectionFilterComponent } from '../topic-section/topic-section-filter.component';
+import { TestTypeFilterComponent } from '../test-type/test-type-filter.component';
+import { TopicFilterComponent } from '../topic/topic-filter.component';
 
 @Component({
   selector: 'app-filters-orchestrator',
@@ -49,7 +53,11 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
     CallerFilterComponent,
     CourseTypeFilterComponent,
     CourseCategryFilterComponent,
-    AppMultiSelectComponent
+    AppMultiSelectComponent,
+    TopicCategoryFilterComponent,
+    TopicSectionFilterComponent,
+    TestTypeFilterComponent,
+    TopicFilterComponent,
   ],
 })
 export class AppFiltersOrchestratorComponent {
@@ -84,7 +92,6 @@ export class AppFiltersOrchestratorComponent {
     if(this.options.applyMode === 'auto')
       this.form.valueChanges.subscribe(value => {
         this.filtersChange.emit(value);
-        console.log(value)
       })
   }
 
@@ -120,6 +127,10 @@ export class AppFiltersOrchestratorComponent {
       callerId: new FormControl<number | null>(null),
       courseTypeId: new FormControl<number | null>(null),
       courseCategoryId: new FormControl<number | null>(null),
+      topicCategoryId: new FormControl<number | null>(null),
+      topicId: new FormControl<number | null>(null),
+      sectionId: new FormControl<number | null>(null),
+      testTypeId: new FormControl<number | null>(null),
     })
   }
 }

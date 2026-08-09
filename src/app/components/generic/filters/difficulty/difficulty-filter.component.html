@@ -1,7 +1,7 @@
 <mat-form-field class="w-100" appearance="outline">
   <mat-label>
-    Tipo de ejercicio
-    @if (control.hasError('required')) { <span class="text-error">*</span> }
+    Dificultad
+    @if (control.hasError('required')) { <span  class="text-error">*</span> }
   </mat-label>
   <input matInput [formControl]="control" [matAutocomplete]="auto" (blur)="onTouched()" />
   @if(control.enabled){
@@ -9,14 +9,14 @@
     <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
   </mat-icon>
   }
-  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName" >
     @for(item of filteredItems; track item.id) {
     <mat-option [value]="item" (onSelectionChange)="onSelected(item)">
       {{ item.description }}
     </mat-option>
     }
   </mat-autocomplete>
-  @if (control.hasError('required')) {
+  @if (ngControl?.control?.errors?.['required'] && (ngControl?.control?.touched || ngControl?.control?.dirty)) {
   <mat-error class="f-s-12">Requerido. *</mat-error>
   }
 </mat-form-field>

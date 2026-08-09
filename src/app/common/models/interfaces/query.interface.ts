@@ -2,46 +2,49 @@ import { IArticle, ICaller, ICourseCategory, ICourseType, IRule, IRuleAmbit, IRu
 import { FeatureType, VoteType } from "./feature-types";
 
 export interface IQueryingDto {
-    id?: number;
-    skip?: number;
-    take?: number;
-    searchTerm?: string;
-    parentId?: number | null;
-    sortedBy?: string;
-    totalCount?: number; // Optional, to hold the total count of items for pagination
-    orderBy?: string;
-    startDate?: Date;
-    endDate?: Date;
-    code?: string;
-    type?: string;
-    ruleCode?: string;
-    ruleId?: number;
-    articleId?: number;
-    allParentIds?: number[];
-    maxDifficulty?: number;
-    minDifficulty?: number;
-    ruleAmbitId?: number;
-    ruleTypeId?: number;
-    ruleGazetteId?: number;
-    voteType?: VoteType
-    featureType?: FeatureType
-    featureId?: number;
-    flashcardId?: number;
-    videoId?: number;
-    diagramId?: number;
-    questionId?: number;
-    noteId?: number;
-    direction?: string;
-    favorite?: boolean;
-    callerId?: number;
-    courseTypeId?: number;
-    courseId?: number;
-    topicId?: number;
-    userId?: number;
-    blockId?: number;
-    courseCategoryId?: number;
-    categoryId?: number | null | undefined;
-    sectionId?: number | null | undefined;
+  id?: number;
+  skip?: number;
+  take?: number;
+  searchTerm?: string;
+  parentId?: number | null;
+  sortedBy?: string;
+  totalCount?: number; // Optional, to hold the total count of items for pagination
+  orderBy?: string;
+  startDate?: Date;
+  endDate?: Date;
+  code?: string;
+  type?: string;
+  ruleCode?: string;
+  ruleId?: number;
+  articleId?: number;
+  allParentIds?: number[];
+  maxDifficulty?: number;
+  minDifficulty?: number;
+  ruleAmbitId?: number;
+  ruleTypeId?: number;
+  ruleGazetteId?: number;
+  voteType?: VoteType
+  featureType?: FeatureType
+  featureId?: number;
+  flashcardId?: number;
+  videoId?: number;
+  diagramId?: number;
+  questionId?: number;
+  noteId?: number;
+  direction?: string;
+  favorite?: boolean;
+  myCourses?: boolean;
+  callerId?: number;
+  courseTypeId?: number;
+  courseId?: number;
+  topicId?: number;
+  userId?: number;
+  blockId?: number;
+  courseCategoryId?: number;
+  categoryId?: number | null | undefined;
+  sectionId?: number | null | undefined;
+  topicCategoryId?: number | null | undefined;
+  testTypeId?: number | null | undefined;
 }
 
 export interface IFilters {
@@ -68,6 +71,7 @@ export type FilterKind =
   | 'ruleAmbitId'
   | 'ruleGazetteId'
   | 'ruleTypeId'
+  | 'testTypeId'
   | 'ruleId'
   | 'ruleCode'
   | 'article'
@@ -92,7 +96,7 @@ export interface FilterConfig<T = unknown> {
   defaultValue?: T | null;
 
   editable?: boolean;
-  
+
   debounceMs?: number;
   minLength?: number;
 }

@@ -4,7 +4,6 @@
         <div class="col-sm-3" [class.d-none]="!isVisible(i)">
             @switch (filter.kind) {
                 @case ('searchTerm') {
-                <!-- <search-term-filter formControlName="searchTerm" #filter [(search)]="searchTerm"></search-term-filter> -->
                     <search-term-filter formControlName="searchTerm" #filter></search-term-filter>
                 }
                 @case ('ruleAmbitId') {
@@ -36,6 +35,18 @@
                 }
                 @case ('articlesIds') {
                     <app-multi-select formControlName="articlesIds" #filter></app-multi-select>
+                }
+                @case ('testTypeId'){
+                    <app-test-type-filter formControlName="testTypeId" #filter></app-test-type-filter>
+                }
+                @case ('topicCategoryId') {
+                    <app-topic-category-filter formControlName="topicCategoryId" #filter></app-topic-category-filter>
+                }
+                @case ('sectionId'){
+                    <app-topic-section-filter [parentId]="form.get('topicCategoryId')?.value ?? null" formControlName="sectionId" #filter></app-topic-section-filter>
+                }
+                @case ('topicId'){
+                    <app-topic-filter [parentId]="form.get('sectionId')?.value ?? null"  formControlName="topicId" #filter></app-topic-filter>
                 }
             }
         </div>
