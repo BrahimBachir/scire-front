@@ -29,20 +29,41 @@
   <!-- --------------------------------------------------------------- -->
   <!-- Collpase bar -->
   <!-- --------------------------------------------------------------- -->
-  <button mat-icon-button (click)="toggleCollpase()" class="d-flex d-lg-none justify-content-center">
+<!--   <button mat-icon-button (click)="toggleCollpase()" class="d-flex d-lg-none justify-content-center">
     <i-tabler name="dots" class="icon-20 d-flex"></i-tabler>
-  </button>
+  </button> -->
+
+<button mat-icon-button extended [matMenuTriggerFor]="profilemenu" aria-label="Notifications"
+  class="position-relative d-flex align-items-center justify-content-center profile-btn-dd">
+    @if(logedUser$ | async; as user){
+    <img [src]="user.image"
+      class="rounded-circle icon-30 object-cover profile-dd d-flex align-items-center justify-content-center m-l-2 m-t-2"
+      width="30" height="30" />
+    }
+</button>
+<!--     
+    <div class="header-collpase p-y-10 p-x-15">
+      <div class="d-flex justify-content-center gap-10">
+        <button mat-icon-button extended [matMenuTriggerFor]="profilemenu" aria-label="Notifications"
+          class="position-relative d-flex align-items-center justify-content-center profile-btn-dd">
+          <img src="/assets/images/profile/user-1.jpg"
+            class="rounded-circle icon-30 object-cover profile-dd d-flex align-items-center justify-content-center"
+            width="30" height="30" />
+        </button>
+      </div>
+    </div>
+    } -->
   <!-- --------------------------------------------------------------- -->
   <!-- profile Dropdown -->
   <!-- --------------------------------------------------------------- -->
-  <button mat-icon-button extended [matMenuTriggerFor]="profilemenu" aria-label="Notifications"
+<!--   <button mat-icon-button extended [matMenuTriggerFor]="profilemenu" aria-label="Notifications"
     class="position-relative align-items-center justify-content-center profile-btn-dd d-none d-lg-flex">
     @if(logedUser$ | async; as user){
     <img [src]="user.image"
       class="rounded-circle icon-30 object-cover profile-dd d-flex align-items-center justify-content-center m-l-2 m-t-2"
       width="30" height="30" />
     }
-  </button>
+  </button> -->
   <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow dd-notifications">
     <div class="p-x-16 p-y-20 b-b-1">
       <div class="d-flex align-items-center">
