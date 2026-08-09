@@ -60,7 +60,6 @@ export class TopicStrategy {
     form: FormGroup,
   ): Observable<ITopicCourse> {
     const value = cleanObject(form.value) as ITopicCourse;
-    console.log("Add to course method at strategy: ", value)
     return this.service.addToCourse({ topicId: value?.topicId, courseId: value?.courseId ?? 0 })
   }
 }

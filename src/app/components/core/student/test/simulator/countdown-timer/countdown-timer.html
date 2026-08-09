@@ -1,0 +1,7 @@
+<mat-card class="shadow-none b-1">
+  <mat-card-content>
+    <div class="f-s-14 p-0 displayer">
+      {{ hours < 10 ? '0' + hours : hours }}:{{ minutes < 10 ? '0' + minutes : minutes }}:{{ seconds < 10 ? '0' + seconds : seconds }}
+    </div>
+  </mat-card-content>
+</mat-card>

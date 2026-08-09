@@ -1,0 +1,31 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-b-10">
+    <mat-card-title>Datos generales</mat-card-title>
+    <mat-card-subtitle>Categorías de preguntas</mat-card-subtitle>
+<div class="row m-b-0 m-t-15">
+    @for(data of data_items; track data.code) {
+    <div class="col-lg-3 col-sm-6 m-b-0">
+      <mat-card class="shadow-none b-1 rounded text-center m-b-0">
+        <div class="p-20">
+          <div class="d-flex align-items-center gap-20">
+            <span class="icon-56 bg-{{
+                data.color
+              }} text-white rounded-circle d-flex align-items-center justify-content-center">
+              <i-tabler name="{{ data.icon }}" class="icon-26"></i-tabler>
+            </span>
+            <div class="text-left">
+              <mat-card-title class="f-s-20 f-w-500">
+                {{ data.title }}
+              </mat-card-title>
+              <mat-card-subtitle class="f-s-15 f-w-400">
+                {{ data.subtitle }}
+              </mat-card-subtitle>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    }
+  </div>
+</mat-card-content>
+</mat-card>

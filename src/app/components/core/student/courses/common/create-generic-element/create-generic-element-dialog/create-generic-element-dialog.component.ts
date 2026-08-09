@@ -115,7 +115,6 @@ export class CreateGenericElementDialogComponent {
 
       ruleCtrl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(ruleId => {
         if (!ruleId) {
-          // rule cleared → wipe and disable articles
           this.selectedRule = null;
           articlesCtrl.setValue([], { emitEvent: false });
           articlesCtrl.disable({ emitEvent: false });
@@ -131,7 +130,7 @@ export class CreateGenericElementDialogComponent {
         .pipe(finalize(() => this.loading = false))
         .subscribe({
           next: result => this.dialogRef.close(result),
-          error: () => this.error = 'Error al guardar la pregunta'
+          error: () => this.error = 'Error al guardar el elemento'
         });
     };
   }

@@ -18,6 +18,8 @@ export class QuestionStrategy  implements FeatureStrategy<IQuestion> {
       text: new FormControl(question?.text ?? '', Validators.required),
       explanation: new FormControl(question?.explanation ?? '', Validators.required),
       real: new FormControl(question?.real ?? false),
+      deadline: new FormControl(question?.deadline ?? false),
+      definition: new FormControl(question?.definition ?? false),
       difficultyId: new FormControl(question?.difficultyId ?? 1, Validators.required),
       creationTypeId: new FormControl(question?.creationTypeId ?? null),
 

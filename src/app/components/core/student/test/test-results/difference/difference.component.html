@@ -1,0 +1,29 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-b-10">
+    <mat-card-title>Diferencias</mat-card-title>
+    <mat-card-subtitle>Porcentaje de diferencia respecto al examen anterior</mat-card-subtitle>
+<div class="row m-t-15">
+  @for (data of data_items; track data.code) {
+    @if (data.code !== 'TQ') {
+      <div class="col-lg-4 col-sm-6">
+        <mat-card class="shadow-none b-1 rounded h-100 m-b-0">
+          <mat-card-content>
+            <mat-card-title class="f-s-24 f-w-500 m-b-8">
+              {{ data.difference > 0 ? data.difference : data.difference * -1 }}%
+            </mat-card-title>
+            <mat-card-subtitle class="f-s-14 f-w-400 m-t-0 m-b-10">
+              {{ data.difference > 0 ? 'Más de ' + data.subtitle.toLowerCase() : 'Menos de ' + data.subtitle.toLowerCase()}}
+            </mat-card-subtitle>
+            <mat-progress-bar
+              mode="determinate"
+              class="mat-{{ data.color }}"
+              value="{{ data.difference > 0 ? data.difference : data.difference * -1 }}"
+            ></mat-progress-bar>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+  }
+</div>
+</mat-card-content>
+</mat-card>

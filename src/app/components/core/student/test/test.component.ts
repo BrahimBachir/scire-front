@@ -1,22 +1,25 @@
-import {
-  Component,
-  ViewChild,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import {
-  MatDialog,
-} from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
-import { Test } from './test';
-import { ITest, IQueryingDto } from 'src/app/common/models/interfaces';
+import {
+  ITest,
+  IQueryingDto,
+  FilterConfig,
+  FiltersOptions,
+} from 'src/app/common/models/interfaces';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TestService } from 'src/app/services';
-import { AppTestDialogContentComponent } from './test-dialog/test-dialog-content';
 import { IconModule } from 'src/app/icon/icon.module';
+import { AppFiltersOrchestratorComponent } from 'src/app/components/generic/filters/orchestrator/filters-orchestrator.component';
+import { TestFiltersData } from 'src/app/common/data';
+import { TranslateModule } from '@ngx-translate/core';
+import { AppDeleteDialogComponent } from 'src/app/components/generic/dialogs/delete-dialog/delete-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TestDialogComponent } from './test-dialog/test-dialog.component';
 @Component({
   templateUrl: './test.component.html',
   imports: [
@@ -25,76 +28,169 @@ import { IconModule } from 'src/app/icon/icon.module';
     ReactiveFormsModule,
     IconModule,
     CommonModule,
+    AppFiltersOrchestratorComponent,
+    TranslateModule,
   ],
+  styleUrl: './test.component.scss',
 })
 export class AppTestComponent implements AfterViewInit {
+  private snackBar = inject(MatSnackBar);
+  private route = inject(ActivatedRoute);
+
+  courseId: number = 0;
+
+  filtersConfig: FilterConfig[] = TestFiltersData;
+  length!: number;
+  pageSize: number = 10;
+  pageSizeOptions: number[] = [5, 10, 20, 50, 100];
+  currentPageIndex: number = 0;
+  lastId: number = 0;
+
+  filters!: IQueryingDto;
+
+  filterOptions: FiltersOptions = {
+    applyMode: 'auto',
+    maxVisbleFields: 4,
+  };
+
   @ViewChild(MatTable, { static: true }) table: MatTable<any> =
     Object.create(null);
-
-  searchText: any;
-
-  displayedColumns: string[] = ['id', 'type', 'numQuestions', 'correct','wrong','notAnswered','score', 'date', 'status','category','section','topic', 'actions'];
-
-
-  dataSource = new MatTableDataSource<ITest>([]);  
-  paginationDTO: IQueryingDto = {
-    skip: 0,
-    take: 5,
-    searchTerm: '',
-    parentId: 0,
-    sortedBy: '',
-    totalCount: 0,
-  };
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator =
     Object.create(null);
 
+  displayedColumns: string[] = [
+    'id',
+    'type',
+    'num_questions',
+    'correct',
+    'wrong',
+    'not_answered',
+    'score',
+    'date',
+    'status',
+    'actions',
+  ];
+
+  dataSource = new MatTableDataSource<ITest>([]);
+
   constructor(
     public dialog: MatDialog,
-    private testService: TestService,
+    private service: TestService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-  ) {}
+    private activatedRouter: ActivatedRoute,
+  ) {
+    this.courseId =
+      Number(this.route?.snapshot?.paramMap?.get('courseId')) || 0;
+  }
 
   ngOnInit(): void {
-    this.loadTests();
+    this.filters = {
+      take: this.pageSize,
+      skip: this.pageSize * this.currentPageIndex,
+    };
+    this.loadItems();
   }
 
-  loadTests(): void {
-    this.testService.getAllTests(this.paginationDTO).subscribe({
-      next: (tests) =>  {
-        //this.dataSource = tests.rows;
-        this.dataSource.data = tests.rows;
-        this.dataSource = new MatTableDataSource(tests.rows);
-        this.paginationDTO.totalCount = tests.total; 
-
+  loadItems(): void {
+    this.service.getAllTests(this.filters).subscribe({
+      next: (res) => {
+        this.length = res.total;
+        this.dataSource.data = res.rows;
+        this.lastId = res.rows[0].id;
+        this.dataSource = new MatTableDataSource(res.rows);
       },
       //error: (error) => console.error(error)
-    })
+    });
   }
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
 
-  applyFilter(filterValue: string): void {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  goToSimulator(): void {
+    this.router.navigate([
+      `${this.route?.snapshot.data['role'].toLowerCase()}/courses/${this.courseId}/tests/${this.lastId}/simulator`,
+    ]);
   }
 
-  openDialog(action: string, test: Test | any): void {
-    const dialogRef = this.dialog.open(AppTestDialogContentComponent, {
-      data: { action, test }, autoFocus: false
+  create() {
+    const dialogRef = this.dialog.open(TestDialogComponent, {
+      data: { courseId: this.courseId },
+      autoFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      //this.dataSource.data = this.testService.getTests();
-      if (result && result.event === 'Refresh') {
-        this.loadTests(); // Refresh the test list if necessary
+      if (result) {
+        this.loadItems();
       }
     });
   }
-}
 
-interface DialogData {
-  action: string;
-  test: Test;
+  edit(test: ITest) {
+    const dialogRef = this.dialog.open(TestDialogComponent, {
+      data: { element: test, courseId: this.courseId },
+      //autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadItems();
+      }
+    });
+  }
+
+  resume(id: number) {
+    this.router.navigate([
+      `${this.route?.snapshot.data['role'].toLowerCase()}/courses/${this.courseId}/tests/${id}/simulator`,
+    ]);
+  }
+
+  goToDetails(id: number) {
+    this.router.navigate([
+      `${this.route?.snapshot.data['role'].toLowerCase()}/courses/${this.courseId}/tests/${id}/results`,
+    ]);
+  }
+
+  onFiltersChanged(filters: IQueryingDto) {
+    this.filters = {
+      ...filters,
+      take: this.pageSize,
+      skip: this.pageSize * this.currentPageIndex,
+    };
+    this.loadItems();
+  }
+
+  onPageChange(event: PageEvent) {
+    this.filters = {
+      ...this.filters,
+      take: event.pageSize,
+      skip: event.pageSize * event.pageIndex,
+    };
+    this.loadItems();
+  }
+
+  remove(id: number) {
+    const dialogRef = this.dialog.open(AppDeleteDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'delete') {
+        this.service.delete(id).subscribe({
+          next: (res) => {
+            this.loadItems();
+            this.showSnackbar(res.message);
+          },
+          //error: (error) => console.error(error)
+        });
+      }
+    });
+  }
+
+  showSnackbar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 2000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
 }

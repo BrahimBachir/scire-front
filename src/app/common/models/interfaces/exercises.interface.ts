@@ -1,5 +1,5 @@
-import { IExerciseType } from "./exercise-type.interface";
-import { IQuestionType } from "./question-type.interface";
+import { IExerciseType } from './exercise-type.interface';
+import { IQuestionType } from './question-type.interface';
 
 export interface IExercise {
   id: number;
@@ -7,19 +7,19 @@ export interface IExercise {
   description: string;
 
   type: IExerciseType;
-  questionsType: IQuestionType;
-  
+  questions_type: IQuestionType;
+
   typeId: number;
   questionsTypeId: number;
 
-  questionCount: number;
+  questions_number: number;
   generalQuestNum: number;
   specificQuestNum: number;
-  
-  timePerQuestion: number; // in seconds
-  penaltyPerWrongAnswer: number;
+
+  time_per_question: number; // in seconds
+  penalty: number;
   totalPoints: number;
   pointsToPass: number;
-  
+
   courseId: number;
 }

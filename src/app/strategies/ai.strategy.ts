@@ -24,8 +24,6 @@ export class AIStrategy {
 
     const value = cleanObject(form.value) as AIGeneration;
 
-    console.log("Topic to be saved/updated at strategy: ", value)
-
-    return this.service.generateElement(value); 
+    return this.service.generateElement(value);
   }
 }

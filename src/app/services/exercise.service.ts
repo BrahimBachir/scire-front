@@ -19,7 +19,7 @@ export class ExerciseService {
     return this.http.get<IExercise[]>(environment.api_base_url + this.routes.api.learning.exercises.base);
   }
 
-  public getAllByCourse(courseId: number): Observable<IExercise[]> {    
+  public getAllByCourse(courseId: number): Observable<IExercise[]> {
     return this.http.get<IExercise[]>(environment.api_base_url + this.routes.api.learning.exercises.by_course.replace(':courseId', courseId.toString()));
   }
 

@@ -1,0 +1,29 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-b-10">
+    <mat-card-title>Porcentajes de la prueba</mat-card-title>
+    <mat-card-subtitle>Porcentaje por categoría de preguntas</mat-card-subtitle>
+    <div class="row m-t-15">
+      @for (data of data_items; track data.code) {
+        @if (data.code !== 'TQ') {
+          <div class="col-lg-4 col-sm-6">
+            <mat-card class="shadow-none b-1 rounded h-100 m-b-0">
+              <mat-card-content>
+                <mat-card-title class="f-s-24 f-w-500 m-b-8">
+                  {{ data.percentage }}%
+                </mat-card-title>
+                <mat-card-subtitle class="f-s-14 f-w-400 m-t-0 m-b-10">
+                  {{ data.subtitle }}
+                </mat-card-subtitle>
+                <mat-progress-bar
+                  mode="determinate"
+                  class="mat-{{ data.color }}"
+                  value="{{ data.percentage }}"
+                ></mat-progress-bar>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        }
+      }
+    </div>
+  </mat-card-content>
+</mat-card>

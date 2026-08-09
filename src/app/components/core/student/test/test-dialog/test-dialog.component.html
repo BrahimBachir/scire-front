@@ -1,0 +1,111 @@
+<div class="p-15">
+  <div class="d-flex w-100 align-items-center justify-content-between">
+    <h3 mat-dialog-title class="p-0">
+      {{ mode === 'EDITING' ? 'Editar' : 'Crear' }} examen
+    </h3>
+    <button
+      mat-icon-button
+      mat-dialog-close
+      class="d-flex justify-content-center m-l-20 bg-error text-white"
+    >
+      <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
+    </button>
+  </div>
+
+  <mat-dialog-content class="p-0 h-100 m-t-10 p-t-5">
+    <form [formGroup]="form">
+      <div
+        class="d-flex row justify-content-start w-100 h-100 m-b-15 m-l-0 m-r--15"
+      >
+        <div class="col-lg-6">
+          <app-test-type-filter
+            formControlName="typeId"
+            #filter
+          ></app-test-type-filter>
+        </div>
+        <div class="col-lg-6">
+          <app-exercise-filter
+            [parentId]="form.get('courseId')?.value ?? null"
+            formControlName="exerciseId"
+          ></app-exercise-filter>
+        </div>
+        <div class="col-lg-6">
+          <app-difficulty-filter
+            formControlName="difficultyId"
+            #filter
+          ></app-difficulty-filter>
+        </div>
+        <div class="col-lg-6">
+          <app-topic-category-filter
+            formControlName="categoryId"
+            #filter
+          ></app-topic-category-filter>
+        </div>
+        <div class="col-lg-6">
+          <app-topic-section-filter
+            [parentId]="form.get('categoryId')?.value ?? null"
+            formControlName="sectionId"
+            #filter
+          ></app-topic-section-filter>
+        </div>
+        <div class="col-lg-12">
+          <app-multi-topic-select
+            [parentId]="form.get('sectionId')?.value ?? null"
+            [courseId]="form.get('courseId')?.value ?? null"
+            formControlName="topicsIds"
+            #filter
+          ></app-multi-topic-select>
+          <!-- <app-topic-filter [parentId]="form.get('sectionId')?.value ?? null" formControlName="topicId" #filter></app-topic-filter>         -->
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>
+              Número de preguntas
+              @if (form.get('num_questions')?.hasError('required')) {
+                <span class="text-error">*</span>
+              }
+            </mat-label>
+            <input
+              type="number"
+              matInput
+              required
+              aria-label="Preguntas"
+              id="num_questions"
+              name="num_questions"
+              formControlName="num_questions"
+              placeholder="Preguntas del test"
+            />
+            @if (form.get('num_questions')?.hasError('required')) {
+              <mat-error class="p-b-15">Requerido.*</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-slide-toggle
+            id="timed"
+            name="timed"
+            class="w-100"
+            formControlName="timed"
+            >Temporizado?</mat-slide-toggle
+          >
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  @if (error) {
+    <p class="text-error m-b-10">{{ error }}</p>
+  }
+
+  <mat-dialog-actions align="end" class="p-0">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="form.invalid"
+      (click)="submit()"
+    >
+      {{ mode === 'EDITING' ? 'Actualizar' : 'Crear' }}
+    </button>
+  </mat-dialog-actions>
+</div>

@@ -1,6 +1,6 @@
 <div class="d-flex h-100">
   <div class="genrate-actions">
-    @for(action of addElementsActions  | planFilter; track action.entity) {
+    @for(action of (addElementsActions | planFilter | async); track action.entity) {
     <button mat-mini-fab [matTooltip]="action.tooltip" [class]="action.buttonClass" [attr.aria-label]="action.label"
       (click)="openDialog(action.entity)">
       <i-tabler class="icon-20 d-flex" [name]="action.icon"></i-tabler>

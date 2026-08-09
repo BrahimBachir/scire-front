@@ -1,0 +1,37 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-b-10">
+    <mat-card-title>Preguntas del examen</mat-card-title>
+    <mat-card-subtitle>Desarrollo de la prueba</mat-card-subtitle>
+    <div id="visitor-chart" class="m-t-24 d-flex flex-col">
+      <apx-chart
+        [series]="basicChart.series"
+        [chart]="basicChart.chart"
+        [labels]="basicChart.labels"
+        [responsive]="basicChart.responsive"
+        [tooltip]="basicChart.tooltip"
+        [legend]="basicChart.legend"
+        [colors]="basicChart.colors"
+        [dataLabels]="basicChart.dataLabels"
+        [plotOptions]="basicChart.plotOptions"
+        [stroke]="basicChart.stroke"
+        [responsive]="basicChart.responsive"
+      >
+      </apx-chart>
+    </div>
+  </mat-card-content>
+  <mat-card-content class="b-t-1">
+    <div class="d-flex align-items-center justify-content-center gap-30">
+    @for(data of data_items; track data.code){
+      @if(data.code !== 'TQ') {
+        <div class="hstack gap-12 align-items-center">
+          <i-tabler
+          name="circle-filled"
+          class="text-{{data.color}} icon-12 d-flex"
+          ></i-tabler>
+          <span class="f-s-14 text-{{data.color}}">{{data.subtitle}}</span>
+        </div>
+      }
+    }
+    </div>
+  </mat-card-content>
+</mat-card>

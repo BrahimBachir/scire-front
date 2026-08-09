@@ -1,30 +1,74 @@
-import { ITestQuestion, IQuestion, ITopic, IUser, ITaskType, ITestType, IDifficulty, ISection, ITopicCategory } from '.';
+import {
+  ITestQuestion,
+  IQuestion,
+  ITopic,
+  IUser,
+  ITaskType,
+  ITestType,
+  IDifficulty,
+  ISection,
+  ITopicCategory,
+  IExercise,
+} from '.';
 
 export interface ITest {
-  id: number; // ID del examen
-  corrctAnswers: number; // Respuestas correctas
-  wrongAnswers: number; // Respuestas correctas e incorrectas
-  notAnswered: number; // Respuestas correctas, incorrectas y no respondidas
-  questions?: IQuestion[]; // Preguntas del examen
-  testQuestions?: ITestQuestion[]; // Preguntas del examen
-  numQuestions: number; // Número de preguntas del examen
-  time_allowed: number; // Tiempo en segundos
-  time_consumed: number; // Tiempo en segundos
-  original_time: number; // Tiempo original en segundos
-  date: Date | undefined; // Fecha del examen
-  score: number; // Puntuación del examen (puede almacenar valores decimales)
-  topic?: ITopic; // ID del tema (opcional para simulacro)
-  completed?: boolean; // Indica si el examen ha sido completado
+  id: number;
+  num_questions: number;
   timed?: boolean;
-  user: IUser;
+
+  corrct_answers?: number;
+  wrong_answers?: number;
+  not_answered?: number;
+  questions?: IQuestion[];
+  test_questions?: ITestQuestion[];
+  time_allowed?: number;
+  time_consumed?: number;
+  original_time?: number;
+  date?: Date | undefined;
+  score?: number;
+  topic?: ITopic;
+  completed?: boolean;
+
+  user?: IUser;
   category?: ITopicCategory;
+  categoryId?: number;
   difficulty?: IDifficulty;
   section?: ISection;
   type?: ITestType;
+  exercise?: IExercise;
+
+  creatorId?: number;
+  sectionId?: number;
+  courseId?: number;
+  difficultyId?: number;
+  typeId?: number;
+  topicId?: number;
+  exerciseId?: number;
+
+  topicsIds?: number[];
 }
 
 export interface IIncomingTests {
-    total: number;
-    rows: ITest[];
+  total: number;
+  rows: ITest[];
 }
 
+export interface ITestResults {
+  data_items: IBasicDataItem[];
+  time_per_question: IBasicDataItem;
+  score: number;
+  score_diff: number;
+  score_diff_percent: number;
+  max_score: number;
+}
+
+export interface IBasicDataItem {
+  code: string;
+  color: string;
+  char_color: string;
+  icon: string;
+  title: number | string;
+  percentage: number;
+  difference: number;
+  subtitle: string;
+}
