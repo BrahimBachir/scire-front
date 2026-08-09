@@ -18,7 +18,19 @@ export class AuthService {
     return this.http.post(URL, {
       email: login.username,
       password: login.password,
-    });
+    }, { withCredentials: true });
+  }
+
+  // Exchanges the httpOnly refresh-token cookie (set by opos-auth on login) for a
+  // fresh opos-auth access token. Never sends a body - the cookie IS the credential.
+  public refresh(): Observable<any> {
+    let URL = `${environment.auth_base_url}${this.routes.auth.refresh}`
+    return this.http.post(URL, {}, { withCredentials: true });
+  }
+
+  public logout(): Observable<any> {
+    let URL = `${environment.auth_base_url}${this.routes.auth.logout}`
+    return this.http.post(URL, {}, { withCredentials: true });
   }
 
   public getLogedUser() {
@@ -49,6 +61,6 @@ export class AuthService {
     let URL = `${environment.auth_base_url}${this.routes.auth.validate}`.replace(':userCode', userCode)
     return this.http.post(URL, {
       code
-    });
+    }, { withCredentials: true });
   }
 }
