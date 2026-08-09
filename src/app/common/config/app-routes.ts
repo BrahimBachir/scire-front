@@ -5,6 +5,8 @@ export const Routes = {
     new: 'logins/new',
     validate: 'logins/validate-email/:userCode',
     resend: 'logins/resend-code/:userCode',
+    refresh: 'logins/refresh',
+    logout: 'logins/logout',
   },
   api: {
     base: 'http://localhost:3300/api/',
@@ -13,6 +15,8 @@ export const Routes = {
       logged: 'users/loged',
       all: 'users',
       contributor: 'users/contributor/:id',
+      plan: 'users/plan',
+      plan_reset: 'users/plan/reset',
     },
     config: {
       pricing_planes: 'configs/pricing-planes',
@@ -34,20 +38,21 @@ export const Routes = {
         blocks: 'learning/topics/:id/blocks',
         articles: 'learning/topics/:topicId/articles',
       },
-      tasks: 'learning/topics/tasks',
+      tasks: 'learning/topics/course/:courseId/tasks',
       questions: {
         base: 'learning/questions',
         types: 'learning/questions/types',
         byRule: 'learning/questions/rule/:ruleCode/article/:articleId',
         byArticle: 'learning/questions/article/:articleId',
-        navigate: 'learning/questions/article/:articleId/navigate'
+        navigate: 'learning/questions/article/:articleId/navigate',
       },
       tests: {
         base: 'learning/tests',
+        results: 'learning/tests/:testId/course/:courseId/results',
         lastTest: 'learning/tests/last',
         testQuestion: 'learning/tests/questions',
         difficulties: 'learning/tests/difficulties',
-        types: 'learning/tests/types'
+        types: 'learning/tests/types',
       },
       difficulties: {
         base: 'learning/difficulties',
@@ -64,13 +69,25 @@ export const Routes = {
         navigate: 'learning/notes/article/:articleId/navigate',
       },
       tracker: 'learning/tracker',
-      stats: {
-        dashboard: 'learning/stats/dashboard',
+      metrics: {
+        overview: 'learning/basic-metrics/:courseId/overview',
+        topics: 'learning/basic-metrics/:courseId/topics',
+        readiness: 'learning/basic-metrics/:courseId/readiness',
+        countdown: 'learning/basic-metrics/:courseId/countdown',
+        activity: 'learning/basic-metrics/:courseId/activity',
+      },
+      advancedMetrics: {
+        activityTrend: 'learning/advanced-metrics/:courseId/activity-trend',
+        topicPerformance: 'learning/advanced-metrics/:courseId/topic-performance',
+        weakSpots: 'learning/advanced-metrics/:courseId/weak-spots',
+        skillsRadar: 'learning/advanced-metrics/:courseId/skills-radar',
+        passProbability: 'learning/advanced-metrics/:courseId/pass-probability',
+        studyPlan: 'learning/advanced-metrics/:courseId/study-plan',
       },
       exercises: {
         base: 'learning/courses/exercises',
-        by_course: 'learning/courses/exercises/:courseId',
-        types: 'learning/courses/exercises/types',
+        by_course: 'learning/courses/exercises/course/:courseId',
+        types: 'learning/courses/exercises/types/all',
       },
       courses: {
         base: 'learning/courses',
@@ -90,30 +107,33 @@ export const Routes = {
           base: 'learning/courses/progress',
           course: 'learning/courses/progress/:courseId',
           topic: 'learning/courses/progress/:courseId/topic/:topicId',
-          topic_articles: 'learning/courses/progress/:courseId/topic/:topicId/articles',
+          topic_articles:
+            'learning/courses/progress/:courseId/topic/:topicId/articles',
           rule_articles: 'learning/courses/progress/:ruleId/articles',
-          article_by_topic: 'learning/courses/progress/:courseId/topic/:topicId/article/:articleId',
-          article_by_rule: 'learning/courses/progress/:ruleId/article/:articleId',
+          article_by_topic:
+            'learning/courses/progress/:courseId/topic/:topicId/article/:articleId',
+          article_by_rule:
+            'learning/courses/progress/:ruleId/article/:articleId',
           article: 'learning/courses/progress/article/:articleId',
-        }
+        },
       },
       videos: {
-        base: "learning/videos",
+        base: 'learning/videos',
         byRule: 'learning/videos/rule/:ruleCode/article/:articleId',
         byArticle: 'learning/videos/article/:articleId',
-        navigate: 'learning/videos/article/:articleId/navigate'
+        navigate: 'learning/videos/article/:articleId/navigate',
       },
       diagrams: {
         base: 'learning/diagrams',
         byRule: 'learning/diagrams/rule/:ruleCode/article/:articleId',
         byArticle: 'learning/diagrams/article/:articleId',
-        navigate: 'learning/diagrams/article/:articleId/navigate'
+        navigate: 'learning/diagrams/article/:articleId/navigate',
       },
       announcements: {
         base: 'learning/announcements',
         by_course: 'learning/announcements/:courseId',
         views: 'learning/announcements/:id/views',
-      }
+      },
     },
     seed: {
       categories: 'seed/categories',
@@ -138,12 +158,12 @@ export const Routes = {
     },
     articles: {
       base: 'articles',
-      all_by_rule: 'articles/:ruleId'
+      all_by_rule: 'articles/:ruleId',
     },
     reactions: {
       base: 'reactions',
       feature_vote: 'reactions/feature-vote/',
-      vote_state: 'reactions/vote-state'
+      vote_state: 'reactions/vote-state',
     },
     reviews: {
       base: 'reviews',
@@ -151,10 +171,10 @@ export const Routes = {
       latests: 'reviews/latests',
     },
     comments: {
-      base: 'comments'
+      base: 'comments',
     },
     ai: {
       base: 'auto-generate',
-    }
-  }
+    },
+  },
 };
