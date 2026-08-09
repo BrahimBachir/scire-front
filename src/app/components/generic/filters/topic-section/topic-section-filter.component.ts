@@ -24,7 +24,6 @@ export class TopicSectionFilterComponent extends BaseFilterDirective<ISection> {
   private service = inject(LearningService);
 
   loadData(): void {
-    console.log("Parent at section filter ID: ", this.parentId)
     if (this.parentId === null && this.mode !== 'FILTERING') {
       this.items = [];
       this.filteredItems = [];
@@ -39,7 +38,6 @@ export class TopicSectionFilterComponent extends BaseFilterDirective<ISection> {
   }
 
   private applyCurrentValue(): void {
-    console.log("Section ID from form: ",this.value)
     if (this.value != null) {
       this.syncInternalControl();
       return;

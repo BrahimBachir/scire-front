@@ -1,3 +1,4 @@
+import { Planes } from 'src/app/common/enums/planes.enum';
 import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
@@ -13,7 +14,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Mis cursos',
     iconName: 'briefcase',
-    route: '',
+    route: 'my-courses',
     type: 'GEN',
   },
   {
@@ -84,6 +85,7 @@ export const navItems: NavItem[] = [
     chip: true,
     chipClass: 'b-1 border-secondary text-secondary',
     chipContent: 'PRO',
+    requiresPlan: [Planes.SILVER, Planes.GOLD],
   },
   {
     displayName: 'Calendario',
@@ -93,5 +95,6 @@ export const navItems: NavItem[] = [
     chip: true,
     chipClass: 'b-1 border-secondary text-secondary',
     chipContent: 'PRO',
+    requiresPlan: [Planes.SILVER, Planes.GOLD],
   }
 ];

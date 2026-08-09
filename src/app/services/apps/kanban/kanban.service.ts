@@ -5,7 +5,7 @@ import { todos, inprogress, completed, onhold } from 'src/app/components/core/ka
 @Injectable({
   providedIn: 'root',
 })
-export class KanbanService {
+export class OldKanbanService {
   todos = signal<Todos[] | any>(todos);
   inProgress = signal<Todos[] | any>(inprogress);
   completed = signal<Todos[] | any>(completed);

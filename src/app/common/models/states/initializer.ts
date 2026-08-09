@@ -1,11 +1,21 @@
-
+import { AppInitState, AuthState, LearningState, UsersState } from '.';
 import {
-  AppInitState,
-  AuthState,
-  LearningState,
-  UsersState,
-} from '.';
-import { IAddress, ITopicCategory, ICourse, IEmail, IGender, IPermit, IPhone, IQuestion, IRole, ISection, ITest, ITopic, IUser, IArticle, IRule } from '../interfaces';
+  IAddress,
+  ITopicCategory,
+  ICourse,
+  IEmail,
+  IGender,
+  IPermit,
+  IPhone,
+  IQuestion,
+  IRole,
+  ISection,
+  ITest,
+  ITopic,
+  IUser,
+  IArticle,
+  IRule,
+} from '../interfaces';
 
 export const DEFAULT_ROLE: IRole = {
   id: 0,
@@ -17,12 +27,12 @@ export const DEFAULT_ROLE: IRole = {
 export const DEFAULT_PERMIT: IPermit = {
   id: 0,
   description: '',
-  code: ''
+  code: '',
 };
 
 export const DEFAULT_PERMITS: IPermit[] = [
   {
-    ...DEFAULT_PERMIT
+    ...DEFAULT_PERMIT,
   },
 ];
 
@@ -37,24 +47,28 @@ export const DEFAULT_EMAIL: IEmail = {
   id: 0,
   code: '',
   description: '',
-  value: ''
-}
+  value: '',
+};
 
-export const DEFAULT_EMAILS: IEmail[] = [{
-  ...DEFAULT_EMAIL
-}]
+export const DEFAULT_EMAILS: IEmail[] = [
+  {
+    ...DEFAULT_EMAIL,
+  },
+];
 
 export const DEFAULT_PHONE: IPhone = {
   id: 0,
   code: '',
   description: '',
   number: '',
-  active: false
-}
+  active: false,
+};
 
-export const DEFAULT_PHONES: IPhone[] = [{
-  ...DEFAULT_PHONE
-}]
+export const DEFAULT_PHONES: IPhone[] = [
+  {
+    ...DEFAULT_PHONE,
+  },
+];
 
 export const DEFAULT_ADDRESS: IAddress = {
   id: 0,
@@ -62,13 +76,14 @@ export const DEFAULT_ADDRESS: IAddress = {
   street: '',
   number: 0,
   other_info: '',
-  postal_code: ''
-}
+  postal_code: '',
+};
 
-export const DEFAULT_ADDRESSES: IAddress[] = [{
-  ...DEFAULT_ADDRESS
-}]
-
+export const DEFAULT_ADDRESSES: IAddress[] = [
+  {
+    ...DEFAULT_ADDRESS,
+  },
+];
 
 export function createDefaultUser(): IUser {
   return {
@@ -91,22 +106,24 @@ export function createDefaultUser(): IUser {
   };
 }
 
-export const DEFAULT_USERS: IUser[] = [{
-  ...createDefaultUser()
-}]
+export const DEFAULT_USERS: IUser[] = [
+  {
+    ...createDefaultUser(),
+  },
+];
 
 export const DEFAULT_CATEGORY: ITopicCategory = {
   id: 0,
   name: '',
-  description: ''
-}
+  description: '',
+};
 
 export const DEFAULT_SECTION: ISection = {
   id: 0,
   name: '',
   category: DEFAULT_CATEGORY,
-  description: ''
-}
+  description: '',
+};
 
 export const DEFAULT_TOPIC: ITopic = {
   id: 0,
@@ -117,16 +134,16 @@ export const DEFAULT_TOPIC: ITopic = {
   mermaids: [],
   videos: [],
   scaffolder: '',
-  sectionId: 0
-}
+  sectionId: 0,
+};
 
 export const DEFAULT_QUESTION: IQuestion = {
   id: 0,
   text: '',
   answers: [],
   difficulty: 0,
-  explanation: ''
-}
+  explanation: '',
+};
 
 export const DEFAULT_COURSE: ICourse = {
   id: 0,
@@ -136,45 +153,46 @@ export const DEFAULT_COURSE: ICourse = {
   calling_year: 0,
   examDate: undefined,
   type: undefined,
-  vacancies: 0
-}
+  vacancies: 0,
+};
 
 export const DEFAULT_ARTICLE: IArticle = {
   title: '',
   versions: [],
   id: 0,
-  description: ''
-}
+  description: '',
+  content: '',
+};
 
 export const DEFAULT_RULE: IRule = {
   id: 0,
   code: '',
-  description: ''
-}
+  description: '',
+};
 
 export function createDefaultTest(): ITest {
   return {
     id: 0,
-    corrctAnswers: 0,
-    wrongAnswers: 0,
-    notAnswered: 0,
+    corrct_answers: 0,
+    wrong_answers: 0,
+    not_answered: 0,
     questions: [],
-    testQuestions: [],
+    test_questions: [],
     time_allowed: 0,
     original_time: 0,
     time_consumed: 0,
     date: undefined,
     score: 0,
     type: {
-      code: 'REVIEW',
-      name: ''
+      code: 'SYLLABUS',
+      name: '',
+      id: 0,
+      description: '',
     },
     user: createDefaultUser(),
-    numQuestions: 0,
+    num_questions: 0,
   };
 }
-
-
 
 /* STATES */
 
@@ -187,8 +205,8 @@ export const InitialLearningState: LearningState = {
   selectedCourse: DEFAULT_COURSE,
   selectedArticle: DEFAULT_ARTICLE,
   selectedTopic: DEFAULT_TOPIC,
-  selectedRule: DEFAULT_RULE
-}
+  selectedRule: DEFAULT_RULE,
+};
 
 export const InitialAuthState: AuthState = {
   token: '',
@@ -204,7 +222,7 @@ export const InitialUsersState: UsersState = {
   selected: createDefaultUser(),
   total: 0,
   loading: false,
-}
+};
 
 export const InitialAppState: AppInitState = {
   auth: InitialAuthState,

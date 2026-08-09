@@ -24,43 +24,17 @@
   </mat-card-content>
 
   <mat-card-content class="p-relative">
-    <div class="content-container p-x-15 p-t-15" [class.collapsed]="!isExpanded" [innerHTML]="item.content | safeHtml">
+    <div class="content-container p-x-15 p-t-15" [class.collapsed]="selectedId !== item.id" [innerHTML]="item.content | safeHtml">
     </div>
 
     <div class="text-center m-t-10">
       <button mat-button color="primary" (click)="toggleExpand(item)">
-        {{ isExpanded ? 'Ocultar' : 'Mostrar más' }}
-        <i-tabler [name]="isExpanded ? 'chevron-up' : 'chevron-down'" class="icon-14 m-l-4"></i-tabler>
+        {{ selectedId === item.id ? 'Ocultar' : 'Mostrar más' }}
+        <i-tabler [name]="selectedId === item.id ? 'chevron-up' : 'chevron-down'" class="icon-14 m-l-4"></i-tabler>
       </button>
     </div>
   </mat-card-content>
 </mat-card>
-<!-- <mat-card class="shadowNone rounded b-1 m-x-15 m-t-15">
-  <mat-card-content class="p-15 b-b-1">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center">
-        <img src="{{item.creator?.image}}" alt="user" width="35" class="rounded-circle" />
-        <div>
-          <span class="f-s-16 f-w-600 m-l-12">{{item.creator?.full_name}}</span>
-          <span class="m-l-12 f-s-12 d-flex align-items-center">
-            <i-tabler class="icon-15 op-5 d-flex m-r-4" name="calendar"></i-tabler>
-            {{ item.createdAt | date:'dd/MM/yy'}}
-          </span>
-        </div>
-      </div>
-      <div>
-        <span class="m-r-12 f-s-14 d-flex align-items-center"><i-tabler [name]="item?.relevance?.icon ?? ''" class="{{item?.relevance?.style ?? ''}} icon-18 m-r-4"></i-tabler>{{item?.relevance?.description }}</span>
-      </div>
-      <div class="f-s-14 d-flex align-items-center">
-        <span class="m-r-12 f-s-14 d-flex align-items-center"><i-tabler name="eye" class="icon-18 m-r-4"></i-tabler>{{item?.views }}</span>
-      </div>
-
-    </div>
-  </mat-card-content>
-  <mat-card-content>
-    <div class="p-x-15 p-t-15" [innerHTML]="item.content | safeHtml"></div>
-  </mat-card-content>
-</mat-card> -->
 } @empty {
 <mat-card class="shadowNone rounded b-1 m-x-15 w-100">
   <mat-card-content class="p-24 b-b-1">

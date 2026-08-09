@@ -1,0 +1,74 @@
+@if (!loading) {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-card-title>¿Estás listo para el examen?</mat-card-title>
+    <mat-card-subtitle>Tu puntuación media frente a la mínima para aprobar, por tipo de prueba</mat-card-subtitle>
+
+    <div class="row m-t-16">
+      @for(item of readiness; track item.exercise_name){
+      <div class="col-lg-6 col-sm-12">
+        <mat-card class="shadow-none b-1 rounded h-100 m-b-0 exercise-card">
+          <mat-card-content>
+            <div class="ex-head">
+              <div class="ex-head-left">
+                <div class="ex-icon">
+                  <i-tabler class="icon-18" name="{{ meta(item.exercise_name).icon }}"></i-tabler>
+                </div>
+                <div>
+                  <span class="ex-name">{{ item.exercise_name }}</span>
+                  <span class="ex-sub">{{ meta(item.exercise_name).subtitle }}</span>
+                </div>
+              </div>
+              <span class="status-pill status-{{ status(item) }}">
+                <i-tabler class="icon-13" name="circle-filled"></i-tabler>
+                {{ statusLabel(status(item)) }}
+              </span>
+            </div>
+
+            <div class="bullet">
+              <div class="bullet-fill status-fill-{{ status(item) }}"
+                [style.width.%]="item.all_strategy.user_correct_percentage"></div>
+              <div class="bullet-target" [style.left.%]="item.all_strategy.needed_correc_percentage"></div>
+            </div>
+            <div class="bullet-caption">
+              <span>Tu media: {{ item.user_points }} pts</span>
+              <span>Mínimo: {{ item.needed_points }} pts</span>
+            </div>
+
+            <div class="strategy-row">
+              <span class="strategy-label">Solo lo que sé</span>
+              <span class="strategy-value">{{ item.known_strategy.user_correc_questions }}<span
+                  class="of">/{{ item.known_strategy.needed_correc_questions }}</span> · {{
+                item.known_strategy.user_correct_percentage | number:'1.0-0' }}%</span>
+            </div>
+            <div class="strategy-row">
+              <span class="strategy-label">Respondiendo todo</span>
+              <span class="strategy-value">{{ item.all_strategy.user_correc_questions }}<span
+                  class="of">/{{ item.all_strategy.needed_correc_questions }}</span> · {{
+                item.all_strategy.user_correct_percentage | number:'1.0-0' }}%</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      } @empty {
+      <div class="col-lg-12">
+        <p class="empty-state">Todavía no hay datos de preparación para este curso.</p>
+      </div>
+      }
+    </div>
+
+    @if(readiness.length){
+    <div class="legend-note m-t-8">
+      <i-tabler class="icon-13" name="info-circle"></i-tabler>
+      La línea vertical marca la puntuación mínima necesaria para aprobar cada prueba
+    </div>
+    }
+  </mat-card-content>
+</mat-card>
+} @else {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+}

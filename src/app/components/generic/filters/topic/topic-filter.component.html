@@ -1,5 +1,8 @@
 <mat-form-field class="w-100" appearance="outline">
-  <mat-label>Tema</mat-label>
+  <mat-label>
+    Tema
+    @if (control.hasError('required')) { <span class="text-error">*</span> }
+  </mat-label>
   <input matInput [formControl]="control" [matAutocomplete]="auto" (blur)="onTouched()" />
   @if(control.enabled){
   <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">

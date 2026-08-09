@@ -1,0 +1,108 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-b-10">
+    <mat-card-title>Tiempos</mat-card-title>
+    <mat-card-subtitle
+      >Tiempo por pregunta y diferencia con el examen
+      anterior</mat-card-subtitle
+    >
+    <div class="row m-t-15">
+      <div class="col-lg-4 col-sm-6">
+        <mat-card class="shadow-none b-1 rounded h-100">
+          <mat-card-content>
+            <div class="d-flex align-items-center justify-content-between">
+              <div>
+                <mat-card-title
+                  class="mat-mdc-card-title f-s-24 f-w-500 m-b-8"
+                  >{{ time | formatTime }}</mat-card-title
+                >
+                <mat-card-subtitle
+                  class="mat-mdc-card-subtitle f-s-15 f-w-400 m-t-0"
+                  >{{ test.time_per_question.subtitle }}</mat-card-subtitle
+                >
+              </div>
+              <div>
+                <span
+                  class="icon-45 rounded-circle bg-{{
+                    test.time_per_question.color
+                  }} text-white d-flex align-items-center justify-content-center"
+                >
+                  <i-tabler
+                    name="{{ test.time_per_question.icon }}"
+                    class="icon-24 d-flex"
+                  ></i-tabler>
+                </span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <mat-card class="shadow-none b-1 rounded h-100">
+          <mat-card-content>
+            <div class="d-flex align-items-center justify-content-between">
+              <div>
+                <mat-card-title
+                  class="mat-mdc-card-title f-s-24 f-w-500 m-b-8 {{
+                    test.time_per_question.difference > 0
+                      ? 'text-success'
+                      : 'text-error'
+                  }}"
+                  >{{ timeDiff | formatTime }}</mat-card-title
+                >
+                <mat-card-subtitle
+                  class="mat-mdc-card-subtitle f-s-15 f-w-400 m-t-0"
+                  >{{
+                    test.time_per_question.difference > 0
+                      ? 'Menos por pregunta'
+                      : 'Más por pregunta'
+                  }}</mat-card-subtitle
+                >
+              </div>
+              <div>
+                <span
+                  class="icon-45 rounded-circle bg-{{
+                    test.time_per_question.color
+                  }} text-white d-flex align-items-center justify-content-center"
+                >
+                  <i-tabler
+                    name="{{ test.time_per_question.icon }}"
+                    class="icon-24 d-flex"
+                  ></i-tabler>
+                </span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <mat-card class="shadow-none b-1 rounded h-100 m-b-0">
+          <mat-card-content>
+            <mat-card-title class="f-s-24 f-w-500 m-b-8  {{
+                    test.time_per_question.percentage > 0
+                      ? 'text-error'
+                      : 'text-success'
+                  }}">
+              {{ test.time_per_question.percentage }}%
+            </mat-card-title>
+            <mat-card-subtitle class="f-s-14 f-w-400 m-t-0 m-b-10">
+              {{
+                    test.time_per_question.percentage > 0
+                      ? 'Más por pregunta'
+                      : 'Menos por pregunta'
+                  }}
+            </mat-card-subtitle>
+            <mat-progress-bar
+              mode="determinate"
+              class="mat-{{
+                    test.time_per_question.percentage > 0
+                      ? 'success'
+                      : 'error'
+                  }}"
+              value="{{ test.time_per_question.percentage }}"
+            ></mat-progress-bar>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

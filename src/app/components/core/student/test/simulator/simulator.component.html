@@ -1,0 +1,312 @@
+@if (test) {
+  <mat-card class="cardWithShadow rounded questions-container">
+    <mat-sidenav-container
+      [ngClass]="{
+        'side-panel-opened': sidePanelOpened(),
+        'side-panel-closed': !sidePanelOpened(),
+      }"
+      class="bg-white rounded"
+      style="height: 80vh"
+    >
+      <mat-sidenav
+        #questionslist
+        [mode]="isOver() ? 'over' : 'side'"
+        [opened]="!isOver()"
+        (open)="sidePanelOpened.set(true)"
+        (close)="sidePanelOpened.set(false)"
+        style="width: 200px"
+      >
+        <h4 class="f-s-16 f-w-600 p-x-16 m-t-16 p-b-5">
+          {{ 'TITLES.TEST.QUESTIONS' | translate }}
+        </h4>
+        <ng-scrollbar #scrollable class="h-90">
+          <mat-nav-list class="p-x-16">
+            @if (test_questions) {
+              @for (tq of test_questions; track $index) {
+                <div
+                  #questionItems
+                  class="question-item d-flex b-1 cursor-pointer rounded m-b-8 align-items-center justify-content-between"
+                  (click)="onSelect(tq)"
+                  [class.bg-light-success]="
+                    tq.question.id === selectedTestQuestion()?.question?.id
+                  "
+                  [class.active-question]="
+                    tq.question.id === selectedTestQuestion()?.question?.id
+                  "
+                >
+                  <div class="p-x-10 p-y-5 f-s-12 f-w-500">
+                    {{ `Pregunta ${$index + 1}` }}
+                  </div>
+                  <i-tabler
+                    name="{{
+                      tq.postponed
+                        ? 'alert-triangle'
+                        : tq.answered
+                          ? tq.correct
+                            ? 'circle-check'
+                            : 'circle-x'
+                          : 'circle'
+                    }}"
+                    class="icon-18 m-r-10"
+                    [ngClass]="
+                      tq.postponed
+                        ? 'text-warning'
+                        : tq.answered
+                          ? tq.correct
+                            ? 'text-success'
+                            : 'text-error'
+                          : ''
+                    "
+                  ></i-tabler>
+                </div>
+              }
+            }
+          </mat-nav-list>
+        </ng-scrollbar>
+      </mat-sidenav>
+
+      <mat-toolbar class="b-b-1">
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <button
+            (click)="questionslist.toggle()"
+            class="d-flex"
+            mat-icon-button
+          >
+            <i-tabler name="menu-2" class="icon-20"></i-tabler>
+          </button>
+          <div class="d-flex col slider-container m-r-10">
+            <mat-slider
+              class="slider"
+              [min]="0"
+              [max]="test_questions.length - 1"
+              step="1"
+            >
+              <input
+                matSliderThumb
+                [(ngModel)]="selectedIndex"
+                (ngModelChange)="onSliderChange($event)"
+                #slider
+              />
+            </mat-slider>
+          </div>
+          <div class="d-flex gap-5 align-items-center">
+            <button
+              mat-mini-fab
+              class="cart-btn-overlay bg-primary text-white"
+              [matTooltip]="
+                (testOngoing() ? 'ACTIONS.PAUSE' : 'ACTIONS.START') | translate
+              "
+              (click)="testOngoing() ? pauseTest() : startTest()"
+            >
+              <i-tabler
+                [name]="testOngoing() ? 'player-pause' : 'player-play'"
+                class="icon-16 d-flex"
+              ></i-tabler>
+            </button>
+            <button
+              mat-mini-fab
+              class="cart-btn-overlay bg-warning text-white"
+              [matTooltip]="'ACTIONS.RESET' | translate"
+              (click)="resetTest()"
+            >
+              <i-tabler [name]="'reload'" class="icon-16 d-flex"></i-tabler>
+            </button>
+            @if (test.timed) {
+              <app-countdown-timer
+                [initialSeconds]="test.time_allowed ?? 0"
+                (timerCompleted)="finishTest()"
+              ></app-countdown-timer>
+            }
+          </div>
+        </div>
+      </mat-toolbar>
+      @if (testOngoing() || !test.timed) {
+        <mat-card-content class="m-t-15">
+          <mat-card class="card shadow-none b-1 rounded theme-card">
+            <div class="p-24">
+              <mat-card-title class="m-b-0 f-s-16">{{
+                selectedTestQuestion()?.question?.text
+              }}</mat-card-title>
+            </div>
+            <div
+              [style]="
+                selectedTestQuestion()?.answered
+                  ? 'height: 45vh; overflow: auto;'
+                  : ''
+              "
+            >
+              <mat-card-content class="b-t-1">
+                <mat-chip-listbox
+                  class="mat-mdc-chip-set-stacked d-flex flex-wrap"
+                  aria-label="Respuestas a la pregunta"
+                >
+                  @for (
+                    answer of selectedTestQuestion()?.question?.answers;
+                    track answer.id
+                  ) {
+                    <mat-chip-option
+                      [value]="answer.id"
+                      [selected]="
+                        selectedTestQuestion()?.selectedAnswer?.id === answer.id
+                      "
+                      (click)="answerQuestion(answer)"
+                      [ngClass]="{
+                        correct:
+                          selectedTestQuestion()?.answered && answer.isCorrect,
+                        error:
+                          selectedTestQuestion()?.answered &&
+                          selectedTestQuestion()?.selectedAnswer?.id ===
+                            answer.id &&
+                          !answer.isCorrect,
+                      }"
+                      >{{ answer.text }}
+                    </mat-chip-option>
+                  }
+                </mat-chip-listbox>
+              </mat-card-content>
+              @if (selectedTestQuestion()?.answered) {
+                <mat-card-content
+                  #explanationSection
+                  class="b-1 rounded m-15 explanation-fade"
+                >
+                  <p class="m-t-0">
+                    {{ selectedTestQuestion()?.question?.explanation }}
+                  </p>
+                </mat-card-content>
+              }
+            </div>
+            <mat-divider></mat-divider>
+            <div class="d-flex align-items-center justify-content-between m-10">
+              <app-reactions
+                [content]="selectedQuestion"
+                [featureType]="featureType"
+              ></app-reactions>
+              <div>|</div>
+              <div
+                [matTooltip]="
+                  'Generado por: ' +
+                    selectedTestQuestion()?.question?.creationType
+                      ?.description || ''
+                "
+              >
+                <i-tabler
+                  class="icon-20 d-flex"
+                  [name]="
+                    selectedTestQuestion()?.question?.creationType?.icon || ''
+                  "
+                ></i-tabler>
+              </div>
+            </div>
+          </mat-card>
+          <div
+            class="d-flex align-items-center gap-15 justify-content-between shadow-none rounded b-1 p-10 m-t-10"
+          >
+            <div>
+              <button
+                mat-mini-fab
+                class="bg-warning text-white custom-size-fab"
+                [matTooltip]="'ACTIONS.MARK_FOR_REVIEW' | translate"
+                [disabled]="
+                  selectedTestQuestion()?.postponed ||
+                  selectedTestQuestion()?.answered
+                "
+                (click)="markForReview()"
+              >
+                <i-tabler name="flag" class="icon-14 d-flex"></i-tabler>
+              </button>
+            </div>
+            <div
+              class="d-flex align-items-center gap-15 justify-content-center"
+            >
+              <button
+                mat-mini-fab
+                class="bg-secondary text-white custom-size-fab"
+                [matTooltip]="'ACTIONS.PREVIOUS_UNANSWERED' | translate"
+                (click)="previousUnansweredQuestion()"
+              >
+                <i-tabler
+                  name="player-track-prev"
+                  class="icon-14 d-flex"
+                ></i-tabler>
+              </button>
+              <button
+                mat-mini-fab
+                class="bg-primary text-white custom-size-fab"
+                matTooltip="{{ 'ACTIONS.PREVIOUS' | translate }}"
+                (click)="previousQuestion()"
+              >
+                <i-tabler
+                  name="player-skip-back"
+                  class="icon-14 d-flex"
+                ></i-tabler>
+              </button>
+              <div
+                class="d-flex f-s-12 align-items-center justify-content-center progress-displayer"
+              >
+                {{ selectedIndex + 1 }} / {{ test_questions.length }}
+              </div>
+              <button
+                mat-mini-fab
+                class="bg-primary text-white custom-size-fab"
+                matTooltip="{{ 'ACTIONS.NEXT' | translate }}"
+                (click)="nextQuestion()"
+              >
+                <i-tabler
+                  name="player-skip-forward"
+                  class="icon-14 d-flex"
+                ></i-tabler>
+              </button>
+              <button
+                mat-mini-fab
+                class="bg-secondary text-white custom-size-fab"
+                matTooltip="{{ 'ACTIONS.NEXT_UNANSWERED' | translate }}"
+                (click)="nextUnansweredQuestion()"
+              >
+                <i-tabler
+                  name="player-track-next"
+                  class="icon-14 d-flex"
+                ></i-tabler>
+              </button>
+            </div>
+            <div>
+              <button
+                mat-mini-fab
+                class="bg-error text-white custom-size-fab"
+                matTooltip="{{ 'ACTIONS.FINISH' | translate }}"
+                (click)="finishTest()"
+              >
+                <i-tabler name="player-stop" class="icon-14 d-flex"></i-tabler>
+              </button>
+            </div>
+          </div>
+        </mat-card-content>
+      } @else {
+        <mat-card-content class="b-1 rounded h-80 m-15">
+          <div class="d-flex align-items-center justify-content-center h-100">
+            <button
+              mat-mini-fab
+              class="cart-btn-overlay bg-primary text-white"
+              [matTooltip]="
+                (testOngoing() ? 'ACTIONS.PAUSE' : 'ACTIONS.START') | translate
+              "
+              (click)="testOngoing() ? pauseTest() : startTest()"
+            >
+              <i-tabler
+                [name]="testOngoing() ? 'player-pause' : 'player-play'"
+                class="icon-16 d-flex"
+              ></i-tabler>
+            </button>
+          </div>
+        </mat-card-content>
+      }
+    </mat-sidenav-container>
+  </mat-card>
+} @else {
+  <mat-card class="cardWithShadow rounded container">
+    <mat-card-content>
+      <div>
+        <span> Test sin preguntas </span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+}

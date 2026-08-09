@@ -119,6 +119,6 @@ export class AppCourseTopicsComponent implements OnInit {
   }
 
   getProgress(topic: ITopic): string {
-    return topic.progress ? `percentage-${topic.progress.topicProgress}` : 'percentage-0'
+    return topic.progress && topic.progress.topicProgress ? `percentage-${topic.progress.topicProgress}` : 'percentage-0'
   }
 }

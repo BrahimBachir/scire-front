@@ -1,0 +1,24 @@
+@if(test){
+<app-test-results-basic [data_items]="test.data_items"></app-test-results-basic>
+<div class="row h-100">
+  <div class="col-lg-6 h-100">
+    <app-test-results-score [test]="test"></app-test-results-score>
+  </div>
+  <div class="col-lg-6 h-100">
+    <app-test-results-basic-pie [data_items]="test.data_items"></app-test-results-basic-pie>
+  </div>
+</div>
+<app-test-results-percentages [test]="test"></app-test-results-percentages>
+<app-test-results-difference [test]="test"></app-test-results-difference>
+<app-test-results-times [test]="test"></app-test-results-times>
+} @else {
+<mat-card class="cardWithShadow rounded container">
+  <mat-card-content>
+    <div>
+      <span>
+        ¡Por favor, seleccione un test! Gracias.
+      </span>
+    </div>
+  </mat-card-content>
+</mat-card>
+}

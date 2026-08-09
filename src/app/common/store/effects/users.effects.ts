@@ -22,6 +22,9 @@ import {
   updateUser,
   createUserLogin,
   loginCompleted,
+  changeUserPlan,
+  resetUserPlan,
+  loadLogedUser,
 } from '../actions';
 import { of } from 'rxjs';
 import { IUser } from '../../models/interfaces';
@@ -117,5 +120,31 @@ export class UsersEffects {
     )
   );
 
-  
+  changeUserPlan$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(changeUserPlan),
+      concatMap(({ planCode }) =>
+        this.usersService.changePlan(planCode).pipe(
+          map(() => loadLogedUser()),
+          catchError((error) =>
+            of({ type: `[User] Change Plan Failed: ${error}` })
+          )
+        )
+      )
+    )
+  );
+
+  resetUserPlan$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(resetUserPlan),
+      concatMap(() =>
+        this.usersService.resetPlan().pipe(
+          map(() => loadLogedUser()),
+          catchError((error) =>
+            of({ type: `[User] Reset Plan Failed: ${error}` })
+          )
+        )
+      )
+    )
+  );
 }

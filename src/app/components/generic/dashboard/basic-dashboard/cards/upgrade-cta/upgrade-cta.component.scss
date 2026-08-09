@@ -1,0 +1,69 @@
+:host {
+  display: block;
+}
+
+.upgrade-cta {
+  background: var(--mat-sys-surface);
+  border: 1px dashed var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-small);
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.upgrade-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.upgrade-icon {
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border-radius: 12px;
+  background: var(--mat-sys-secondary-fixed-dim);
+  color: var(--mat-sys-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upgrade-copy {
+  min-width: 0;
+}
+
+.upgrade-title {
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.upgrade-sub {
+  font-size: 12.5px;
+  color: var(--mat-sys-surface-container-lowest);
+  margin-top: 2px;
+  max-width: 56ch;
+}
+
+.upgrade-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid var(--mat-sys-secondary);
+  color: var(--mat-sys-secondary);
+  padding: 9px 16px;
+  border-radius: var(--mat-sys-corner-small);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.upgrade-btn:hover {
+  background: var(--mat-sys-secondary-fixed-dim);
+}

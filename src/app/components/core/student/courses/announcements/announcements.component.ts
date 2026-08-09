@@ -30,22 +30,22 @@ import { AnnouncementsService } from "src/app/services";
     ReactiveFormsModule,
     NgScrollbarModule,
     TranslateModule,
-    SafeHtmlPipe
+    SafeHtmlPipe,
   ],
-  styleUrl: './announcements.component.scss'
-
+  styleUrl: './announcements.component.scss',
 })
 export class AppAnnouncementsComponent implements OnInit {
   public service = inject(AnnouncementsService);
   private route = inject(ActivatedRoute);
-  isExpanded: boolean = false;
+  selectedId: number = 0;
 
   items = signal<IAnnouncement[] | null>(null);
 
   courseId: number = 0;
 
   constructor() {
-    this.courseId = Number(this.route?.snapshot?.paramMap?.get('courseId')) || 0;
+    this.courseId =
+      Number(this.route?.snapshot?.paramMap?.get('courseId')) || 0;
   }
 
   ngOnInit(): void {
@@ -53,23 +53,22 @@ export class AppAnnouncementsComponent implements OnInit {
   }
 
   getItems() {
-    this.service.getAll(this.courseId).subscribe(announs => {
+    this.service.getAll(this.courseId).subscribe((announs) => {
       console.log(announs);
       this.items.set(announs);
     });
   }
 
   toggleExpand(item: any) {
-    if (!this.isExpanded) {
-      // Only increase views when opening, not closing
+    if (this.selectedId === item.id) {
+      this.selectedId = 0;
+    } else {
+      this.selectedId = item.id;
       this.increaseViewCount(item.id);
     }
-    this.isExpanded = !this.isExpanded;
   }
 
   increaseViewCount(id: number) {
-    // Your service logic here
-    console.log('Increasing view count for:', id);
     this.service.increaseViews(id).subscribe();
   }
 }

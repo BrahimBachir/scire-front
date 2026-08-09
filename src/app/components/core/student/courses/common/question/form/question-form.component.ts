@@ -8,7 +8,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FeatureFormComponent } from 'src/app/common/models/interfaces';
-import { AppDifficultyFilterComponent } from 'src/app/components/generic/filters/difficulty/difficulty-filter';
+import { DifficultyFilterComponent } from 'src/app/components/generic/filters/difficulty/difficulty-filter.component';
 import { IconModule } from 'src/app/icon/icon.module';
 import { MaterialModule } from 'src/app/material.module';
 
@@ -18,7 +18,7 @@ import { MaterialModule } from 'src/app/material.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppDifficultyFilterComponent,
+    DifficultyFilterComponent,
     MatFormFieldModule,
     MatCardModule,
     MaterialModule,

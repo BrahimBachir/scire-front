@@ -1,129 +1,64 @@
 import { Component } from '@angular/core';
-import {
-  CdkDragDrop,
-  DragDropModule,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
-import { AppKanbanDialogComponent } from './kanban-dialog.component';
-import { AppOkDialogComponent } from './ok-dialog/ok-dialog.component';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
-import { KanbanService } from 'src/app/services/apps/kanban/kanban.service';
+import { OldKanbanService } from 'src/app/services/apps/kanban/kanban.service';
 import { Todos } from './kanban';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { IconModule } from 'src/app/icon/icon.module';
-import { AppDeleteDialogComponent } from '../../generic/dialogs/delete-dialog/delete-dialog.component';
-// tslint:disable-next-line - Disables all
+import { KanbanService } from 'src/app/services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IEpic, ITask } from 'src/app/common/models/interfaces';
 
 @Component({
-    selector: 'app-kanban',
-    templateUrl: './kanban.component.html',
-    imports: [
-        MaterialModule,
-        CommonModule,
-        IconModule,
-        DragDropModule,
-        NgScrollbarModule,
-    ]
+  selector: 'app-kanban',
+  templateUrl: './kanban.component.html',
+  imports: [MaterialModule, CommonModule, IconModule, NgScrollbarModule],
 })
 export class AppKanbanComponent {
-  todos: Todos[] = [];
-  inprogress: Todos[] = [];
-  completed: Todos[] = [];
-  onhold: Todos[] = [];
+  todos: IEpic[] = [];
+  inprogress: IEpic[] = [];
+  completed: IEpic[] = [];
+  isExpanded: boolean = false;
+
+  courseId: number | null =
+    Number(this.route.snapshot.paramMap.get('courseId')) || null;
+  selectedId: any;
 
   constructor(
     public dialog: MatDialog,
-    public taskService: KanbanService,
-    private snackBar: MatSnackBar
+    public taskService: OldKanbanService,
+    private service: KanbanService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
     this.loadTasks();
   }
 
   loadTasks(): void {
-    const allTasks = this.taskService.getAllTasks();
-
-    this.todos = allTasks.todos;
-    this.inprogress = allTasks.inProgress;
-    this.completed = allTasks.completed;
-    this.onhold = allTasks.onHold;
+    this.service.getData(this.courseId ?? 0).subscribe((data) => {
+      this.todos = data.filter((task) => task.percentage_completed === 0);
+      this.inprogress = data.filter(
+        (task) =>
+          task.percentage_completed > 0 && task.percentage_completed < 100,
+      );
+      this.completed = data.filter((task) => task.percentage_completed === 100);
+    });
   }
 
-  drop(event: CdkDragDrop<any[]>): void {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+  goToTopic(topicId: number) {
+    this.router.navigate([
+      `${this.route?.snapshot.data['role'].toLowerCase()}/courses/:courseId/topic/:topicId/content`
+        .replace(':courseId', this.courseId?.toString() || '0')
+        .replace(':topicId', topicId.toString()),
+    ]);
+  }
+
+  toggleExpand(epic: IEpic) {
+    if (this.selectedId === epic.id) {
+      this.selectedId = 0;
     } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      this.selectedId = epic.id;
     }
-  }
-
-  openDialog(action: string, obj: any): void {
-    obj.action = action;
-
-    const dialogRef = this.dialog.open(AppKanbanDialogComponent, {
-      data: obj,
-      autoFocus: false, 
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result.event === 'Add') {
-        this.taskService.addTask(result.data);
-        this.loadTasks();
-        this.dialog.open(AppOkDialogComponent);
-        this.showSnackbar('Task added successfully!');
-      }
-      if (result.event === 'Edit') {
-        this.taskService.editTask(result.data);
-        this.loadTasks();
-      }
-    });
-  }
-
-  deleteTask(t: Todos) {
-    const del = this.dialog.open(AppDeleteDialogComponent);
-
-    del.afterClosed().subscribe((result) => {
-      if (result === 'true') {
-        this.taskService.deleteTask(t.id);
-        this.loadTasks();
-        this.showSnackbar('Task deleted successfully!');
-      }
-    });
-  }
-
-  showSnackbar(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 2000,
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-    });
-  }
-  //taskProperty bgcolor
-  getTaskClass(taskProperty: string | any): any {
-    return taskProperty === 'Design'
-      ? 'bg-success'
-      : taskProperty === 'Mobile'
-      ? 'bg-primary'
-      : taskProperty === 'UX Stage'
-      ? 'bg-warning'
-      : taskProperty === 'Research'
-      ? 'bg-error'
-      : taskProperty === 'Data Science'
-      ? 'bg-secondary'
-      : taskProperty === 'Branding'
-      ? 'bg-primary'
-      : '';
   }
 }

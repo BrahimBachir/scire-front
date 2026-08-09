@@ -22,8 +22,14 @@ export class EgretCalendarEvent implements CalendarEvent {
   };
   draggable?: boolean;
   meta?: {
-    location: string;
-    notes: string;
+    location?: string;
+    notes?: string;
+    readonly?: boolean;
+    kind?: 'articles' | 'test';
+    topicId?: number;
+    topicName?: string;
+    courseId?: number;
+    articles?: { id: number; title: string }[];
   };
 
   constructor(data: any) {

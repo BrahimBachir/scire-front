@@ -11,6 +11,17 @@
     "release": "standard-version"
   },
   "private": true,
+  "overrides": {
+    "karma-coverage": {
+      "minimatch": {
+        "brace-expansion": "^1.1.16"
+      }
+    },
+    "@isaacs/brace-expansion": "^5.0.1",
+    "@modelcontextprotocol/sdk": {
+      "@hono/node-server": "^2.0.11"
+    }
+  },
   "dependencies": {
     "@amcharts/amcharts5": "^5.13.3",
     "@amcharts/amcharts5-geodata": "^5.1.4",
@@ -60,7 +71,7 @@
   },
   "devDependencies": {
     "@angular/build": "^20.0.4",
-    "@angular/cli": "~20.0.4",
+    "@angular/cli": "^20.3.32",
     "@angular/compiler-cli": "^20.0.4",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",

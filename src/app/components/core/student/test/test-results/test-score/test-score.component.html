@@ -1,0 +1,29 @@
+<mat-card class="cardWithShadow score-card h-100">
+  <mat-card-content class="h-100">
+    <mat-card-title class="m-b-16">Nota del examen</mat-card-title>
+    <div class="col align-items-center">
+      <div class="d-flex col col-7 align-items-center">
+        <h3 class="f-s-40 text-primary f-w-400 m-0 lh-lg">{{ test.score }}/{{test.max_score}}</h3>
+        <span class="m-t-10 d-block f-w-500 f-s-16">Diferencia con el anterior</span>
+        <h6 class="m-t-8 f-s-14 m-b-0 f-w-400 ">{{ test.score_diff > 0 ? '+' + test.score_diff + ' puntos' : test.score_diff + ' puntos' }}</h6>
+        <h6 class="m-t-8 f-s-14 m-b-0 f-w-400 ">{{ test.score_diff_percent > 0 ? 'Nota un '+test.score_diff_percent +'% más alta' : 'Nota un '+test.score_diff_percent+'% más baja' }}</h6>
+      </div>
+      <div class="col-5 h-40">
+        <div>
+          <apx-chart
+            [series]="predictionChart.series"
+            [chart]="predictionChart.chart"
+            [plotOptions]="predictionChart.plotOptions"
+            [tooltip]="predictionChart.tooltip"
+            [grid]="predictionChart.grid"
+            [colors]="predictionChart.colors"
+            [labels]="predictionChart.labels"
+            [fill]="predictionChart.fill"
+          >
+          </apx-chart>
+        </div>
+      </div>
+      <h6 class="m-t-8 f-s-12 m-b-0 m-t-15 f-w-400 "> <span class="text-error">*</span> Es recomendable pasar al siguiente elemento de estudio (ley, tema, etc) al alcanzar un 70% de la nota necesaria.</h6>
+    </div>
+  </mat-card-content>
+</mat-card>

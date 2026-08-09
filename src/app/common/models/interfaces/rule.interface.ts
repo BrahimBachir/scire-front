@@ -4,12 +4,10 @@ export interface IRule {
   id: number;
   code: string;
   description: string;
-  lastArticle?: string;
   internal?: boolean;
   repealed?: boolean;
   articles?: IArticle[];
   boeIndex?: IRuleIndex[];
-  //boeArticles?: any[];
   updateDate?: Date;
   enactmentDate?: Date;
   repealDate?: Date;
@@ -21,6 +19,8 @@ export interface IRule {
   ambit?: IRuleAmbit | null;
   ambitId?: number;
   readingTime?: number;
+  fromBOE?: boolean;
+  creatorId?: number;
 }
 
 export interface IRuleIndex {
@@ -36,12 +36,12 @@ export interface IMetadataSource {
   identificador: string;
   ambito: { codigo: string; texto: string; };
   rango: { codigo: string; texto: string; };
-  fecha_disposicion: string; // Changed to string based on new input
+  fecha_disposicion: string;
   titulo: string;
   diario: string;
-  fecha_publicacion: string; // Changed to string based on new input
-  diario_numero: string; // Changed to string based on new input
-  fecha_vigencia: string; // Changed to string based on new input
+  fecha_publicacion: string;
+  diario_numero: string;
+  fecha_vigencia: string;
   estatus_derogacion: string;
   [key: string]: any;
 }

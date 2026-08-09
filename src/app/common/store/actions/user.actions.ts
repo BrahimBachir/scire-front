@@ -21,6 +21,9 @@ export const LOGGED_USER_LOADED = '[USERS] Logged user loaded';
 export const TOGGLE_USER_SELECTION = '[USERS] Toggle User Selection';
 export const TOGGLE_ALL_USERS_SELECTION = '[USERS] Toggle All Users Selection';
 
+export const CHANGE_USER_PLAN = '[USERS] Change user plan';
+export const RESET_USER_PLAN = '[USERS] Reset user plan';
+
 
 export const createUser = createAction(CREATE_USER, props<{ user: IUser }>());
 
@@ -83,3 +86,10 @@ export const toggleAllUsersSelection = createAction(
   TOGGLE_ALL_USERS_SELECTION,
   props<{ selected: boolean }>()
 );
+
+export const changeUserPlan = createAction(
+  CHANGE_USER_PLAN,
+  props<{ planCode: string }>()
+);
+
+export const resetUserPlan = createAction(RESET_USER_PLAN);

@@ -1,0 +1,75 @@
+.session-meta {
+  font-size: 12.5px;
+  color: var(--mat-sys-surface-container-lowest);
+  margin-top: -6px;
+}
+
+.chip-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.review-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  background: var(--mat-sys-surface-bright);
+}
+
+.ico {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ico-success {
+  background: rgba(44, 208, 126, 0.15);
+  color: #2cd07e;
+}
+
+.ico-warning {
+  background: rgba(246, 192, 0, 0.15);
+  color: #f6c000;
+}
+
+.ico-error {
+  background: var(--mat-sys-error-fixed-dim);
+  color: var(--mat-sys-error);
+}
+
+.ico-primary {
+  background: var(--mat-sys-primary-fixed-dim);
+  color: var(--mat-sys-primary);
+}
+
+.ico-secondary {
+  background: var(--mat-sys-secondary-fixed-dim);
+  color: var(--mat-sys-secondary);
+}
+
+.rc-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.rc-title {
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.rc-time {
+  font-size: 11.5px;
+  color: var(--mat-sys-surface-container-lowest);
+}
+
+.empty-state {
+  font-size: 13px;
+  color: var(--mat-sys-surface-container-lowest);
+}

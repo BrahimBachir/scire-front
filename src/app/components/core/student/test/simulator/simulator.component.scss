@@ -1,0 +1,112 @@
+@use '../../../../../../assets/scss/variables' as *;
+
+.questions-container {
+  margin-bottom: 0 !important;
+}
+
+/* Allow the chip container to wrap */
+::ng-deep .mat-mdc-chip-set .mdc-evolution-chip-set__chips {
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Allow text to wrap inside chips */
+::ng-deep .mdc-evolution-chip__text-label {
+  white-space: normal !important;
+  overflow-wrap: break-word;
+  font-size: small;
+}
+
+/* Ensure full width fit */
+::ng-deep .mat-mdc-chip {
+  max-width: 100%;
+}
+
+/* Allow the CHIP to expand in height */
+::ng-deep .mat-mdc-chip.mat-mdc-standard-chip {
+  height: auto !important;
+  min-height: 32px;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  align-items: flex-start;
+}
+
+::ng-deep .mdc-evolution-chip__action {
+  height: auto !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.correct {
+  font-weight: bold;
+  color: $success;
+  border: 2px solid $success;
+  border-radius: 8px;
+}
+
+.error {
+  font-weight: bold;
+  text-decoration: line-through;
+  color: $error;
+  border: 2px solid $error;
+  border-radius: 8px;
+}
+
+.slider-container, .slider {
+  width: 100%;
+}
+
+.slider {
+  width: 97%;
+}
+
+.progress-displayer {
+  min-width: 50px;
+}
+
+
+.question-item {
+  transition: background-color 0.2s ease;
+}
+
+.question-item:hover {
+  background-color: #E3F8F9 !important;
+}
+
+.question-item.bg-light-success:hover {
+  filter: brightness(0.95);
+}
+
+.custom-size-fab {
+  --mdc-fab-mini-container-size: 32px;
+
+  /* You may also need to scale the icon container */
+  --mdc-fab-mini-icon-size: 16px;
+
+  /* Adjusting the width/height manually ensures the circle stays perfect */
+  width: var(--mdc-fab-mini-container-size) !important;
+  height: var(--mdc-fab-mini-container-size) !important;
+}
+
+@keyframes highlight-fade {
+  0% {
+    background-color: #fff9c4;
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  50% {
+    background-color: #fff9c4;
+  }
+
+  100% {
+    background-color: transparent;
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.explanation-fade {
+  animation: highlight-fade 1.5s ease-out;
+}

@@ -5,3 +5,4 @@ export * from './filters/rule-filter-items';
 export * from './filters/flashcard-filter-items';
 export * from './filters/note-filter-items';
 export * from './add-elements-actions';
+export * from './filters/test-filter-items';

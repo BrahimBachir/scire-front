@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { provideTablerIcons, TablerIconComponent } from 'angular-tabler-icons';
-import { IconAdjustmentsMinus, IconAdjustmentsPlus, IconAlertHexagon, IconAlertTriangle, IconArrowBackUp, IconArrowsShuffle, IconArticle, IconBell, IconBellRinging, IconBook, IconBox, IconBrandDribbble, IconBrandFacebook, IconBrandGithub, IconBrandInstagram, IconBrandTiktok, IconBrandTwitter, IconBrandWhatsapp, IconBrandX, IconBrandYoutube, IconBriefcase, IconCalculator, IconCalendar, IconCertificate, IconChartPie, IconCheck, IconCheckbox, IconChecklist, IconChevronDown, IconChevronLeft, IconChevronRight, IconChevronUp, IconCircleArrowDown, IconCircleArrowUp, IconCircleFilled, IconCirclePlus, IconClock, IconCornerDownLeftDouble, IconCornerDownRightDouble, IconCreditCard, IconDeviceDesktop, IconDeviceFloppy, IconDeviceLaptop, IconDeviceMobile, IconDevicesQuestion, IconDots, IconDotsVertical, IconDownload, IconEdit, IconExternalLink, IconEye, IconEyeOff, IconFileDescription, IconFileInvoice, IconFileText, IconFilter, IconFilterCancel, IconFlipVertical, IconGavel, IconHeart, IconHeartStar, IconHelpCircle, IconHexagons, IconHome, IconInfoCircle, IconInfoTriangle, IconListSearch, IconLock, IconLogout, IconMail, IconMapPin, IconMenu2, IconMessage2, IconMessageCircle, IconMessageCircleQuestion, IconMinus, IconMoon, IconNote, IconPencil, IconPencilMinus, IconPercentage0, IconPercentage10, IconPercentage100, IconPercentage20, IconPercentage30, IconPercentage40, IconPercentage50, IconPercentage60, IconPercentage70, IconPercentage80, IconPercentage90, IconPhoto, IconPlayerPlay, IconPlus, IconPoint, IconPolaroid, IconPresentationAnalytics, IconReceipt, IconSchema, IconSchool, IconSearch, IconSettings, IconShare, IconSparkles, IconStar, IconStarFilled, IconSun, IconTableDown, IconThumbDown, IconThumbDownFilled, IconThumbUp, IconThumbUpFilled, IconTrash, IconTruckDelivery, IconUser, IconUserCheck, IconUserCircle, IconUsersGroup, IconUserX, IconVideo, IconX, IconZoomIn, IconZoomOut } from "angular-tabler-icons/icons";
+import { IconAd, IconAdjustmentsMinus, IconAdjustmentsPlus, IconAi, IconAlertHexagon, IconAlertTriangle, IconArrowBackUp, IconArrowLeft, IconArrowRight, IconArrowsShuffle, IconArticle, IconBell, IconBellRinging, IconBook, IconBox, IconBrandDribbble, IconBrandFacebook, IconBrandGithub, IconBrandInstagram, IconBrandTiktok, IconBrandTwitter, IconBrandWhatsapp, IconBrandX, IconBrandYoutube, IconBriefcase, IconBulb, IconCalculator, IconCalendar, IconCertificate, IconChartBarPopular, IconChartLine, IconChartPie, IconChartRadar, IconCheck, IconCheckbox, IconChecklist, IconChevronDown, IconChevronLeft, IconChevronRight, IconChevronUp, IconCircle, IconCircleArrowDown, IconCircleArrowUp, IconCircleCheck, IconCircleFilled, IconCirclePlus, IconCircleX, IconClock, IconClockHour3, IconCornerDownLeftDouble, IconCornerDownRightDouble, IconCreditCard, IconDeviceDesktop, IconDeviceFloppy, IconDeviceLaptop, IconDeviceMobile, IconDevicesQuestion, IconDots, IconDotsVertical, IconDownload, IconEdit, IconExternalLink, IconEye, IconEyeOff, IconFile, IconFileDescription, IconFileInvoice, IconFileText, IconFileTextSpark, IconFilter, IconFilterCancel, IconFlag, IconFlipVertical, IconGavel, IconHeart, IconHeartHandshake, IconHeartStar, IconHelpCircle, IconHexagons, IconHome, IconInfoCircle, IconInfoTriangle, IconListSearch, IconLock, IconLogout, IconMail, IconMapPin, IconMenu2, IconMessage2, IconMessageCircle, IconMessageCircleQuestion, IconMinus, IconMoodCheck, IconMoodEmpty, IconMoodNeutral, IconMoodWrrr, IconMoon, IconNote, IconPencil, IconPencilMinus, IconPercentage0, IconPercentage10, IconPercentage100, IconPercentage20, IconPercentage30, IconPercentage40, IconPercentage50, IconPercentage60, IconPercentage70, IconPercentage80, IconPercentage90, IconPhoto, IconPlayerPause, IconPlayerPlay, IconPlayerSkipBack, IconPlayerSkipForward, IconPlayerStop, IconPlayerTrackNext, IconPlayerTrackPrev, IconPlus, IconPoint, IconPolaroid, IconPresentationAnalytics, IconReceipt, IconReload, IconSchema, IconSchool, IconSearch, IconSettings, IconShare, IconSparkles, IconStar, IconStarFilled, IconSun, IconTableDown, IconThumbDown, IconThumbDownFilled, IconThumbUp, IconThumbUpFilled, IconTrash, IconTruckDelivery, IconUser, IconUserCheck, IconUserCircle, IconUsersGroup, IconUserX, IconVideo, IconX, IconZoomIn, IconZoomOut } from "angular-tabler-icons/icons";
 
 const icons = {
   IconX,
+  IconCircleX,
+  IconReload,
+  IconFileTextSpark,
+  IconChartBarPopular,
   IconInfoCircle,
   IconPencil,
   IconCalculator,
@@ -122,10 +126,33 @@ const icons = {
   IconPoint,
   IconCircleArrowUp,
   IconBrandWhatsapp,
+  IconChartLine,
   IconBrandX,
   IconBrandTiktok,
   IconAlertHexagon,
   IconChevronUp,
+  IconCircle,
+  IconCircleCheck,
+  IconArrowLeft,
+  IconArrowRight,
+  IconPlayerSkipForward,
+  IconPlayerSkipBack,
+  IconPlayerTrackPrev,
+  IconPlayerTrackNext,
+  IconPlayerStop,
+  IconFlag,
+  IconPlayerPause,
+  IconMoodCheck,
+  IconMoodWrrr,
+  IconMoodEmpty,
+  IconMoodNeutral,
+  IconClockHour3,
+  IconFile,
+  IconAd,
+  IconAi,
+  IconBulb,
+  IconChartRadar,
+  IconHeartHandshake,
 };
 
 @NgModule({

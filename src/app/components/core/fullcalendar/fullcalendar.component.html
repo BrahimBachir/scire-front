@@ -1,13 +1,35 @@
 <mat-card class="cardWithShadow">
   <mat-card-content>
     <div class="d-flex align-items-center">
-      <mat-card-title class="m-b-0">Angular Calendar</mat-card-title>
+      <mat-card-title class="m-b-0">Calendario de estudio</mat-card-title>
       <div class="m-l-auto">
         <button mat-flat-button color="primary" (click)="addEvent()">
-          Add Event
+          Nuevo
         </button>
       </div>
     </div>
+
+    @if (noExamDate()) {
+      <p class="text-warning m-t-16 m-b-0">
+        Este curso no tiene fecha de examen configurada, así que no se puede
+        generar un plan de estudio. Añade una fecha de examen en los datos
+        del curso para ver aquí cuántos artículos necesitas cubrir cada día.
+      </p>
+    } @else if (examDate()) {
+      <p class="m-t-16 m-b-0">
+        Necesitas cubrir aproximadamente
+        <strong>{{ articlesPerDayAvg() | number : '1.0-1' }}</strong>
+        artículos/día para llegar preparado al examen del
+        <strong>{{ examDate() | date : 'dd/MM/yyyy' }}</strong>.
+      </p>
+      @if (insufficientTime()) {
+        <p class="text-error m-t-8 m-b-0">
+          El tiempo disponible no llega para cubrir el temario con un día de
+          margen antes de cada test: te faltarían
+          {{ shortfallDays() }} día{{ shortfallDays() > 1 ? 's' : '' }}.
+        </p>
+      }
+    }
   </mat-card-content>
 </mat-card>
 
@@ -24,21 +46,21 @@
             (click)="setView('month')"
             [class.active]="view() === 'month'"
           >
-            Month
+            Mes
           </button>
           <button
             mat-button class="text-white"
             (click)="setView('week')"
             [class.active]="view() === 'week'"
           >
-            Week
+            Semana
           </button>
           <button
             mat-button class="text-white"
             (click)="setView('day')"
             [class.active]="view() === 'day'"
           >
-            Day
+            Día
           </button>
           <button
             mat-icon-button class="text-white"

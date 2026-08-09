@@ -1,0 +1,40 @@
+.radar-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-grid {
+  fill: none;
+  stroke: var(--mat-sys-outline-variant);
+  stroke-width: 1;
+}
+
+.radar-axis {
+  stroke: var(--mat-sys-outline-variant);
+  stroke-width: 1;
+}
+
+.radar-shape {
+  fill: var(--mat-sys-primary-fixed-dim);
+  stroke: var(--mat-sys-primary);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.radar-dot {
+  fill: var(--mat-sys-primary);
+  stroke: var(--mat-sys-surface);
+  stroke-width: 1.5;
+}
+
+.radar-label {
+  font-size: 10.5px;
+  fill: var(--mat-sys-surface-container-lowest);
+  font-family: inherit;
+}
+
+.empty-state {
+  font-size: 13px;
+  color: var(--mat-sys-surface-container-lowest);
+}

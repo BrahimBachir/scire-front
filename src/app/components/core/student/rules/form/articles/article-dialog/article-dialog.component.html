@@ -1,0 +1,29 @@
+<div class="p-15">
+  <div class="d-flex w-100 align-items-center justify-content-between m-b-15">
+    <h3 mat-dialog-title>{{ mode === 'EDITING' ? 'Editar' : 'Crear' }} Artículo/Apartado</h3>
+    <button mat-icon-button mat-dialog-close class="d-flex justify-content-center m-l-20 bg-error text-white">
+      <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
+    </button>
+  </div>
+
+  <mat-dialog-content class="p-0">
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Título</mat-label>
+        <input matInput formControlName="title" placeholder="Ej. Artículo 1">
+      </mat-form-field>
+
+      <div class="NgxEditor__Wrapper">
+        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+        <ngx-editor [editor]="editor" formControlName="content" placeholder="Escriba aquí..."></ngx-editor>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="p-0">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="submit()">
+      {{ mode === 'EDITING' ? 'Actualizar' : 'Añadir' }}
+    </button>
+  </mat-dialog-actions>
+</div>

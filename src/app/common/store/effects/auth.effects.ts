@@ -9,6 +9,7 @@ import {
   endLogoutAction,
   logoutAction,
   createUserLogin,
+  loadLogedUser,
 } from '../actions';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services';
@@ -49,7 +50,7 @@ export class AuthEffects {
         .pipe(
           map(res => {
             const user = res as IUser & { token: string };
-            return logedUserLoaded(user, user.token); 
+            return logedUserLoaded(user, user.token);
           }),
           catchError(() => of({ type: LOGIN_ERROR }))
         )
@@ -73,13 +74,35 @@ export class AuthEffects {
     )
   });
 
+  loadLogedUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(loadLogedUser),
+      exhaustMap(() => this.authService.getLogedUser()
+        .pipe(
+          map(res => {
+            const user = res as IUser & { token: string };
+            return logedUserLoaded(user, user.token);
+          }),
+          catchError(() => of({ type: LOGIN_ERROR }))
+        )
+      )
+    )
+  });
+
   logoutUser$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(logoutAction),
-      map(() => {
-        this.router.navigate([FRONT_ROUTE_TOKEN_AUTH_URL]);
-        return endLogoutAction();
-      })
+      exhaustMap(() =>
+        this.authService.logout().pipe(
+          // Best-effort: local logout must proceed even if the API call fails
+          // (e.g. the refresh token was already expired/revoked).
+          catchError(() => of(null)),
+          map(() => {
+            this.router.navigate([FRONT_ROUTE_TOKEN_AUTH_URL]);
+            return endLogoutAction();
+          }),
+        )
+      )
     )
   });
 }

@@ -1,4 +1,5 @@
 @use "../variables" as *;
+@use "@angular/material" as mat;
 
 html {
   .mat-secondary {
@@ -19,7 +20,11 @@ html {
     }
   }
 
-  // style
+    .mat-success {
+      .mdc-linear-progress__bar-inner {
+        border-color: $success !important;
+      }
+    }
 
   .mdc-linear-progress__buffer,
   .mdc-linear-progress__bar-inner {

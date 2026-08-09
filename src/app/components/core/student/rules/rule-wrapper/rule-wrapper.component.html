@@ -1,0 +1,77 @@
+@if(mode === 'CREATING'){
+  <mat-card class="cardWithShadow">
+    <mat-card-content>
+      <form [formGroup]="locateRuleForm">
+        <div class="d-flex row m-b-30 justify-content-between align-items-end">
+          <div class="col-lg-3">
+            <label id="example-radio-group-label" class="f-w-600 d-block f-s-14">¿Es una norma legislativa?</label>
+            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" id="isLegalRule"
+              name="isLegalRule" required formControlName="isLegalRule">
+              <mat-radio-button class="example-radio-button" color="primary" [value]="true">
+                Sí
+              </mat-radio-button>
+              <mat-radio-button class="example-radio-button" color="primary" [value]="false">
+                No
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="col-lg-3">
+            <label id="example-radio-group-label" class="f-w-600 d-block f-s-14">¿Publicada en el BOE?</label>
+            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" id="inBOE"
+              name="inBOE" required formControlName="inBOE">
+              <mat-radio-button class="example-radio-button" color="primary" [value]="true">
+                Sí
+              </mat-radio-button>
+              <mat-radio-button class="example-radio-button" color="primary" [value]="false">
+                No
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="col-lg-3">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Código BOE</mat-label>
+              <input type="text" placeholder="Buscar por código" aria-label="Buscar por código" matInput id="type"
+                required name="type" formControlName="ruleCodeControl" />
+              <mat-hint> Estructura típica: BOE-A-2015-10565</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 justify-content-end d-flex">
+            @if(boeRuleLocated() === true || alreadyExists() === true) {
+                        <button mat-flat-button class="bg-error text-white" (click)="cleanForm()">
+                          Limpiar
+                        </button>
+            } @else {
+              <button mat-flat-button (click)="seachBoeRule()" [disabled]="!locateRuleForm.valid || !locateRuleForm.get('ruleCodeControl')?.value || boeRuleLocated()">
+                Buscar
+              </button>
+            }
+          </div>
+        </div>
+      </form>
+      @if(alreadyExists()){
+      <div class="row col-xl-12 justify-content-center ">
+        <div class="col-sm-6 col-lg-6">
+          <mat-card class="cardWithShadow">
+            <mat-card-content>
+              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center col-lg-9">
+                  <div class="m-l-16">
+                    <h6 class="m-0 f-w-600 f-s-16">{{ local_data.description }}</h6>
+                    <span class="d-flex align-items-center f-s-14"><i-tabler name="gavel"
+                        class="icon-14 m-r-4"></i-tabler>La norm ya existe</span>
+                  </div>
+                </div>
+                <button mat-flat-button color="primary" class="m-l-auto col-lg-3" (click)="goToRule(local_data.id)">
+                  Detalles </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      }
+    </mat-card-content>
+  </mat-card>
+}
+@if(boeRuleLocated() === true || locateRuleForm.get('isLegalRule')?.value === false || locateRuleForm.get('inBOE')?.value === false || mode === 'EDITING'){
+  <app-rule-form [rule]="local_data"></app-rule-form>
+}

@@ -1,4 +1,4 @@
-import { FeatureType, IArticle, IExercise, IFieldMode, IFlashcard, IQuestion, IReaction, IRule, IDiagram, ITopic, IVideo } from ".";
+import { FeatureType, IArticle, IExercise, IFieldMode, IFlashcard, IQuestion, IReaction, IRule, IDiagram, ITopic, IVideo, ITest } from ".";
 
 export interface DialogData {
   action: string;
@@ -15,7 +15,7 @@ export interface ReactionResponse {
 export interface CreateDialogData {
   feature: FeatureType;
   articlesIds: number[];
-  element?: IVideo | IFlashcard | IQuestion | IDiagram | IExercise | ITopic | IVideo;
+  element?: IVideo | IFlashcard | IQuestion | IDiagram | IExercise | ITopic | IVideo | ITest;
   mode: IFieldMode;
   rule?: IRule;
   article?: IArticle | null;

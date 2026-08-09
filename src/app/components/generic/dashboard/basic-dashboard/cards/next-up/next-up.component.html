@@ -1,0 +1,34 @@
+@if(!loading){
+<div class="cta">
+  <div class="cta-left">
+    <div class="cta-icon">
+      <i-tabler class="icon-22" name="article"></i-tabler>
+    </div>
+    @if(next){
+    <div class="cta-copy">
+      <div class="cta-eyebrow">Siguiente en tu plan</div>
+      <div class="cta-title">{{ next.article_name }}</div>
+      <div class="cta-sub">{{ next.rule_name }}</div>
+    </div>
+    } @else {
+    <div class="cta-copy">
+      <div class="cta-eyebrow">Siguiente en tu plan</div>
+      <div class="cta-title">¡Vas al día!</div>
+      <div class="cta-sub">No tienes elementos pendientes por ahora</div>
+    </div>
+    }
+  </div>
+  @if(next){
+  <button class="cta-btn" type="button" (click)="goToTopic(next.topic_id)">
+    Continuar estudio
+    <i-tabler class="icon-16" name="arrow-right"></i-tabler>
+  </button>
+  }
+</div>
+} @else {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+}

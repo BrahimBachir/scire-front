@@ -1,0 +1,40 @@
+@if(!loading){
+<mat-card class="cardWithShadow h-100 m-b-0">
+  <mat-card-content>
+    <mat-card-title>Mapa de habilidades</mat-card-title>
+    <mat-card-subtitle>Precisión en tus temas evaluados más recientemente</mat-card-subtitle>
+
+    @if(hasEnoughData){
+    <div class="radar-wrap m-t-16">
+      <svg width="220" height="200" viewBox="0 0 200 180">
+        <polygon class="radar-grid" [attr.points]="guideRing(1)"></polygon>
+        <polygon class="radar-grid" [attr.points]="guideRing(0.66)"></polygon>
+        <polygon class="radar-grid" [attr.points]="guideRing(0.33)"></polygon>
+
+        @for(axis of axisLines; track $index){
+        <line class="radar-axis" [attr.x1]="axis.x1" [attr.y1]="axis.y1" [attr.x2]="axis.x2" [attr.y2]="axis.y2"></line>
+        }
+
+        <polygon class="radar-shape" [attr.points]="shapePoints"></polygon>
+
+        @for(dot of dots; track $index){
+        <circle class="radar-dot" [attr.cx]="dot.x" [attr.cy]="dot.y" r="3"></circle>
+        }
+
+        @for(label of labels; track $index){
+        <text class="radar-label" [attr.x]="label.x" [attr.y]="label.y" [attr.text-anchor]="label.anchor">{{ label.text }}</text>
+        }
+      </svg>
+    </div>
+    } @else {
+    <p class="empty-state m-t-16">Necesitas practicar tests en al menos 3 temas para ver tu mapa de habilidades.</p>
+    }
+  </mat-card-content>
+</mat-card>
+} @else {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+}

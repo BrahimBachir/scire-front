@@ -1,13 +1,10 @@
-.content-container {
+/* .content-container {
     overflow: hidden;
     transition: max-height 0.3s ease-out;
     position: relative;
 
     &.collapsed {
         max-height: 100px;
-        /* Adjust this value to your preferred "compressed" height */
-
-        // Optional: Add a fade-out effect at the bottom
         &::after {
             content: '';
             position: absolute;
@@ -18,4 +15,4 @@
             background: linear-gradient(transparent, white);
         }
     }
-}
+} */

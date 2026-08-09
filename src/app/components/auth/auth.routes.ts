@@ -5,7 +5,7 @@ import { AppForgotPasswordComponent } from './forgot-password/forgot-password.co
 import { AppLoginComponent } from './login/login.component';
 import { AppRegisterComponent } from './register/register.component';
 import { AppTwoStepsComponent } from './two-steps/two-steps.component';
-import { FRONT_ROUTE_TOKEN_AUTH_LOGIN, FRONT_ROUTE_TOKEN_EMPTY } from 'src/app/common/config';
+import { FRONT_ROUTE_TOKEN_EMPTY } from 'src/app/common/config';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { SemiAuthGuard } from 'src/app/common/guards';
 import { MinimumAccountComponent } from './account/min-account.component';
@@ -51,7 +51,7 @@ export const AuthRoutes: Routes = [
         path: 'profile/:code',
         component: MinimumAccountComponent,
         canActivate: [SemiAuthGuard],
-      }
+      },
     ],
   },
 ];

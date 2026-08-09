@@ -4,4 +4,6 @@
       <p>{{ paragraph['#text'] }}</p>
     }
   </div>
+} @else if (content) {
+  <div  [innerHTML]="content | safeHtml"></div>
 }

@@ -41,10 +41,10 @@ export class ResponseInterceptor implements HttpInterceptor {
                   timeOut: 3000,
                 });
                 break;
-              case 401: //Unauthorized 
-                if (error.error.message.startsWith('ERROR_012')) {
-                  this.store.dispatch(logoutAction());
-                }
+              case 401: //Unauthorized
+                // refreshInterceptor now owns 401 handling (retry-with-refreshed-token,
+                // then logout only if the refresh itself fails) - don't dispatch logout
+                // here too, or a request mid-refresh would get logged out prematurely.
                 this.toaster.error(`${error.error.message}`, ERROR, {
                   timeOut: 3000,
                 });

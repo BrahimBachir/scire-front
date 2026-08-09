@@ -1,0 +1,102 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    @if(loading){
+    <div class="d-flex w-100 h-40 justify-content-center align-items-center">
+      <mat-spinner></mat-spinner>
+    </div>
+    } @else {
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-xl-12">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <input type="text" placeholder="Nombre de la norma" aria-label="Nombre de la norma" matInput
+              id="description" equired name="description" formControlName="description" />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Código</mat-label>
+            <input type="text" placeholder="Código de la norma" aria-label="Código de la norma" matInput id="code"
+              required name="code" formControlName="code" />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <rule-type-filter formControlName="typeId"></rule-type-filter>
+        </div>
+        <div class="col-lg-3">
+          <rule-ambit-filter formControlName="ambitId"></rule-ambit-filter>
+        </div>
+        <div class="col-lg-3">
+          <rule-gazette-filter formControlName="gazetteId"></rule-gazette-filter>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Última actualización</mat-label>
+            <input matInput [matDatepicker]="updateDate" formControlName="updateDate" placeholder="DD/MM/AAAA" />
+            <mat-datepicker-toggle matIconSuffix [for]="updateDate"></mat-datepicker-toggle>
+            <mat-datepicker #updateDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Fecha publicación</mat-label>
+            <input matInput [matDatepicker]="enactmentDate" formControlName="enactmentDate" placeholder="DD/MM/AAAA" />
+            <mat-datepicker-toggle matIconSuffix [for]="enactmentDate"></mat-datepicker-toggle>
+            <mat-datepicker #enactmentDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Fecha de vigencia</mat-label>
+            <input matInput [matDatepicker]="effectiveDate" formControlName="effectiveDate" placeholder="DD/MM/AAAA" />
+            <mat-datepicker-toggle matIconSuffix [for]="effectiveDate"></mat-datepicker-toggle>
+            <mat-datepicker #effectiveDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3">
+          <mat-slide-toggle id="internal" name="internal" class="w-100"
+            formControlName="internal">¿Interno?</mat-slide-toggle>
+        </div>
+        <div class="col-lg-3">
+          <mat-slide-toggle id="repealed" name="repealed" class="w-100"
+            formControlName="repealed">¿Derogada?</mat-slide-toggle>
+        </div>
+      </div>
+      <!-- ARTICLES INPUT -->
+      @if(rule?.fromBOE){
+        <div class="col-xl-12 m-t-15 p-x-0">
+          <mat-form-field  appearance="outline" class="w-100">
+            <mat-label>Artículos de la norma</mat-label>
+            <mat-chip-grid disabled #formChip aria-label="Enter keywords">
+              @for (article of boeIndexArray.controls; track article.value.id) {
+                <mat-chip-row>
+                  {{ article.value.titulo }}
+                  <button matChipRemove aria-label="'remove ' + keyword">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip-row>
+              }
+              <input placeholder="Añadir elemento..." [matChipInputFor]="formChip" />
+            </mat-chip-grid>
+          </mat-form-field>
+        </div>
+    } @else {
+      <app-rule-articles [articles]="articlesArray" ></app-rule-articles>
+    }
+  </form>
+    <div class="row justify-content-between p-x-15">
+      <div>
+        @if(error){
+          <mat-error class="f-s-12 m-t-10">
+            {{ error }}
+          </mat-error>
+        }
+      </div>
+      <button  mat-flat-button (click)="submit()" [disabled]="!form.valid">
+        Guardar
+      </button>
+    </div>
+    }
+  </mat-card-content>
+</mat-card>

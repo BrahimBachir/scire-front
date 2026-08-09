@@ -20,11 +20,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
 import { NavService } from 'src/app/services/nav.service';
-import { ICourse } from 'src/app/common/models/interfaces';
+import { ICourse, IPlan } from 'src/app/common/models/interfaces';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/common/store/app.store';
 import { selectChoosenCourse } from 'src/app/common/store/selectors/learning.selectors';
 import { IconModule } from 'src/app/icon/icon.module';
+import { selectUserActivePlan } from 'src/app/common/store/selectors';
+import { Planes } from 'src/app/common/enums/planes.enum';
 
 @Component({
   selector: 'app-nav-item',
@@ -52,6 +54,8 @@ export class AppNavItemComponent implements OnChanges {
   route: string = '';
   selectedCourse!: ICourse | null;
 
+  plan: IPlan | undefined;
+
   constructor(
     public navService: NavService,
     public router: Router,
@@ -60,6 +64,12 @@ export class AppNavItemComponent implements OnChanges {
     if (this.depth === undefined) {
       this.depth = 0;
     }
+
+    this.store.select(selectUserActivePlan).subscribe({
+      next: (plan) => {
+        this.plan = plan;
+      },
+    });
   }
 
   ngOnChanges() {
@@ -75,8 +85,18 @@ export class AppNavItemComponent implements OnChanges {
     })
   }
 
+  isLocked(item: NavItem): boolean {
+    if (!item.requiresPlan || !item.requiresPlan.length) return false;
+    return !this.plan || !item.requiresPlan.includes(this.plan.code as Planes);
+  }
+
   onItemSelected(item: NavItem) {
     if(item.disabled) return;
+    if (this.isLocked(item)) {
+      const baseRoleUrl = this.router.url.split('/')[1];
+      this.router.navigate([`${baseRoleUrl}/pricing`]);
+      return;
+    }
     this.createRoute(item)
     if (!item.children || !item.children.length) this.router.navigate([this.route]);
     if (item.children && item.children.length) this.expanded = !this.expanded;
@@ -117,7 +137,15 @@ export class AppNavItemComponent implements OnChanges {
 
     const baseRoleUrl = currentUrl.split('/')[1];
     if (item.type && item.type === 'GEN') this.route = `/${baseRoleUrl}/${item.route}`;
-    else if (this.selectedCourse && this.selectedCourse?.id) this.route = `/${baseRoleUrl}/${item.route?.replace(':courseId', this.selectedCourse?.id.toString())}`;
+    else if (this.selectedCourse && this.selectedCourse?.id) {
+      this.route = `/${baseRoleUrl}/${item.route?.replace(':courseId', this.selectedCourse?.id.toString())}`;
+      if (item.route?.includes('dashboard') && this.plan) {
+        if (this.plan.code === 'BRONZE')
+          this.route = this.route + '/basic';
+        else
+          this.route = this.route + '/advanced';
+      }
+    }
   }
 
 }

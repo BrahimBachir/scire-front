@@ -50,7 +50,8 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { SPANISH_DATE_FORMATS } from './common/config/constants';
 import { MyPaginatorIntl } from './services';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import { dateInterceptor } from './common/interceptors';
+import { dateInterceptor, refreshInterceptor } from './common/interceptors';
+import { provideAppIllustrations } from './illustrations/providers/illustrations-app.provider';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -59,6 +60,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimationsAsync(), // required animations providers
+    provideAppIllustrations(),
     provideToastr(), // Toastr providers
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHighlightOptions({
@@ -82,7 +84,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withInterceptorsFromDi()),
     provideHttpClient(
-      withInterceptors([dateInterceptor])
+      withInterceptors([dateInterceptor, refreshInterceptor])
     ),
     provideStoreDevtools({
       maxAge: 25,

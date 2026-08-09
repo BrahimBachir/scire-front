@@ -37,8 +37,8 @@ export class LegislationService {
     );
   }
 
-  public getMetadata(queryingDto?: IQueryingDto): Observable<IMetadataSource | IRule> {
-    return this.http.get<IMetadataSource | IRule>(
+  public getMetadata(queryingDto?: IQueryingDto): Observable<IRule> {
+    return this.http.get<IRule>(
       environment.api_base_url + this.routes.api.rule.metadata.replace(':ruleCode', queryingDto?.ruleCode || '')
     );
   }

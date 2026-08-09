@@ -1,0 +1,12 @@
+mat-chip-grid {
+  max-height: 80px;          //Adjust this value to your preferred height
+  //height: 80px;              // Adjust this value to your preferred height
+  overflow-y: auto;          // Enable vertical scrolling
+  overflow-x: hidden;        // Prevent horizontal scrolling
+  padding-bottom: 4px;       // Small gap so chips don't touch the border
+}
+
+.mat-mdc-chip-grid {
+  display: flex;
+  align-items: center;
+}

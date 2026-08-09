@@ -1,3 +1,5 @@
+@use '../../../../../../../assets/scss/variables' as *;
+
 /* Allow the chip container to wrap */
 ::ng-deep .mat-mdc-chip-set .mdc-evolution-chip-set__chips {
   max-width: 100%;
@@ -33,13 +35,17 @@
 
 .correct {
   font-weight: bold;
-  color: green;
+  color: $success;
+  border: 2px solid $success;
+  border-radius: 8px;
 }
 
 .error {
   font-weight: bold;
   text-decoration: line-through;
-  color: red;
+  color: $error;
+  border: 2px solid $error;
+  border-radius: 8px;
 }
 
 .actions {

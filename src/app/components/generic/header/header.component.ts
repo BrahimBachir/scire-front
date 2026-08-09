@@ -24,6 +24,7 @@ import { UserMenu } from 'src/app/common/config';
 import { selectLogedIn, selectLogedUser, selectUserActivePlan } from 'src/app/common/store/selectors';
 import { BrandingComponent } from '../branding/branding.component';
 import { IconModule } from 'src/app/icon/icon.module';
+import { Theme, ThemeService } from 'src/app/services/theme.service';
 
 interface profiledd {
   id: number;
@@ -107,6 +108,7 @@ export class HeaderComponent {
     private translate: TranslateService,
     private store: Store<AppState>,
     private router: Router,
+    private themeService: ThemeService,
   ) {
     translate.setDefaultLang('es');
   }
@@ -135,6 +137,7 @@ export class HeaderComponent {
 
   setlightDark(theme: string) {
     this.options.theme = theme;
+    this.themeService.setTheme(theme as Theme)
     this.emitOptions();
   }
 

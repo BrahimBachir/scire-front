@@ -1,4 +1,4 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogClose,
@@ -8,12 +8,9 @@ import {
 } from '@angular/material/dialog';
 import { MaterialModule } from 'src/app/material.module';
 import { CreateDialogData, IExercise, IFieldMode } from 'src/app/common/models/interfaces';
-import { RuleFilterComponent } from 'src/app/components/generic/filters/rule/rule-filter.component';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { finalize } from 'rxjs';
-import { AppState } from 'src/app/common/store/app.store';
-import { Store } from '@ngrx/store';
 import { IconModule } from 'src/app/icon/icon.module';
 import { ExerciseStrategy } from 'src/app/strategies';
 import { ExerciceTypeFilterComponent } from 'src/app/components/generic/filters/exercise-type/exercise-type-filter.component';
@@ -40,8 +37,6 @@ import { QuestionTypeFilterComponent } from 'src/app/components/generic/filters/
   ]
 })
 export class ExerciseDialogComponent {
-  //private store = inject(Store<AppState>);
-
   form!: FormGroup;
   loading = false;
   error: string | null = null;
@@ -77,7 +72,4 @@ export class ExerciseDialogComponent {
   }
 
   submit!: () => void;
-
-  ngOnDestroy() {
-  }
 }

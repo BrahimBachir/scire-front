@@ -1,4 +1,5 @@
 import { Component, effect, inject, Input, model } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -22,14 +23,13 @@ import { VideoDialogComponent } from '../video/dialog/video-dialog.component';
     IconModule,
     MatDividerModule,
     MatTooltipModule,
-    PlanFilterPipe
+    PlanFilterPipe,
+    AsyncPipe,
   ],
   templateUrl: './create-generic-element.component.html',
-  styleUrl: './create-generic-element.component.scss'
-
+  styleUrl: './create-generic-element.component.scss',
 })
 export class AppCreateGenericElementComponent {
-  @Input() rule!: IRule;
   @Input() article!: IArticle | null;
   entityToCreate = model<string>('');
   mode: IFieldMode = 'CREATING';
@@ -37,7 +37,7 @@ export class AppCreateGenericElementComponent {
   courseId: number = 0;
   addElementsActions = ADD_ELEMENTS_ACTIONS;
 
-  private dialog = inject(MatDialog)
+  private dialog = inject(MatDialog);
 
   featureToCreate: string = '';
 
@@ -45,7 +45,8 @@ export class AppCreateGenericElementComponent {
     private router: Router,
     private activatedRouter: ActivatedRoute,
   ) {
-    this.courseId = Number(activatedRouter?.snapshot?.paramMap?.get('courseId')) || 0;
+    this.courseId =
+      Number(activatedRouter?.snapshot?.paramMap?.get('courseId')) || 0;
 
     effect(() => {
       const entity = this.entityToCreate();
@@ -53,7 +54,7 @@ export class AppCreateGenericElementComponent {
       if (entity) {
         this.openDialog(entity);
       }
-    })
+    });
   }
 
   openDialog(feature: string) {
@@ -64,72 +65,75 @@ export class AppCreateGenericElementComponent {
 
     if (feature === 'AI') {
       this.createAIElement();
-      return
+      return;
     }
 
     if (feature === 'VIDEO') {
       this.createVideo();
-      return
+      return;
     }
 
-
     this.featureToCreate = feature;
-    console.log("Feature to create: ", feature)
-    const dialogRef = this.dialog.open(CreateGenericElementDialogComponent, {
+    this.dialog.open(CreateGenericElementDialogComponent, {
       width: '900px',
       data: {
         action: 'CREAR',
         mode: 'CREATING',
-        ruleId: this.rule.id,
+        ruleId: this.article?.ruleId,
         feature,
-        //rule: this.rule,
         articlesIds: this.article ? [this.article.id] : [],
       },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log("Result: ", result)
     });
   }
 
   createDiagram() {
-    this.router.navigate([`${this.activatedRouter?.snapshot.data['role'].toLowerCase()}/diagrams/create`], {
-      state: {
-        ruleId: this.rule.id,
-        articlesIds: [this.article?.id],
-        mode: 'CREATING'
-      }
-    });
+    this.router.navigate(
+      [
+        `${this.activatedRouter?.snapshot.data['role'].toLowerCase()}/diagrams/create`,
+      ],
+      {
+        state: {
+          ruleId: this.article?.ruleId,
+          articlesIds: [this.article?.id],
+          mode: 'CREATING',
+        },
+      },
+    );
   }
 
   createAIElement() {
     const dialogRef = this.dialog.open(AIDialogComponent, {
       width: '900px',
       data: {
-        ruleId: this.rule?.id,
+        ruleId: this.article?.ruleId,
         articlesIds: this.article ? [this.article.id] : [],
       },
     });
 
     dialogRef.afterClosed().subscribe((diagram) => {
-      if(diagram && diagram.snippet)
-        this.router.navigate([`${this.activatedRouter?.snapshot.data['role'].toLowerCase()}/diagrams/create`], {
-          state: {
-            ruleId: diagram.ruleId,
-            articlesIds: [diagram.articlesIds],
-            mode: 'CREATING',
-            element: diagram,
-            fromAI: true
-          }
-        });
+      if (diagram && diagram.snippet)
+        this.router.navigate(
+          [
+            `${this.activatedRouter?.snapshot.data['role'].toLowerCase()}/diagrams/create`,
+          ],
+          {
+            state: {
+              ruleId: diagram.ruleId,
+              articlesIds: diagram.articlesIds,
+              mode: 'CREATING',
+              element: diagram,
+              fromAI: true,
+            },
+          },
+        );
     });
   }
 
-  createVideo(){    
+  createVideo() {
     const dialogRef = this.dialog.open(VideoDialogComponent, {
       width: '900px',
       data: {
-        ruleId: this.rule?.id,
+        ruleId: this.article?.ruleId,
         mode: 'CREATING',
         articleId: this.article?.id,
       },
@@ -139,5 +143,4 @@ export class AppCreateGenericElementComponent {
       console.log(video);
     });
   }
-
 }

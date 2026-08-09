@@ -1,109 +1,142 @@
 <mat-card class="cardWithShadow">
   <mat-card-content>
-    <div class="row justify-content-between gap-16">
-      <div class="col-lg-4">
-        <mat-form-field appearance="outline" class="w-100 hide-hint">
-          <input matInput placeholder="Buscar test" (keyup)="applyFilter($any($event.target).value)" />
-          <mat-icon matSuffix>
-            <i-tabler name="search" class="icon-20 d-flex m-t-2"></i-tabler>
-          </mat-icon>
-        </mat-form-field>
-      </div>
-      <div class="col-lg-4 d-flex align-items-center justify-content-end">
-        <!-- add employee -->
-        <button mat-flat-button (click)="openDialog('Add', {})" color="primary">
-          Crear test
-        </button>
-      </div>
-    </div>
+    <app-filters-orchestrator
+      [config]="filtersConfig"
+      (filtersChange)="onFiltersChanged($event)"
+      [options]="filterOptions"
+    >
+    </app-filters-orchestrator>
   </mat-card-content>
 </mat-card>
-<mat-card class="cardWithShadow">
+<mat-card class="cardWithShadow m-b-0">
+  <mat-card-header class="b-b-1 justify-content-end">
+    <button
+      mat-mini-fab
+      class="bg-secondary text-white m-r-10"
+      [matTooltip]="'BUTTONS.CREATE.SIMULATOR' | translate"
+      [aria-label]="'BUTTONS.CREATE.SIMULATOR' | translate"
+      (click)="goToSimulator()"
+    >
+      <i-tabler name="file-text-spark" class="icon-20 d-flex"></i-tabler>
+    </button>
+    <button
+      mat-mini-fab
+      class="bg-primary text-white"
+      [matTooltip]="'BUTTONS.CREATE.TEST' | translate"
+      [aria-label]="'BUTTONS.CREATE.TEST' | translate"
+      (click)="create()"
+    >
+      <i-tabler name="plus" class="icon-20 d-flex"></i-tabler>
+    </button>
+  </mat-card-header>
   <mat-card-content>
     <div class="table-responsive">
       <table mat-table [dataSource]="dataSource" class="w-100">
         <ng-container matColumnDef="id">
-          <th *matHeaderCellDef  class="f-s-16 f-w-600"> ID </th>
-          <td *matCellDef="let test"> {{test.id}} </td>
+          <th *matHeaderCellDef class="f-s-16 f-w-600">ID</th>
+          <td *matCellDef="let test">{{ test.id }}</td>
         </ng-container>
         <ng-container matColumnDef="type">
-          <th *matHeaderCellDef  class="f-s-16 f-w-600"> Tipo </th>
-          <td *matCellDef="let test"> {{test.type.toUpperCase()}} </td>
+          <th *matHeaderCellDef class="f-s-16 f-w-600">Tipo</th>
+          <td *matCellDef="let test">
+            {{ test.type ? test.type.description : 'Sin tipo' }}
+          </td>
         </ng-container>
 
-        <ng-container matColumnDef="numQuestions">
-          <th *matHeaderCellDef  class="f-s-16 f-w-600"> Total preguntas </th>
-          <td *matCellDef="let test"> {{test.numQuestions}} </td>
+        <ng-container matColumnDef="num_questions">
+          <th *matHeaderCellDef class="f-s-16 f-w-600">Preguntas</th>
+          <td *matCellDef="let test">{{ test.num_questions }}</td>
         </ng-container>
 
         <ng-container matColumnDef="correct">
-          <th *matHeaderCellDef  class="f-s-16 f-w-600"> Correctas </th>
-          <td *matCellDef="let test"> {{test.corrctAnswers }} </td>
+          <th *matHeaderCellDef class="f-s-16 f-w-600">Correctas</th>
+          <td *matCellDef="let test">{{ test.corrct_answers }}</td>
         </ng-container>
 
         <ng-container matColumnDef="wrong">
-          <th *matHeaderCellDef  class="f-s-16 f-w-600"> Incorrectas </th>
-          <td *matCellDef="let test"> {{test.wrongAnswers }} </td>
+          <th *matHeaderCellDef class="f-s-16 f-w-600">Incorrectas</th>
+          <td *matCellDef="let test">{{ test.wrong_answers }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="notAnswered">
-          <th *matHeaderCellDef  class="f-s-16 f-w-600"> Sin contestar </th>
-          <td *matCellDef="let test"> {{test.notAnswered }} </td>
+        <ng-container matColumnDef="not_answered">
+          <th *matHeaderCellDef class="f-s-16 f-w-600">Sin contestar</th>
+          <td *matCellDef="let test">{{ test.not_answered }}</td>
         </ng-container>
 
+        <!-- TODO: Cambiar el 15 por el número mínumo para pasar que determina el ejercicio asociado con el test -->
         <ng-container matColumnDef="score">
-          <th *matHeaderCellDef  class="f-s-16 f-w-600"> Nota </th>
-          <td *matCellDef="let test" [ngClass]="{
-                'correct': test.score >= 15,
-                'incorrect': test.score < 15
-                }"> {{ test.score | number:'1.2-2' }} </td>
+          <th *matHeaderCellDef class="f-s-16 f-w-600">Nota</th>
+          <td
+            *matCellDef="let test"
+            [ngClass]="{
+              'text-success': test.score >= test?.exercise?.pointsToPass,
+              'text-error': test.score < test?.exercise?.pointsToPass,
+            }"
+          >
+            {{ test.score | number: '1.2-2' }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="date">
-          <th *matHeaderCellDef  class="f-s-16 f-w-600"> Fecha </th>
-          <td *matCellDef="let test"> {{ test.date | date:'dd/MM/yy' }} </td>
+          <th *matHeaderCellDef class="f-s-16 f-w-600">Fecha</th>
+          <td *matCellDef="let test">{{ test.date | date: 'dd/MM/yy' }}</td>
         </ng-container>
         <ng-container matColumnDef="status">
-          <th *matHeaderCellDef> Estado </th>
+          <th *matHeaderCellDef>Estado</th>
           <td *matCellDef="let test">
-            <span [style.color]="test.completed ? 'green' : 'orange'">
-              {{ test.completed ? 'Completado' : 'Pendiente' }}
+            <span
+              [ngClass]="
+                test.not_answered === test.num_questions
+                  ? 'text-error'
+                  : test.completed
+                    ? 'text-success'
+                    : 'text-warning'
+              "
+            >
+              {{
+                test.not_answered === test.num_questions
+                  ? 'Pendiente'
+                  : test.completed
+                    ? 'Completado'
+                    : 'En curso'
+              }}
             </span>
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="category">
-          <th *matHeaderCellDef  class="f-s-16 f-w-600"> Categoría </th>
-          <td *matCellDef="let test"> {{ test.topic?.section?.category?.name }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="section">
-          <th *matHeaderCellDef> Sección </th>
-          <td *matCellDef="let test"> {{ test.topic?.section?.name }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="topic">
-          <th *matHeaderCellDef  class="f-s-16 f-w-600"> Tema </th>
-          <td *matCellDef="let test"> {{ test.topic?.name }} </td>
-        </ng-container>
-
         <ng-container matColumnDef="actions">
-          <th th *matHeaderCellDef class="f-s-16 f-w-600">
-            Action
-          </th>
+          <th th *matHeaderCellDef class="f-s-16 f-w-600">Action</th>
           <td td *matCellDef="let element" class="action-link">
-            <a (click)="openDialog('Update', element)" class="m-r-10 cursor-pointer"><i-tabler name="edit"
-                class="icon-18"></i-tabler></a>
-            <a (click)="openDialog('Delete', element)" class="cursor-pointer">
-              <i-tabler name="trash" class="icon-18"></i-tabler>
-            </a>
+            @if (element.completed) {
+              <a (click)="goToDetails(element.id)" class="m-r-10 cursor-pointer"
+                ><i-tabler name="chart-bar-popular" class="icon-18"></i-tabler
+              ></a>
+            } @else {
+              <a (click)="resume(element.id)" class="m-r-10 cursor-pointer"
+                ><i-tabler name="player-play" class="icon-18"></i-tabler
+              ></a>
+            }
+            <a (click)="edit(element)" class="m-r-10 cursor-pointer"
+              ><i-tabler name="edit" class="icon-18"></i-tabler
+            ></a>
+            <a (click)="remove(element.id)" class="cursor-pointer"
+              ><i-tabler name="trash" class="icon-18"></i-tabler
+            ></a>
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      <mat-paginator
+        #paginator
+        [pageSize]="pageSize"
+        [length]="length"
+        [pageSizeOptions]="pageSizeOptions"
+        [showFirstLastButtons]="true"
+        class="b-t-1 p-x-48"
+        (page)="onPageChange($event)"
+      ></mat-paginator>
     </div>
   </mat-card-content>
 </mat-card>

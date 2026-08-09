@@ -1,0 +1,61 @@
+@if(!loading){
+<div class="row">
+  <div class="col-lg-6 col-sm-6">
+    <mat-card class="shadow-none b-1 rounded h-100 m-b-0">
+      <mat-card-content>
+        <mat-card-title>Temas</mat-card-title>
+        <mat-card-subtitle>Porcentaje de progreso de cada tema</mat-card-subtitle>
+        <div class=" topics-container b-1 rounded p-x-10 p-b-15">
+          @for(topic of progress; track topic.topicId){
+          <div [matTooltip]="topic.topicDescription" class="d-flex flex-col gap-4 m-t-16">
+            <div class="d-flex justify-content-between m-b-4">
+              <span class="f-s-16 f-w-500">{{ topic.topicName }}</span>
+              <span class="f-s-16 f-w-500">{{ topic.topicProgress }}%</span>
+            </div>
+            <mat-progress-bar
+              class="{{topic.topicProgress === 100 ? 'mat-success' : topic.topicProgress > 80 ? 'mat-warning' : 'mat-error'}}"
+              mode="determinate" [value]="topic.topicProgress"></mat-progress-bar>
+          </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-lg-6 col-sm-6">
+    <mat-card class="shadow-none b-1 rounded h-100 m-b-0">
+      <mat-card-content>
+        <div class="col-lg-12 col-sm-6 p-x-0 m-b-15">
+          <mat-card class="shadow-none b-1 rounded h-100 m-b-0">
+            <mat-card-content>
+              <mat-card-title>Situación</mat-card-title>
+              <mat-card-subtitle>¿Estás listo para el examen?</mat-card-subtitle>
+              <p>Estrategia responder todo:</p>
+              <div class="col-lg-12 col-sm-6 p-x-0 m-b-15">
+
+              </div>
+              <p>Estrategia "responder lo que sé":</p>
+              <div class="col-lg-12 col-sm-6 p-x-0 m-b-15">
+
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-lg-12 col-sm-6 p-x-0">
+          <mat-card class="shadow-none b-1 rounded h-100 m-b-0">
+            <mat-card-content>
+              <mat-card-title>Cuenta atrás</mat-card-title>
+              <mat-card-subtitle>Elementos de estudio / tiempo</mat-card-subtitle>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+} @else {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+}

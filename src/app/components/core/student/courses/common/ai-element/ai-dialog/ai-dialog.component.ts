@@ -1,4 +1,4 @@
-import { Component, effect, Inject, inject, Injector, model, Type } from '@angular/core';
+import { Component, Inject, inject, Injector, Type } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogClose,
@@ -10,13 +10,12 @@ import { MaterialModule } from 'src/app/material.module';
 import { CREATE_STRATEGY_MAP, CreateDialogData, FEATURE_COMPONENT_MAP, FeatureType, GenericFeatureType, IFieldMode, IFlashcard, IQuestion, IRule, IDiagram } from 'src/app/common/models/interfaces';
 import { RuleFilterComponent } from 'src/app/components/generic/filters/rule/rule-filter.component';
 import { AppMultiSelectComponent } from 'src/app/components/generic/reusable/multi-select/multi-select.component';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { finalize, Subject, takeUntil } from 'rxjs';
-import { AIStrategy, FeatureStrategy, QuestionStrategy, FlashcardStrategy, NoteStrategy, VideoStrategy } from 'src/app/strategies';
+import { finalize, Subject } from 'rxjs';
+import { AIStrategy, FeatureStrategy, QuestionStrategy, FlashcardStrategy } from 'src/app/strategies';
 import { AppState } from 'src/app/common/store/app.store';
 import { Store } from '@ngrx/store';
-import { getSelectedRule } from 'src/app/common/store/selectors/learning.selectors';
 import { IconModule } from 'src/app/icon/icon.module';
 import { AiFormComponent } from '../ai-element-create.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -48,8 +47,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AIDialogComponent {
   private store = inject(Store<AppState>);
-  /* private router = inject(Router);
-  private activatedRouter = inject(ActivatedRoute); */
   private destroy$ = new Subject<void>();
 
   form!: FormGroup;

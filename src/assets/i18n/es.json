@@ -110,7 +110,24 @@
     "CREATE": "Crear",
     "DELETE": "Eliminar",
     "EDIT": "Editar",
-    "VIEW": "Ver"
+    "VIEW": "Ver",
+    "NEXT": "Sigueinte",
+    "PREVIOUS": "Anterior",
+    "NEXT_UNANSWERED": "Siguiente sin responder",
+    "PREVIOUS_UNANSWERED": "Anterior sin responder",
+    "PLAY": "Reproducir",
+    "PAUSE": "Pausar",
+    "STOP": "Detener",
+    "FINISH": "Finalizar",
+    "SAVE": "Guardar",
+    "CANCEL": "Cancelar",
+    "START": "Iniciar",
+    "END": "Finalizar",
+    "SUBMIT": "Enviar",
+    "RESET": "Reiniciar",
+    "CLOSE": "Cerrar",
+    "RESUME": "Reanudar",
+    "MARK_FOR_REVIEW": "Marcar para revisión"
   },
   "NOT_FOUND": {
     "NOTES": "No se han encontrado notas"
@@ -122,6 +139,9 @@
     "NOTES": {
       "ALL": "Notas",
       "MY_NOTES": "Mis notas"
+    },
+    "TEST": {
+      "QUESTIONS": "Preguntas"
     }
   },
   "LABELS": {
@@ -139,6 +159,13 @@
       "CATEGORY": "Categoría",
       "SECTION": "Sección",
       "ACTIONS": "Acciones"
+    },
+    "ARTICLE": {
+      "TITLE": "Título",
+      "CONTENT": "Contenido",
+      "ACTIONS": "Acciones"
+    },
+    "TEST": {
     }
   },
   "BUTTONS": {
@@ -150,8 +177,10 @@
       "DIAGRAM": "Crear diagrama",
       "AI": "Crear elemento con AI",
       "MODULE": "Crear módulo",
+      "TEST": "Crear examen",
       "COURSE": "Crear curso",
-      "COMMENT": "Crear comentario"
+      "COMMENT": "Crear comentario",
+      "SIMULATOR": "Ir al simulador"
     },
     "EDIT": {
       "NOTES": "Editar nota",

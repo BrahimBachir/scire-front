@@ -24,8 +24,9 @@
               <mat-card-title class="m-b-0 f-s-16">
                 {{ rule.ambit?.description }}
               </mat-card-title>
-              <span class="d-flex align-items-center gap-4 f-s-14"><i-tabler name="clock" class="icon-16 d-flex"></i-tabler>{{
-                rule?.readingTime || 0 }}</span>
+              <span class="d-flex align-items-center gap-4 f-s-14"><i-tabler name="clock"
+                  class="icon-16 d-flex"></i-tabler>{{
+                (rule?.readingTime ?? 0) | formatTime }}</span>
             </div>
             <mat-card-content class="text-center rule-item">
               <h3 class="m-b-4 f-s-16 f-w-600">
@@ -34,27 +35,29 @@
               <span class="f-s-12">{{ rule.updateDate | date:'dd/MM/yy' }}</span>
             </mat-card-content>
             <mat-divider></mat-divider>
-            <div class="text-center p-y-8 p-x-12">
-              @if( ('COURSE_DELETE' | accessControl) | async ) {
-              <button mat-mini-fab class="cart-btn-overlay bg-error text-white" matTooltip="Delete"
+            <div class="d-flex text-center gap-8 p-y-8 p-x-12">
+              <a mat-button (click)="goToRoute(rule)" class="w-100">
+                Empezar
+              </a>
+              @if( (rule?.creatorId || 0 | myOwnContent) | async ) {
+              <button mat-mini-fab class="cart-btn-overlay bg-error text-white" matTooltip="Borrar"
                 (click)=" deleteRule(rule.id); $event.stopPropagation()">
                 <i-tabler name="trash" class="icon-16 d-flex"></i-tabler>
               </button>
               }
-              @if(('COURSE_EDIT' | accessControl) | async ) {
-              <button mat-mini-fab class="cart-btn-overlay bg-primary text-white" matTooltip="Edit" (click)="editRule(rule)">
+              @if( (rule?.creatorId || 0 | myOwnContent) | async ) {
+              <button mat-mini-fab class="cart-btn-overlay bg-primary text-white" matTooltip="Editar"
+                (click)="editRule(rule.id); $event.stopPropagation()">
                 <i-tabler name="pencil" class="icon-16 d-flex"></i-tabler>
               </button>
               }
-              <a mat-button (click)="goToRoute(rule)" class="w-100">
-                Empezar
-              </a>
             </div>
           </mat-card>
         </div>
         }
-      </div>      
+      </div>
     </ng-scrollbar>
   </mat-card-content>
-  <mat-paginator #paginator [pageSize]="pageSize" [length]="length" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true" class="b-t-1 p-x-48" (page)="onPageChange($event)"></mat-paginator>
+  <mat-paginator #paginator [pageSize]="pageSize" [length]="length" [pageSizeOptions]="pageSizeOptions"
+    [showFirstLastButtons]="true" class="b-t-1 p-x-48" (page)="onPageChange($event)"></mat-paginator>
 </mat-card>
