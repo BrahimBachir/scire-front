@@ -1,0 +1,46 @@
+@if(!loading){
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-card-title>Rendimiento por tema</mat-card-title>
+    <mat-card-subtitle>Distribución de tus respuestas en los temas que ya has practicado</mat-card-subtitle>
+
+    @if(topics.length){
+    <div class="legend-row m-t-16">
+      <span class="legend-item"><span class="legend-swatch correct"></span>Correctas</span>
+      <span class="legend-item"><span class="legend-swatch incorrect"></span>Incorrectas</span>
+      <span class="legend-item"><span class="legend-swatch skipped"></span>Omitidas</span>
+    </div>
+
+    <div class="topics-container">
+      @for(topic of topics; track topic.topicId){
+      <div class="stack-row">
+        <div class="stack-row-head">
+          <span class="stack-name">{{ topic.topicName }}</span>
+          <span class="stack-count">{{ topic.total }} preguntas</span>
+        </div>
+        <div class="stack-track">
+          <div class="stack-seg correct" [style.width.%]="topic.correctPercentage" [title]="'Correctas: ' + topic.correctPercentage + '%'">
+            @if(topic.correctPercentage >= 8){ {{ topic.correctPercentage }}% }
+          </div>
+          <div class="stack-seg incorrect" [style.width.%]="topic.incorrectPercentage" [title]="'Incorrectas: ' + topic.incorrectPercentage + '%'">
+            @if(topic.incorrectPercentage >= 8){ {{ topic.incorrectPercentage }}% }
+          </div>
+          <div class="stack-seg skipped" [style.width.%]="topic.skippedPercentage" [title]="'Omitidas: ' + topic.skippedPercentage + '%'">
+            @if(topic.skippedPercentage >= 8){ {{ topic.skippedPercentage }}% }
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    } @else {
+    <p class="empty-state m-t-16">Todavía no has respondido preguntas en este curso.</p>
+    }
+  </mat-card-content>
+</mat-card>
+} @else {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+}

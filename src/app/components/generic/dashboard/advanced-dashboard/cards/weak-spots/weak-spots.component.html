@@ -1,0 +1,53 @@
+@if(!loading){
+<mat-card class="cardWithShadow h-100 m-b-0">
+  <mat-card-content>
+    <mat-card-title>Mapa de puntos débiles</mat-card-title>
+    @if(weakSpots.rows.length){
+    <mat-card-subtitle>
+      Tus {{ weakSpots.rows.length }} temas con menor precisión (de {{ weakSpots.totalTopicsInCourse }} en el temario), por tipo de prueba
+    </mat-card-subtitle>
+
+    <div class="heat-wrap m-t-16">
+      <table class="heat-table">
+        <thead>
+          <tr>
+            <th>Tema</th>
+            @for(col of columns; track col){
+            <th>{{ columnLabel(col) }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for(row of weakSpots.rows; track row.topicId){
+          <tr>
+            <td class="heat-row-label">{{ row.topicName }}</td>
+            @for(col of columns; track col){
+            <td class="heat-cell status-{{ status(cellAccuracy(row, col)) }}">
+              {{ cellAccuracy(row, col) ?? '—' }}
+            </td>
+            }
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if(weakSpots.totalTopicsInCourse > weakSpots.rows.length){
+    <span class="heat-footer-link">
+      Ver los {{ weakSpots.totalTopicsInCourse }} temas del temario
+      <i-tabler class="icon-14" name="arrow-right"></i-tabler>
+    </span>
+    }
+    } @else {
+    <mat-card-subtitle>Todavía no hay datos de rendimiento en este curso</mat-card-subtitle>
+    <p class="empty-state m-t-16">Responde algunos tests para ver tus puntos débiles por tema.</p>
+    }
+  </mat-card-content>
+</mat-card>
+} @else {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+}

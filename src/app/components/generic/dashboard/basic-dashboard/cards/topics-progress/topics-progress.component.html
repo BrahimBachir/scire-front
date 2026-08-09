@@ -1,0 +1,31 @@
+@if(!loading){
+<mat-card class="cardWithShadow h-100 m-b-0">
+  <mat-card-content>
+    <mat-card-title>Progreso por tema</mat-card-title>
+    <mat-card-subtitle>Basado en los elementos que has marcado para estudiar</mat-card-subtitle>
+    <div class="topics-container m-t-16">
+      @for(topic of progress; track topic.topicId){
+      <div [matTooltip]="topic.topicDescription" class="topic-row">
+        <div class="topic-row-head">
+          <span class="topic-name">
+            <span class="topic-dot {{ status(topic.topicProgress) }}"></span>
+            {{ topic.topicName }} - {{ topic.topicDescription | slice:0:60 }}{{ topic.topicDescription.length > 60 ? '...' : '' }}
+          </span>
+          <span class="topic-pct">{{ topic.topicProgress }}%</span>
+        </div>
+        <mat-progress-bar class="{{ barClass(topic.topicProgress) }}" mode="determinate"
+          [value]="topic.topicProgress"></mat-progress-bar>
+      </div>
+      } @empty {
+      <p class="empty-state">Todavía no hay temas asignados a este curso.</p>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>
+} @else {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+}

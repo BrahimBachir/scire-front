@@ -1,72 +1,48 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import {
-  Router,
-  NavigationEnd,
-  ActivatedRoute,
-  Data,
-  RouterModule,
-} from '@angular/router';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { Router, ActivatedRoute, Data, RouterModule } from '@angular/router';
+import { Observable, Subscription, of, switchMap } from 'rxjs';
 import { CoreService } from 'src/app/services/core.service';
-
-import {
-  ApexChart,
-  ChartComponent,
-  ApexDataLabels,
-  ApexLegend,
-  ApexStroke,
-  ApexTooltip,
-  ApexAxisChartSeries,
-  ApexXAxis,
-  ApexYAxis,
-  ApexGrid,
-  ApexPlotOptions,
-  ApexFill,
-  ApexMarkers,
-  NgApexchartsModule,
-} from 'ng-apexcharts';
 import { Store } from '@ngrx/store';
-import { Breadcrumb, BreadcrumbService } from 'src/app/services';
-import { Observable } from 'rxjs';
+import { Breadcrumb, BreadcrumbService, BasicMetricsService } from 'src/app/services';
 import { CommonModule } from '@angular/common';
-import { ICourse } from 'src/app/common/models/interfaces';
+import { ICourse, IExamReadiness } from 'src/app/common/models/interfaces';
 import { AppState } from 'src/app/common/store/app.store';
+import { selectChoosenCourse } from 'src/app/common/store/selectors/learning.selectors';
+import { selectUserActivePlan } from 'src/app/common/store/selectors';
+import { IconModule } from 'src/app/icon/icon.module';
+import { Planes } from 'src/app/common/enums';
 
-export interface breadcrumbOption {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  dataLabels: ApexDataLabels;
-  plotOptions: ApexPlotOptions;
-  yaxis: ApexYAxis;
-  xaxis: ApexXAxis;
-  fill: ApexFill;
-  tooltip: ApexTooltip;
-  stroke: ApexStroke;
-  legend: ApexLegend;
-  grid: ApexGrid;
-  marker: ApexMarkers;
-}
+type ReadinessStatus = 'ok' | 'mid' | 'low' | 'none';
+
+const READINESS_LABEL: Record<ReadinessStatus, string> = {
+  ok: '¡Listo!',
+  mid: 'Vas bien',
+  low: 'Lejos',
+  none: 'Sin datos',
+};
 
 @Component({
   selector: 'app-breadcrumb',
-  imports: [CommonModule, NgApexchartsModule, RouterModule],
+  imports: [CommonModule, RouterModule, IconModule],
   templateUrl: './breadcrumb.component.html',
-  styleUrls: [],
+  styleUrls: ['./breadcrumb.component.scss'],
 })
-export class AppBreadcrumbComponent {
-  @ViewChild('chart') chart: ChartComponent = Object.create(null);
-  course: ICourse | null;
+export class AppBreadcrumbComponent implements OnInit, OnDestroy {
+  course: ICourse | null = null;
 
   breadcrumbs$: Observable<Breadcrumb[]>;
-  
-  public breadcrumbOption!: Partial<breadcrumbOption> | any;
-  public breadcrumb2Option!: Partial<breadcrumbOption> | any;
-
-  // @Input() layout;
   pageInfo: Data | any = Object.create(null);
 
+  activePlan$ = this.store.select(selectUserActivePlan);
+  readonly Planes = Planes;
+
+  readiness: IExamReadiness[] = [];
+  loadingReadiness = false;
+
   options = this.settings.getOptions();
+
+  private sub = new Subscription();
 
   constructor(
     private settings: CoreService,
@@ -74,158 +50,69 @@ export class AppBreadcrumbComponent {
     private route: ActivatedRoute,
     private titleService: Title,
     private store: Store<AppState>,
-    private bcService: BreadcrumbService
+    private bcService: BreadcrumbService,
+    private metricsService: BasicMetricsService
   ) {
     this.breadcrumbs$ = this.bcService.breadcrumbs$;
-    this.breadcrumbs$.subscribe(bcs => this.pageInfo = bcs[bcs.length-1])
-    this.breadcrumbOption = {
-      series: [
-        {
-          name: '',
-          data: [5, 8, 7, 12, 6, 7, 15, 20],
-        },
-      ],
-      chart: {
-        type: 'bar',
-        width: 70,
-        height: 40,
-        toolbar: {
-          show: false,
-        },
-        sparkline: {
-          enabled: true,
-        },
-      },
-      colors: 'var(--mat-sys-primary)',
-      grid: {
-        show: false,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          borderRadius: 2,
-          columnWidth: '50%',
-          barHeight: '100%',
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 0,
-        colors: ['transparent'],
-      },
-      xaxis: {
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        labels: {
-          show: false,
-        },
-      },
-      yaxis: {
-        labels: {
-          show: false,
-        },
-      },
-      axisBorder: {
-        show: false,
-      },
-      fill: {
-        colors: ['var(--mat-sys-primary)'],
-        opacity: 1,
-      },
-      tooltip: {
-        theme: 'dark',
-        style: {
-          fontFamily: 'inherit',
-        },
-        x: {
-          show: false,
-        },
-        y: {
-          formatter: undefined,
-        },
-      },
-    };
+    this.breadcrumbs$.subscribe((bcs) => (this.pageInfo = bcs[bcs.length - 1]));
+  }
 
-    this.breadcrumb2Option = {
-      series: [
-        {
-          name: '',
-          data: [5, 8, 7, 12, 6, 7, 15, 20],
-        },
-      ],
-      chart: {
-        type: 'bar',
-        width: 70,
-        height: 40,
-        toolbar: {
-          show: false,
-        },
-        sparkline: {
-          enabled: true,
-        },
-      },
-      colors: 'var(--mat-sys-secondary)',
-      grid: {
-        show: false,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          borderRadius: 2,
-          columnWidth: '50%',
-          barHeight: '100%',
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 0,
-        colors: ['transparent'],
-      },
-      xaxis: {
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        labels: {
-          show: false,
-        },
-      },
-      yaxis: {
-        labels: {
-          show: false,
-        },
-      },
-      axisBorder: {
-        show: false,
-      },
-      fill: {
-        colors: ['var(--mat-sys-secondary)'],
-        opacity: 1,
-      },
-      tooltip: {
-        theme: 'dark',
-        style: {
-          fontFamily: 'inherit',
-        },
-        x: {
-          show: false,
-        },
-        y: {
-          formatter: undefined,
-        },
-      },
-    };
+  ngOnInit(): void {
+    this.sub.add(
+      this.store
+        .select(selectChoosenCourse)
+        .pipe(
+          switchMap((course) => {
+            this.course = course;
+            if (!course?.id) {
+              this.readiness = [];
+              return of(null);
+            }
+            this.loadingReadiness = true;
+            return this.metricsService.getReadiness(course.id);
+          })
+        )
+        .subscribe({
+          next: (res) => {
+            this.readiness = res ?? [];
+            this.loadingReadiness = false;
+          },
+          error: () => {
+            this.readiness = [];
+            this.loadingReadiness = false;
+          },
+        })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
+  get readyCount(): number {
+    return this.readiness.filter((r) => r.isReady).length;
+  }
+
+  get readinessStatus(): ReadinessStatus {
+    if (!this.course?.id || this.loadingReadiness || !this.readiness.length) return 'none';
+    if (this.readyCount === this.readiness.length) return 'ok';
+    if (this.readyCount === 0) return 'low';
+    return 'mid';
+  }
+
+  get readinessLabel(): string {
+    return READINESS_LABEL[this.readinessStatus];
+  }
+
+  get readinessDetail(): string {
+    if (!this.course?.id) return 'Selecciona un curso para ver tu preparación';
+    if (this.loadingReadiness) return 'Calculando...';
+    if (!this.readiness.length) return 'Todavía no hay datos de preparación';
+    return `${this.readyCount} de ${this.readiness.length} pruebas superadas`;
+  }
+
+  goToPricing(): void {
+    const baseRoleUrl = this.router.url.split('/')[1];
+    this.router.navigate([`${baseRoleUrl}/pricing`]);
   }
 }

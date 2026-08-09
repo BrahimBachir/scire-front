@@ -1,0 +1,33 @@
+@if(!loading){
+<mat-card class="cardWithShadow h-100 m-b-0">
+  <mat-card-content>
+    <mat-card-title>Última sesión</mat-card-title>
+    @if(last){
+    <mat-card-subtitle>{{ last.article_name }}</mat-card-subtitle>
+    <div class="session-meta">{{ last.rule_name }}</div>
+    <div class="chip-list m-t-16">
+      @for(entry of reviewedEntries; track entry.label){
+      <div class="review-chip">
+        <div class="ico ico-{{ entry.colorClass }}">
+          <i-tabler class="icon-15" name="{{ entry.icon }}"></i-tabler>
+        </div>
+        <div class="rc-text">
+          <div class="rc-title">{{ entry.label }}</div>
+          <div class="rc-time">{{ entry.reviewedAt | date:'dd/MM/yyyy, HH:mm' }}</div>
+        </div>
+      </div>
+      }
+    </div>
+    } @else {
+    <mat-card-subtitle>Todavía no has estudiado ningún elemento</mat-card-subtitle>
+    <p class="empty-state m-t-16">En cuanto empieces a estudiar, verás aquí tu actividad más reciente.</p>
+    }
+  </mat-card-content>
+</mat-card>
+} @else {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+}

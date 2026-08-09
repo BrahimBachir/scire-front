@@ -1,0 +1,93 @@
+.readiness-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 10px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: filter 0.15s ease;
+}
+
+.readiness-badge:hover {
+  filter: brightness(0.97);
+}
+
+.readiness-badge.readiness-disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+.readiness-dot {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border-radius: 50%;
+}
+
+.readiness-ok {
+  background: rgba(44, 208, 126, 0.15);
+}
+
+.readiness-ok .readiness-dot {
+  background: #2cd07e;
+}
+
+.readiness-ok h6 {
+  color: #1a9d5f;
+}
+
+.readiness-mid {
+  background: rgba(246, 192, 0, 0.15);
+}
+
+.readiness-mid .readiness-dot {
+  background: #f6c000;
+}
+
+.readiness-mid h6 {
+  color: #9c7a00;
+}
+
+.readiness-low {
+  background: var(--mat-sys-error-fixed-dim);
+}
+
+.readiness-low .readiness-dot {
+  background: var(--mat-sys-error);
+}
+
+.readiness-low h6 {
+  color: var(--mat-sys-error);
+}
+
+.readiness-none {
+  background: var(--mat-sys-surface-bright);
+}
+
+.readiness-none .readiness-dot {
+  background: var(--mat-sys-surface-container-lowest);
+}
+
+.readiness-none h6 {
+  color: var(--mat-sys-surface-container-lowest);
+}
+
+.upgrade-plan-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--mat-sys-secondary);
+  border: 1px solid var(--mat-sys-secondary);
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.upgrade-plan-btn:hover {
+  background: var(--mat-sys-secondary-fixed-dim);
+}

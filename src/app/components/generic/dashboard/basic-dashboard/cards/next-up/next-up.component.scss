@@ -1,0 +1,85 @@
+:host {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.cta {
+  background: linear-gradient(135deg, var(--mat-sys-primary-fixed-dim), transparent);
+  border: 1px solid var(--mat-sys-primary-fixed-dim);
+  border-radius: var(--mat-sys-corner-small);
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.cta-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.cta-icon {
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border-radius: 12px;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--mat-sys-level1);
+}
+
+.cta-copy {
+  min-width: 0;
+}
+
+.cta-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mat-sys-primary);
+}
+
+.cta-title {
+  font-size: 15.5px;
+  font-weight: 600;
+  margin: 3px 0 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cta-sub {
+  font-size: 13px;
+  color: var(--mat-sys-surface-container-lowest);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--mat-sys-primary);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: var(--mat-sys-corner-small);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cta-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

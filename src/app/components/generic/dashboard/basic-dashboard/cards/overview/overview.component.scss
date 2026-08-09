@@ -1,0 +1,132 @@
+:host {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.hero-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mat-sys-surface-container-lowest);
+}
+
+.hero-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.tile-icon {
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mat-sys-primary);
+}
+
+.bg-primary-tint {
+  background: var(--mat-sys-primary-fixed-dim);
+}
+
+.bg-warning-tint {
+  background: rgba(246, 192, 0, 0.15);
+  color: #9c7a00;
+}
+
+.tile-label {
+  font-size: 12.5px;
+  color: var(--mat-sys-surface-container-lowest);
+  font-weight: 500;
+}
+
+.tile-value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.tile-value-sm {
+  font-size: 18px;
+}
+
+.tile-meta {
+  font-size: 12px;
+  color: var(--mat-sys-surface-container-lowest);
+  margin-top: 2px;
+}
+
+.ring-wrap {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex: none;
+}
+
+.ring-wrap svg {
+  transform: rotate(-90deg);
+}
+
+.ring-track {
+  fill: none;
+  stroke: var(--mat-sys-outline-variant);
+  stroke-width: 6;
+}
+
+.ring-value {
+  fill: none;
+  stroke: var(--mat-sys-primary);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s ease;
+}
+
+.ring-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.status-pill i-tabler {
+  width: 13px;
+  height: 13px;
+}
+
+.status-ok {
+  background: rgba(44, 208, 126, 0.15);
+  color: #1a9d5f;
+}
+
+.status-mid {
+  background: rgba(246, 192, 0, 0.15);
+  color: #9c7a00;
+}
+
+.status-low {
+  background: var(--mat-sys-error-fixed-dim);
+  color: var(--mat-sys-error);
+}

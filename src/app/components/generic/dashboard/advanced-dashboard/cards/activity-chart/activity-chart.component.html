@@ -1,0 +1,68 @@
+@if(!loading){
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-card-title>Actividad de estudio</mat-card-title>
+    <mat-card-subtitle>Elementos repasados por día durante las últimas dos semanas</mat-card-subtitle>
+
+    @if(points.length){
+    <div class="chart-wrap m-t-16">
+      <svg viewBox="0 0 640 190" preserveAspectRatio="xMinYMid meet">
+        <defs>
+          <linearGradient id="adAreaFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" style="stop-color:var(--mat-sys-primary); stop-opacity:0.22;" />
+            <stop offset="100%" style="stop-color:var(--mat-sys-primary); stop-opacity:0;" />
+          </linearGradient>
+        </defs>
+
+        <line class="chart-target" x1="20" [attr.y1]="targetY" x2="620" [attr.y2]="targetY"></line>
+        <text class="chart-label" x="622" [attr.y]="targetY - 4" text-anchor="end">
+          Ritmo necesario · {{ activity.requiredPace }}/día
+        </text>
+
+        <path class="chart-area" [attr.d]="areaPath" fill="url(#adAreaFill)"></path>
+        <path class="chart-line" [attr.d]="linePath"></path>
+
+        @if(lastPoint){
+        <circle class="chart-point" [attr.cx]="lastPoint.x" [attr.cy]="lastPoint.y" r="4.5"></circle>
+        <text class="chart-callout" [attr.x]="lastPoint.x - 8" [attr.y]="lastPoint.y - 9" text-anchor="end">
+          {{ lastPoint.count }} hoy
+        </text>
+        }
+
+        @for(p of labeledPoints; track p.date){
+        <text class="chart-label" [attr.x]="p.x" y="185" text-anchor="middle">{{ dayLetter(p.date) }}</text>
+        }
+      </svg>
+    </div>
+
+    <div class="chart-stats">
+      <div><div class="chart-stat-label">Media diaria (7 días)</div><div class="chart-stat-value">{{ activity.currentPace }}</div></div>
+      <div><div class="chart-stat-label">Mejor día</div><div class="chart-stat-value">{{ activity.bestDay }}</div></div>
+      @if(activity.estimatedCompletionDate){
+      <div><div class="chart-stat-label">Fecha estimada de finalización</div><div class="chart-stat-value">{{ activity.estimatedCompletionDate | date:'dd/MM/yyyy' }}</div></div>
+      }
+    </div>
+
+    <div class="streak-row">
+      <span class="streak-caption">Constancia esta semana</span>
+      <div class="streak-days">
+        @for(day of streakDays; track $index){
+        <div class="streak-day">
+          <div class="streak-dot" [class.on]="day.on" [class.off]="!day.on"></div>
+          <span class="streak-letter">{{ day.letter }}</span>
+        </div>
+        }
+      </div>
+    </div>
+    } @else {
+    <p class="empty-state m-t-16">Todavía no hay actividad registrada en este curso.</p>
+    }
+  </mat-card-content>
+</mat-card>
+} @else {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+}

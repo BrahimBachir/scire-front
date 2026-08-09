@@ -23,7 +23,8 @@ export * from './question.interface';
 export * from './answare.interface';
 export * from './test.interface';
 export * from './test-questions.interface';
-export * from './stats.interface';
+export * from './basic-metrics.interface';
+export * from './advanced-metrics.interface';
 export * from './source.interface';
 export * from './task.interface';
 export * from './mermaid.interface';
@@ -64,3 +65,4 @@ export * from './announcement.interface'
 export * from './announcement-relevance.interface'
 export * from './social-media-brand.interface'
 export * from './social-media.interface'
+export * from './study-schedule.interface'

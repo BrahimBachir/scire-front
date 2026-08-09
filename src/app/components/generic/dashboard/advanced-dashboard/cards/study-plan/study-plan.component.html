@@ -1,0 +1,30 @@
+@if(!loading){
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-card-title>Tu plan de estudio recomendado</mat-card-title>
+    <mat-card-subtitle>Basado en tu precisión y tu cobertura del temario</mat-card-subtitle>
+
+    @if(items.length){
+    <div class="plan-list m-t-16">
+      @for(item of items; track item.title; let i = $index){
+      <div class="plan-row">
+        <div class="plan-rank">{{ i + 1 }}</div>
+        <div class="plan-text">
+          <div class="plan-title">{{ item.title }}</div>
+          <div class="plan-reason">{{ item.reason }}</div>
+        </div>
+      </div>
+      }
+    </div>
+    } @else {
+    <p class="empty-state m-t-16">Todavía no tenemos suficientes datos para recomendarte un plan. Sigue estudiando y haciendo tests.</p>
+    }
+  </mat-card-content>
+</mat-card>
+} @else {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+}
