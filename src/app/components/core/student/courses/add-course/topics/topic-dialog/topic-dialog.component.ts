@@ -19,7 +19,7 @@ import { TopicFilterComponent } from "src/app/components/generic/filters/topic/t
 import { BlockFormComponent } from '../blocks/block-form.component';
 
 @Component({
-  selector: 'app-topic-dialog',
+  selector: 'app-topic-dialog', 
   imports: [
     CommonModule,
     FormsModule,

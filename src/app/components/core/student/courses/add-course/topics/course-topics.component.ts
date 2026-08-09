@@ -12,7 +12,6 @@ import {
 
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ProductService } from 'src/app/services/apps/product.service';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { TopicService } from 'src/app/services';
 import { ITopic } from 'src/app/common/models/interfaces';

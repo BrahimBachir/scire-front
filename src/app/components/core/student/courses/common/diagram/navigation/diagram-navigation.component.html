@@ -33,13 +33,13 @@
     </div>
     <div class="text-center p-y-8 p-x-12 diagram-actions">
       @if( (selectedDiagram()?.creatorId || 0 | myOwnContent) | async ) {
-      <button mat-mini-fab class="cart-btn-overlay bg-error text-white" matTooltip="Delete"
+      <button mat-mini-fab class="cart-btn-overlay bg-error text-white" matTooltip="Borrar"
         (click)=" deleteItem(); $event.stopPropagation()">
         <i-tabler name="trash" class="icon-16 d-flex"></i-tabler>
       </button>
       }
       @if((selectedDiagram()?.creatorId || 0 | myOwnContent) | async ) {
-      <button mat-mini-fab class="cart-btn-overlay bg-primary text-white" matTooltip="Edit" (click)="updateItem()">
+      <button mat-mini-fab class="cart-btn-overlay bg-primary text-white" matTooltip="Editar" (click)="updateItem()">
         <i-tabler name="pencil" class="icon-16 d-flex"></i-tabler>
       </button>
       }

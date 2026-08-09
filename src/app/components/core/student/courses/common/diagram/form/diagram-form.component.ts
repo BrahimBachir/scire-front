@@ -71,6 +71,7 @@ export class DiagramFormComponent implements OnInit, OnChanges {
   error = signal<boolean>(false);
 
   diagramId: number = 0;
+  private navigationState: CreateDialogData | undefined;
 
   mode: IFieldMode = 'CREATING';
   feature: GenericFeatureType = 'DIAGRAM';
@@ -99,6 +100,7 @@ export class DiagramFormComponent implements OnInit, OnChanges {
 
     const navigation = this.router.currentNavigation();
     const state = navigation?.extras.state as CreateDialogData;
+    this.navigationState = state;
 
     if (state && state.fromAI) {
       this.selectedDiagram = state.element as IDiagram;
@@ -119,16 +121,24 @@ export class DiagramFormComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     console.log(this.mode)
     if (this.mode === 'CREATING') {
-      this.store.select(getSelectedRule).pipe(takeUntil(this.destroy$)).subscribe(rule => {
-        if (rule) {
-          this.form.get('ruleId')?.setValue(rule.id);
-        }
-      });
-      this.store.select(getAllSelectedArticles).pipe(takeUntil(this.destroy$)).subscribe(ids => {
-        console.log("Articles IDs at Diagram: ", ids)
-        if (ids)
-          this.form.get('articlesIds')?.setValue(ids);
-      });
+      if (this.navigationState?.ruleId) {
+        this.form.get('ruleId')?.setValue(this.navigationState.ruleId);
+      } else {
+        this.store.select(getSelectedRule).pipe(takeUntil(this.destroy$)).subscribe(rule => {
+          if (rule) {
+            this.form.get('ruleId')?.setValue(rule.id);
+          }
+        });
+      }
+
+      if (this.navigationState?.articlesIds?.length) {
+        this.form.get('articlesIds')?.setValue(this.navigationState.articlesIds);
+      } else {
+        this.store.select(getAllSelectedArticles).pipe(takeUntil(this.destroy$)).subscribe(ids => {
+          if (ids)
+            this.form.get('articlesIds')?.setValue(ids);
+        });
+      }
       this.loaded.set(true);
     } else {
       this.loadItem();

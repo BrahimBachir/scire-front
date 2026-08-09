@@ -21,11 +21,11 @@
       @for (answer of question()?.answers; track answer.id) {
       <mat-chip-option [value]="answer.id" [selected]="answer.selected" (click)="answerQuestion(answer)" [ngClass]="{
             'correct':
-            question()?.answered && question()?.isCorrect && answer.selected,
+            question()?.answered && answer.isCorrect,
             'error':
             question()?.answered &&
             answer.selected &&
-            !question()?.isCorrect
+            !answer.isCorrect
           }">{{answer.text}}</mat-chip-option>
       }
 
