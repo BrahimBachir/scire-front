@@ -2,13 +2,13 @@
   <mat-card class="cardWithShadow law-content rounded">
     <app-article-tabs [selectedTabIndex]="selectedTabIndex" [tabs]="tabs()" [progress]="progress" (tabSelected)="selectTab($event)">
     </app-article-tabs>
-
-    <app-article-stepper [paragraphs]="paragraphs()" [ruleId]="ruleId" [articleId]="articleId" [progress]="progress" (resetRequested)="resetArticle()"  [lastArticle]="selectedTabIndex === tabs.length - 1"  (nextArticleRequested)="goToNextTab()" (entityToCreate)="handleEntityCreationInput($event)">
-    </app-article-stepper>
+    @if(article()?.id){
+      <app-article-stepper [article]="article()" (resetRequested)="resetArticle()" [progressFacade]="progress" [isInitialLoad]="firstLoad" [lastArticle]="selectedTabIndex === tabs.length - 1"  (nextArticleRequested)="goToNextTab()" (entityToCreate)="handleEntityCreationInput($event)" (nextStep)="onStepChange($event)"></app-article-stepper>
+    }
   </mat-card>
-  @if(article() && selectedRule){
+  @if(article()){
   <mat-card class="cardWithShadow m-l-20 gen-actions ">
-    <app-create-generic-element [rule]="selectedRule" [article]="article()" [entityToCreate]="entityToCreate()"></app-create-generic-element>
+    <app-create-generic-element [article]="article()" [entityToCreate]="entityToCreate()"></app-create-generic-element>
   </mat-card>
   }
 </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -40,6 +40,7 @@ import { IconModule } from 'src/app/icon/icon.module';
 export class AppMultiSelectComponent
   implements ControlValueAccessor {
   private service = inject(ArticlesService);
+  private cdr = inject(ChangeDetectorRef);
 
   @Input() mode: IFieldMode = 'FILTERING';
   @Input() parentId: number | null = null;
@@ -77,6 +78,7 @@ export class AppMultiSelectComponent
   writeValue(ids: number[] | null): void {
     this.value = ids ?? [];
     this.syncSelectedItems();
+    this.cdr.markForCheck();
   }
 
   registerOnChange(fn: (value: number[]) => void): void {
@@ -104,7 +106,6 @@ export class AppMultiSelectComponent
     this.onTouched();
 
     this.syncSelectedItems();
-    console.log("Articles: ", this.value)
   }
 
   remove(article: IArticle): void {
@@ -119,9 +120,9 @@ export class AppMultiSelectComponent
 
   clean(): void {
     this.control.setValue('', { emitEvent: true });
-    this.value = [];                               
-    this.selectedItems = [];                       
-    this.filteredItems = [...this.items];          
+    this.value = [];
+    this.selectedItems = [];
+    this.filteredItems = [...this.items];
     this.onChange([]);
     this.onTouched();
   }
@@ -151,8 +152,8 @@ export class AppMultiSelectComponent
       .subscribe(data => {
         this.items = data;
         this.filteredItems = data;
-        this.filter(this.control.value);
         this.syncSelectedItems();
+        this.cdr.markForCheck();
       });
   }
 
@@ -170,14 +171,6 @@ export class AppMultiSelectComponent
       .map(id => itemMap.get(id))
       .filter((item): item is IArticle => !!item);
   }
-
-  /*   private filter(value: string | null): IArticle[] {
-      const filterValue = (value ?? '').toLowerCase();
-      return this.items.filter(item =>
-        item.title.toLowerCase().includes(filterValue) ||
-        item.boeId?.toLowerCase().includes(filterValue)
-      );
-    } */
 
   filter(searchValue: string | null): void {
     const text = (searchValue ?? '').toLowerCase();

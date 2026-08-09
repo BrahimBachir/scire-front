@@ -9,3 +9,9 @@ export function parseDate (date: string | number): Date | undefined {
     }
     return new Date(str);
 };
+
+export function formatToISODate(date: any): string | null {
+    if (!date) return null;
+    const d = new Date(date);
+    return isNaN(d.getTime()) ? null : d.toISOString();
+}

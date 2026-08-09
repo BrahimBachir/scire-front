@@ -19,6 +19,8 @@ import { PageEvent } from '@angular/material/paginator';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { TranslateModule } from '@ngx-translate/core';
 import { IconModule } from 'src/app/icon/icon.module';
+import { FormatTimePipe } from "../../../../common/pipe/time-format.pipe";
+import { MyOwnContentPipe } from "../../../../common/pipe/my-own-content.pipe";
 
 @Component({
   selector: 'app-courses',
@@ -37,19 +39,20 @@ import { IconModule } from 'src/app/icon/icon.module';
     MatIconModule,
     MatInputModule,
     MatButtonModule,
-    ControlAccessPipe,
     AppFiltersOrchestratorComponent,
     TranslateModule,
     NgScrollbarModule,
+    FormatTimePipe,
+    MyOwnContentPipe
   ],
-  styleUrl: 'rules.component.scss'
+  styleUrl: './rules.component.scss'
 })
 export class AppRulesComponent implements OnInit {
 
   filtersConfig: FilterConfig[] = RuleFiltersData;
   length!: number;
-  pageSize: number = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 50, 100]
+  pageSize: number = 12;
+  pageSizeOptions: number[] = [12, 24, 36, 60, 100]
   currentPageIndex: number = 0;
 
   filters!: IQueryingDto;
@@ -58,17 +61,7 @@ export class AppRulesComponent implements OnInit {
     applyMode: 'auto',
     maxVisbleFields: 4
   }
-
-  editRule(_t98: IRule) {
-    throw new Error('Method not implemented.');
-  }
-  deleteRule(arg0: number) {
-    throw new Error('Method not implemented.');
-  }
-  create() {
-    this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/modules/create`]);
-  }
-  private legislationService = inject(LegislationService)
+  private service = inject(LegislationService)
   private router = inject(Router)
   private route = inject(ActivatedRoute);
 
@@ -82,7 +75,7 @@ export class AppRulesComponent implements OnInit {
   filterForm!: FormGroup;
 
   ngOnInit(): void {
-    this.getItems();
+    this.loadItems();
 
   }
 
@@ -100,14 +93,14 @@ export class AppRulesComponent implements OnInit {
   }
 
 
-  getItems(): void {
+  loadItems(): void {
     this.filters = {
       ...this.filters,
       take: this.pageSize,
       skip: this.pageSize * this.currentPageIndex
     }
     this.filters.skip = this.pageSize * this.currentPageIndex;
-    this.legislationService.getRules(this.filters).subscribe({
+    this.service.getRules(this.filters).subscribe({
       next: (res) => {
         this.length = res.total;
         this.rules.set(res.rows as IRule[]);
@@ -117,14 +110,32 @@ export class AppRulesComponent implements OnInit {
     });
   }
 
+  editRule(id: number) {
+    this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/modules/${id}/edit`]);
+  }
+
+
+  deleteRule(id: number) {
+    this.service.deleteRule(id).subscribe({
+      next: (res) => {
+        this.loadItems();
+      },
+      error: (err) => console.error('Error deleting rule:', err),
+    });
+  }
+
+  create() {
+    this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/modules/create`]);
+  }
+
   onFiltersChanged(filters: IQueryingDto) {
     this.filters = filters;
-    this.getItems();
+    this.loadItems();
   }
 
   onPageChange(event: PageEvent) {
     this.currentPageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.getItems();
+    this.loadItems();
   }
 }

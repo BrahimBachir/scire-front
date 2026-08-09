@@ -28,21 +28,18 @@ export class ArticleTabsComponent {
   articleProgress = signal<IArticleProgress | null>(null);
 
   constructor() {
-
     effect(() => {
       const pro = this.progress.selectedArticleProgress();
       if (pro) {
         this.articleProgress.set(pro);
       }
     });
-
   }
 
   onTabIndexChanged(index: number) {
     if (!this.tabs) return;
     const tab = this.tabs[index];
     if (!tab) return;
-
     this.tabSelected.emit(tab);
   }
 }

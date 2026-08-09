@@ -77,6 +77,8 @@ export interface ITopicProgress {
   totalArticlesInTopic: number;
   completedArticlesInTopic: number;
   topicProgress: number;
+  topicDescription: string;
+  topicName: string;
 }
 
 export interface IAllArticlesProgress {

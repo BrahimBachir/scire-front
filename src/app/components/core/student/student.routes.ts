@@ -3,7 +3,7 @@ import { AppCourseListComponent } from './courses/course-list/course-list.compon
 import { AuthGuard } from 'src/app/common/guards';
 import { AppRulesComponent } from './rules/rules.component';
 import { AppTopicContentComponent } from './courses/topic-content/topic-content.component';
-import { AppCreateEditRuleComponent } from './rules/create-edit/create-edit-rule.component';
+import { RuleFormWrapperComponent } from './rules/rule-wrapper/rule-wrapper.component';
 import { AppAccountSettingComponent } from '../../generic/account-setting/account-setting.component';
 import { ProfileContentComponent } from '../../generic/account/profile-content/profile-content.component';
 import { AppFaqComponent } from '../../generic/faq/faq.component';
@@ -52,6 +52,7 @@ export const StudentRoutes: Routes = [
         component: AppCourseListComponent,
         data: {
           title: 'Mis cursos',
+          myCourses: true,
           urls: [
             { title: 'Academia', url: '/' },
             { title: 'Mis cursos' },
@@ -84,32 +85,34 @@ export const StudentRoutes: Routes = [
         path: 'modules',
         component: AppRulesComponent,
         data: {
-          title: 'Normas',
+          title: 'Módulos',
           urls: [
             { title: 'Academia', url: '/' },
-            { title: 'Normas' },
+            { title: 'Módulos' },
           ],
         },
       },
       {
         path: 'modules/create',
-        component: AppCreateEditRuleComponent,
+        component: RuleFormWrapperComponent,
         data: {
-          title: 'Normas',
+          title: 'Módulos',
           urls: [
             { title: 'Academia', url: '/' },
-            { title: 'Normas' },
+            { title: 'Módulos', url: 'student/modules' },
+            { title: 'Crear módulo' },
           ],
         },
       },
       {
-        path: 'modules/:ruleCode/edit',
-        component: AppCreateEditRuleComponent,
+        path: 'modules/:ruleId/edit',
+        component: RuleFormWrapperComponent,
         data: {
-          title: 'Normas',
+          title: 'Módulos',
           urls: [
             { title: 'Academia', url: '/' },
-            { title: 'Normas' },
+            { title: 'Módulos', url: 'student/modules' },
+            { title: 'Editar módulo' },
           ],
         },
       },
@@ -117,10 +120,11 @@ export const StudentRoutes: Routes = [
         path: 'modules/:ruleId/details',
         component: AppTopicContentComponent,
         data: {
-          title: 'Normas',
+          title: 'Módulos',
           urls: [
             { title: 'Academia', url: '/' },
-            { title: 'Normas' },
+            { title: 'Módulos', url: 'student/modules' },
+            { title: 'Ver módulo' },
           ],
         },
       },

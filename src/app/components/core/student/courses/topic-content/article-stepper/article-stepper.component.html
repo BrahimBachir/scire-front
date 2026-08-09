@@ -1,19 +1,21 @@
-<mat-vertical-stepper [selectedIndex]="currentStepIndex" (selectionChange)="onStepChange($event)">
+<mat-vertical-stepper #stepper [selectedIndex]="currentStepIndex" (selectionChange)="onStepChange($event)">
 
   <!-- TEXT -->
-  <mat-step label="text" [completed]="progress.selectedArticleProgress()?.text_reviewed">
+  <mat-step label="text" [completed]="progress?.text_reviewed">
     <ng-template matStepLabel>Contenido</ng-template>
     @if(currentStepIndex === 0) {
       <ng-container>
-        <app-article-content [paragraphs]="paragraphs"></app-article-content>
+        <app-article-content [content]="content"></app-article-content>
       </ng-container>
     }
-
-    <button mat-flat-button matStepperNext>Siguiente</button>
+    <div class="d-flex align-items-center gap-12">
+      <button mat-stroked-button class="text-primary" [disabled]="firstArticle" (click)="goPreviousArticle()">Artículo anterior</button>
+      <button mat-flat-button matStepperNext>Siguiente</button>
+    </div>
   </mat-step>
 
   <!-- VIDEO -->
-  <mat-step label="videos" [completed]="progress.selectedArticleProgress()?.video_reviewed">
+  <mat-step label="videos" [completed]="progress?.video_reviewed">
     <ng-template matStepLabel>Vídeo</ng-template>
     @if(currentStepIndex === 1) {
       <ng-container>
@@ -27,7 +29,7 @@
   </mat-step>
 
   <!-- DIAGRAMS -->
-  <mat-step label="diagrams" [completed]="progress.selectedArticleProgress()?.diagrams_reviewed">
+  <mat-step label="diagrams" [completed]="progress?.diagrams_reviewed">
     <ng-template matStepLabel>Diagrama y resúmenes</ng-template>
     @if(currentStepIndex === 2) {
     <ng-container>
@@ -42,7 +44,7 @@
   </mat-step>
 
   <!-- FLASHCARDS -->
-  <mat-step label="flashcards" [completed]="progress.selectedArticleProgress()?.flashcards_reviewed">
+  <mat-step label="flashcards" [completed]="progress?.flashcards_reviewed">
     <ng-template matStepLabel>Tarjetas de memorización</ng-template>
     @if(currentStepIndex === 3) {
     <ng-container>
@@ -57,7 +59,7 @@
   </mat-step>
 
   <!-- QUESTIONS -->
-  <mat-step label="questions" [completed]="progress.selectedArticleProgress()?.questions_reviewed">
+  <mat-step label="questions" [completed]="progress?.questions_reviewed">
     <ng-template matStepLabel>Preguntas de repaso</ng-template>
     @if(currentStepIndex === 4) {
     <ng-container>
@@ -72,7 +74,7 @@
   </mat-step>
 
   <!-- FINAL -->
-  <mat-step label="final" [completed]="progress.selectedArticleProgress()?.completed">
+  <mat-step label="final" [completed]="progress?.completed">
     <ng-template matStepLabel>¡Felicitaciones!</ng-template>
     @if(currentStepIndex === 5) {
       <ng-container>
