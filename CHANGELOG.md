@@ -1,3 +1,24 @@
+## [2.1.4](https://github.com/BrahimBachir/scire-front/compare/v2.1.3...v2.1.4) (2026-08-10)
+
+
+### Bug Fixes
+
+* **docker:** bump build stage from Node 19 to Node 22 ([ed84db5](https://github.com/BrahimBachir/scire-front/commit/ed84db5ae30b2ef18f510e73930a680b91491737))
+
+## [2.1.3](https://github.com/BrahimBachir/scire-front/compare/v2.1.2...v2.1.3) (2026-08-10)
+
+
+### Bug Fixes
+
+* **deps:** pin Angular monorepo packages to one exact version ([93bf9fa](https://github.com/BrahimBachir/scire-front/commit/93bf9fae78e308efdbaf2cc0b0dd010bad7ad723))
+
+## [2.1.2](https://github.com/BrahimBachir/scire-front/compare/v2.1.1...v2.1.2) (2026-08-10)
+
+
+### Bug Fixes
+
+* **deps:** regenerate package-lock.json to resolve Angular peer conflict ([56d2b1e](https://github.com/BrahimBachir/scire-front/commit/56d2b1ee99f07c32421466214338c90c2bfd169f))
+
 ## [2.1.1](https://github.com/BrahimBachir/scire-front/compare/v2.1.0...v2.1.1) (2026-08-10)
 
 
