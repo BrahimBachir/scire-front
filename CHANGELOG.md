@@ -1,3 +1,10 @@
+## [2.1.5](https://github.com/BrahimBachir/scire-front/compare/v2.1.4...v2.1.5) (2026-08-10)
+
+
+### Bug Fixes
+
+* **docker:** copy the built app from dist/front/browser, not dist/front ([9a90b07](https://github.com/BrahimBachir/scire-front/commit/9a90b0767d434b5c48b001d67522ada2293aeaf6))
+
 ## [2.1.4](https://github.com/BrahimBachir/scire-front/compare/v2.1.3...v2.1.4) (2026-08-10)
 
 
