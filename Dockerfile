@@ -23,9 +23,9 @@ FROM nginx:alpine AS nginx-stage
 # Copy the CORRECT and complete nginx.conf file
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# IMPORTANT CHANGE: Copy the built application from the 'browser' subfolder
-#COPY --from=build-stage /app/dist/front/browser /usr/share/nginx/html
-COPY --from=build-stage /app/dist/front /usr/share/nginx/html
+# Angular's application builder outputs to a 'browser' subfolder (dist/front/browser/index.html),
+# not directly under dist/front - copy that subfolder so nginx's index.html actually gets overwritten.
+COPY --from=build-stage /app/dist/front/browser /usr/share/nginx/html
 
 # Expose port 80 to the host machine
 EXPOSE 80
