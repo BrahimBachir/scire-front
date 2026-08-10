@@ -1,3 +1,13 @@
+## [2.1.6](https://github.com/BrahimBachir/scire-front/compare/v2.1.5...v2.1.6) (2026-08-10)
+
+
+### Bug Fixes
+
+* **deps:** pin Angular monorepo packages to one exact version ([1e1a234](https://github.com/BrahimBachir/scire-front/commit/1e1a2347571f141878aaa83f9f10b3567920f41b))
+* **docker:** bump build stage from Node 19 to Node 22 ([ebea6cc](https://github.com/BrahimBachir/scire-front/commit/ebea6cc5775bd76fed648cb1303d439d5ce6baaf))
+* **docker:** copy the built app from dist/front/browser, not dist/front ([4d35027](https://github.com/BrahimBachir/scire-front/commit/4d3502790272550d463c6816c23a78c126ad056d))
+* **registration:** delete default data ([95e3e21](https://github.com/BrahimBachir/scire-front/commit/95e3e2158fd728a0a9627f1ad9aea95426e011df))
+
 ## [2.1.5](https://github.com/BrahimBachir/scire-front/compare/v2.1.4...v2.1.5) (2026-08-10)
 
 
