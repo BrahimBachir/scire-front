@@ -1,3 +1,10 @@
+## [2.1.7](https://github.com/BrahimBachir/scire-front/compare/v2.1.6...v2.1.7) (2026-08-10)
+
+
+### Bug Fixes
+
+* **build:** wire up fileReplacements for the production environment file ([148c741](https://github.com/BrahimBachir/scire-front/commit/148c741b028b0d49626bbc3544605c8c9c492602))
+
 ## [2.1.6](https://github.com/BrahimBachir/scire-front/compare/v2.1.5...v2.1.6) (2026-08-10)
 
 
