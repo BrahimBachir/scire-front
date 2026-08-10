@@ -11,10 +11,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Actions, ofType } from '@ngrx/effects';
 import { IconModule } from 'src/app/icon/icon.module';
 import { AppState } from 'src/app/common/store/app.store';
 import { selectUserActivePlan } from 'src/app/common/store/selectors';
-import { changeUserPlan, resetUserPlan } from 'src/app/common/store/actions';
+import { changeUserPlan, resetUserPlan, startCheckout, checkoutSessionFailed } from 'src/app/common/store/actions';
 import { IPlan, IPlanFeatures } from 'src/app/common/models/interfaces';
 import { ConfigService } from 'src/app/services/config.service';
 
@@ -27,6 +29,8 @@ import { ConfigService } from 'src/app/services/config.service';
 export class AppAccountSettingComponent implements OnInit {
   private store = inject(Store<AppState>);
   private configService = inject(ConfigService);
+  private actions$ = inject(Actions);
+  private snackBar = inject(MatSnackBar);
 
   activePlan$ = this.store.select(selectUserActivePlan);
   availablePlans = signal<IPlan[]>([]);
@@ -35,6 +39,14 @@ export class AppAccountSettingComponent implements OnInit {
   ngOnInit(): void {
     this.configService.getPlanes().subscribe({
       next: (planes) => this.availablePlans.set(planes),
+    });
+
+    this.actions$.pipe(ofType(checkoutSessionFailed)).subscribe(() => {
+      this.snackBar.open('No se ha podido iniciar el pago. Inténtalo de nuevo.', 'Cerrar', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
     });
   }
 
@@ -50,7 +62,14 @@ export class AppAccountSettingComponent implements OnInit {
     const planCode = this.selectedPlanCode();
     if (!planCode) return;
 
-    this.store.dispatch(changeUserPlan({ planCode }));
+    const plan = this.availablePlans().find((p) => p.code === planCode);
+    if (plan && Number(plan.price) > 0) {
+      // Paid plans go through Stripe Checkout instead of the free-only change-plan endpoint.
+      this.store.dispatch(startCheckout({ planCode, interval: 'month' }));
+    } else {
+      this.store.dispatch(changeUserPlan({ planCode }));
+    }
+
     this.selectedPlanCode.set(null);
   }
 
