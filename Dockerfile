@@ -4,8 +4,8 @@ FROM node:19-alpine AS build-stage
 # Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json first to leverage Docker cache
-COPY package*.json ./
+# Copy package.json, package-lock.json, and .npmrc first to leverage Docker cache
+COPY package*.json .npmrc ./
 
 # Install dependencies (using npm ci for a clean, reproducible install)
 RUN npm ci
