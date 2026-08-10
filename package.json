@@ -1,6 +1,6 @@
 {
   "name": "scire-front",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "scripts": {
     "ng": "ng",
     "dev": "ng serve -o --port 4999",
