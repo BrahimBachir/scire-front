@@ -1,3 +1,15 @@
+# [2.1.0](https://github.com/BrahimBachir/scire-front/compare/v2.0.1...v2.1.0) (2026-08-10)
+
+
+### Bug Fixes
+
+* **payments:** route paid-plan changes through Stripe Checkout from account settings ([31c58e1](https://github.com/BrahimBachir/scire-front/commit/31c58e1047decdfe7c6dde46e31db922872c58ee))
+
+
+### Features
+
+* **payments:** wire pricing page to Stripe Checkout for paid plans ([21ce324](https://github.com/BrahimBachir/scire-front/commit/21ce3247c33f0984c9123aa0908890a8a72ea25c))
+
 ## [2.0.1](https://github.com/BrahimBachir/scire-front/compare/v2.0.0...v2.0.1) (2026-08-09)
 
 
