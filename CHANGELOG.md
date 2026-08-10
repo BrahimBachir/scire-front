@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/BrahimBachir/scire-front/compare/v2.1.1...v2.1.2) (2026-08-10)
+
+
+### Bug Fixes
+
+* **deps:** regenerate package-lock.json to resolve Angular peer conflict ([56d2b1e](https://github.com/BrahimBachir/scire-front/commit/56d2b1ee99f07c32421466214338c90c2bfd169f))
+
 ## [2.1.1](https://github.com/BrahimBachir/scire-front/compare/v2.1.0...v2.1.1) (2026-08-10)
 
 
