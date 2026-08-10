@@ -1,3 +1,10 @@
+## [2.1.3](https://github.com/BrahimBachir/scire-front/compare/v2.1.2...v2.1.3) (2026-08-10)
+
+
+### Bug Fixes
+
+* **deps:** pin Angular monorepo packages to one exact version ([93bf9fa](https://github.com/BrahimBachir/scire-front/commit/93bf9fae78e308efdbaf2cc0b0dd010bad7ad723))
+
 ## [2.1.2](https://github.com/BrahimBachir/scire-front/compare/v2.1.1...v2.1.2) (2026-08-10)
 
 
