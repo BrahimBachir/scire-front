@@ -1,7 +1,6 @@
 export const environment = {
   production: true,
-  api_base_url : 'http://localhost:3500/api/',
-  auth_base_url : 'http://localhost:3700/api/',
-  test_user: "",
-  test_pass: "",
+  api_base_url: 'https://scire-api.onrender.com/api/',
+  auth_base_url : 'https://scire-auth.onrender.com/api/',
+  front_base_url: 'https://scire.kaptya.com',
 };
