@@ -22,6 +22,9 @@ export const Routes = {
       pricing_planes: 'configs/pricing-planes',
       variables: 'variables',
     },
+    payments: {
+      checkout_session: 'payments/checkout-session',
+    },
     genders: {
       all: 'genders',
     },

@@ -83,7 +83,7 @@
         </div>
         }
         <button mat-flat-button color="primary" class="w-100 m-t-24" [disabled]="plan.code === activePlan.code"
-          (click)="choosePlan(plan.code)">
+          (click)="choosePlan(plan)">
           {{ plan.code === activePlan.code ? 'Plan actual' : 'Elegir ' + plan.description }}
         </button>
       </mat-card-content>

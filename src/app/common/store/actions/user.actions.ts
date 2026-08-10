@@ -24,6 +24,9 @@ export const TOGGLE_ALL_USERS_SELECTION = '[USERS] Toggle All Users Selection';
 export const CHANGE_USER_PLAN = '[USERS] Change user plan';
 export const RESET_USER_PLAN = '[USERS] Reset user plan';
 
+export const START_CHECKOUT = '[USERS] Start checkout';
+export const CHECKOUT_SESSION_FAILED = '[USERS] Checkout session failed';
+
 
 export const createUser = createAction(CREATE_USER, props<{ user: IUser }>());
 
@@ -93,3 +96,13 @@ export const changeUserPlan = createAction(
 );
 
 export const resetUserPlan = createAction(RESET_USER_PLAN);
+
+export const startCheckout = createAction(
+  START_CHECKOUT,
+  props<{ planCode: string; interval: 'month' | 'year' }>()
+);
+
+export const checkoutSessionFailed = createAction(
+  CHECKOUT_SESSION_FAILED,
+  props<{ error: any }>()
+);

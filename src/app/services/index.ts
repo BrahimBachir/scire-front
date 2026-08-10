@@ -27,3 +27,4 @@ export * from './course-progress.service';
 export * from './article-progress.facade';
 export * from './annuncements.service';
 export * from './study-schedule.service';
+export * from './payments.service';

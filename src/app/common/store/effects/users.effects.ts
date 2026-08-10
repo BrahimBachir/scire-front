@@ -7,6 +7,7 @@ import {
   map,
   mergeMap,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import {
@@ -25,10 +26,12 @@ import {
   changeUserPlan,
   resetUserPlan,
   loadLogedUser,
+  startCheckout,
+  checkoutSessionFailed,
 } from '../actions';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { IUser } from '../../models/interfaces';
-import { UsersService } from 'src/app/services';
+import { UsersService, PaymentsService } from 'src/app/services';
 import { getDecodedAccessToken } from '../../utils';
 
 @Injectable()
@@ -36,6 +39,7 @@ export class UsersEffects {
   constructor(
     private actions$: Actions,
     private usersService: UsersService,
+    private paymentsService: PaymentsService,
     public router: Router,
   ) {}
 
@@ -143,6 +147,24 @@ export class UsersEffects {
           catchError((error) =>
             of({ type: `[User] Reset Plan Failed: ${error}` })
           )
+        )
+      )
+    )
+  );
+
+  // Redirects the browser to Stripe Checkout on success (the app is navigated away,
+  // so there's no meaningful resulting state); dispatches checkoutSessionFailed
+  // on error so the pricing page can show it.
+  startCheckout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(startCheckout),
+      concatMap(({ planCode, interval }) =>
+        this.paymentsService.createCheckoutSession(planCode, interval).pipe(
+          tap(({ url }) => {
+            window.location.href = url;
+          }),
+          map(() => ({ type: '[Payments] Checkout session created' })),
+          catchError((error) => of(checkoutSessionFailed({ error })))
         )
       )
     )
