@@ -1,3 +1,12 @@
+## [2.1.8](https://github.com/BrahimBachir/scire-front/compare/v2.1.7...v2.1.8) (2026-08-15)
+
+
+### Bug Fixes
+
+* **build:** wire up fileReplacements for the production environment file ([ba9931f](https://github.com/BrahimBachir/scire-front/commit/ba9931f6e4c744aa872808ab1434a3b08c313dfb))
+* **config:** point api_base_url at opos-api's actual port, use kaptya.com in prod ([73d15c6](https://github.com/BrahimBachir/scire-front/commit/73d15c6aef1029ea907cd5c298d407b776cdfa67))
+* **notes:** scope notes to their course and fix article selection not saving ([358c907](https://github.com/BrahimBachir/scire-front/commit/358c907fae8f0b38e650c689273fbbba4b7c08c6))
+
 ## [2.1.7](https://github.com/BrahimBachir/scire-front/compare/v2.1.6...v2.1.7) (2026-08-10)
 
 
