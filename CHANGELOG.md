@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/BrahimBachir/scire-front/compare/v2.2.0...v2.2.1) (2026-08-15)
+
+
+### Bug Fixes
+
+* **course:** share course doble // ath the URL ([f8bd128](https://github.com/BrahimBachir/scire-front/commit/f8bd1283ed14a863f7d789e6c3c38f46bb984c78))
+
 # [2.2.0](https://github.com/BrahimBachir/scire-front/compare/v2.1.8...v2.2.0) (2026-08-15)
 
 
