@@ -9,9 +9,36 @@
   <mat-dialog-content class="p-0">
     <form [formGroup]="form">
       <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Título</mat-label>
-        <input matInput formControlName="title" placeholder="Ej. Artículo 1">
+        <mat-label>Descripción</mat-label>
+        <input matInput formControlName="description" placeholder="Ej. Artículo 1">
       </mat-form-field>
+
+      <div class="d-flex row">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Libro</mat-label>
+          <input matInput formControlName="book" placeholder="Ej. Libro I">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Título</mat-label>
+          <input matInput formControlName="title" placeholder="Ej. Título I">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Capítulo</mat-label>
+          <input matInput formControlName="chapter" placeholder="Ej. Capítulo I">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Sección</mat-label>
+          <input matInput formControlName="section" placeholder="Ej. Sección I">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Subsección</mat-label>
+          <input matInput formControlName="subsection" placeholder="Ej. Subsección I">
+        </mat-form-field>
+      </div>
 
       <div class="NgxEditor__Wrapper">
         <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>

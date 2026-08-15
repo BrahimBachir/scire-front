@@ -27,7 +27,7 @@
       @for (item of filteredItems; track item.boeId) {
       <mat-option (click)="$event.stopPropagation()">
         <mat-checkbox [checked]="isSelected(item)" (change)="toggleSelection(item)" (click)="$event.stopPropagation()">
-          {{ item.title }}
+          {{ item.description }}
         </mat-checkbox>
       </mat-option>
       }

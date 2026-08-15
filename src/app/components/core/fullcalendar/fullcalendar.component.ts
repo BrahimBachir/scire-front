@@ -248,7 +248,7 @@ export class AppFullcalendarComponent implements OnInit {
                       .filter((article) => article.progress?.percentage !== 100)
                       .map((article) => ({
                         id: article.id,
-                        title: article.title,
+                        title: article.description,
                       })),
                   }))
                 )

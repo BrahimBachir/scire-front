@@ -161,7 +161,12 @@
       "ACTIONS": "Acciones"
     },
     "ARTICLE": {
+      "DESCRIPTION": "Descripción",
+      "BOOK": "Libro",
       "TITLE": "Título",
+      "CHAPTER": "Capítulo",
+      "SECTION": "Sección",
+      "SUBSECTION": "Subsección",
       "CONTENT": "Contenido",
       "ACTIONS": "Acciones"
     },

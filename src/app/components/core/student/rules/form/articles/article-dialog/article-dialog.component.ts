@@ -66,7 +66,12 @@ export class ArticleDialogComponent implements OnInit {
 
     this.form = this.fb.group({
       id: [this.data.element?.id || null],
-      title: [this.data.element?.title || '', Validators.required],
+      description: [this.data.element?.description || '', Validators.required],
+      book: [this.data.element?.book || ''],
+      title: [this.data.element?.title || ''],
+      chapter: [this.data.element?.chapter || ''],
+      section: [this.data.element?.section || ''],
+      subsection: [this.data.element?.subsection || ''],
       content: [this.data.element?.content || '', Validators.required],
     });
     // If editing, convert HTML → editor doc

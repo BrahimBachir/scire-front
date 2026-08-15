@@ -6,7 +6,11 @@ export interface IArticle {
   id: number;
   boeId?: string;
   description: string;
-  title: string;
+  book?: string;
+  title?: string;
+  chapter?: string;
+  section?: string;
+  subsection?: string;
   content: string;
   versions: IArticleVersion[];
   repealed?: boolean;

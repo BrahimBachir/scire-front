@@ -115,17 +115,11 @@ export abstract class BaseFilterDirective<T extends IFilterItem> implements Cont
   }
 
   private filterLogic(val: T | string | null): T[] {
-    if(this.items[0] && this.items[0].title){
-      const text = typeof val === 'string' ? val.toLowerCase() : val?.title?.toLowerCase() || '';
-      return this.items.filter(i => i.title?.toLowerCase().includes(text));
-    }
     const text = typeof val === 'string' ? val.toLowerCase() : val?.description.toLowerCase() || '';
     return this.items.filter(i => i.description.toLowerCase().includes(text));
   }
 
   displayName = (entity: T | string | null): string => {
-    if(this.items[0] && this.items[0].title)
-      return typeof entity === 'object' && entity ? entity.title || '' : '';
     return typeof entity === 'object' && entity ? entity.description : '';
   }
 }

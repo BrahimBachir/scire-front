@@ -42,7 +42,7 @@ export class RuleArticlesComponent {
   private dialog = inject(MatDialog);
   @ViewChild(MatTable) table!: MatTable<any>;
 
-  displayedColumns: string[] = ['title', 'content', 'actions'];
+  displayedColumns: string[] = ['description', 'content', 'actions'];
 
   create() {
     const dialogRef = this.dialog.open(ArticleDialogComponent, {
@@ -54,7 +54,12 @@ export class RuleArticlesComponent {
       if (result) {
         this.articles.push(new FormGroup({
           id: new FormControl(result.id),
+          description: new FormControl(result.description),
+          book: new FormControl(result.book),
           title: new FormControl(result.title),
+          chapter: new FormControl(result.chapter),
+          section: new FormControl(result.section),
+          subsection: new FormControl(result.subsection),
           content: new FormControl(result.content)
         }));
         this.table.renderRows();

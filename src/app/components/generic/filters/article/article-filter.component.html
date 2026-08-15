@@ -12,7 +12,7 @@
   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
     @for(item of filteredItems; track item.boeId) {
     <mat-option [value]="item" (onSelectionChange)="onSelected(item)">
-      {{ item.title }}
+      {{ item.description }}
     </mat-option>
     }
   </mat-autocomplete>

@@ -175,7 +175,7 @@ export class AppMultiSelectComponent
   filter(searchValue: string | null): void {
     const text = (searchValue ?? '').toLowerCase();
     this.filteredItems = this.items.filter(item =>
-      item.title.toLowerCase().includes(text) ||
+      item.description.toLowerCase().includes(text) ||
       item.boeId?.toLowerCase().includes(text) // Helpful to filter by ID too!
     );
   }

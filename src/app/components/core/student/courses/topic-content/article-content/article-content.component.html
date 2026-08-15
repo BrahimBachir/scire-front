@@ -1,3 +1,13 @@
+@if (hierarchy.length) {
+  <div class="article-hierarchy d-flex flex-wrap align-items-center gap-12 m-b-15">
+    @for (level of hierarchy; track level.icon) {
+      <span class="d-flex align-items-center gap-4">
+        <i-tabler [name]="level.icon" class="icon-16"></i-tabler>
+        <span>{{ level.value }}</span>
+      </span>
+    }
+  </div>
+}
 @if (paragraphs?.length) {
   <div class="article-content">
     @for (paragraph of paragraphs; track $index) {

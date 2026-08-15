@@ -3,7 +3,7 @@
     <mat-tab>
         <ng-template mat-tab-label>
             <span (click)="tabSelected.emit(tab)">
-                {{ tab.title || tab?.boeId?.toUpperCase() }}
+                {{ tab.description || tab?.boeId?.toUpperCase() }}
             </span>
             @if(tab.id === progress.selectedArticleProgress()?.articleId){
                 <i-tabler class="icon-18 m-l-5"

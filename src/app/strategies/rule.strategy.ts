@@ -33,8 +33,12 @@ export class RuleStrategy {
           return new FormGroup({
             id: new FormControl(article.id),
             boeId: new FormControl(article.boeId ?? ''),
-            title: new FormControl(article.title),
             description: new FormControl(article.description),
+            book: new FormControl(article.book ?? ''),
+            title: new FormControl(article.title ?? ''),
+            chapter: new FormControl(article.chapter ?? ''),
+            section: new FormControl(article.section ?? ''),
+            subsection: new FormControl(article.subsection ?? ''),
             content: new FormControl(article.content ?? ''),
             repealed: new FormControl(article.repealed ?? false),
             lastUpdate: new FormControl(article.lastUpdate ?? null),
@@ -61,7 +65,7 @@ export class RuleStrategy {
     }
     return articles.map(article => ({
       id: article.boeId ?? '',
-      titulo: article.title,
+      titulo: article.description,
     }));
   }
 
