@@ -8,10 +8,10 @@
     </mat-card-title>
     
     <div class="d-flex start-course align-items-center">
-      <button class="text-white" mat-icon-button (click)="goToCourseContent()" matTooltip="Ver temario">
+      <button class="text-white" mat-icon-button (click)="goToCourseSillabus()" matTooltip="Ver temario">
         <i-tabler name="eye" class="icon-18"></i-tabler>
       </button>
-      <button class="text-white m-r-10" mat-icon-button (click)="goToCourseContent()" matTooltip="Empezar/reanudar curso">
+      <button class="text-white m-r-10" mat-icon-button (click)="goToCourseDetails()" matTooltip="Empezar/reanudar">
         <i-tabler name="player-play" class="icon-18"></i-tabler>
       </button>
       <i-tabler class="icon-20 m-l-5" [matTooltip]="'Avance: '+percentage().toString() +'%'" [name]="'percentage-'+percentage().toString()" ></i-tabler>

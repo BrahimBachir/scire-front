@@ -12,7 +12,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { environment } from 'src/environments/environment';
-import { CourseService } from 'src/app/services';
+import { BasicMetricsService, CourseService } from 'src/app/services';
 import { ICourse } from 'src/app/common/models/interfaces';
 import { ToastrService } from 'ngx-toastr';
 import { ERROR, SUCCESS, WARNING } from 'src/app/common/config/constants';
@@ -50,6 +50,7 @@ export class AppCourseHeaderComponent implements OnInit {
   constructor(
     public activatedRouter: ActivatedRoute,
     public courseService: CourseService,
+    private basicMetricsService: BasicMetricsService,
     private router: Router,
     private route: ActivatedRoute,
     public toastService: ToastrService,
@@ -61,6 +62,8 @@ export class AppCourseHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.isFavorite();
     this.isUserJoined();
+    console.log('course-header.component.ts', this.course);
+    console.log('course-header.component.ts', this.course.id);
   }
 
   isFavorite() {
@@ -85,8 +88,37 @@ export class AppCourseHeaderComponent implements OnInit {
      })
   }
 
-    goToCourseContent() {
-    //this.router.navigate(['/apps/courses/:id/content'.replace(':id', this.id())]);
+  goToCourseDetails() {
+    if (!this.course.id) return;
+    this.basicMetricsService.getActivity(this.course.id).subscribe({
+      next: (activity) => {
+        const topicId = activity?.upcoming_activity?.topic_id ?? activity?.previous_activity?.topic_id;
+        console.log('goToCourseDetails', topicId);
+        if (topicId) this.goToTopicContent(topicId);
+        else this.goToCourseSillabus();
+      },
+      error: (error) => {
+        this.toastService.error(`${error.error.message}`, ERROR, {
+          timeOut: 3000,
+        });
+      }
+    })
+  }
+
+  private goToTopicContent(topicId: number) {
+    this.router.navigate([
+      `${this.route?.snapshot.data['role'].toLowerCase()}/courses/:courseId/topic/:topicId/content`
+        .replace(':courseId', this.course.id!.toString())
+        .replace(':topicId', topicId.toString()),
+    ]);
+  }
+
+  goToCourseSillabus() {
+    if (!this.course.id) return;
+    this.router.navigate([
+      `${this.route?.snapshot.data['role'].toLowerCase()}/courses/:courseId/topics`
+        .replace(':courseId', this.course.id.toString()),
+    ]);
   }
 
   addToFavorites() {

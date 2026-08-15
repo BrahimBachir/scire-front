@@ -187,7 +187,7 @@ export class AppCourseDetailComponent implements OnInit {
     if (this.course.type?.code === 'PROP') {
       this.course.colour = 'primary';
     } else if (this.course.type?.code === 'COM') {
-      this.course.colour = 'accent';
+      this.course.colour = 'secondary';
     } else {
       this.course.colour = 'warn';
     }
