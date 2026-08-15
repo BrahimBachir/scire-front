@@ -3,6 +3,7 @@ import { IArticle, ICourse, IRule, IDiagram } from "../../models/interfaces";
 
 export const LOAD_COURSE = '[LEARNING] Load course!';
 export const COURSE_LOADED = '[LEARNING] Course loaded!';
+export const SET_ACTIVE_COURSE = '[LEARNING] Set active course (no navigation)';
 
 export const SET_SELECTED_RULE = '[LEARNING] New selected rule';
 export const SET_SELECTED_DIAGRAM = '[LEARNING] New selected diagram';
@@ -17,6 +18,13 @@ export const loadCourse = createAction(
 );
 
 export const courseLoaded = createAction(COURSE_LOADED);
+
+export const setActiveCourse = createAction(
+  SET_ACTIVE_COURSE,
+  (
+    course: ICourse
+  ) => ({ course })
+);
 
 
 export const setSelectedRule = createAction(

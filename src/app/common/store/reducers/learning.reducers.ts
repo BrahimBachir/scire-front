@@ -1,11 +1,17 @@
 import { createReducer, on } from "@ngrx/store";
 import { InitialLearningState } from "../../models/states";
-import { loadCourse, setAllSelectedArticles, setSelectedArticle, setSelectedRule, setSelectedDiagram } from "../actions";
+import { loadCourse, setActiveCourse, setAllSelectedArticles, setSelectedArticle, setSelectedRule, setSelectedDiagram } from "../actions";
 
 
 export const learningReducers = createReducer(
   InitialLearningState,
   on(loadCourse, (state, { course }) => {
+    return {
+      ...state,
+      selectedCourse: course,
+    };
+  }),
+  on(setActiveCourse, (state, { course }) => {
     return {
       ...state,
       selectedCourse: course,

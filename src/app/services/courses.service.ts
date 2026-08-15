@@ -42,6 +42,11 @@ export class CourseService {
     return this.http.get<IIncomingEntity>(URL, { params });
   }
   
+  public getLastActiveCourse(): Observable<ICourse | null> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.last_active}`;
+    return this.http.get<ICourse | null>(URL);
+  }
+
   public getTypes(): Observable<ICourseType[]> {
     let URL = `${environment.api_base_url}${this.routes.api.learning.courses.types}`;
     return this.http.get<ICourseType[]>(URL);

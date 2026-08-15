@@ -93,6 +93,7 @@ export const Routes = {
       courses: {
         base: 'learning/courses',
         my_courses: 'learning/courses/my-courses',
+        last_active: 'learning/courses/last-active',
         types: 'learning/courses/types',
         tags: 'learning/courses/tags',
         statuses: 'learning/courses/statuses',
