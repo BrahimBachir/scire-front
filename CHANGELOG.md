@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/BrahimBachir/scire-front/compare/v2.1.8...v2.2.0) (2026-08-15)
+
+
+### Features
+
+* **course-header:** resume course at last studied topic/article ([e8674af](https://github.com/BrahimBachir/scire-front/commit/e8674af11b82321c100ac9baee3fc1a33e91b13c))
+
 ## [2.1.8](https://github.com/BrahimBachir/scire-front/compare/v2.1.7...v2.1.8) (2026-08-15)
 
 
