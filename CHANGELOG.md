@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/BrahimBachir/scire-front/compare/v2.2.1...v2.3.0) (2026-08-15)
+
+
+### Features
+
+* **courses:** auto-select last active course on login ([e178584](https://github.com/BrahimBachir/scire-front/commit/e1785841bb32aaa142197de8ddd6a8e83dd77fb7))
+
 ## [2.2.1](https://github.com/BrahimBachir/scire-front/compare/v2.2.0...v2.2.1) (2026-08-15)
 
 
