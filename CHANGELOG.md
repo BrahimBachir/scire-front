@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/BrahimBachir/scire-front/compare/v2.3.0...v2.4.0) (2026-08-15)
+
+
+### Features
+
+* **articles:** show article hierarchy and rename title to description ([35c07b4](https://github.com/BrahimBachir/scire-front/commit/35c07b499da5ba681d69358ee8da4a6791e70299))
+
 # [2.3.0](https://github.com/BrahimBachir/scire-front/compare/v2.2.1...v2.3.0) (2026-08-15)
 
 
