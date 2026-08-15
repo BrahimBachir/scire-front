@@ -45,7 +45,7 @@ export class AppCourseHeaderComponent implements OnInit {
   favourite: boolean = false;
   joined: boolean = false;
   percentage = input<number>(0)
-  url: string = `${environment.front_base_url}/${this.router.url}`;
+  url: string = `${environment.front_base_url}${this.router.url}`;
 
   constructor(
     public activatedRouter: ActivatedRoute,
