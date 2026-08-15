@@ -27,9 +27,10 @@ submit(
 ): Observable<INote> {
 
   const value = cleanObject(featureForm.value) as INote;
-  
+
   //value.ruleId = commonForm.value.ruleId;
   value.articlesIds = commonForm.value.articlesIds ?? [];
+  value.courseId = commonForm.value.courseId;
   console.log(value)
 
   return value.id
