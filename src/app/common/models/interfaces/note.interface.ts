@@ -6,6 +6,7 @@ export interface INote {
   color?: string | null;
   title?: string | null;
   favorite?: boolean | null;
+  courseId: number;
   rule?: IRule | null;
   ruleId?: number | null;
   article?: IArticle | null;

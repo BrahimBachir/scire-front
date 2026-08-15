@@ -1,6 +1,5 @@
 export const Routes = {
   auth: {
-    base: 'http://localhost:3800/api/',
     logins: 'logins',
     new: 'logins/new',
     validate: 'logins/validate-email/:userCode',
@@ -9,7 +8,6 @@ export const Routes = {
     logout: 'logins/logout',
   },
   api: {
-    base: 'http://localhost:3300/api/',
     users: {
       new_login: 'users/new-login',
       logged: 'users/loged',

@@ -10,17 +10,19 @@ import { CoreService } from 'src/app/services/core.service';
     <div class="d-flex align-items-center">
       <a [routerLink]="['/']" class="logodark">
         <img
-          src="./assets/images/logos/dark-logo.svg"
+          src="./assets/images/scire/scire-horizontal.svg"
           class="align-middle m-2"
           alt="logo"
+          width="160"
         />
       </a>
 
       <a [routerLink]="['/']" class="logolight">
         <img
-          src="./assets/images/logos/light-logo.svg"
+          src="./assets/images/scire/scire-horizontal.svg"
           class="align-middle m-2"
           alt="logo"
+          width="160"
         />
       </a>
     </div>

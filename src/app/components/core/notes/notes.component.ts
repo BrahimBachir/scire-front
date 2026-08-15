@@ -4,6 +4,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 import { NoteService } from 'src/app/services';
 import { FilterConfig, FiltersOptions, INote, TernaryFilterConfig, IQueryingDto } from 'src/app/common/models/interfaces';
 import { MatDialog } from '@angular/material/dialog';
@@ -34,8 +35,10 @@ import { IconModule } from 'src/app/icon/icon.module';
 export class AppNotesComponent implements OnInit {
   private service = inject(NoteService)
   private snackBar = inject(MatSnackBar)
+  private route = inject(ActivatedRoute)
   sidePanelOpened = signal(true);
   private dialog = inject(MatDialog)
+  courseId!: number;
   length!: number;
   pageSize: number = 10;
   pageSizeOptions: number[] = [5, 10, 25, 50, 100]
@@ -82,6 +85,7 @@ export class AppNotesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.courseId = Number(this.route.snapshot.paramMap.get('courseId')) || 0;
     this.getNotes();
   }
 
@@ -91,6 +95,7 @@ export class AppNotesComponent implements OnInit {
       data: {
         action: 'CREAR',
         feature: this.feature,
+        courseId: this.courseId,
         rule: {
           isEditable: true,
           element: null
@@ -109,13 +114,14 @@ export class AppNotesComponent implements OnInit {
   }
 
   getNotes() {
-    this.filters = {
+    const queryingDto: IQueryingDto = {
       ...this.filters,
+      courseId: this.courseId,
       take: this.pageSize,
       skip: this.pageSize * this.currentPageIndex
     }
 
-    this.service.getAll(this.filters).subscribe({
+    this.service.getAll(queryingDto).subscribe({
       next: (res) => {
         this.notes.set(res.rows as INote[])
         this.length = res.total;
@@ -184,6 +190,7 @@ export class AppNotesComponent implements OnInit {
       data: {
         action: 'EDITAR',
         feature: this.feature,
+        courseId: note?.courseId ?? this.courseId,
         ruleId: note?.ruleId,
         articlesIds: note?.articlesIds,
         element: note

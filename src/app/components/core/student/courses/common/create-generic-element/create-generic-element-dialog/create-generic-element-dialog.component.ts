@@ -82,6 +82,7 @@ export class CreateGenericElementDialogComponent {
       common: new FormGroup({
         ruleId: new FormControl<number | null>(this.data.ruleId || null),
         articlesIds: new FormControl<number[]>(this.data.articlesIds ?? []),
+        courseId: new FormControl<number | null>(this.data.courseId ?? null),
       }),
       feature: this.strategy.buildForm(this.data.element as any)
     });
@@ -96,6 +97,19 @@ export class CreateGenericElementDialogComponent {
       ruleCtrl.disable({ emitEvent: false })
     }
 
+    ruleCtrl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(ruleId => {
+      if (!ruleId) {
+        this.selectedRule = null;
+        articlesCtrl.setValue([], { emitEvent: false });
+        articlesCtrl.disable({ emitEvent: false });
+        return;
+      }
+
+      articlesCtrl.enable({ emitEvent: false });
+
+      articlesCtrl.setValue([], { emitEvent: false });
+    });
+
     this.mode = this.data.mode;
 
     this.submit = () => {
@@ -104,27 +118,6 @@ export class CreateGenericElementDialogComponent {
 
       const commonForm = this.form.get('common') as FormGroup;
       const featureForm = this.form.get('feature') as FormGroup;
-
-      const ruleCtrl = commonForm.get('ruleId') as FormControl<number | null>;
-      const articlesCtrl = commonForm.get('articlesIds') as FormControl<number[]>;
-
-      // disable initially if no rule
-      if (!ruleCtrl.value) {
-        articlesCtrl.disable({ emitEvent: false });
-      }
-
-      ruleCtrl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(ruleId => {
-        if (!ruleId) {
-          this.selectedRule = null;
-          articlesCtrl.setValue([], { emitEvent: false });
-          articlesCtrl.disable({ emitEvent: false });
-          return;
-        }
-
-        articlesCtrl.enable({ emitEvent: false });
-
-        articlesCtrl.setValue([], { emitEvent: false });
-      });
 
       this.strategy.submit(featureForm, commonForm)
         .pipe(finalize(() => this.loading = false))
