@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/BrahimBachir/scire-front/compare/v2.5.0...v2.5.1) (2026-08-20)
+
+
+### Bug Fixes
+
+* **dialogs:** stop MatDialog scroll-block from hiding sticky header ([44b70fb](https://github.com/BrahimBachir/scire-front/commit/44b70fb382853464ea4a1edd0d323237abf63901))
+
 # [2.5.0](https://github.com/BrahimBachir/scire-front/compare/v2.4.0...v2.5.0) (2026-08-20)
 
 
