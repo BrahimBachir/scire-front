@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { FormGroup, FormControl, FormArray } from "@angular/forms";
+import { FormGroup, FormControl, FormArray, AbstractControl, ValidationErrors } from "@angular/forms";
 import { Observable } from "rxjs";
 import { cleanObject } from "../common/utils";
 import { LegislationService } from "../services";
@@ -54,9 +54,14 @@ export class RuleStrategy {
             fecha_actualizacion: new FormControl(index?.fecha_actualizacion ?? null),
             url: new FormControl(index?.url ?? ''),
           })
-        })
+        }),
+        rule?.fromBOE ? [RuleStrategy.requireAtLeastOneArticle] : []
       )
     });
+  }
+
+  private static requireAtLeastOneArticle(control: AbstractControl): ValidationErrors | null {
+    return (control as FormArray).length > 0 ? null : { required: true };
   }
 
   buildBOEIndex(articles: IArticle[]): IRuleIndex[] {

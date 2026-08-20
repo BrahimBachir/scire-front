@@ -130,20 +130,26 @@ export class RuleFormWrapperComponent implements OnInit {
 
   seachBoeRule() {
     let code: string = this.locateRuleForm.get('ruleCodeControl')?.value || '';
-    this.service.getMetadata({ ruleCode: code.trim() }).subscribe(source => {
-      if (source?.id) {
-        this.local_data = { ...source };
-        this.alreadyExists.set(true);
-        this.boeRuleLocated.set(false);
-      } else {
-        source.fromBOE = true;
-        this.local_data = source;
-        this.getRuleArticles();
-        this.alreadyExists.set(false);
-        this.boeRuleLocated.set(true);
+    this.service.getMetadata({ ruleCode: code.trim() }).subscribe({
+      next: source => {
+        if (source?.id) {
+          this.local_data = { ...source };
+          this.alreadyExists.set(true);
+          this.boeRuleLocated.set(false);
+          this.openSnackBar('Norma localizada!', 'Cerrar');
+        } else {
+          source.fromBOE = true;
+          this.local_data = source;
+          this.alreadyExists.set(false);
+          // Only reveal the form once the articles fetch has settled, so the
+          // form is never built from a rule whose boeIndex hasn't arrived yet.
+          this.loadRuleArticles(code);
+        }
+      },
+      error: () => {
+        this.openSnackBar('Error al localizar la norma en el BOE', 'Cerrar');
       }
-      this.openSnackBar('Norma localizada!', 'Cerrar');
-    })
+    });
   }
 
   cleanForm() {
@@ -153,15 +159,27 @@ export class RuleFormWrapperComponent implements OnInit {
     this.alreadyExists.set(null);
   }
 
-  getRuleArticles() {
-    let code: string = this.locateRuleForm.get('ruleCodeControl')?.value || '';
-
-    this.service.getIndex({ ruleCode: code.trim() }).subscribe(articles => {
-      if (articles && articles.length > 0) {
+  private loadRuleArticles(code: string) {
+    this.service.getIndex({ ruleCode: code.trim() }).subscribe({
+      next: articles => {
         this.local_data = {
           ...this.local_data,
-          boeIndex: articles
+          boeIndex: articles ?? []
         };
+        if (articles && articles.length > 0) {
+          this.openSnackBar('Norma localizada!', 'Cerrar');
+        } else {
+          this.openSnackBar('Norma localizada, pero no se pudieron recuperar sus artículos del BOE. Revísalos manualmente.', 'Cerrar');
+        }
+        this.boeRuleLocated.set(true);
+      },
+      error: () => {
+        this.local_data = {
+          ...this.local_data,
+          boeIndex: []
+        };
+        this.openSnackBar('Norma localizada, pero no se pudieron recuperar sus artículos del BOE. Revísalos manualmente.', 'Cerrar');
+        this.boeRuleLocated.set(true);
       }
     });
   }
