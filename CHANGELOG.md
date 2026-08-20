@@ -1,3 +1,16 @@
+# [2.5.0](https://github.com/BrahimBachir/scire-front/compare/v2.4.0...v2.5.0) (2026-08-20)
+
+
+### Bug Fixes
+
+* **rules:** fix BOE rule lookup UX and require at least one article ([e3895c1](https://github.com/BrahimBachir/scire-front/commit/e3895c16ea29ea3cc75e2e69ee4e175bf8c8b877))
+
+
+### Features
+
+* **learning:** add bulk course upload UI via Excel ([d6e1e19](https://github.com/BrahimBachir/scire-front/commit/d6e1e195ffadb86e17af5b2c4707fc089d23b0ad))
+* **learning:** add course categories and sections UI ([d95ebf3](https://github.com/BrahimBachir/scire-front/commit/d95ebf35305498d584b5aa9c4a75b8898cac1860))
+
 # [2.4.0](https://github.com/BrahimBachir/scire-front/compare/v2.3.0...v2.4.0) (2026-08-15)
 
 
