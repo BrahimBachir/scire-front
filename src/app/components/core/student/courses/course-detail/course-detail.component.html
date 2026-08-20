@@ -156,6 +156,25 @@
         </div>
       </ng-template>
     </mat-tab>
+    @if(canUploadData()) {
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="d-flex align-items-center">
+          <mat-icon class="d-flex align-items-center">
+            <i-tabler name="book" class="icon-20 m-r-8 d-flex"></i-tabler>
+          </mat-icon>
+        </div>
+        <p>
+          Cargar datos
+        </p>
+      </ng-template>
+      <ng-template matTabContent class="p-b-0">
+        <div class="table-responsive topics-container p-15 rounded b-1 m-b-15">
+          <app-course-upload></app-course-upload>
+        </div>
+      </ng-template>
+    </mat-tab>
+    }
   </mat-tab-group>
 </mat-card>
 }

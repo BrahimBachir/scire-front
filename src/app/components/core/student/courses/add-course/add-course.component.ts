@@ -11,6 +11,9 @@ import { AddCourseExtraInfoComponent } from "./extra-info/course-extra-info.comp
 import { CourseGeneralInfoComponent } from "./general-info/course-general-info.component";
 import { AddCoursePricingComponent } from "./pricing/course-pricing.component";
 import { CourseTopicsComponent } from "./topics/course-topics.component";
+import { CourseUploadComponent } from "./upload/course-upload.component";
+import { CourseCategoriesComponent } from "./categories/course-categories.component";
+import { CourseSectionsComponent } from "./sections/course-sections.component";
 import { ICourse } from "src/app/common/models/interfaces";
 
 @Component({
@@ -26,6 +29,9 @@ import { ICourse } from "src/app/common/models/interfaces";
     AddCourseExtraInfoComponent,
     CourseExercisesComponent,
     CourseTopicsComponent,
+    CourseUploadComponent,
+    CourseCategoriesComponent,
+    CourseSectionsComponent,
     AddCoursePricingComponent
   ],
   templateUrl: './add-course.component.html',

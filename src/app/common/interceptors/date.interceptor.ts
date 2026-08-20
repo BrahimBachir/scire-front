@@ -1,6 +1,6 @@
 import { HttpInterceptorFn, HttpRequest, HttpHandlerFn } from '@angular/common/http';
 export const dateInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
-  if (!req.body || typeof req.body !== 'object') {
+  if (!req.body || typeof req.body !== 'object' || req.body instanceof FormData || req.body instanceof Blob) {
     return next(req);
   }
 

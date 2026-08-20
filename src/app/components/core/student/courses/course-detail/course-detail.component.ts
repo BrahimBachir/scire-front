@@ -1,5 +1,9 @@
-import { Component, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/common/store/app.store';
+import { selectLogedUser, selectUserRole } from 'src/app/common/store/selectors';
+import { Roles } from 'src/app/common/enums/roles.enum';
 import { MatCardModule } from '@angular/material/card';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
@@ -29,6 +33,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { MaterialModule } from 'src/app/material.module';
 import { ContributorsContentComponent } from '../course-contributors/contributors-content.component';
 import { AppAnnouncementsComponent } from '../announcements/announcements.component';
+import { CourseUploadComponent } from '../add-course/upload/course-upload.component';
 @Component({
   selector: 'app-course-detail',
   templateUrl: './course-detail.component.html',
@@ -55,6 +60,7 @@ import { AppAnnouncementsComponent } from '../announcements/announcements.compon
     NgScrollbarModule,
     TranslateModule,
     AppAnnouncementsComponent,
+    CourseUploadComponent,
   ],
   styleUrl: './course-detail.component.scss'
 
@@ -78,6 +84,10 @@ export class AppCourseDetailComponent implements OnInit {
 
   safeHtml: SafeHtml = '';
 
+  private store = inject(Store<AppState>);
+  private currentUserId: number | null = null;
+  private currentUserRoleCode: string | null = null;
+
   constructor(
     activatedRouter: ActivatedRoute,
     public courseService: CourseService,
@@ -92,6 +102,24 @@ export class AppCourseDetailComponent implements OnInit {
   ngOnInit(): void {
     this.getCourseDetail();
     this.getCourseTopics();
+    this.store.select(selectLogedUser).subscribe((user) => this.currentUserId = user?.id ?? null);
+    this.store.select(selectUserRole).subscribe((role) => this.currentUserRoleCode = role?.code ?? null);
+  }
+
+  canUploadData(): boolean {
+    if (!this.course) {
+      return false;
+    }
+    if (this.course.type?.code === 'COM') {
+      return true;
+    }
+    if (this.course.type?.code === 'PROP') {
+      if (this.currentUserRoleCode === Roles.SUPER) {
+        return true;
+      }
+      return this.currentUserRoleCode === Roles.INSTRUCTOR && this.course.creatorId === this.currentUserId;
+    }
+    return false;
   }
 
   step = 0;

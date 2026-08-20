@@ -1,0 +1,148 @@
+<mat-card class="cardWithShadow shadow-none b-1 rounded">
+  <mat-card-content>
+    <h3 class="m-b-15">Cargar datos</h3>
+
+    <div class="row p-b-15 m-x-0">
+      <mat-form-field appearance="outline" class="col-md-4 p-x-0">
+        <mat-label>¿Qué quieres cargar?</mat-label>
+        <mat-select [value]="selectedType()" (selectionChange)="onTypeChange($event.value)">
+          @for (option of typeOptions; track option.value) {
+          <mat-option [value]="option.value">{{ option.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="upload-step p-b-15">
+      <h4>1 · Descarga la plantilla</h4>
+      <p class="text-muted">Incluye desplegables ya rellenos con las leyes, temas y bloques de este curso.</p>
+      <button mat-flat-button color="primary" (click)="downloadTemplate()">
+        <mat-icon>download</mat-icon>
+        Descargar plantilla
+      </button>
+    </div>
+
+    <div class="upload-step p-b-15">
+      <h4>2 · Sube el archivo relleno</h4>
+      <ngx-dropzone accept=".xlsx" [multiple]="false" (change)="onFilesAdded($event)">
+        <ngx-dropzone-label>
+          <div class="dropzone-label">
+            <mat-icon>upload_file</mat-icon>
+            <div>Arrastra tu archivo .xlsx aquí, o haz clic para seleccionarlo</div>
+            <div class="text-muted small">Debe ser la plantilla de este tipo · máx. 5 MB · máx. 2.000 filas</div>
+          </div>
+        </ngx-dropzone-label>
+      </ngx-dropzone>
+
+      @if(validating()){
+      <div class="d-flex align-items-center gap-10 p-t-10">
+        <mat-spinner diameter="20"></mat-spinner>
+        <span>Validando archivo…</span>
+      </div>
+      }
+    </div>
+
+    @if(selectedFile() && !validating() && report(); as rep){
+    <div class="upload-step p-b-15">
+      <div class="file-chip">
+        <mat-icon>description</mat-icon>
+        <span><strong>{{ selectedFile()?.name }}</strong></span>
+        <a href="javascript:void(0)" (click)="changeFile()">Cambiar archivo</a>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="num">{{ rep.totalRows }}</div>
+          <div class="lbl">Filas totales</div>
+        </div>
+        <div class="stat ok">
+          <div class="num">{{ rep.validRows }}</div>
+          <div class="lbl">Se importarán</div>
+        </div>
+        <div class="stat bad">
+          <div class="num">{{ rep.rejectedRows }}</div>
+          <div class="lbl">Se omitirán</div>
+        </div>
+      </div>
+
+      @if(rep.issues.length){
+      <table class="issues-table">
+        <thead>
+          <tr>
+            <th>Fila</th>
+            <th>Campo</th>
+            <th>Detalle</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(issue of rep.issues; track issue.row + (issue.field ?? '') + issue.message){
+          <tr>
+            <td class="mono">{{ issue.row }}</td>
+            <td class="mono">{{ issue.field }}</td>
+            <td>
+              <span class="sev" [class.error]="issue.severity === 'ERROR'" [class.warn]="issue.severity === 'WARNING'">
+                {{ issue.severity === 'ERROR' ? 'Error' : 'Aviso' }}
+              </span>
+              {{ issue.message }}
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+      }
+
+      <div class="d-flex justify-content-end gap-10 p-t-10">
+        <button mat-button (click)="changeFile()">Cancelar</button>
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="hasBlockingIssues() || submitting()"
+          (click)="confirmImport()">
+          {{ submitting() ? 'Enviando…' : 'Importar ' + rep.validRows + ' filas válidas' }}
+        </button>
+      </div>
+    </div>
+    }
+
+    <div class="upload-step">
+      <h4>Historial de cargas</h4>
+      @if(jobs().length === 0){
+      <p class="text-muted">Todavía no se ha cargado ningún archivo en este curso.</p>
+      } @else {
+      <table class="job-table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Archivo</th>
+            <th>Estado</th>
+            <th>Resultado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(job of jobs(); track job.id){
+          <tr>
+            <td>{{ job.createdAt | date: 'short' }}</td>
+            <td>{{ typeLabel(job.type) }}</td>
+            <td class="mono">{{ job.fileName }}</td>
+            <td>
+              @switch (job.status) {
+                @case ('PENDING') {<span class="pill progress">Pendiente</span>}
+                @case ('IN_PROGRESS') {<span class="pill progress">En curso</span>}
+                @case ('COMPLETED') {<span class="pill done">Completada</span>}
+                @case ('COMPLETED_WITH_ERRORS') {<span class="pill warn">Con avisos</span>}
+                @case ('FAILED') {<span class="pill bad">Fallida</span>}
+              }
+            </td>
+            <td class="small">
+              @if(job.status === 'PENDING' || job.status === 'IN_PROGRESS'){ — }
+              @else { {{ job.importedRows }}/{{ job.totalRows }} filas }
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>
