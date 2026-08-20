@@ -52,6 +52,8 @@ import { MyPaginatorIntl } from './services';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { dateInterceptor, refreshInterceptor } from './common/interceptors';
 import { provideAppIllustrations } from './illustrations/providers/illustrations-app.provider';
+import { MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/dialog';
+import { Overlay } from '@angular/cdk/overlay';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -113,6 +115,11 @@ export const appConfig: ApplicationConfig = {
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
     { provide: MAT_DATE_FORMATS, useValue: SPANISH_DATE_FORMATS },
-    { provide: LOCALE_ID, useValue: 'es' }
+    { provide: LOCALE_ID, useValue: 'es' },
+    {
+      provide: MAT_DIALOG_SCROLL_STRATEGY,
+      useFactory: (overlay: Overlay) => () => overlay.scrollStrategies.noop(),
+      deps: [Overlay],
+    },
   ],
 };
