@@ -31,7 +31,9 @@ export const Routes = {
     },
     learning: {
       categories: 'learning/categories',
+      categoriesByCourse: 'learning/categories/course/:courseId',
       sections: 'learning/sections',
+      sectionsByCourse: 'learning/sections/course/:courseId',
       topics: {
         base: 'learning/topics',
         by_course: 'learning/topics/course/:courseId',
@@ -105,6 +107,12 @@ export const Routes = {
         un_join: 'learning/courses/:id/un-join',
         favourite: 'learning/courses/:id/favourite',
         is_favourite: 'learning/courses/:id/is-favourite',
+        bulkUpload: {
+          template: 'learning/courses/:id/bulk-upload/template',
+          validate: 'learning/courses/:id/bulk-upload/validate',
+          jobs: 'learning/courses/:id/bulk-upload/jobs',
+          job: 'learning/courses/:id/bulk-upload/jobs/:jobId',
+        },
         progress: {
           base: 'learning/courses/progress',
           course: 'learning/courses/progress/:courseId',
