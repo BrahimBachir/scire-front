@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/BrahimBachir/scire-front/compare/v2.5.1...v2.6.0) (2026-08-20)
+
+
+### Features
+
+* **filters:** auto-select single-option independent dropdowns ([4ef173f](https://github.com/BrahimBachir/scire-front/commit/4ef173fdfe3900321e67afc7bc79a755f9752b38))
+
 ## [2.5.1](https://github.com/BrahimBachir/scire-front/compare/v2.5.0...v2.5.1) (2026-08-20)
 
 
