@@ -44,7 +44,12 @@ export class CourseCategryFilterComponent extends BaseFilterDirective<ICourseCat
     this.service.getCategories().subscribe(data => {
       this.items = data;
       this.filteredItems = data;
-      this.syncInternalControl();
+
+      if (this.value != null) {
+        this.syncInternalControl();
+        return;
+      }
+      this.autoSelectIfSingleOption();
     });
   }
 }

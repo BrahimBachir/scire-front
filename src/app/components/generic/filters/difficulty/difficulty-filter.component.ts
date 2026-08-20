@@ -36,5 +36,6 @@ export class DifficultyFilterComponent extends BaseFilterDirective<IDifficulty> 
       this.syncInternalControl();
       return;
     }
+    this.autoSelectIfSingleOption();
   }
 }

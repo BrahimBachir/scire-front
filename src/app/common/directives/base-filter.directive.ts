@@ -114,6 +114,18 @@ export abstract class BaseFilterDirective<T extends IFilterItem> implements Cont
     this.control.setValue(selected as any, { emitEvent: false });
   }
 
+  // Auto-selects the only available item for dropdowns that don't depend on
+  // another element (e.g. a sibling filter's value driving `parentId`).
+  // Cascading filters (topic-section, topic, article, ...) must not call this.
+  protected autoSelectIfSingleOption(): void {
+    if (this.control.disabled || this.items.length !== 1) {
+      return;
+    }
+
+    this.onSelected(this.items[0]);
+    this.syncInternalControl();
+  }
+
   private filterLogic(val: T | string | null): T[] {
     const text = typeof val === 'string' ? val.toLowerCase() : val?.description.toLowerCase() || '';
     return this.items.filter(i => i.description.toLowerCase().includes(text));

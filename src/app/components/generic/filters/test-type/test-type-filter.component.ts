@@ -36,5 +36,6 @@ export class TestTypeFilterComponent extends BaseFilterDirective<ITestType> {
       this.syncInternalControl();
       return;
     }
+    this.autoSelectIfSingleOption();
   }
 }

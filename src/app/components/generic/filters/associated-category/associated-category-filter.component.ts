@@ -44,5 +44,6 @@ export class AssociatedCategoryFilterComponent extends BaseFilterDirective<ITopi
       this.syncInternalControl();
       return;
     }
+    this.autoSelectIfSingleOption();
   }
 }

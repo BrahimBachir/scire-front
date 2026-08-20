@@ -61,6 +61,8 @@ export class RuleFilterComponent extends BaseFilterDirective<IRule> {
       return;
     }
 
+    this.autoSelectIfSingleOption();
+
     /* if (this.mode === 'CREATING') {
       this.state.select(getSelectedRule).subscribe(rule => {
         if (rule) {

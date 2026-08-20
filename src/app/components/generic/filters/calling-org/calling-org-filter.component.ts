@@ -44,7 +44,12 @@ export class CallerFilterComponent extends BaseFilterDirective<ICaller> {
     this.service.getCaller().subscribe(data => {
       this.items = data;
       this.filteredItems = data;
-      this.syncInternalControl();
+
+      if (this.value != null) {
+        this.syncInternalControl();
+        return;
+      }
+      this.autoSelectIfSingleOption();
     });
   }
 }

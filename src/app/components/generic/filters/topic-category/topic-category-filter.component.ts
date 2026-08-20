@@ -36,5 +36,6 @@ export class TopicCategoryFilterComponent extends BaseFilterDirective<ITopicCate
       this.syncInternalControl();
       return;
     }
+    this.autoSelectIfSingleOption();
   }
 }

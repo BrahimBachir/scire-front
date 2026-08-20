@@ -61,15 +61,18 @@ export class CourseTypeFilterComponent extends BaseFilterDirective<ICourseType> 
 
     if (this.mode !== 'FILTERING') {
       const type = this.items.find(s => s.code === getDefaultCourseType(this.roleCode));
-      
-      if (!type) return;
-      
-      this.writeValue(type.id);
-      this.onChange(type.id);
 
-      if (this.roleCode && this.roleCode !== 'SUPER')
-        this.control.disable({ emitEvent: false });
+      if (type) {
+        this.writeValue(type.id);
+        this.onChange(type.id);
+
+        if (this.roleCode && this.roleCode !== 'SUPER')
+          this.control.disable({ emitEvent: false });
+        return;
+      }
     }
+
+    this.autoSelectIfSingleOption();
   }
 }
 /* export class CourseTypeFilterComponent implements ControlValueAccessor, OnInit {

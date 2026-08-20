@@ -58,5 +58,6 @@ export class ExerciceFilterComponent extends BaseFilterDirective<IExercise> {
       this.syncInternalControl();
       return;
     }
+    this.autoSelectIfSingleOption();
   }
 }
