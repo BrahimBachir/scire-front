@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/BrahimBachir/scire-front/compare/v2.8.0...v2.9.0) (2026-08-21)
+
+
+### Features
+
+* **i18n:** wire up a working language switcher and migrate shared UI to translation keys ([ce4fabe](https://github.com/BrahimBachir/scire-front/commit/ce4fabe7103d238717d1b5f4eda51f46013b1fcf))
+
 # [2.8.0](https://github.com/BrahimBachir/scire-front/compare/v2.7.1...v2.8.0) (2026-08-21)
 
 
