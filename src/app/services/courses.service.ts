@@ -92,6 +92,31 @@ export class CourseService {
     return this.http.post(URL,{favourite});
   }
 
+  public submitForReview(courseId: number): Observable<ICourse> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.submitForReview}`.replace(':id', courseId.toString());
+    return this.http.post<ICourse>(URL, {});
+  }
+
+  public publish(courseId: number): Observable<ICourse> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.publish}`.replace(':id', courseId.toString());
+    return this.http.post<ICourse>(URL, {});
+  }
+
+  public approve(courseId: number): Observable<ICourse> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.approve}`.replace(':id', courseId.toString());
+    return this.http.post<ICourse>(URL, {});
+  }
+
+  public reject(courseId: number): Observable<ICourse> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.reject}`.replace(':id', courseId.toString());
+    return this.http.post<ICourse>(URL, {});
+  }
+
+  public archive(courseId: number): Observable<ICourse> {
+    let URL = `${environment.api_base_url}${this.routes.api.learning.courses.archive}`.replace(':id', courseId.toString());
+    return this.http.post<ICourse>(URL, {});
+  }
+
   public isFavourite(courseId: number): Observable<boolean>  {
     let URL = `${environment.api_base_url}${this.routes.api.learning.courses.is_favourite}`.replace(':id', courseId.toString());
     return this.http.get<boolean>(URL);

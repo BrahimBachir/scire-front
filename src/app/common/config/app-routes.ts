@@ -107,6 +107,11 @@ export const Routes = {
         un_join: 'learning/courses/:id/un-join',
         favourite: 'learning/courses/:id/favourite',
         is_favourite: 'learning/courses/:id/is-favourite',
+        submitForReview: 'learning/courses/:id/submit-for-review',
+        publish: 'learning/courses/:id/publish',
+        approve: 'learning/courses/:id/approve',
+        reject: 'learning/courses/:id/reject',
+        archive: 'learning/courses/:id/archive',
         bulkUpload: {
           template: 'learning/courses/:id/bulk-upload/template',
           validate: 'learning/courses/:id/bulk-upload/validate',

@@ -15,12 +15,12 @@ export const RoleRoutes: Routes = [
     canActivate: [RoleRedirectGuard],
     children: [],
   },
-  /*   {
+  {
     path: FRONT_ROUTE_TOKEN_SUPER,
     data: { role: Roles.SUPER },
-    loadChildren: () => import('./../pages/forms/forms.routes').then((m) => m.FormsRoutes),
+    loadChildren: () => import('./super/super.routes').then((m) => m.SuperRoutes),
     canMatch: [AuthGuard, RoleGuard],
-  }, */
+  },
   {
     path: FRONT_ROUTE_TOKEN_STUDENT,
     data: { role: Roles.STUDENT },

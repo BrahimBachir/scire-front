@@ -26,6 +26,10 @@ import { PageEvent } from '@angular/material/paginator';
 import { AppFiltersOrchestratorComponent } from 'src/app/components/generic/filters/orchestrator/filters-orchestrator.component';
 import { AppDeleteDialogComponent } from 'src/app/components/generic/dialogs/delete-dialog/delete-dialog.component';
 import { MyOwnContentPipe } from 'src/app/common/pipe/my-own-content.pipe';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/common/store/app.store';
+import { selectUserRole } from 'src/app/common/store/selectors';
+import { FRONT_ROUTE_TOKEN_SUPER } from 'src/app/common/config';
 
 
 //TODO: 3. Actions (create, edit, delete --> decide logic)
@@ -94,10 +98,12 @@ export class AppCourseListComponent implements OnInit {
   isMobileView = false;
 
   private showOnlyMyCourses: boolean = false;
+  protected isSuper: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private store: Store<AppState>,
   ) {
     const media = inject(MediaMatcher);
     this.mobileQuery = media.matchMedia('(max-width: 1199px)');
@@ -106,6 +112,8 @@ export class AppCourseListComponent implements OnInit {
     this.mobileQuery.addEventListener('change', (e) => {
       this.isMobileView = e.matches;
     });
+
+    this.store.select(selectUserRole).subscribe(role => this.isSuper = role.code === 'SUPER');
 
     this.showOnlyMyCourses = !!this.route.snapshot.data['myCourses'];
 
@@ -129,6 +137,10 @@ export class AppCourseListComponent implements OnInit {
   create() {
     this.router.navigate([`${this.route?.snapshot.data['role'].toLowerCase()}/courses/new`]);
 
+  }
+
+  goToModeration() {
+    this.router.navigate([`${FRONT_ROUTE_TOKEN_SUPER}/moderation`]);
   }
 
   ngOnInit(): void {

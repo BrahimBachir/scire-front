@@ -1,44 +1,28 @@
-<mat-form-field class="w-100" appearance="outline">
-  <mat-label>Estado</mat-label>
-  <input matInput [formControl]="control" [matAutocomplete]="auto" (blur)="onTouched()" />
-  @if(control.enabled){
-  <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
-    <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
-  </mat-icon>
-  }
-  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
-    @for(item of filteredItems; track item.code) {
-    <mat-option [value]="item" (onSelectionChange)="onSelected(item)">
-      {{ item.description }}
-    </mat-option>
-    }
-  </mat-autocomplete>
-  @if (control.hasError('required')) {
-  <mat-error class="f-s-12">Requerido. *</mat-error>
-  }
-</mat-form-field>
+<div class="d-flex flex-column">
+  <mat-chip-set>
+    <mat-chip [disabled]="true" class="f-w-600">
+      {{ currentStatus?.description || 'Borrador' }}
+    </mat-chip>
+  </mat-chip-set>
 
-
-<!-- <form #form="ngForm">
-  <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Estado</mat-label>
-    <input type="text" placeholder="Buscar estado" aria-label="Buscar estado" matInput id="status" name="status"
-      [formControl]="control" [matAutocomplete]="StatusAuto" [matTooltip]="selectedItem()?.description" />
-    @if(control.enabled){
-      <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
-        <i-tabler name="x" class="icon-15 d-flex justify-content-center align-items-center"></i-tabler>
-      </mat-icon>
+  @if (mode === 'EDITING') {
+  <div class="d-flex flex-column gap-2 m-t-15">
+    @if (canSubmitForReview) {
+    <button mat-flat-button color="primary" type="button" [disabled]="processing" (click)="submitForReview()">
+      Enviar a revisión
+    </button>
     }
-    <mat-autocomplete autoActiveFirstOption #StatusAuto="matAutocomplete" [displayWith]="displayName"
-      (optionSelected)="onSelected($event)">
-      @for(item of filteredItems(); track item.code) {
-      <mat-option [value]="item">
-        {{ item.description }}
-      </mat-option>
-      }
-    </mat-autocomplete>
-    @if(required()){
-      <mat-hint [class]="control.errors?.['required'] ? 'text-error' : ''" >Elemento requerido.*</mat-hint>
+    @if (canPublish) {
+    <button mat-flat-button color="primary" type="button" [disabled]="processing" (click)="publish()">
+      Publicar
+    </button>
     }
-  </mat-form-field>
-</form> -->
+    @if (canArchive) {
+    <button mat-stroked-button color="warn" type="button" class="m-t-8" [disabled]="processing"
+      (click)="archive()">
+      Archivar
+    </button>
+    }
+  </div>
+  }
+</div>

@@ -45,6 +45,7 @@ export interface IQueryingDto {
   sectionId?: number | null | undefined;
   topicCategoryId?: number | null | undefined;
   testTypeId?: number | null | undefined;
+  statusCode?: string;
 }
 
 export interface IFilters {

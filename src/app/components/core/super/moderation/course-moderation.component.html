@@ -1,0 +1,40 @@
+<mat-card class="cardWithShadow m-b-0">
+  <mat-card-header class="b-b-1">
+    <mat-card-title>Cursos pendientes de moderación</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="module-list">
+    @if(courses) {
+    <div class="row">
+      @for(course of courses; track course.id) {
+      <div class="col-lg-6">
+        <mat-card class="shadow-none b-1 m-b-15">
+          <mat-card-content class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="f-w-600">{{ course.description }}</div>
+              <div class="f-s-12">{{ course.callerDescription }} · {{ course.typeDescription }}</div>
+            </div>
+            <div class="d-flex gap-10">
+              <button mat-flat-button color="primary" type="button" [disabled]="processingId === course.id"
+                (click)="approve(course)">
+                Aprobar
+              </button>
+              <button mat-stroked-button color="warn" type="button" [disabled]="processingId === course.id"
+                (click)="reject(course)">
+                Rechazar
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      } @empty {
+      <app-banner-nof-found class="w-100" bannerText="No hay cursos pendientes de moderación."
+        bannerTitle="Todo al día."></app-banner-nof-found>
+      }
+    </div>
+    } @else {
+    <div class="h-100 d-flex align-items-center justify-content-center p-10">
+      <mat-spinner></mat-spinner>
+    </div>
+    }
+  </mat-card-content>
+</mat-card>

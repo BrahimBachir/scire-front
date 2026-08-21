@@ -5,7 +5,13 @@
   </mat-card-content>
 </mat-card>
 <mat-card class="cardWithShadow m-b-0">
-  <mat-card-header class="b-b-1 justify-content-end">
+  <mat-card-header class="b-b-1 justify-content-end gap-10">
+    @if(isSuper) {
+    <button mat-mini-fab class="bg-secondary text-white" matTooltip="Moderación" aria-label="Moderación"
+      (click)="goToModeration()">
+      <i-tabler name="gavel" class="icon-20 d-flex"></i-tabler>
+    </button>
+    }
     <button mat-mini-fab class="bg-primary text-white" [matTooltip]="'BUTTONS.CREATE.COURSE' | translate"
       [aria-label]="'BUTTONS.CREATE.COURSE' | translate" (click)="create()">
       <i-tabler name="plus" class="icon-20 d-flex"></i-tabler>
