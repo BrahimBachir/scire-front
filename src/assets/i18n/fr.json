@@ -286,19 +286,73 @@
   },
   "ERRORS": {
     "NOT_FOUND": {
-
+      "RULES": "Loi introuvable.",
+      "ARTICLES": "Article introuvable.",
+      "FLASHCARDS": "Flashcard introuvable.",
+      "ANNOUNCEMENTS": "Annonce introuvable.",
+      "REVIEWS": "Le contenu que vous essayez d'évaluer est introuvable.",
+      "USERS": "Utilisateur introuvable.",
+      "COURSES": "Cours introuvable.",
+      "QUESTIONS": "Question introuvable.",
+      "TESTS": "Test introuvable.",
+      "NOTES": "Note introuvable.",
+      "BLOCKS": "Bloc du cours introuvable.",
+      "PROGRESS": "Enregistrement de progression introuvable.",
+      "GENDERS": "Genre introuvable.",
+      "COUNTRIES": "Pays introuvable.",
+      "EXERCISES": "Exercice introuvable.",
+      "VIDEOS": "Vidéo introuvable.",
+      "DIAGRAMS": "Diagramme introuvable.",
+      "PLANS": "Forfait introuvable.",
+      "ROLES": "Rôle introuvable.",
+      "CATEGORIES": "Catégorie introuvable.",
+      "SECTIONS": "Section introuvable.",
+      "TOPICS": "Sujet introuvable.",
+      "BULK_UPLOAD": "Tâche d'import en masse introuvable."
     },
-    "AI": {
-
+    "VALIDATION": {
+      "RULES": "Un paramètre requis est manquant pour cette loi.",
+      "ARTICLES": "Un paramètre requis est manquant pour cet article.",
+      "FLASHCARDS": "Vous devez sélectionner au moins un article pour cette flashcard.",
+      "REVIEWS": "Données d'évaluation invalides.",
+      "COMMENTS": "Un paramètre requis est manquant pour ce commentaire.",
+      "REACTIONS": "Données de réaction invalides.",
+      "USERS": "Données utilisateur invalides.",
+      "COURSES": "Cette action n'est pas autorisée pour ce cours.",
+      "TESTS": "Pas assez de questions ne correspondent aux critères du test.",
+      "NOTES": "Un paramètre requis est manquant pour cette note.",
+      "PROGRESS": "Un paramètre requis est manquant pour charger la progression.",
+      "VIDEOS": "Vous devez sélectionner au moins un article pour cette vidéo.",
+      "DIAGRAMS": "Vous devez sélectionner au moins un article pour ce diagramme.",
+      "PLANS": "Ce forfait n'est pas disponible pour le moment.",
+      "PAYMENTS": "Le paiement n'a pas pu être traité.",
+      "AI": "Le service d'IA n'a pas pu générer de réponse.",
+      "CATEGORIES": "Une catégorie est requise pour créer cette section.",
+      "BULK_UPLOAD": "Le fichier importé n'est pas valide.",
+      "EMAIL": "L'adresse e-mail est incorrecte ou n'existe pas."
     },
-    "LOGIN": {
-
+    "CONFLICT": {
+      "RULES": "Une loi avec ce code existe déjà.",
+      "REVIEWS": "Vous avez déjà évalué ce contenu.",
+      "CATEGORIES": "Une catégorie avec ce nom existe déjà.",
+      "SECTIONS": "Une section avec ce nom existe déjà dans cette catégorie.",
+      "TOPICS": "Un sujet avec cette description existe déjà.",
+      "EMAIL": "Cette adresse e-mail est déjà enregistrée."
     },
-    "USER": {
-
+    "FORBIDDEN": {
+      "USERS": "Vous n'avez pas la permission de modifier cet utilisateur.",
+      "PLANS": "Cette fonctionnalité n'est pas disponible avec votre forfait actuel."
     },
-    "PRICING": {
-      "PLAN_LIMIT_REACHED": "Limite du plan atteinte"
+    "UNAUTHORIZED": {
+      "TOKEN": "Votre session a expiré. Veuillez vous reconnecter.",
+      "CREDENTIALS": "E-mail ou mot de passe incorrect.",
+      "ACCOUNT": "Votre compte n'est pas encore actif.",
+      "LOGIN_ATTEMPTS": "Trop de tentatives échouées. Votre compte a été suspendu temporairement."
+    },
+    "INTERNAL": {
+      "RULES": "Impossible de récupérer les données officielles de cette loi pour le moment.",
+      "ARTICLES": "Impossible de récupérer les données officielles de cet article pour le moment.",
+      "UNKNOWN": "Une erreur est survenue. Veuillez réessayer."
     }
   },
   "SUCCESS": {
