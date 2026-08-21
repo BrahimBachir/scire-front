@@ -28,6 +28,7 @@ export class CourseGeneralInfoComponent implements OnInit {
   modeToSend!: IFieldMode;
   @Input() isEditMode = false;
   @Input() courseId: number | null = null;
+  @Input() creatorId: number | null = null;
   editorControl = new FormControl();
 
   editor = new Editor();

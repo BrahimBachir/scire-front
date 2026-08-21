@@ -110,5 +110,8 @@ export function buildParams(queryingDto: IQueryingDto, params: HttpParams): Http
     if (queryingDto.articleId && queryingDto.articleId >= 0)
         params = params.append('articleId', queryingDto.articleId);
 
+    if (queryingDto.statusCode && queryingDto.statusCode.trim() !== '')
+        params = params.append('statusCode', queryingDto.statusCode.trim());
+
     return params;
 }

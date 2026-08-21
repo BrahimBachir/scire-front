@@ -2,7 +2,8 @@
   <app-course-general-info
     [form]="form.controls.general"
     [isEditMode]="isEditMode"
-    [courseId]="courseId">
+    [courseId]="courseId"
+    [creatorId]="course?.creatorId ?? null">
   </app-course-general-info>
 
     <app-course-extra-info

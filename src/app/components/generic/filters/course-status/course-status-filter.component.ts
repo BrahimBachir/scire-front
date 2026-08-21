@@ -24,7 +24,7 @@ import { IconModule } from 'src/app/icon/icon.module';
 import { BaseFilterDirective } from 'src/app/common/directives';
 import { AppState } from 'src/app/common/store/app.store';
 import { Store } from '@ngrx/store';
-import { selectUserRole } from 'src/app/common/store/selectors';
+import { selectLogedUser, selectUserRole } from 'src/app/common/store/selectors';
 
 @Component({
   selector: 'course-status-filter',
@@ -49,14 +49,20 @@ export class CourseStatusFilterComponent extends BaseFilterDirective<ICourseStat
   // The course being edited. Required in EDITING mode so the workflow
   // action buttons (submit for review / publish / archive) know what to act on.
   @Input() courseId: number | null = null;
+  // The course's creator. Only the creator (not other contributors) may submit it for review.
+  @Input() creatorId: number | null = null;
 
   roleCode: string = '';
+  userId: number | null = null;
   processing = false;
 
   private service = inject(CourseService);
   private store = inject(Store<AppState>)
     .select(selectUserRole)
     .subscribe(role => this.roleCode = role.code || '');
+  private userStore = inject(Store<AppState>)
+    .select(selectLogedUser)
+    .subscribe(user => this.userId = user?.id ?? null);
 
   loadData(): void {
     this.service.getStatuses().subscribe(data => {
@@ -74,8 +80,12 @@ export class CourseStatusFilterComponent extends BaseFilterDirective<ICourseStat
     return this.roleCode === 'SUPER';
   }
 
+  get isCreator(): boolean {
+    return this.creatorId != null && this.userId != null && this.creatorId === this.userId;
+  }
+
   get canSubmitForReview(): boolean {
-    return this.mode === 'EDITING' && this.currentStatus?.code === 'DRAFT';
+    return this.mode === 'EDITING' && this.currentStatus?.code === 'DRAFT' && this.isCreator;
   }
 
   get canPublish(): boolean {

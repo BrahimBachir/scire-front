@@ -46,7 +46,7 @@ export class AddCourseComponent implements OnInit {
   courseId = Number(this.route.snapshot.paramMap.get('courseId')) || null;
   isEditMode = !!this.courseId;
 
-  course!: ICourse;
+  course: ICourse | null = null;
 
   form = this.fb.group({
     general: this.fb.group({
@@ -97,6 +97,7 @@ export class AddCourseComponent implements OnInit {
   private loadCourse(): void {
     if (this.courseId)
       this.service.getOne(this.courseId).subscribe(course => {
+        this.course = course;
         this.form.patchValue({
           general: {
             id: course.id,
