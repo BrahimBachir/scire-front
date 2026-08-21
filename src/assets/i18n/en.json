@@ -105,5 +105,203 @@
     "FIRST_PAGE": "First page",
     "LAST_PAGE": "Last page",
     "OF": "of"
+  },
+  "ACTIONS":{
+    "CREATE": "Create",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "VIEW": "View",
+    "NEXT": "Next",
+    "PREVIOUS": "Previous",
+    "NEXT_UNANSWERED": "Next unanswered",
+    "PREVIOUS_UNANSWERED": "Previous unanswered",
+    "PLAY": "Play",
+    "PAUSE": "Pause",
+    "STOP": "Stop",
+    "FINISH": "Finish",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "START": "Start",
+    "END": "End",
+    "SUBMIT": "Submit",
+    "RESET": "Reset",
+    "CLOSE": "Close",
+    "RESUME": "Resume",
+    "MARK_FOR_REVIEW": "Mark for review",
+    "LOGOUT": "Log out",
+    "SUBMIT_FOR_REVIEW": "Submit for review",
+    "PUBLISH": "Publish",
+    "ARCHIVE": "Archive",
+    "FILTER": "Filter",
+    "CLEAR_FILTERS": "Clear filters"
+  },
+  "NOT_FOUND": {
+    "NOTES": "No notes were found"
+  },
+  "NO_ITEMS": {
+    "NOTES": "You haven't created any notes yet!"
+  },
+  "TITLES": {
+    "NOTES": {
+      "ALL": "Notes",
+      "MY_NOTES": "My notes"
+    },
+    "TEST": {
+      "QUESTIONS": "Questions"
+    }
+  },
+  "MENU": {
+    "PROFILE": "My profile",
+    "MY_COURSES": "My courses",
+    "ACCOUNT": "Account",
+    "FAQ": "FAQs"
+  },
+  "NAV": {
+    "CAPTIONS": {
+      "GENERAL": "General",
+      "COURSE": "Course"
+    },
+    "COURSES": "Courses",
+    "MY_COURSES": "My courses",
+    "MODULES": "Modules",
+    "COURSE_DETAILS": "Course details",
+    "SYLLABUS": "Syllabus",
+    "STATISTICS": "Statistics",
+    "TESTS": "Tests",
+    "FLASHCARDS": "Flashcards",
+    "NOTES": "Notes",
+    "DIAGRAMS": "Diagrams",
+    "VIDEOS": "Videos",
+    "KANBAN": "Kanban",
+    "CALENDAR": "Calendar"
+  },
+  "DIALOGS": {
+    "DELETE": {
+      "TITLE": "Delete item",
+      "CONFIRM_SINGULAR": "Are you sure you want to delete this item?",
+      "CONFIRM_PLURAL": "Are you sure you want to delete these items?",
+      "CONFIRM_BUTTON": "Delete"
+    },
+    "WARN": {
+      "TITLE": "Delete confirmation",
+      "CONFIRM_SINGULAR": "Would you like to delete this item?",
+      "CONFIRM_PLURAL": "Would you like to delete these items?",
+      "CANCEL_BUTTON": "Cancel",
+      "CONFIRM_BUTTON": "Delete"
+    }
+  },
+  "LABELS": {
+    "ACTIONS": "Actions",
+    "NOTES": {
+      "FAVORITE": "Favorite",
+      "RULE": "Rule",
+      "ARTICLE": "Article",
+      "COLOR": "Color"
+    },
+    "TOPIC": {
+      "NAME": "Name",
+      "code": "Code",
+      "DESCRIPTION": "Description",
+      "CATEGORY": "Category",
+      "SECTION": "Section",
+      "ACTIONS": "Actions"
+    },
+    "ARTICLE": {
+      "DESCRIPTION": "Description",
+      "BOOK": "Book",
+      "TITLE": "Title",
+      "CHAPTER": "Chapter",
+      "SECTION": "Section",
+      "SUBSECTION": "Subsection",
+      "CONTENT": "Content",
+      "ACTIONS": "Actions"
+    },
+    "TEST": {
+    },
+    "VALIDATION": {
+      "REQUIRED_FIELD": "Required field. *"
+    },
+    "YEAR_PICKER": "Call year",
+    "YEAR_PICKER_PLACEHOLDER": "Select a year",
+    "COURSE_STATUS": {
+      "DRAFT": "Draft"
+    },
+    "FILTERS": {
+      "SHOW_MORE": "Show more filters",
+      "SHOW_LESS": "Show fewer filters",
+      "CATEGORY": "Category",
+      "TYPE": "Type",
+      "EXERCISE_TYPE": "Exercise type",
+      "QUESTION_TYPE": "Question type",
+      "RULE_TYPE": "Rule type",
+      "RULE_GAZETTE": "Rule gazette",
+      "RULE_AMBIT": "Rule scope",
+      "RULE": "Legislation",
+      "ARTICLE": "Article",
+      "ARTICLES": "Articles",
+      "SECTION": "Section",
+      "CALLING_ORG": "Calling body",
+      "DIFFICULTY": "Difficulty",
+      "TOPIC": "Topic",
+      "SEARCH_LABEL": "Search",
+      "SEARCH_PLACEHOLDER": "Search item..."
+    }
+  },
+  "BUTTONS": {
+    "CREATE": {
+      "NOTES": "Create note",
+      "FLASHCARDS": "Create flashcard",
+      "VIDEO": "Create video",
+      "QUESTION": "Create question",
+      "DIAGRAM": "Create diagram",
+      "AI": "Create item with AI",
+      "MODULE": "Create module",
+      "TEST": "Create test",
+      "COURSE": "Create course",
+      "COMMENT": "Create comment",
+      "SIMULATOR": "Go to simulator"
+    },
+    "EDIT": {
+      "NOTES": "Edit note",
+      "FLASHCARDS": "Edit flashcard",
+      "VIDEO": "Edit video",
+      "QUESTION": "Edit question",
+      "DIAGRAM": "Edit diagram",
+      "AI": "Edit item with AI",
+      "MODULE": "Edit module",
+      "COURSE": "Edit course",
+      "COMMENT": "Edit comment"
+    },
+    "DELETE": {
+      "NOTES": "Delete note",
+      "FLASHCARDS": "Delete flashcard",
+      "VIDEO": "Delete video",
+      "QUESTION": "Delete question",
+      "DIAGRAM": "Delete diagram",
+      "AI": "Delete item with AI",
+      "MODULE": "Delete module",
+      "COURSE": "Delete course",
+      "COMMENT": "Delete comment"
+    }
+  },
+  "ERRORS": {
+    "NOT_FOUND": {
+
+    },
+    "AI": {
+
+    },
+    "LOGIN": {
+
+    },
+    "USER": {
+
+    },
+    "PRICING": {
+      "PLAN_LIMIT_REACHED": "Plan limit reached"
+    }
+  },
+  "SUCCESS": {
+    "DELETED": "Item successfully deleted!"
   }
 }

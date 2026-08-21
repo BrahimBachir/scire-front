@@ -1,9 +1,9 @@
 <mat-form-field appearance="outline" class="w-100">
-  <mat-label>Buscar</mat-label>
-  <input 
-    matInput 
-    type="text" 
-    placeholder="Buscar elemento..." 
+  <mat-label>{{ 'LABELS.FILTERS.SEARCH_LABEL' | translate }}</mat-label>
+  <input
+    matInput
+    type="text"
+    [placeholder]="'LABELS.FILTERS.SEARCH_PLACEHOLDER' | translate"
     [formControl]="control"
     (blur)="onTouched()" />
   

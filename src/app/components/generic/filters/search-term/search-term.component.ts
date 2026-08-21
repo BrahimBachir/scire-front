@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Component, effect, forwardRef, model, OnDestroy, OnInit, signal } from '@angular/core';
 import { IconModule } from 'src/app/icon/icon.module';
 import { Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'search-term-filter',
@@ -18,6 +19,7 @@ import { Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
     ReactiveFormsModule,
     MatIconModule,
     MatInputModule,
+    TranslateModule,
   ],
   providers: [
     {

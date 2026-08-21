@@ -1,0 +1,307 @@
+{
+  "Analytical": "Analítica",
+  "eCommerce": "Comerç electrònic",
+  "Chat": "Xat",
+  "Calendar": "Calendari",
+  "Email": "Correu electrònic",
+  "Contacts": "Contactes",
+  "Courses": "Cursos",
+  "Employee": "Empleats",
+  "Notes": "Notes",
+  "Tickets": "Tiquets",
+  "Invoice": "Factura",
+  "Blog": "Blog",
+  "Posts": "Publicacions",
+  "Detail": "Detall",
+  "ToDo": "Tasques pendents",
+  "Taskboard": "Tauler de tasques",
+  "Roll Base Access": "Accés basat en rols",
+  "Treeview": "Vista d'arbre",
+  "Pricing": "Preus",
+  "Account Setting": "Configuració del compte",
+  "FAQ": "Preguntes freqüents",
+  "Landingpage": "Pàgina d'inici",
+  "Widgets": "Widgets",
+  "Cards": "Targetes",
+  "Banners": "Banners",
+  "Charts": "Gràfics",
+  "Form elements": "Elements de formulari",
+  "Autocomplete": "Autocompletar",
+  "Button": "Botó",
+  "Checkbox": "Casella de selecció",
+  "Radio": "Ràdio",
+  "Datepicker": "Selector de data",
+  "Form Layouts": "Dissenys de formulari",
+  "Form Horizontal": "Formulari horitzontal",
+  "Form Vertical": "Formulari vertical",
+  "Form Wizard": "Assistent de formulari",
+  "Tables": "Taules",
+  "Basic Table": "Taula bàsica",
+  "Dynamic Table": "Taula dinàmica",
+  "Expand Table": "Expandir taula",
+  "Filterable Table": "Taula filtrable",
+  "Footer Row Table": "Taula amb fila de peu",
+  "HTTP Table": "Taula HTTP",
+  "Mix Table": "Taula mixta",
+  "Multi Header Footer": "Multi capçalera i peu",
+  "Pagination Table": "Taula amb paginació",
+  "Row Context Table": "Taula de context de fila",
+  "Selection Table": "Taula de selecció",
+  "Sortable Table": "Taula ordenable",
+  "Sticky Column": "Columna fixa",
+  "Sticky Header Footer": "Capçalera i peu fixos",
+  "Datatables": "Taules de dades",
+  "Basic DataTable": "Taula de dades bàsica",
+  "Material Table": "Taula Material",
+  "Table Editing": "Edició de taula",
+  "Filter Table": "Taula de filtratge",
+  "Line": "Línia",
+  "Gredient": "Degradat",
+  "Area": "Àrea",
+  "Candlestick": "Espelmes (Candlestick)",
+  "Column": "Columna",
+  "Doughnut & Pie": "Donut i circular",
+  "Radialbar & Radar": "Barra radial i radar",
+  "Ui Components": "Components d'UI",
+  "Badge": "Insígnia",
+  "Expansion Panel": "Panell d'expansió",
+  "Chips": "Xips",
+  "Dialog": "Diàleg",
+  "Lists": "Llistes",
+  "Divider": "Divisor",
+  "Menu": "Menú",
+  "Paginator": "Paginador",
+  "Progress Bar": "Barra de progrés",
+  "Progress Spinner": "Indicador de progrés",
+  "Ripples": "Ondulacions",
+  "Slide Toggle": "Interruptor lliscant",
+  "Slider": "Lliscador",
+  "Snackbar": "Snackbar",
+  "Tabs": "Pestanyes",
+  "Toolbar": "Barra d'eines",
+  "Tooltips": "Suggeriments",
+  "Login": "Iniciar sessió",
+  "Side Login": "Login lateral",
+  "Boxed Login": "Login en caixa",
+  "Register": "Registrar-se",
+  "Side Register": "Registre lateral",
+  "Boxed Register": "Registre en caixa",
+  "Forgot Password": "Vaig oblidar la contrasenya",
+  "Side Forgot Password": "Lateral va oblidar contrasenya",
+  "Boxed Forgot Password": "Caixa va oblidar contrasenya",
+  "Two Steps": "Dos passos",
+  "Side Two Steps": "Lateral dos passos",
+  "Boxed Two Steps": "Caixa dos passos",
+  "Error": "Error",
+  "Maintenance": "Manteniment",
+  "Menu Level": "Nivell de menú",
+  "Menu 1": "Menú 1",
+  "Menu 2": "Menú 2",
+  "Disabled": "Deshabilitat",
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE": "Elements per pàgina:",
+    "NEXT_PAGE": "Pàgina següent",
+    "PREVIOUS_PAGE": "Pàgina anterior",
+    "FIRST_PAGE": "Primera pàgina",
+    "LAST_PAGE": "Última pàgina",
+    "OF": "de"
+  },
+  "ACTIONS":{
+    "CREATE": "Crear",
+    "DELETE": "Eliminar",
+    "EDIT": "Editar",
+    "VIEW": "Veure",
+    "NEXT": "Següent",
+    "PREVIOUS": "Anterior",
+    "NEXT_UNANSWERED": "Següent sense respondre",
+    "PREVIOUS_UNANSWERED": "Anterior sense respondre",
+    "PLAY": "Reproduir",
+    "PAUSE": "Pausar",
+    "STOP": "Aturar",
+    "FINISH": "Finalitzar",
+    "SAVE": "Desar",
+    "CANCEL": "Cancel·lar",
+    "START": "Iniciar",
+    "END": "Finalitzar",
+    "SUBMIT": "Enviar",
+    "RESET": "Reiniciar",
+    "CLOSE": "Tancar",
+    "RESUME": "Reprendre",
+    "MARK_FOR_REVIEW": "Marcar per revisar",
+    "LOGOUT": "Tancar sessió",
+    "SUBMIT_FOR_REVIEW": "Enviar a revisió",
+    "PUBLISH": "Publicar",
+    "ARCHIVE": "Arxivar",
+    "FILTER": "Filtrar",
+    "CLEAR_FILTERS": "Netejar filtres"
+  },
+  "NOT_FOUND": {
+    "NOTES": "No s'han trobat notes"
+  },
+  "NO_ITEMS": {
+    "NOTES": "Encara no has creat notes!"
+  },
+  "TITLES": {
+    "NOTES": {
+      "ALL": "Notes",
+      "MY_NOTES": "Les meves notes"
+    },
+    "TEST": {
+      "QUESTIONS": "Preguntes"
+    }
+  },
+  "MENU": {
+    "PROFILE": "El meu perfil",
+    "MY_COURSES": "Els meus cursos",
+    "ACCOUNT": "Compte",
+    "FAQ": "Preguntes freqüents"
+  },
+  "NAV": {
+    "CAPTIONS": {
+      "GENERAL": "General",
+      "COURSE": "Curs"
+    },
+    "COURSES": "Cursos",
+    "MY_COURSES": "Els meus cursos",
+    "MODULES": "Mòduls",
+    "COURSE_DETAILS": "Detalls del curs",
+    "SYLLABUS": "Temari",
+    "STATISTICS": "Estadístiques",
+    "TESTS": "Tests",
+    "FLASHCARDS": "Memorització",
+    "NOTES": "Notes",
+    "DIAGRAMS": "Diagrames",
+    "VIDEOS": "Vídeos",
+    "KANBAN": "Kanban",
+    "CALENDAR": "Calendari"
+  },
+  "DIALOGS": {
+    "DELETE": {
+      "TITLE": "Eliminar element",
+      "CONFIRM_SINGULAR": "Segur que vols eliminar aquest element?",
+      "CONFIRM_PLURAL": "Segur que vols eliminar aquests elements?",
+      "CONFIRM_BUTTON": "Eliminar"
+    },
+    "WARN": {
+      "TITLE": "Confirmació d'eliminació",
+      "CONFIRM_SINGULAR": "Vols eliminar aquest element?",
+      "CONFIRM_PLURAL": "Vols eliminar aquests elements?",
+      "CANCEL_BUTTON": "Cancel·lar",
+      "CONFIRM_BUTTON": "Eliminar"
+    }
+  },
+  "LABELS": {
+    "ACTIONS": "Accions",
+    "NOTES": {
+      "FAVORITE": "Favorita",
+      "RULE": "Norma",
+      "ARTICLE": "Article",
+      "COLOR": "Color"
+    },
+    "TOPIC": {
+      "NAME": "Nom",
+      "code": "Codi",
+      "DESCRIPTION": "Descripció",
+      "CATEGORY": "Categoria",
+      "SECTION": "Secció",
+      "ACTIONS": "Accions"
+    },
+    "ARTICLE": {
+      "DESCRIPTION": "Descripció",
+      "BOOK": "Llibre",
+      "TITLE": "Títol",
+      "CHAPTER": "Capítol",
+      "SECTION": "Secció",
+      "SUBSECTION": "Subsecció",
+      "CONTENT": "Contingut",
+      "ACTIONS": "Accions"
+    },
+    "TEST": {
+    },
+    "VALIDATION": {
+      "REQUIRED_FIELD": "Camp obligatori. *"
+    },
+    "YEAR_PICKER": "Any de la convocatòria",
+    "YEAR_PICKER_PLACEHOLDER": "Seleccioneu un any",
+    "COURSE_STATUS": {
+      "DRAFT": "Esborrany"
+    },
+    "FILTERS": {
+      "SHOW_MORE": "Veure més filtres",
+      "SHOW_LESS": "Veure menys filtres",
+      "CATEGORY": "Categoria",
+      "TYPE": "Tipus",
+      "EXERCISE_TYPE": "Tipus d'exercici",
+      "QUESTION_TYPE": "Tipus de pregunta",
+      "RULE_TYPE": "Tipus de norma",
+      "RULE_GAZETTE": "Diari de la norma",
+      "RULE_AMBIT": "Àmbit de la norma",
+      "RULE": "Norma legislativa",
+      "ARTICLE": "Article",
+      "ARTICLES": "Articles",
+      "SECTION": "Secció",
+      "CALLING_ORG": "Convocant",
+      "DIFFICULTY": "Dificultat",
+      "TOPIC": "Tema",
+      "SEARCH_LABEL": "Cercar",
+      "SEARCH_PLACEHOLDER": "Cercar element..."
+    }
+  },
+  "BUTTONS": {
+    "CREATE": {
+      "NOTES": "Crear nota",
+      "FLASHCARDS": "Crear flashcard",
+      "VIDEO": "Crear vídeo",
+      "QUESTION": "Crear pregunta",
+      "DIAGRAM": "Crear diagrama",
+      "AI": "Crear element amb IA",
+      "MODULE": "Crear mòdul",
+      "TEST": "Crear examen",
+      "COURSE": "Crear curs",
+      "COMMENT": "Crear comentari",
+      "SIMULATOR": "Anar al simulador"
+    },
+    "EDIT": {
+      "NOTES": "Editar nota",
+      "FLASHCARDS": "Editar flashcard",
+      "VIDEO": "Editar vídeo",
+      "QUESTION": "Editar pregunta",
+      "DIAGRAM": "Editar diagrama",
+      "AI": "Editar element amb IA",
+      "MODULE": "Editar mòdul",
+      "COURSE": "Editar curs",
+      "COMMENT": "Editar comentari"
+    },
+    "DELETE": {
+      "NOTES": "Eliminar nota",
+      "FLASHCARDS": "Eliminar flashcard",
+      "VIDEO": "Eliminar vídeo",
+      "QUESTION": "Eliminar pregunta",
+      "DIAGRAM": "Eliminar diagrama",
+      "AI": "Eliminar element amb IA",
+      "MODULE": "Eliminar mòdul",
+      "COURSE": "Eliminar curs",
+      "COMMENT": "Eliminar comentari"
+    }
+  },
+  "ERRORS": {
+    "NOT_FOUND": {
+
+    },
+    "AI": {
+
+    },
+    "LOGIN": {
+
+    },
+    "USER": {
+
+    },
+    "PRICING": {
+      "PLAN_LIMIT_REACHED": "Límit del pla superat"
+    }
+  },
+  "SUCCESS": {
+    "DELETED": "Element eliminat amb èxit!"
+  }
+}

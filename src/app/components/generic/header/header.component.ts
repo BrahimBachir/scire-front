@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { CoreService } from 'src/app/services/core.service';
 import { MatDialog } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
 import { MaterialModule } from 'src/app/material.module';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -25,6 +24,7 @@ import { selectLogedIn, selectLogedUser, selectUserActivePlan } from 'src/app/co
 import { BrandingComponent } from '../branding/branding.component';
 import { IconModule } from 'src/app/icon/icon.module';
 import { Theme, ThemeService } from 'src/app/services/theme.service';
+import { Lang, LanguageService } from 'src/app/services/language.service';
 
 interface profiledd {
   id: number;
@@ -67,36 +67,16 @@ export class HeaderComponent {
 
   showFiller = false;
 
-  public selectedLanguage: any = {
-    language: 'English',
-    code: 'en',
-    type: 'US',
-    icon: '/assets/images/flag/icon-flag-en.svg',
-  };
-
-  public languages: any[] = [
-    {
-      language: 'English',
-      code: 'en',
-      type: 'US',
-      icon: '/assets/images/flag/icon-flag-en.svg',
-    },
-    {
-      language: 'Español',
-      code: 'es',
-      icon: '/assets/images/flag/icon-flag-es.svg',
-    },
-    {
-      language: 'Français',
-      code: 'fr',
-      icon: '/assets/images/flag/icon-flag-fr.svg',
-    },
-    {
-      language: 'German',
-      code: 'de',
-      icon: '/assets/images/flag/icon-flag-de.svg',
-    },
+  public languages: { language: string; code: Lang; icon: string }[] = [
+    { language: 'English', code: 'en', icon: '/assets/images/flag/icon-flag-en.svg' },
+    { language: 'Español', code: 'es', icon: '/assets/images/flag/icon-flag-es.svg' },
+    { language: 'Français', code: 'fr', icon: '/assets/images/flag/icon-flag-fr.svg' },
+    { language: 'Català', code: 'ca', icon: '/assets/images/flag/icon-flag-ca.svg' },
   ];
+
+  get selectedLanguage() {
+    return this.languages.find(l => l.code === this.languageService.lang()) ?? this.languages[0];
+  }
 
   @Output() optionsChange = new EventEmitter<AppSettings>();
 
@@ -105,13 +85,11 @@ export class HeaderComponent {
   constructor(
     private settings: CoreService,
     public dialog: MatDialog,
-    private translate: TranslateService,
     private store: Store<AppState>,
     private router: Router,
     private themeService: ThemeService,
-  ) {
-    translate.setDefaultLang('es');
-  }
+    private languageService: LanguageService,
+  ) {}
 
   ngOnInit(): void {
     this.logedUser$ = this.store.select(selectLogedUser);
@@ -130,9 +108,8 @@ export class HeaderComponent {
     this.store.dispatch(logoutAction());
   }
 
-  changeLanguage(lang: any): void {
-    this.translate.use(lang.code);
-    this.selectedLanguage = lang;
+  changeLanguage(lang: { code: Lang }): void {
+    this.languageService.setLang(lang.code);
   }
 
   setlightDark(theme: string) {
@@ -148,22 +125,22 @@ export class HeaderComponent {
   profiledd: profiledd[] = [
     {
       id: 1,
-      title: 'Mi perfil',
+      title: 'MENU.PROFILE',
       link: 'profile',
     },
     {
       id: 2,
-      title: 'Mis cursos',
+      title: 'MENU.MY_COURSES',
       link: 'my-courses',
     },
     {
       id: 3,
-      title: 'Cuenta',
+      title: 'MENU.ACCOUNT',
       link: 'account',
-    },    
+    },
     {
       id: 3,
-      title: 'FAQs',
+      title: 'MENU.FAQ',
       link: 'faq',
     }
   ];

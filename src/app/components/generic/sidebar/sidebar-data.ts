@@ -3,43 +3,43 @@ import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
   {
-    navCap: 'General',
+    navCap: 'NAV.CAPTIONS.GENERAL',
   },
   {
-    displayName: 'Cursos',
+    displayName: 'NAV.COURSES',
     iconName: 'school',
     route: '',
     type: 'GEN',
   },
   {
-    displayName: 'Mis cursos',
+    displayName: 'NAV.MY_COURSES',
     iconName: 'briefcase',
     route: 'my-courses',
     type: 'GEN',
   },
   {
-    displayName: 'Módulos',
+    displayName: 'NAV.MODULES',
     iconName: 'hexagons',
     route: 'modules',
     type: 'GEN',
   },
   {
-    navCap: 'Curso',
+    navCap: 'NAV.CAPTIONS.COURSE',
   },
   {
-    displayName: 'Detalles curso',
+    displayName: 'NAV.COURSE_DETAILS',
     iconName: 'file-description',
     route: 'courses/:courseId/details',
     type: 'COUR'
   },
   {
-    displayName: 'Temario',
+    displayName: 'NAV.SYLLABUS',
     iconName: 'book',
     route: 'courses/:courseId/topics',
     type: 'COUR'
   },
   {
-    displayName: 'Estadísticas',
+    displayName: 'NAV.STATISTICS',
     iconName: 'chart-pie',
     route: 'courses/:courseId/dashboard',
     type: 'COUR',
@@ -48,37 +48,37 @@ export const navItems: NavItem[] = [
     chipContent: 'PRO',
   },
   {
-    displayName: 'Tests',
+    displayName: 'NAV.TESTS',
     iconName: 'devices-question',
     route: 'courses/:courseId/tests',
     type: 'COUR'
   },
   {
-    displayName: 'Memorización',
+    displayName: 'NAV.FLASHCARDS',
     iconName: 'flip-vertical',
     route: '/flashcards',
     type: 'COUR'
   },
   {
-    displayName: 'Notas',
+    displayName: 'NAV.NOTES',
     iconName: 'note',
     route: 'courses/:courseId/notes',
     type: 'COUR'
   },
   {
-    displayName: 'Diagramas',
+    displayName: 'NAV.DIAGRAMS',
     iconName: 'schema',
     route: '/diagrams',
     type: 'COUR'
   },
   {
-    displayName: 'Vídeos',
+    displayName: 'NAV.VIDEOS',
     iconName: 'video',
     route: '/videos',
     type: 'COUR'
   },
   {
-    displayName: 'Kanban',
+    displayName: 'NAV.KANBAN',
     iconName: 'checklist',
     route: 'courses/:courseId/kanban',
     type: 'COUR',
@@ -88,7 +88,7 @@ export const navItems: NavItem[] = [
     requiresPlan: [Planes.SILVER, Planes.GOLD],
   },
   {
-    displayName: 'Calendario',
+    displayName: 'NAV.CALENDAR',
     iconName: 'calendar',
     route: 'courses/:courseId/calendar',
     type: 'COUR',

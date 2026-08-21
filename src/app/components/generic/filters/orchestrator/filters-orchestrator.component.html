@@ -56,18 +56,18 @@
 
 <div class="d-flex justify-content-end">
     @if(config.length > maxVisbleFields){
-    <button mat-mini-fab matTooltip="{{ showAll() ? 'Ver menos filtros' : 'Ver más filtros' }}" class="text-primary"
-        aria-label="Ver más/menos filtros" (click)="toggleFilters()">
+    <button mat-mini-fab [matTooltip]="(showAll() ? 'LABELS.FILTERS.SHOW_LESS' : 'LABELS.FILTERS.SHOW_MORE') | translate" class="text-primary"
+        [attr.aria-label]="(showAll() ? 'LABELS.FILTERS.SHOW_LESS' : 'LABELS.FILTERS.SHOW_MORE') | translate" (click)="toggleFilters()">
         <i-tabler class="icon-20 d-flex" [name]="showAll() ? 'adjustments-minus' : 'adjustments-plus'"></i-tabler>
     </button>
     }
     @if(options.applyMode === 'manual'){
-    <button mat-mini-fab class="bg-secondary text-white m-l-10" matTooltip="Filtrar" aria-label="Filtrar"
+    <button mat-mini-fab class="bg-secondary text-white m-l-10" [matTooltip]="'ACTIONS.FILTER' | translate" [attr.aria-label]="'ACTIONS.FILTER' | translate"
         (click)="apply()">
         <i-tabler name="filter" class="icon-20 d-flex"></i-tabler>
     </button>
     }
-    <button mat-mini-fab class="bg-error text-white m-l-10" matTooltip="Limpiar filtros" aria-label="Limpiar filtros"
+    <button mat-mini-fab class="bg-error text-white m-l-10" [matTooltip]="'ACTIONS.CLEAR_FILTERS' | translate" [attr.aria-label]="'ACTIONS.CLEAR_FILTERS' | translate"
         (click)="clear()">
         <i-tabler name="filter-cancel" class="icon-20 d-flex"></i-tabler>
     </button>

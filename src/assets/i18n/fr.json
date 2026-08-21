@@ -97,5 +97,211 @@
   "Menu Level": "Niveau menu",
   "Menu 1": "Menu 1",
   "Menu 2": "Menu 2",
-  "Disabled": "Désactivé"
+  "Disabled": "Désactivé",
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE": "Éléments par page :",
+    "NEXT_PAGE": "Page suivante",
+    "PREVIOUS_PAGE": "Page précédente",
+    "FIRST_PAGE": "Première page",
+    "LAST_PAGE": "Dernière page",
+    "OF": "sur"
+  },
+  "ACTIONS":{
+    "CREATE": "Créer",
+    "DELETE": "Supprimer",
+    "EDIT": "Modifier",
+    "VIEW": "Voir",
+    "NEXT": "Suivant",
+    "PREVIOUS": "Précédent",
+    "NEXT_UNANSWERED": "Suivant sans réponse",
+    "PREVIOUS_UNANSWERED": "Précédent sans réponse",
+    "PLAY": "Lire",
+    "PAUSE": "Pause",
+    "STOP": "Arrêter",
+    "FINISH": "Terminer",
+    "SAVE": "Enregistrer",
+    "CANCEL": "Annuler",
+    "START": "Démarrer",
+    "END": "Terminer",
+    "SUBMIT": "Envoyer",
+    "RESET": "Réinitialiser",
+    "CLOSE": "Fermer",
+    "RESUME": "Reprendre",
+    "MARK_FOR_REVIEW": "Marquer pour révision",
+    "LOGOUT": "Déconnexion",
+    "SUBMIT_FOR_REVIEW": "Soumettre pour révision",
+    "PUBLISH": "Publier",
+    "ARCHIVE": "Archiver",
+    "FILTER": "Filtrer",
+    "CLEAR_FILTERS": "Effacer les filtres"
+  },
+  "NOT_FOUND": {
+    "NOTES": "Aucune note trouvée"
+  },
+  "NO_ITEMS": {
+    "NOTES": "Vous n'avez pas encore créé de notes !"
+  },
+  "TITLES": {
+    "NOTES": {
+      "ALL": "Notes",
+      "MY_NOTES": "Mes notes"
+    },
+    "TEST": {
+      "QUESTIONS": "Questions"
+    }
+  },
+  "MENU": {
+    "PROFILE": "Mon profil",
+    "MY_COURSES": "Mes cours",
+    "ACCOUNT": "Compte",
+    "FAQ": "FAQ"
+  },
+  "NAV": {
+    "CAPTIONS": {
+      "GENERAL": "Général",
+      "COURSE": "Cours"
+    },
+    "COURSES": "Cours",
+    "MY_COURSES": "Mes cours",
+    "MODULES": "Modules",
+    "COURSE_DETAILS": "Détails du cours",
+    "SYLLABUS": "Programme",
+    "STATISTICS": "Statistiques",
+    "TESTS": "Tests",
+    "FLASHCARDS": "Mémorisation",
+    "NOTES": "Notes",
+    "DIAGRAMS": "Diagrammes",
+    "VIDEOS": "Vidéos",
+    "KANBAN": "Kanban",
+    "CALENDAR": "Calendrier"
+  },
+  "DIALOGS": {
+    "DELETE": {
+      "TITLE": "Supprimer l'élément",
+      "CONFIRM_SINGULAR": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+      "CONFIRM_PLURAL": "Êtes-vous sûr de vouloir supprimer ces éléments ?",
+      "CONFIRM_BUTTON": "Supprimer"
+    },
+    "WARN": {
+      "TITLE": "Confirmation de suppression",
+      "CONFIRM_SINGULAR": "Souhaitez-vous supprimer cet élément ?",
+      "CONFIRM_PLURAL": "Souhaitez-vous supprimer ces éléments ?",
+      "CANCEL_BUTTON": "Annuler",
+      "CONFIRM_BUTTON": "Supprimer"
+    }
+  },
+  "LABELS": {
+    "ACTIONS": "Actions",
+    "NOTES": {
+      "FAVORITE": "Favorite",
+      "RULE": "Norme",
+      "ARTICLE": "Article",
+      "COLOR": "Couleur"
+    },
+    "TOPIC": {
+      "NAME": "Nom",
+      "code": "Code",
+      "DESCRIPTION": "Description",
+      "CATEGORY": "Catégorie",
+      "SECTION": "Section",
+      "ACTIONS": "Actions"
+    },
+    "ARTICLE": {
+      "DESCRIPTION": "Description",
+      "BOOK": "Livre",
+      "TITLE": "Titre",
+      "CHAPTER": "Chapitre",
+      "SECTION": "Section",
+      "SUBSECTION": "Sous-section",
+      "CONTENT": "Contenu",
+      "ACTIONS": "Actions"
+    },
+    "TEST": {
+    },
+    "VALIDATION": {
+      "REQUIRED_FIELD": "Champ obligatoire. *"
+    },
+    "YEAR_PICKER": "Année de la convocation",
+    "YEAR_PICKER_PLACEHOLDER": "Sélectionnez une année",
+    "COURSE_STATUS": {
+      "DRAFT": "Brouillon"
+    },
+    "FILTERS": {
+      "SHOW_MORE": "Afficher plus de filtres",
+      "SHOW_LESS": "Afficher moins de filtres",
+      "CATEGORY": "Catégorie",
+      "TYPE": "Type",
+      "EXERCISE_TYPE": "Type d'exercice",
+      "QUESTION_TYPE": "Type de question",
+      "RULE_TYPE": "Type de norme",
+      "RULE_GAZETTE": "Journal officiel de la norme",
+      "RULE_AMBIT": "Portée de la norme",
+      "RULE": "Norme législative",
+      "ARTICLE": "Article",
+      "ARTICLES": "Articles",
+      "SECTION": "Section",
+      "CALLING_ORG": "Organisme convocateur",
+      "DIFFICULTY": "Difficulté",
+      "TOPIC": "Sujet",
+      "SEARCH_LABEL": "Rechercher",
+      "SEARCH_PLACEHOLDER": "Rechercher un élément..."
+    }
+  },
+  "BUTTONS": {
+    "CREATE": {
+      "NOTES": "Créer une note",
+      "FLASHCARDS": "Créer une flashcard",
+      "VIDEO": "Créer une vidéo",
+      "QUESTION": "Créer une question",
+      "DIAGRAM": "Créer un diagramme",
+      "AI": "Créer un élément avec l'IA",
+      "MODULE": "Créer un module",
+      "TEST": "Créer un examen",
+      "COURSE": "Créer un cours",
+      "COMMENT": "Créer un commentaire",
+      "SIMULATOR": "Aller au simulateur"
+    },
+    "EDIT": {
+      "NOTES": "Modifier la note",
+      "FLASHCARDS": "Modifier la flashcard",
+      "VIDEO": "Modifier la vidéo",
+      "QUESTION": "Modifier la question",
+      "DIAGRAM": "Modifier le diagramme",
+      "AI": "Modifier l'élément avec l'IA",
+      "MODULE": "Modifier le module",
+      "COURSE": "Modifier le cours",
+      "COMMENT": "Modifier le commentaire"
+    },
+    "DELETE": {
+      "NOTES": "Supprimer la note",
+      "FLASHCARDS": "Supprimer la flashcard",
+      "VIDEO": "Supprimer la vidéo",
+      "QUESTION": "Supprimer la question",
+      "DIAGRAM": "Supprimer le diagramme",
+      "AI": "Supprimer l'élément avec l'IA",
+      "MODULE": "Supprimer le module",
+      "COURSE": "Supprimer le cours",
+      "COMMENT": "Supprimer le commentaire"
+    }
+  },
+  "ERRORS": {
+    "NOT_FOUND": {
+
+    },
+    "AI": {
+
+    },
+    "LOGIN": {
+
+    },
+    "USER": {
+
+    },
+    "PRICING": {
+      "PLAN_LIMIT_REACHED": "Limite du plan atteinte"
+    }
+  },
+  "SUCCESS": {
+    "DELETED": "Élément supprimé avec succès !"
+  }
 }

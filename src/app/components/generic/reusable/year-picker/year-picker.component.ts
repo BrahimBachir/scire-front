@@ -4,6 +4,7 @@ import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Custom format for Native Date
 export const MY_NATIVE_FORMATS = {
@@ -32,10 +33,11 @@ export const MY_NATIVE_FORMATS = {
     },
   ],
   imports: [
-    MatFormFieldModule, 
-    MatInputModule, 
-    MatDatepickerModule, 
-    ReactiveFormsModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    TranslateModule,
   ],
 })
 export class YearPickerComponent implements ControlValueAccessor {

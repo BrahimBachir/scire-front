@@ -1,6 +1,6 @@
 <div>
   <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Artículos</mat-label>
+    <mat-label>{{ 'LABELS.FILTERS.ARTICLES' | translate }}</mat-label>
     <mat-chip-grid #chipGrid>
       @for (item of selectedItems; track item.boeId) {
       <mat-chip-row [removable]="parentId" (removed)="remove(item)">
@@ -13,7 +13,7 @@
       </mat-chip-row>
       }
       <input matInput
-       placeholder="Buscar artículo"
+       [placeholder]="'LABELS.FILTERS.SEARCH_PLACEHOLDER' | translate"
        [formControl]="control"
        [matAutocomplete]="ArticleAuto"
        [matChipInputFor]="chipGrid"

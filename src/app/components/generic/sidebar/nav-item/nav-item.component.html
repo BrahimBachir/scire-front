@@ -1,7 +1,7 @@
 @if(item.navCap){
 <div mat-subheader class="nav-caption">
   <i-tabler name="dots" class="icon-18 caption-icon"></i-tabler>
-  <span class="caption-text">{{ item.navCap }}</span>
+  <span class="caption-text">{{ item.navCap | translate }}</span>
 </div>
 } @if(!item.navCap && !item.external && !item.twoLines) {
 <a mat-list-item (click)="onItemSelected(item)" [ngClass]="{

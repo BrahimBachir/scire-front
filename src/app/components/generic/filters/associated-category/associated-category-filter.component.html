@@ -1,5 +1,5 @@
 <mat-form-field class="w-100" appearance="outline">
-  <mat-label>Categoría</mat-label>
+  <mat-label>{{ 'LABELS.FILTERS.CATEGORY' | translate }}</mat-label>
   <input matInput [formControl]="control" [matAutocomplete]="auto" (blur)="onTouched()" />
   @if(control.enabled){
   <mat-icon matSuffix class="d-flex justify-content-center align-items-center cursor-pointer" (click)="clean()">
@@ -14,6 +14,6 @@
     }
   </mat-autocomplete>
   @if (control.hasError('required')) {
-  <mat-error class="f-s-12">Requerido. *</mat-error>
+  <mat-error class="f-s-12">{{ 'LABELS.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
   }
 </mat-form-field>
