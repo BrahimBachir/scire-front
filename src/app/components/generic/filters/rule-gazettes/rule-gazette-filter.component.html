@@ -1,5 +1,5 @@
 <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Diario de la norma</mat-label>
+    <mat-label>{{ 'LABELS.FILTERS.RULE_GAZETTE' | translate }}</mat-label>
   <input matInput [formControl]="control" [matAutocomplete]="auto" (blur)="onTouched()" />
 
   @if(control.enabled){
@@ -16,7 +16,7 @@
     }
   </mat-autocomplete>
   @if (control.hasError('required')) {
-  <mat-error class="f-s-12">Elemento requerido. *</mat-error>
+  <mat-error class="f-s-12">{{ 'LABELS.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
   }
 </mat-form-field>
 

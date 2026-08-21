@@ -1,7 +1,7 @@
 <div class="d-flex flex-column">
   <mat-chip-set>
     <mat-chip [disabled]="true" class="f-w-600">
-      {{ currentStatus?.description || 'Borrador' }}
+      {{ currentStatus?.description || ('LABELS.COURSE_STATUS.DRAFT' | translate) }}
     </mat-chip>
   </mat-chip-set>
 
@@ -9,18 +9,18 @@
   <div class="d-flex flex-column gap-2 m-t-15">
     @if (canSubmitForReview) {
     <button mat-flat-button color="primary" type="button" [disabled]="processing" (click)="submitForReview()">
-      Enviar a revisión
+      {{ 'ACTIONS.SUBMIT_FOR_REVIEW' | translate }}
     </button>
     }
     @if (canPublish) {
     <button mat-flat-button color="primary" type="button" [disabled]="processing" (click)="publish()">
-      Publicar
+      {{ 'ACTIONS.PUBLISH' | translate }}
     </button>
     }
     @if (canArchive) {
     <button mat-stroked-button color="warn" type="button" class="m-t-8" [disabled]="processing"
       (click)="archive()">
-      Archivar
+      {{ 'ACTIONS.ARCHIVE' | translate }}
     </button>
     }
   </div>

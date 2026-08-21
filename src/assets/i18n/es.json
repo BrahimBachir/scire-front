@@ -127,7 +127,13 @@
     "RESET": "Reiniciar",
     "CLOSE": "Cerrar",
     "RESUME": "Reanudar",
-    "MARK_FOR_REVIEW": "Marcar para revisión"
+    "MARK_FOR_REVIEW": "Marcar para revisión",
+    "LOGOUT": "Cerrar sesión",
+    "SUBMIT_FOR_REVIEW": "Enviar a revisión",
+    "PUBLISH": "Publicar",
+    "ARCHIVE": "Archivar",
+    "FILTER": "Filtrar",
+    "CLEAR_FILTERS": "Limpiar filtros"
   },
   "NOT_FOUND": {
     "NOTES": "No se han encontrado notas"
@@ -142,6 +148,46 @@
     },
     "TEST": {
       "QUESTIONS": "Preguntas"
+    }
+  },
+  "MENU": {
+    "PROFILE": "Mi perfil",
+    "MY_COURSES": "Mis cursos",
+    "ACCOUNT": "Cuenta",
+    "FAQ": "FAQs"
+  },
+  "NAV": {
+    "CAPTIONS": {
+      "GENERAL": "General",
+      "COURSE": "Curso"
+    },
+    "COURSES": "Cursos",
+    "MY_COURSES": "Mis cursos",
+    "MODULES": "Módulos",
+    "COURSE_DETAILS": "Detalles curso",
+    "SYLLABUS": "Temario",
+    "STATISTICS": "Estadísticas",
+    "TESTS": "Tests",
+    "FLASHCARDS": "Memorización",
+    "NOTES": "Notas",
+    "DIAGRAMS": "Diagramas",
+    "VIDEOS": "Vídeos",
+    "KANBAN": "Kanban",
+    "CALENDAR": "Calendario"
+  },
+  "DIALOGS": {
+    "DELETE": {
+      "TITLE": "Eliminar elemento",
+      "CONFIRM_SINGULAR": "¿Seguro que quieres eliminar este elemento?",
+      "CONFIRM_PLURAL": "¿Seguro que quieres eliminar estos elementos?",
+      "CONFIRM_BUTTON": "Eliminar"
+    },
+    "WARN": {
+      "TITLE": "Confirmar eliminación",
+      "CONFIRM_SINGULAR": "¿Deseas eliminar este elemento?",
+      "CONFIRM_PLURAL": "¿Deseas eliminar estos elementos?",
+      "CANCEL_BUTTON": "Cancelar",
+      "CONFIRM_BUTTON": "Eliminar"
     }
   },
   "LABELS": {
@@ -171,6 +217,34 @@
       "ACTIONS": "Acciones"
     },
     "TEST": {
+    },
+    "VALIDATION": {
+      "REQUIRED_FIELD": "Elemento requerido. *"
+    },
+    "YEAR_PICKER": "Año de la convocatoria",
+    "YEAR_PICKER_PLACEHOLDER": "Seleccione un año",
+    "COURSE_STATUS": {
+      "DRAFT": "Borrador"
+    },
+    "FILTERS": {
+      "SHOW_MORE": "Ver más filtros",
+      "SHOW_LESS": "Ver menos filtros",
+      "CATEGORY": "Categoría",
+      "TYPE": "Tipo",
+      "EXERCISE_TYPE": "Tipo de ejercicio",
+      "QUESTION_TYPE": "Tipo de pregunta",
+      "RULE_TYPE": "Tipo de norma",
+      "RULE_GAZETTE": "Diario de la norma",
+      "RULE_AMBIT": "Ámbito de la norma",
+      "RULE": "Norma legislativa",
+      "ARTICLE": "Artículo",
+      "ARTICLES": "Artículos",
+      "SECTION": "Sección",
+      "CALLING_ORG": "Convocante",
+      "DIFFICULTY": "Dificultad",
+      "TOPIC": "Tema",
+      "SEARCH_LABEL": "Buscar",
+      "SEARCH_PLACEHOLDER": "Buscar elemento..."
     }
   },
   "BUTTONS": {

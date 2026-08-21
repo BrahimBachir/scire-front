@@ -1,6 +1,6 @@
 <mat-form-field class="w-100" appearance="outline">
   <mat-label>
-    Tipo de ejercicio
+    {{ 'LABELS.FILTERS.EXERCISE_TYPE' | translate }}
     @if (control.hasError('required')) { <span class="text-error">*</span> }
   </mat-label>
   <input matInput [formControl]="control" [matAutocomplete]="auto" (blur)="onTouched()" />
@@ -17,6 +17,6 @@
     }
   </mat-autocomplete>
   @if (control.hasError('required')) {
-  <mat-error class="f-s-12">Requerido. *</mat-error>
+  <mat-error class="f-s-12">{{ 'LABELS.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
   }
 </mat-form-field>

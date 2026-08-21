@@ -1,6 +1,6 @@
 <!-- TODO: Tooltip the complete name of the rule -->
 <mat-form-field class="w-100" appearance="outline">
-    <mat-label>Norma legislativa</mat-label>
+    <mat-label>{{ 'LABELS.FILTERS.RULE' | translate }}</mat-label>
   <input matInput [formControl]="control" [matTooltip]="" [matAutocomplete]="auto" (blur)="onTouched()" />
   @if (control.value !== null) {
     <mat-icon 
@@ -18,6 +18,6 @@
     }
   </mat-autocomplete>
   @if (control.hasError('required')) {
-  <mat-error class="f-s-12">Requerido. *</mat-error>
+  <mat-error class="f-s-12">{{ 'LABELS.VALIDATION.REQUIRED_FIELD' | translate }}</mat-error>
   }
 </mat-form-field>
