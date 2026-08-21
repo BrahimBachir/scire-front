@@ -1,3 +1,10 @@
+## [2.7.1](https://github.com/BrahimBachir/scire-front/compare/v2.7.0...v2.7.1) (2026-08-21)
+
+
+### Bug Fixes
+
+* **course:** filter moderation list to pending, gate submit button to creator ([9a5eb51](https://github.com/BrahimBachir/scire-front/commit/9a5eb511d9500071f22544c1f64c3d5a1b41c820))
+
 # [2.7.0](https://github.com/BrahimBachir/scire-front/compare/v2.6.0...v2.7.0) (2026-08-21)
 
 
