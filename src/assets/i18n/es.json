@@ -286,19 +286,73 @@
   },
   "ERRORS": {
     "NOT_FOUND": {
-
+      "RULES": "Ley no encontrada.",
+      "ARTICLES": "Artículo no encontrado.",
+      "FLASHCARDS": "Flashcard no encontrada.",
+      "ANNOUNCEMENTS": "Anuncio no encontrado.",
+      "REVIEWS": "No se ha encontrado el contenido que intentas valorar.",
+      "USERS": "Usuario no encontrado.",
+      "COURSES": "Curso no encontrado.",
+      "QUESTIONS": "Pregunta no encontrada.",
+      "TESTS": "Test no encontrado.",
+      "NOTES": "Nota no encontrada.",
+      "BLOCKS": "Bloque del curso no encontrado.",
+      "PROGRESS": "Registro de progreso no encontrado.",
+      "GENDERS": "Género no encontrado.",
+      "COUNTRIES": "País no encontrado.",
+      "EXERCISES": "Ejercicio no encontrado.",
+      "VIDEOS": "Vídeo no encontrado.",
+      "DIAGRAMS": "Diagrama no encontrado.",
+      "PLANS": "Plan de precios no encontrado.",
+      "ROLES": "Rol no encontrado.",
+      "CATEGORIES": "Categoría no encontrada.",
+      "SECTIONS": "Sección no encontrada.",
+      "TOPICS": "Tema no encontrado.",
+      "BULK_UPLOAD": "Trabajo de carga masiva no encontrado."
     },
-    "AI": {
-
+    "VALIDATION": {
+      "RULES": "Falta un parámetro necesario para esta ley.",
+      "ARTICLES": "Falta un parámetro necesario para este artículo.",
+      "FLASHCARDS": "Debes seleccionar al menos un artículo para esta flashcard.",
+      "REVIEWS": "Datos de la valoración no válidos.",
+      "COMMENTS": "Falta un parámetro necesario para este comentario.",
+      "REACTIONS": "Datos de la reacción no válidos.",
+      "USERS": "Datos de usuario no válidos.",
+      "COURSES": "Esta acción no está permitida para este curso.",
+      "TESTS": "No hay suficientes preguntas que cumplan los criterios del test.",
+      "NOTES": "Falta un parámetro necesario para esta nota.",
+      "PROGRESS": "Falta un parámetro necesario para cargar el progreso.",
+      "VIDEOS": "Debes seleccionar al menos un artículo para este vídeo.",
+      "DIAGRAMS": "Debes seleccionar al menos un artículo para este diagrama.",
+      "PLANS": "Este plan no está disponible en este momento.",
+      "PAYMENTS": "No se ha podido procesar el pago.",
+      "AI": "El servicio de IA no ha podido generar una respuesta.",
+      "CATEGORIES": "Se requiere una categoría para crear esta sección.",
+      "BULK_UPLOAD": "El archivo subido no es válido.",
+      "EMAIL": "La dirección de correo es incorrecta o no existe."
     },
-    "LOGIN": {
-
+    "CONFLICT": {
+      "RULES": "Ya existe una ley con este código.",
+      "REVIEWS": "Ya has valorado este contenido.",
+      "CATEGORIES": "Ya existe una categoría con este nombre.",
+      "SECTIONS": "Ya existe una sección con este nombre en esta categoría.",
+      "TOPICS": "Ya existe un tema con esta descripción.",
+      "EMAIL": "Esta dirección de correo ya está registrada."
     },
-    "USER": {
-
+    "FORBIDDEN": {
+      "USERS": "No tienes permiso para editar este usuario.",
+      "PLANS": "Esta funcionalidad no está disponible en tu plan actual."
     },
-    "PRICING": {
-      "PLAN_LIMIT_REACHED": "Limite del plan superado"
+    "UNAUTHORIZED": {
+      "TOKEN": "Tu sesión ha caducado. Inicia sesión de nuevo.",
+      "CREDENTIALS": "Correo o contraseña incorrectos.",
+      "ACCOUNT": "Tu cuenta todavía no está activa.",
+      "LOGIN_ATTEMPTS": "Demasiados intentos fallidos. Tu cuenta ha sido suspendida temporalmente."
+    },
+    "INTERNAL": {
+      "RULES": "No hemos podido obtener los datos oficiales de esta ley en este momento.",
+      "ARTICLES": "No hemos podido obtener los datos oficiales de este artículo en este momento.",
+      "UNKNOWN": "Algo ha salido mal. Inténtalo de nuevo."
     }
   },
   "SUCCESS": {

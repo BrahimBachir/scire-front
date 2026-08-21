@@ -286,19 +286,73 @@
   },
   "ERRORS": {
     "NOT_FOUND": {
-
+      "RULES": "Llei no trobada.",
+      "ARTICLES": "Article no trobat.",
+      "FLASHCARDS": "Flashcard no trobada.",
+      "ANNOUNCEMENTS": "Anunci no trobat.",
+      "REVIEWS": "No s'ha trobat el contingut que intentes valorar.",
+      "USERS": "Usuari no trobat.",
+      "COURSES": "Curs no trobat.",
+      "QUESTIONS": "Pregunta no trobada.",
+      "TESTS": "Test no trobat.",
+      "NOTES": "Nota no trobada.",
+      "BLOCKS": "Bloc del curs no trobat.",
+      "PROGRESS": "Registre de progrés no trobat.",
+      "GENDERS": "Gènere no trobat.",
+      "COUNTRIES": "País no trobat.",
+      "EXERCISES": "Exercici no trobat.",
+      "VIDEOS": "Vídeo no trobat.",
+      "DIAGRAMS": "Diagrama no trobat.",
+      "PLANS": "Pla de preus no trobat.",
+      "ROLES": "Rol no trobat.",
+      "CATEGORIES": "Categoria no trobada.",
+      "SECTIONS": "Secció no trobada.",
+      "TOPICS": "Tema no trobat.",
+      "BULK_UPLOAD": "Feina de càrrega massiva no trobada."
     },
-    "AI": {
-
+    "VALIDATION": {
+      "RULES": "Falta un paràmetre necessari per a aquesta llei.",
+      "ARTICLES": "Falta un paràmetre necessari per a aquest article.",
+      "FLASHCARDS": "Has de seleccionar almenys un article per a aquesta flashcard.",
+      "REVIEWS": "Dades de la valoració no vàlides.",
+      "COMMENTS": "Falta un paràmetre necessari per a aquest comentari.",
+      "REACTIONS": "Dades de la reacció no vàlides.",
+      "USERS": "Dades d'usuari no vàlides.",
+      "COURSES": "Aquesta acció no està permesa per a aquest curs.",
+      "TESTS": "No hi ha prou preguntes que compleixin els criteris del test.",
+      "NOTES": "Falta un paràmetre necessari per a aquesta nota.",
+      "PROGRESS": "Falta un paràmetre necessari per carregar el progrés.",
+      "VIDEOS": "Has de seleccionar almenys un article per a aquest vídeo.",
+      "DIAGRAMS": "Has de seleccionar almenys un article per a aquest diagrama.",
+      "PLANS": "Aquest pla no està disponible en aquest moment.",
+      "PAYMENTS": "No s'ha pogut processar el pagament.",
+      "AI": "El servei d'IA no ha pogut generar una resposta.",
+      "CATEGORIES": "Cal una categoria per crear aquesta secció.",
+      "BULK_UPLOAD": "El fitxer pujat no és vàlid.",
+      "EMAIL": "L'adreça de correu és incorrecta o no existeix."
     },
-    "LOGIN": {
-
+    "CONFLICT": {
+      "RULES": "Ja existeix una llei amb aquest codi.",
+      "REVIEWS": "Ja has valorat aquest contingut.",
+      "CATEGORIES": "Ja existeix una categoria amb aquest nom.",
+      "SECTIONS": "Ja existeix una secció amb aquest nom en aquesta categoria.",
+      "TOPICS": "Ja existeix un tema amb aquesta descripció.",
+      "EMAIL": "Aquesta adreça de correu ja està registrada."
     },
-    "USER": {
-
+    "FORBIDDEN": {
+      "USERS": "No tens permís per editar aquest usuari.",
+      "PLANS": "Aquesta funcionalitat no està disponible en el teu pla actual."
     },
-    "PRICING": {
-      "PLAN_LIMIT_REACHED": "Límit del pla superat"
+    "UNAUTHORIZED": {
+      "TOKEN": "La teva sessió ha caducat. Torna a iniciar sessió.",
+      "CREDENTIALS": "Correu o contrasenya incorrectes.",
+      "ACCOUNT": "El teu compte encara no està actiu.",
+      "LOGIN_ATTEMPTS": "Massa intents fallits. El teu compte ha estat suspès temporalment."
+    },
+    "INTERNAL": {
+      "RULES": "No hem pogut obtenir les dades oficials d'aquesta llei en aquest moment.",
+      "ARTICLES": "No hem pogut obtenir les dades oficials d'aquest article en aquest moment.",
+      "UNKNOWN": "Alguna cosa ha fallat. Torna-ho a provar."
     }
   },
   "SUCCESS": {

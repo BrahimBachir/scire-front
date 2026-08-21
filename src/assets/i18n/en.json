@@ -286,19 +286,73 @@
   },
   "ERRORS": {
     "NOT_FOUND": {
-
+      "RULES": "Law not found.",
+      "ARTICLES": "Article not found.",
+      "FLASHCARDS": "Flashcard not found.",
+      "ANNOUNCEMENTS": "Announcement not found.",
+      "REVIEWS": "The content you're trying to review could not be found.",
+      "USERS": "User not found.",
+      "COURSES": "Course not found.",
+      "QUESTIONS": "Question not found.",
+      "TESTS": "Test not found.",
+      "NOTES": "Note not found.",
+      "BLOCKS": "Course block not found.",
+      "PROGRESS": "Progress record not found.",
+      "GENDERS": "Gender not found.",
+      "COUNTRIES": "Country not found.",
+      "EXERCISES": "Exercise not found.",
+      "VIDEOS": "Video not found.",
+      "DIAGRAMS": "Diagram not found.",
+      "PLANS": "Pricing plan not found.",
+      "ROLES": "Role not found.",
+      "CATEGORIES": "Category not found.",
+      "SECTIONS": "Section not found.",
+      "TOPICS": "Topic not found.",
+      "BULK_UPLOAD": "Bulk upload job not found."
     },
-    "AI": {
-
+    "VALIDATION": {
+      "RULES": "A required parameter is missing for this law.",
+      "ARTICLES": "A required parameter is missing for this article.",
+      "FLASHCARDS": "You must select at least one article for this flashcard.",
+      "REVIEWS": "Invalid review data.",
+      "COMMENTS": "A required parameter is missing for this comment.",
+      "REACTIONS": "Invalid reaction data.",
+      "USERS": "Invalid user data.",
+      "COURSES": "This action isn't allowed for this course.",
+      "TESTS": "Not enough questions match the selected test criteria.",
+      "NOTES": "A required parameter is missing for this note.",
+      "PROGRESS": "A required parameter is missing to load progress.",
+      "VIDEOS": "You must select at least one article for this video.",
+      "DIAGRAMS": "You must select at least one article for this diagram.",
+      "PLANS": "This plan isn't available right now.",
+      "PAYMENTS": "The payment could not be processed.",
+      "AI": "The AI service could not generate a response.",
+      "CATEGORIES": "A category is required to create this section.",
+      "BULK_UPLOAD": "The uploaded file is invalid.",
+      "EMAIL": "The email address is invalid or doesn't exist."
     },
-    "LOGIN": {
-
+    "CONFLICT": {
+      "RULES": "A law with this code already exists.",
+      "REVIEWS": "You've already reviewed this content.",
+      "CATEGORIES": "A category with this name already exists.",
+      "SECTIONS": "A section with this name already exists in this category.",
+      "TOPICS": "A topic with this description already exists.",
+      "EMAIL": "This email address is already registered."
     },
-    "USER": {
-
+    "FORBIDDEN": {
+      "USERS": "You don't have permission to edit this user.",
+      "PLANS": "This feature isn't available on your current plan."
     },
-    "PRICING": {
-      "PLAN_LIMIT_REACHED": "Plan limit reached"
+    "UNAUTHORIZED": {
+      "TOKEN": "Your session has expired. Please sign in again.",
+      "CREDENTIALS": "Incorrect email or password.",
+      "ACCOUNT": "Your account isn't active yet.",
+      "LOGIN_ATTEMPTS": "Too many failed attempts. Your account has been temporarily suspended."
+    },
+    "INTERNAL": {
+      "RULES": "We couldn't retrieve this law's official data right now.",
+      "ARTICLES": "We couldn't retrieve this article's official data right now.",
+      "UNKNOWN": "Something went wrong. Please try again."
     }
   },
   "SUCCESS": {
