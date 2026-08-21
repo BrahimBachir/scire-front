@@ -25,14 +25,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PageEvent } from '@angular/material/paginator';
 import { AppFiltersOrchestratorComponent } from 'src/app/components/generic/filters/orchestrator/filters-orchestrator.component';
 import { AppDeleteDialogComponent } from 'src/app/components/generic/dialogs/delete-dialog/delete-dialog.component';
-import { MyOwnContentPipe } from 'src/app/common/pipe/my-own-content.pipe';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/common/store/app.store';
-import { selectUserRole } from 'src/app/common/store/selectors';
+import { selectLogedUser, selectUserRole } from 'src/app/common/store/selectors';
 import { FRONT_ROUTE_TOKEN_SUPER } from 'src/app/common/config';
+import { canDeleteCourse, canEditCourse } from 'src/app/common/models/interfaces';
 
 
-//TODO: 3. Actions (create, edit, delete --> decide logic)
 //TODO: 6. OrderBy functionality
 
 export interface Section {
@@ -53,7 +52,6 @@ export interface Section {
     ReactiveFormsModule,
     AppBannersNotFoundComponent,
     AppFiltersOrchestratorComponent,
-    MyOwnContentPipe
   ],
   templateUrl: './course-list.component.html',
   styleUrl: './course-list.component.scss',
@@ -99,6 +97,8 @@ export class AppCourseListComponent implements OnInit {
 
   private showOnlyMyCourses: boolean = false;
   protected isSuper: boolean = false;
+  private currentUserId: number | null = null;
+  private currentUserRoleCode: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -113,7 +113,11 @@ export class AppCourseListComponent implements OnInit {
       this.isMobileView = e.matches;
     });
 
-    this.store.select(selectUserRole).subscribe(role => this.isSuper = role.code === 'SUPER');
+    this.store.select(selectUserRole).subscribe(role => {
+      this.isSuper = role.code === 'SUPER';
+      this.currentUserRoleCode = role.code ?? null;
+    });
+    this.store.select(selectLogedUser).subscribe(user => this.currentUserId = user?.id ?? null);
 
     this.showOnlyMyCourses = !!this.route.snapshot.data['myCourses'];
 
@@ -183,6 +187,14 @@ export class AppCourseListComponent implements OnInit {
     } else {
       return ''; // empty star, no class
     }
+  }
+
+  canEdit(course: ICourse): boolean {
+    return canEditCourse(course.typeCode, course.creatorId, this.currentUserRoleCode ?? undefined, this.currentUserId ?? undefined);
+  }
+
+  canDelete(course: ICourse): boolean {
+    return canDeleteCourse(course.typeCode, course.creatorId, this.currentUserRoleCode ?? undefined, this.currentUserId ?? undefined);
   }
 
   remove(id: number) {

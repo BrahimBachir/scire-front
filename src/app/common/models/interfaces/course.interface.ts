@@ -25,6 +25,7 @@ export interface ICourse {
   type?: ICourseType;
   typeId?: number;
   typeDescription?: string;
+  typeCode?: string;
 
   status?: ICourseStatus;
   statusId?: number;
