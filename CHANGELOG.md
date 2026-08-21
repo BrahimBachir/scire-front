@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/BrahimBachir/scire-front/compare/v2.7.1...v2.8.0) (2026-08-21)
+
+
+### Features
+
+* **course:** control edit/delete buttons by course type and role ([ac73c8e](https://github.com/BrahimBachir/scire-front/commit/ac73c8e917270892ccb9117634b6f02a65dcc558))
+
 ## [2.7.1](https://github.com/BrahimBachir/scire-front/compare/v2.7.0...v2.7.1) (2026-08-21)
 
 
