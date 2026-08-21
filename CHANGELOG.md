@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/BrahimBachir/scire-front/compare/v2.9.0...v2.10.0) (2026-08-21)
+
+
+### Features
+
+* **i18n:** translate backend ERRORS.<CODE>.<ENTITY> error keys ([73e83fc](https://github.com/BrahimBachir/scire-front/commit/73e83fceedaa4c187dbceda48009c02161022b27))
+
 # [2.9.0](https://github.com/BrahimBachir/scire-front/compare/v2.8.0...v2.9.0) (2026-08-21)
 
 
