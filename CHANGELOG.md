@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/BrahimBachir/scire-front/compare/v2.6.0...v2.7.0) (2026-08-21)
+
+
+### Features
+
+* **course:** add controlled status lifecycle workflow ([41da45b](https://github.com/BrahimBachir/scire-front/commit/41da45bef618bbbeaf7d0ebc238ff0fa2d12601c))
+
 # [2.6.0](https://github.com/BrahimBachir/scire-front/compare/v2.5.1...v2.6.0) (2026-08-20)
 
 
