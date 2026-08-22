@@ -10,6 +10,9 @@ import { IconModule } from 'src/app/icon/icon.module';
 import { ISocialMedia, IUser } from 'src/app/common/models/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/services';
+import { Store } from '@ngrx/store';
+import { selectLogedUser } from 'src/app/common/store/selectors';
+import { filter, take } from 'rxjs';
 
 @Component({
   selector: 'app-profile-content',
@@ -20,6 +23,7 @@ import { UsersService } from 'src/app/services';
 export class ProfileContentComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private service = inject(UsersService);
+  private store = inject(Store);
 
 
   pageTitle = 'UserProfile';
@@ -36,11 +40,21 @@ export class ProfileContentComponent implements OnInit {
   constructor() {
     this.courseId = Number(this.route?.snapshot?.paramMap?.get('courseId')) || 0;
     this.userId = Number(this.route?.snapshot?.paramMap?.get('userId')) || 0;
-    console.log("ID: ", this.courseId, this.userId)
   }
 
   ngOnInit(): void {
-    this.loadUser();
+    const userIdParam = this.route?.snapshot?.paramMap?.get('userId');
+    if (userIdParam) {
+      this.loadUser();
+    } else {
+      this.store.select(selectLogedUser).pipe(
+        filter((loggedUser) => !!loggedUser?.id),
+        take(1),
+      ).subscribe((loggedUser) => {
+        this.userId = loggedUser.id!;
+        this.loadUser();
+      });
+    }
   }
 
   loadUser() {
