@@ -119,6 +119,33 @@
               </mat-card-content>
             </mat-card>
           </div>
+          @if (assignableRoles.length > 0) {
+          <div class="col-12">
+            <mat-card class="cardWithShadow">
+              <mat-card-content class="p-y-24">
+                <mat-card-title>Cambiar mi rol</mat-card-title>
+                <mat-card-subtitle class="f-s-14">
+                  Cambia tu rol en la plataforma. Solo se muestran los roles a los que puedes cambiar desde tu rol actual.
+                </mat-card-subtitle>
+
+                <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-24">Nuevo rol</mat-label>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                  <mat-select placeholder="Selecciona un rol" [value]="selectedRoleCode()"
+                    (selectionChange)="onRoleSelected($event.value)">
+                    @for (role of assignableRoles; track role.id) {
+                    <mat-option [value]="role.code">{{ role.description }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+
+                <div class="m-t-24">
+                  <button mat-flat-button color="primary" [disabled]="!selectedRoleCode()"
+                    (click)="changeRole()">Cambiar rol</button>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          }
         </div>
       </mat-card-content>
     </mat-tab>

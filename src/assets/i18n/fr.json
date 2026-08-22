@@ -173,7 +173,12 @@
     "DIAGRAMS": "Diagrammes",
     "VIDEOS": "Vidéos",
     "KANBAN": "Kanban",
-    "CALENDAR": "Calendrier"
+    "CALENDAR": "Calendrier",
+    "ORGANIZATIONS": "Organisations",
+    "USERS": "Utilisateurs",
+    "MODERATION": "Modération",
+    "ORGANIZATIONS_COMING_SOON_TITLE": "Bientôt disponible.",
+    "ORGANIZATIONS_COMING_SOON_TEXT": "La gestion des organisations arrive bientôt."
   },
   "DIALOGS": {
     "DELETE": {

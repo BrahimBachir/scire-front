@@ -10,10 +10,11 @@ import {
   logoutAction,
   createUserLogin,
   loadLogedUser,
+  mandatoryPasswordChangeRequired,
 } from '../actions';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services';
-import { FRONT_ROUTE_TOKEN_AUTH_URL } from '../../config';
+import { FRONT_ROUTE_TOKEN_AUTH_URL, FRONT_ROUTE_TOKEN_AUTH_PASS_CHANGE } from '../../config';
 import { IUser } from '../../models/interfaces';
 import { getDecodedAccessToken } from '../../utils';
 import { of } from 'rxjs';
@@ -30,7 +31,12 @@ export class AuthEffects {
         exhaustMap((action) => this.authService.login(action.login)
         .pipe(
           //map(logingInfo => ({ type: loginCompleted, payload: logingInfo })),
-          map(res => {
+          map((res: any) => {
+            if (res?.mustChangePassword) {
+              this.authService.setChangeToken(res.changeToken);
+              this.router.navigate([FRONT_ROUTE_TOKEN_AUTH_URL, FRONT_ROUTE_TOKEN_AUTH_PASS_CHANGE]);
+              return mandatoryPasswordChangeRequired();
+            }
             const data_parsed = Object.create(res);
             let detokenized = getDecodedAccessToken(data_parsed.token);
             return loginCompleted(data_parsed.token,detokenized.sub);

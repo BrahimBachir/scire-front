@@ -1,6 +1,6 @@
 import { BreakpointObserver, MediaMatcher } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 import { CoreService } from 'src/app/services/core.service';
 import { AppSettings } from 'src/app/config';
@@ -14,6 +14,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { AppState } from 'src/app/common/store/app.store';
 import { Store } from '@ngrx/store';
 import { selectChoosenCourse } from 'src/app/common/store/selectors/learning.selectors';
+import { selectUserRole } from 'src/app/common/store/selectors/auth.selectors';
 import { ICourse } from 'src/app/common/models/interfaces';
 import { AppAuthBrandingComponent } from '../generic/branding/auth-branding.component';
 import { AppBreadcrumbComponent } from '../generic/breadcrumb/breadcrumb.component';
@@ -100,11 +101,13 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.select(selectChoosenCourse).subscribe({
-      next: (course) => {
+    combineLatest([
+      this.store.select(selectChoosenCourse),
+      this.store.select(selectUserRole),
+    ]).subscribe({
+      next: ([course, role]) => {
         this.selectedCourse = course;
-        this.activeInactiveMenuOptions();
-        this.navItems = navItems;
+        this.navItems = this.buildNavItems(role?.code);
       }
     })
     // Ensure `content` is available after view initialization
@@ -168,8 +171,13 @@ export class MainComponent implements OnInit {
     this.htmlElement.classList.add(options.activeTheme);
   }
 
-  activeInactiveMenuOptions() {
-    if (!this.selectedCourse || this.selectedCourse.id === 0) navItems.forEach(item => { if (item.type === 'COUR') item.disabled = true; })
-    else navItems.forEach(item => { if (item.type === 'COUR') item.disabled = false; })
+  buildNavItems(roleCode: string | undefined): NavItem[] {
+    const noCourseSelected = !this.selectedCourse || this.selectedCourse.id === 0;
+    return navItems
+      .filter(item => !item.roles || item.roles.some(r => r === roleCode))
+      .map(item => ({
+        ...item,
+        disabled: item.type === 'COUR' ? noCourseSelected : item.disabled,
+      }));
   }
 }

@@ -6,6 +6,7 @@ export const Routes = {
     resend: 'logins/resend-code/:userCode',
     refresh: 'logins/refresh',
     logout: 'logins/logout',
+    mandatory_password: 'logins/mandatory-password',
   },
   api: {
     users: {
@@ -15,6 +16,9 @@ export const Routes = {
       contributor: 'users/contributor/:id',
       plan: 'users/plan',
       plan_reset: 'users/plan/reset',
+      role: 'users/role',
+      bulk_delete: 'users/bulk-delete',
+      provision: 'users/provision',
     },
     config: {
       pricing_planes: 'configs/pricing-planes',

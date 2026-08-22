@@ -1,4 +1,5 @@
 import { Planes } from 'src/app/common/enums/planes.enum';
+import { Roles } from 'src/app/common/enums/roles.enum';
 
 export interface NavItem {
     displayName?: string;
@@ -16,4 +17,6 @@ export interface NavItem {
     ddType?: string;
     type?: string;
     requiresPlan?: Planes[];
+    /** Roles allowed to see this item. Omit to show it to every role. */
+    roles?: Roles[];
 }

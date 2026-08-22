@@ -13,6 +13,7 @@ export const START_LOGOUT = '[USER - Logout] User to be logedout!';
 export const LOGOUT_FINISHED = '[USER - Logout] Logout successfully!';
 export const LOGIN_ERROR = '[USER - Login] An error has occured!';
 export const CREATE_USER_LOGIN = '[USER - Login] Create user-login';
+export const MANDATORY_PASSWORD_CHANGE_REQUIRED = '[USER - Login] Mandatory password change required';
 
 export const verifiyingEmail = createAction(VERIFIIYING_EMAIL);
 export const emailVerificantionCodeSent = createAction(EMAIL_VERIFICATION_CODE_SENT);
@@ -45,6 +46,8 @@ export const logedUserLoaded = createAction(
   LOGED_USER_LOADED,
   (user: IUser, token: string) => ({ user, token })
 );
+
+export const mandatoryPasswordChangeRequired = createAction(MANDATORY_PASSWORD_CHANGE_REQUIRED);
 
 export const logoutAction = createAction(START_LOGOUT);
 export const endLogoutAction = createAction(LOGOUT_FINISHED);

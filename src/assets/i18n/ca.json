@@ -173,7 +173,12 @@
     "DIAGRAMS": "Diagrames",
     "VIDEOS": "Vídeos",
     "KANBAN": "Kanban",
-    "CALENDAR": "Calendari"
+    "CALENDAR": "Calendari",
+    "ORGANIZATIONS": "Organitzacions",
+    "USERS": "Usuaris",
+    "MODERATION": "Moderació",
+    "ORGANIZATIONS_COMING_SOON_TITLE": "Properament.",
+    "ORGANIZATIONS_COMING_SOON_TEXT": "La gestió d'organitzacions està en camí."
   },
   "DIALOGS": {
     "DELETE": {

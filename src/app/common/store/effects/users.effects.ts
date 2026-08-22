@@ -25,6 +25,8 @@ import {
   loginCompleted,
   changeUserPlan,
   resetUserPlan,
+  changeUserRole,
+  changeUserRoleFailed,
   loadLogedUser,
   startCheckout,
   checkoutSessionFailed,
@@ -147,6 +149,22 @@ export class UsersEffects {
           catchError((error) =>
             of({ type: `[User] Reset Plan Failed: ${error}` })
           )
+        )
+      )
+    )
+  );
+
+  // On success, re-fetch the logged-in user (loadLogedUser$ in auth.effects.ts
+  // -> GET /users/loged -> a freshly-signed token with the new role baked in).
+  // The role change itself never mints a token — this is the only place the
+  // session's privileges actually get refreshed.
+  changeUserRole$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(changeUserRole),
+      concatMap(({ roleCode }) =>
+        this.usersService.changeRole(roleCode).pipe(
+          map(() => loadLogedUser()),
+          catchError((error) => of(changeUserRoleFailed({ error })))
         )
       )
     )

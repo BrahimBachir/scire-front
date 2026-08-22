@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { submitLogin, loginCompleted, logedUserLoaded, logoutAction, verificationCompleted, verifiyingEmail, emailVerificantionCodeSent } from '../actions';
+import { submitLogin, loginCompleted, logedUserLoaded, logoutAction, verificationCompleted, verifiyingEmail, emailVerificantionCodeSent, mandatoryPasswordChangeRequired } from '../actions';
 import { InitialAuthState } from '../../models/states';
 
 export const authReducer = createReducer(
@@ -53,6 +53,12 @@ export const authReducer = createReducer(
       user: user,
       token: token,
       logedIn: true,
+    };
+  }),
+  on(mandatoryPasswordChangeRequired, (state) => {
+    return {
+      ...state,
+      verifying: false,
     };
   }),
   on(logoutAction, (state) =>{

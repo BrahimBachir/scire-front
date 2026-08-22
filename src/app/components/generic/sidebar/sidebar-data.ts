@@ -1,5 +1,8 @@
 import { Planes } from 'src/app/common/enums/planes.enum';
+import { Roles } from 'src/app/common/enums/roles.enum';
 import { NavItem } from './nav-item/nav-item';
+
+const NON_SUPER_ROLES = [Roles.STUDENT, Roles.INSTRUCTOR];
 
 export const navItems: NavItem[] = [
   {
@@ -16,6 +19,7 @@ export const navItems: NavItem[] = [
     iconName: 'briefcase',
     route: 'my-courses',
     type: 'GEN',
+    roles: NON_SUPER_ROLES,
   },
   {
     displayName: 'NAV.MODULES',
@@ -24,19 +28,43 @@ export const navItems: NavItem[] = [
     type: 'GEN',
   },
   {
+    displayName: 'NAV.ORGANIZATIONS',
+    iconName: 'building-community',
+    route: 'organizations',
+    type: 'GEN',
+    roles: [Roles.SUPER],
+  },
+  {
+    displayName: 'NAV.USERS',
+    iconName: 'users-group',
+    route: 'users',
+    type: 'GEN',
+    roles: [Roles.SUPER],
+  },
+  {
+    displayName: 'NAV.MODERATION',
+    iconName: 'gavel',
+    route: 'moderation',
+    type: 'GEN',
+    roles: [Roles.SUPER],
+  },
+  {
     navCap: 'NAV.CAPTIONS.COURSE',
+    roles: NON_SUPER_ROLES,
   },
   {
     displayName: 'NAV.COURSE_DETAILS',
     iconName: 'file-description',
     route: 'courses/:courseId/details',
-    type: 'COUR'
+    type: 'COUR',
+    roles: NON_SUPER_ROLES,
   },
   {
     displayName: 'NAV.SYLLABUS',
     iconName: 'book',
     route: 'courses/:courseId/topics',
-    type: 'COUR'
+    type: 'COUR',
+    roles: NON_SUPER_ROLES,
   },
   {
     displayName: 'NAV.STATISTICS',
@@ -46,36 +74,42 @@ export const navItems: NavItem[] = [
     chip: true,
     chipClass: 'b-1 border-secondary text-secondary',
     chipContent: 'PRO',
+    roles: NON_SUPER_ROLES,
   },
   {
     displayName: 'NAV.TESTS',
     iconName: 'devices-question',
     route: 'courses/:courseId/tests',
-    type: 'COUR'
+    type: 'COUR',
+    roles: NON_SUPER_ROLES,
   },
   {
     displayName: 'NAV.FLASHCARDS',
     iconName: 'flip-vertical',
     route: '/flashcards',
-    type: 'COUR'
+    type: 'COUR',
+    roles: NON_SUPER_ROLES,
   },
   {
     displayName: 'NAV.NOTES',
     iconName: 'note',
     route: 'courses/:courseId/notes',
-    type: 'COUR'
+    type: 'COUR',
+    roles: NON_SUPER_ROLES,
   },
   {
     displayName: 'NAV.DIAGRAMS',
     iconName: 'schema',
     route: '/diagrams',
-    type: 'COUR'
+    type: 'COUR',
+    roles: NON_SUPER_ROLES,
   },
   {
     displayName: 'NAV.VIDEOS',
     iconName: 'video',
     route: '/videos',
-    type: 'COUR'
+    type: 'COUR',
+    roles: NON_SUPER_ROLES,
   },
   {
     displayName: 'NAV.KANBAN',
@@ -86,6 +120,7 @@ export const navItems: NavItem[] = [
     chipClass: 'b-1 border-secondary text-secondary',
     chipContent: 'PRO',
     requiresPlan: [Planes.SILVER, Planes.GOLD],
+    roles: NON_SUPER_ROLES,
   },
   {
     displayName: 'NAV.CALENDAR',
@@ -96,5 +131,6 @@ export const navItems: NavItem[] = [
     chipClass: 'b-1 border-secondary text-secondary',
     chipContent: 'PRO',
     requiresPlan: [Planes.SILVER, Planes.GOLD],
+    roles: NON_SUPER_ROLES,
   }
 ];
