@@ -15,9 +15,10 @@ interface socialcards {
 }
 @Component({
   selector: 'app-user-courses',
-  imports: [MaterialModule, IconModule, CommonModule, FormsModule, 
+  imports: [MaterialModule, IconModule, CommonModule, FormsModule,
       AppBannersNotFoundComponent,],
   templateUrl: './user-courses.component.html',
+  styleUrl: './user-courses.component.scss',
 })
 export class UserCoursesComponent implements OnInit {
   private router = inject(Router);

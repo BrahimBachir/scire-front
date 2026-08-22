@@ -36,27 +36,27 @@
 <mat-card class="cardWithShadow overflow-hidden">
   <mat-toolbar class="bg-primary text-white no-shadow">
     <mat-toolbar-row>
-      <div class="d-flex align-items-center w-100">
-        <span>{{
+      <div class="d-flex flex-wrap align-items-center gap-4 w-100 calendar-toolbar-row">
+        <span class="calendar-toolbar-title">{{
           viewDate() | calendarDate : view() + "ViewTitle" : "en"
         }}</span>
-        <div class="m-l-auto d-flex align-items-center">
+        <div class="m-l-auto d-flex flex-wrap align-items-center">
           <button
-            mat-button class="text-white"
+            mat-button class="text-white view-text-btn"
             (click)="setView('month')"
             [class.active]="view() === 'month'"
           >
             Mes
           </button>
           <button
-            mat-button class="text-white"
+            mat-button class="text-white view-text-btn"
             (click)="setView('week')"
             [class.active]="view() === 'week'"
           >
             Semana
           </button>
           <button
-            mat-button class="text-white"
+            mat-button class="text-white view-text-btn"
             (click)="setView('day')"
             [class.active]="view() === 'day'"
           >
@@ -101,7 +101,7 @@
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
-  <mat-card-content>
+  <mat-card-content class="calendar-view-scroll">
     <div [ngSwitch]="view()">
       <!-- month view -->
       <mwl-calendar-month-view

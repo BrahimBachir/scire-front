@@ -1,0 +1,44 @@
+.calendar-toolbar-title {
+  white-space: nowrap;
+}
+
+// mat-toolbar-row has a fixed height by default; once the row's content
+// wraps to a second line it needs to be allowed to grow, otherwise the
+// wrapped line renders past the toolbar's box instead of pushing it taller.
+@media (max-width: 700px) {
+  ::ng-deep .mat-toolbar-row {
+    height: auto;
+    min-height: var(--mat-toolbar-standard-height, 64px);
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+// angular-calendar's week/day grids render an hour column plus a fixed
+// intrinsic width per day; scroll horizontally on narrow screens instead
+// of breaking page layout. The month view already reflows on its own.
+.calendar-view-scroll {
+  overflow-x: auto;
+
+  ::ng-deep .cal-week-view,
+  ::ng-deep .cal-day-view {
+    min-width: 600px;
+  }
+}
+
+// The toolbar packs a title plus 9 buttons (3 labeled view buttons that
+// duplicate the 3 icon view buttons, plus 3 navigation icons) into one row.
+// Below ~700px that no longer fits; drop the redundant labeled buttons
+// first since the icon trio already covers the same actions, then let
+// whatever remains wrap instead of overflowing.
+@media (max-width: 700px) {
+  .view-text-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .calendar-toolbar-title {
+    white-space: normal;
+  }
+}

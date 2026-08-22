@@ -1,5 +1,5 @@
 <div class="courses-contents">
-  <div class="header-content d-flex w-100 justify-content-between m-t-15 m-b-15">
+  <div class="header-content d-flex flex-wrap w-100 justify-content-between align-items-center gap-10 m-t-15 m-b-15">
     <div class="d-flex align-items-center gap-15">
       <h5 class="f-w-500 f-s-20">Cursos</h5>
 
@@ -7,7 +7,7 @@
         <div class="f-s-14 lh-sm">{{ filteredCount() }}</div>
       </div>
     </div>
-    <mat-form-field appearance="outline" class="h-100 w-40 d-flex align-items-center m-b--15">
+    <mat-form-field appearance="outline" class="h-100 w-40 user-courses-search d-flex align-items-center m-b--15">
       <mat-label>Buscar</mat-label>
       <input matInput type="text" placeholder="Search estudiante" [(ngModel)]="searchText" />
 
@@ -24,7 +24,7 @@
   </div>
   <div class="row">
     @for(course of filteredCourses(); track course.id) {
-    <div class="col-lg-4">
+    <div class="col-sm-6 col-lg-4">
       <mat-card class="card overflow-hidden shadow-none b-1 cursor-pointer" (click)="goToCourseDetails(course)">
         <img mat-card-image src="{{ course.imgSrc }}" alt="Imagen principal del curso" />
         <div class="card-overlay h-100 d-flex align-items-center justify-content-end">

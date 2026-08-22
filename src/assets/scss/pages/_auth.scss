@@ -2,9 +2,23 @@
 
 .blank-layout-container {
   height: 100vh;
+  height: 100dvh;
   display: flex;
   background-size: cover;
   align-items: center;
+}
+
+// Below "large" the side image column is hidden (see .d-lg-flex/.d-none) and
+// the layout is single-column, so let the container grow with its content
+// instead of forcing the branding block to fill the whole viewport height
+// (which used to push the form off-screen on phones and tablets).
+@media (max-width: 1279px) {
+  .blank-layout-container {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    align-items: flex-start;
+  }
 }
 
 .auth-title {
@@ -54,6 +68,18 @@
     .col-12 {
       padding-right: 8px;
       padding-left: 8px;
+    }
+
+    // The 6 one-digit boxes in .col-2 (16.66% each) get tight on narrow
+    // phones once gutters are subtracted; claw back space there.
+    @media (max-width: 380px) {
+      margin-right: -3px;
+      margin-left: -3px;
+
+      .col-2 {
+        padding-right: 3px;
+        padding-left: 3px;
+      }
     }
   }
 }

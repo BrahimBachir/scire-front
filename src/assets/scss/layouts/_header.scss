@@ -15,6 +15,13 @@ html .topbar {
 
 .topbar-dd {
   min-width: 360px !important;
+  max-width: calc(100vw - 24px) !important;
+}
+
+@media (max-width: 420px) {
+  .topbar-dd {
+    min-width: calc(100vw - 24px) !important;
+  }
 }
 
 .apps-dd {

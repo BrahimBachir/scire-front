@@ -22,7 +22,7 @@
       @if(filteredCourses()) {
       <div class="row">
         @for(course of filteredCourses(); track course.id) {
-        <div class="col-lg-4">
+        <div class="col-sm-6 col-lg-4">
           <mat-card class="card overflow-hidden shadow-none b-1 cursor-pointer" (click)="goToCourseDetails(course)">
             <img mat-card-image src="{{ course.imgSrc }}" alt="Imagen principal del curso" />
             <div class="card-overlay h-100 d-flex align-items-center justify-content-end">

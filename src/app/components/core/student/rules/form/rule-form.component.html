@@ -14,23 +14,23 @@
               id="description" equired name="description" formControlName="description" />
           </mat-form-field>
         </div>
-        <div class="col-lg-3">
+        <div class="col-sm-6 col-lg-3">
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Código</mat-label>
             <input type="text" placeholder="Código de la norma" aria-label="Código de la norma" matInput id="code"
               required name="code" formControlName="code" />
           </mat-form-field>
         </div>
-        <div class="col-lg-3">
+        <div class="col-sm-6 col-lg-3">
           <rule-type-filter formControlName="typeId"></rule-type-filter>
         </div>
-        <div class="col-lg-3">
+        <div class="col-sm-6 col-lg-3">
           <rule-ambit-filter formControlName="ambitId"></rule-ambit-filter>
         </div>
-        <div class="col-lg-3">
+        <div class="col-sm-6 col-lg-3">
           <rule-gazette-filter formControlName="gazetteId"></rule-gazette-filter>
         </div>
-        <div class="col-lg-3">
+        <div class="col-sm-6 col-lg-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Última actualización</mat-label>
             <input matInput [matDatepicker]="updateDate" formControlName="updateDate" placeholder="DD/MM/AAAA" />
@@ -38,7 +38,7 @@
             <mat-datepicker #updateDate></mat-datepicker>
           </mat-form-field>
         </div>
-        <div class="col-lg-3">
+        <div class="col-sm-6 col-lg-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Fecha publicación</mat-label>
             <input matInput [matDatepicker]="enactmentDate" formControlName="enactmentDate" placeholder="DD/MM/AAAA" />
@@ -46,7 +46,7 @@
             <mat-datepicker #enactmentDate></mat-datepicker>
           </mat-form-field>
         </div>
-        <div class="col-lg-3">
+        <div class="col-sm-6 col-lg-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Fecha de vigencia</mat-label>
             <input matInput [matDatepicker]="effectiveDate" formControlName="effectiveDate" placeholder="DD/MM/AAAA" />
@@ -54,11 +54,11 @@
             <mat-datepicker #effectiveDate></mat-datepicker>
           </mat-form-field>
         </div>
-        <div class="col-lg-3">
+        <div class="col-sm-6 col-lg-3">
           <mat-slide-toggle id="internal" name="internal" class="w-100"
             formControlName="internal">¿Interno?</mat-slide-toggle>
         </div>
-        <div class="col-lg-3">
+        <div class="col-sm-6 col-lg-3">
           <mat-slide-toggle id="repealed" name="repealed" class="w-100"
             formControlName="repealed">¿Derogada?</mat-slide-toggle>
         </div>

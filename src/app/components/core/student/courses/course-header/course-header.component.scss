@@ -1,0 +1,30 @@
+.course-header-title {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.course-header-title-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 599px) {
+  .course-header-bar {
+    justify-content: flex-start !important;
+  }
+
+  .course-header-title {
+    width: 100%;
+    flex-basis: 100%;
+  }
+
+  .course-header-title-text {
+    white-space: normal;
+  }
+
+  .start-course {
+    flex-basis: 100%;
+    justify-content: flex-end;
+  }
+}

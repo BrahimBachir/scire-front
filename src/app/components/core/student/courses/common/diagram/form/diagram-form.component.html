@@ -10,8 +10,8 @@
             </div>
         </div>
 
-        <mat-card-content class="d-flex justify-content-start gap-15 h-100 m-r-15 diagram-editor-container">
-            <mat-card class="d-flex col justify-content-between shadow-none b-1 col-sm-4 h-100 p-15">
+        <mat-card-content class="d-flex flex-wrap justify-content-start gap-15 h-100 m-r-15 diagram-editor-container">
+            <mat-card class="d-flex col justify-content-between shadow-none b-1 col-sm-12 col-lg-4 h-100 p-15">
                 <mat-form-field appearance="outline" class="w-100">
                     <textarea matInput formControlName="snippet" rows="12"></textarea>
                 </mat-form-field>
@@ -26,7 +26,7 @@
                     </mat-chip-listbox>
                 </div>
             </mat-card>
-            <mat-card class="shadow-none b-1 col-8 h-100">
+            <mat-card class="shadow-none b-1 col-sm-12 col-lg-8 h-100">
                 @if(panZoom){
                 <div class="d-flex row m-10 justify-content-between">
                     <div class="col-lg-6 p-l-0">

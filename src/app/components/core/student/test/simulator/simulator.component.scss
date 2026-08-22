@@ -78,6 +78,16 @@
   filter: brightness(0.95);
 }
 
+// The nav bar packs a mark-for-review button, a 5-control question
+// navigator and a finish button in one row; below ~430px that no longer
+// fits, so let it wrap onto a centered second line instead of overflowing.
+@media (max-width: 430px) {
+  .test-nav-bar {
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+}
+
 .custom-size-fab {
   --mdc-fab-mini-container-size: 32px;
 

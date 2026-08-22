@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,11 +33,16 @@ import { IconModule } from 'src/app/icon/icon.module';
     MatPaginatorModule,
   ]
 })
-export class AppNotesComponent implements OnInit {
+export class AppNotesComponent implements OnInit, OnDestroy {
   private service = inject(NoteService)
   private snackBar = inject(MatSnackBar)
   private route = inject(ActivatedRoute)
+  private breakpointObserver = inject(BreakpointObserver)
   sidePanelOpened = signal(true);
+  isOverSignal = signal(window.matchMedia('(max-width: 960px)').matches);
+  private breakpointSubscription = this.breakpointObserver
+    .observe('(max-width: 960px)')
+    .subscribe((state) => this.isOverSignal.set(state.matches));
   private dialog = inject(MatDialog)
   courseId!: number;
   length!: number;
@@ -137,7 +143,11 @@ export class AppNotesComponent implements OnInit {
   }
 
   isOver(): boolean {
-    return window.matchMedia(`(max-width: 960px)`).matches;
+    return this.isOverSignal();
+  }
+
+  ngOnDestroy(): void {
+    this.breakpointSubscription.unsubscribe();
   }
 
   onSelect(note: INote): void {

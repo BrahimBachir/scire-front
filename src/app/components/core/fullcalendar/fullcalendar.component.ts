@@ -141,6 +141,7 @@ export class CalendarDialogComponent {
     selector: 'app-fullcalendar',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './fullcalendar.component.html',
+    styleUrl: './fullcalendar.component.scss',
     imports: [
         MaterialModule,
         FormsModule,

@@ -3,12 +3,14 @@ import {
   effect,
   ElementRef,
   inject,
+  OnDestroy,
   OnInit,
   signal,
   viewChild,
   ViewChild,
   viewChildren,
 } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TestService } from 'src/app/services';
@@ -51,12 +53,17 @@ import { finalize } from 'rxjs';
   styleUrl: './simulator.component.scss',
   providers: [TestStrategy],
 })
-export class AppTestSimulatorComponent implements OnInit {
+export class AppTestSimulatorComponent implements OnInit, OnDestroy {
   @ViewChild(CountdownTimer) countdownTimerComponent!: CountdownTimer;
   private service = inject(TestService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private strategy = inject(TestStrategy);
+  private breakpointObserver = inject(BreakpointObserver);
+  isOverSignal = signal(window.matchMedia('(max-width: 960px)').matches);
+  private breakpointSubscription = this.breakpointObserver
+    .observe('(max-width: 960px)')
+    .subscribe((state) => this.isOverSignal.set(state.matches));
 
   explanationElement = viewChild<ElementRef>('explanationSection');
   questionItems = viewChildren<ElementRef>('questionItems');
@@ -302,7 +309,11 @@ export class AppTestSimulatorComponent implements OnInit {
   }
 
   isOver(): boolean {
-    return window.matchMedia(`(max-width: 960px)`).matches;
+    return this.isOverSignal();
+  }
+
+  ngOnDestroy(): void {
+    this.breakpointSubscription.unsubscribe();
   }
 
   nextQuestion(): void {

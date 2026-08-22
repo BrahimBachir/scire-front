@@ -27,6 +27,9 @@ export class MermaidPanZoomDirective {
     private renderer: Renderer2
   ) {
     this.renderer.setStyle(el.nativeElement, 'cursor', 'grab');
+    // Prevent the browser from scrolling/zooming the page on single-finger
+    // drag so our own touch handlers can pan the diagram instead.
+    this.renderer.setStyle(el.nativeElement, 'touch-action', 'none');
   }
 
   @HostListener('mousedown', ['$event'])
@@ -50,6 +53,29 @@ export class MermaidPanZoomDirective {
   onUp() {
     this.dragging = false;
     this.renderer.setStyle(this.el.nativeElement, 'cursor', 'grab');
+  }
+
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(e: TouchEvent) {
+    if (e.touches.length !== 1) return;
+    this.dragging = true;
+    this.startX = e.touches[0].clientX - this.tx;
+    this.startY = e.touches[0].clientY - this.ty;
+  }
+
+  @HostListener('touchmove', ['$event'])
+  onTouchMove(e: TouchEvent) {
+    if (!this.dragging || e.touches.length !== 1) return;
+    e.preventDefault();
+    this.tx = e.touches[0].clientX - this.startX;
+    this.ty = e.touches[0].clientY - this.startY;
+    this.applyTransform();
+  }
+
+  @HostListener('touchend')
+  @HostListener('touchcancel')
+  onTouchEnd() {
+    this.dragging = false;
   }
 
   zoomIn() {

@@ -1,12 +1,12 @@
 <mat-card class="cardWithShadow overflow-hidden">
-  <div class="bg-{{ course.colour }} text-white p-y-10 p-x-24 d-flex justify-content-between align-items-center">
-    <mat-card-title class="d-flex align-items-center gap-10">
-      <a (click)="goBack()" mat-icon-button class="text-white d-flex justify-content-center">
+  <div class="bg-{{ course.colour }} text-white p-y-10 p-x-24 d-flex flex-wrap justify-content-between align-items-center gap-10 course-header-bar">
+    <mat-card-title class="d-flex align-items-center gap-10 course-header-title">
+      <a (click)="goBack()" mat-icon-button class="text-white d-flex justify-content-center flex-shrink-0">
         <i-tabler name="chevron-left" class="icon-18 d-flex"></i-tabler>
       </a>
-      {{ course.description }}
+      <span class="course-header-title-text">{{ course.description }}</span>
     </mat-card-title>
-    
+
     <div class="d-flex start-course align-items-center">
       <button class="text-white" mat-icon-button (click)="goToCourseSillabus()" matTooltip="Ver temario">
         <i-tabler name="eye" class="icon-18"></i-tabler>
