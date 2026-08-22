@@ -1,3 +1,10 @@
+## [2.10.1](https://github.com/BrahimBachir/scire-front/compare/v2.10.0...v2.10.1) (2026-08-22)
+
+
+### Bug Fixes
+
+* **responsive:** make key surfaces work on tablet and mobile ([5407498](https://github.com/BrahimBachir/scire-front/commit/540749823fa4d2c22f9592584034b6bea6fc8a95))
+
 # [2.10.0](https://github.com/BrahimBachir/scire-front/compare/v2.9.0...v2.10.0) (2026-08-21)
 
 
