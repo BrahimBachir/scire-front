@@ -176,9 +176,7 @@
     "CALENDAR": "Calendario",
     "ORGANIZATIONS": "Organizaciones",
     "USERS": "Usuarios",
-    "MODERATION": "Moderación",
-    "ORGANIZATIONS_COMING_SOON_TITLE": "Próximamente.",
-    "ORGANIZATIONS_COMING_SOON_TEXT": "La gestión de organizaciones está en camino."
+    "MODERATION": "Moderación"
   },
   "DIALOGS": {
     "DELETE": {

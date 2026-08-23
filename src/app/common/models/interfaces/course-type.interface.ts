@@ -37,11 +37,16 @@ export function canCreateCourseType(typeCode: string | undefined, userRoleCode: 
   }
 }
 
+// organizationId is the course's own org; userOrganizationId is the caller's
+// — an ADMIN/INSTRUCTOR may only touch ORG/TUT courses in their own org, not
+// any such course platform-wide. UX only, the backend is the real boundary.
 export function canEditCourse(
   typeCode: string | undefined,
   creatorId: number | undefined,
   userRoleCode: string | undefined,
   userId: number | undefined,
+  organizationId?: number,
+  userOrganizationId?: number,
 ): boolean {
   if (userRoleCode === 'SUPER') return true;
 
@@ -51,9 +56,9 @@ export function canEditCourse(
     case 'COM':
       return true;
     case 'ORG':
-      return userRoleCode === 'ADMIN';
+      return userRoleCode === 'ADMIN' && !!organizationId && organizationId === userOrganizationId;
     case 'TUT':
-      return userRoleCode === 'INSTRUCTOR';
+      return userRoleCode === 'INSTRUCTOR' && !!organizationId && organizationId === userOrganizationId;
     default:
       return false;
   }
@@ -64,6 +69,8 @@ export function canDeleteCourse(
   creatorId: number | undefined,
   userRoleCode: string | undefined,
   userId: number | undefined,
+  organizationId?: number,
+  userOrganizationId?: number,
 ): boolean {
   if (userRoleCode === 'SUPER') return true;
 
@@ -73,9 +80,9 @@ export function canDeleteCourse(
     case 'COM':
       return creatorId !== undefined && creatorId === userId;
     case 'ORG':
-      return userRoleCode === 'ADMIN';
+      return userRoleCode === 'ADMIN' && !!organizationId && organizationId === userOrganizationId;
     case 'TUT':
-      return userRoleCode === 'INSTRUCTOR';
+      return userRoleCode === 'INSTRUCTOR' && !!organizationId && organizationId === userOrganizationId;
     default:
       return false;
   }

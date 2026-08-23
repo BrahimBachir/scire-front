@@ -7,8 +7,8 @@ import { PageEvent } from '@angular/material/paginator';
 import { Store } from '@ngrx/store';
 import { IconModule } from 'src/app/icon/icon.module';
 import { MaterialModule } from 'src/app/material.module';
-import { GendersService, RoleService, UsersService } from 'src/app/services';
-import { IGender, IRole, IUser } from 'src/app/common/models/interfaces';
+import { GendersService, OrganizationsService, RoleService, UsersService } from 'src/app/services';
+import { IGender, IOrganization, IRole, IUser } from 'src/app/common/models/interfaces';
 import { AppSearchTermFilterComponent } from 'src/app/components/generic/filters/search-term/search-term.component';
 import { AppDeleteDialogComponent } from 'src/app/components/generic/dialogs/delete-dialog/delete-dialog.component';
 import { AppBannersNotFoundComponent } from 'src/app/components/generic/banners/not-found/banner-not-found.component';
@@ -39,6 +39,7 @@ export class AppUserManagementComponent implements OnInit {
   private usersService = inject(UsersService);
   private roleService = inject(RoleService);
   private gendersService = inject(GendersService);
+  private organizationsService = inject(OrganizationsService);
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
   private store = inject(Store<AppState>);
@@ -55,12 +56,21 @@ export class AppUserManagementComponent implements OnInit {
 
   protected roles: IRole[] = [];
   protected genders: IGender[] = [];
+  // Only fetched for a SUPER caller (GET /organizations is SUPER-only) — an
+  // ADMIN provisioning INSTRUCTOR/STUDENT never picks an org, the backend
+  // always forces their own regardless of what's submitted.
+  protected organizations: IOrganization[] = [];
   protected selected = new Set<number>();
 
   protected searchControl = new FormControl<string | null>(null);
 
   ngOnInit(): void {
-    this.store.select(selectUserRole).subscribe(role => this.currentUserRoleCode = role?.code ?? null);
+    this.store.select(selectUserRole).subscribe(role => {
+      this.currentUserRoleCode = role?.code ?? null;
+      if (this.currentUserRoleCode === Roles.SUPER) {
+        this.organizationsService.getAll({ take: 1000 }).subscribe(res => this.organizations = res.rows);
+      }
+    });
     this.roleService.getAll().subscribe(roles => this.roles = roles);
     this.gendersService.getAll().subscribe(genders => this.genders = genders);
 
@@ -128,7 +138,12 @@ export class AppUserManagementComponent implements OnInit {
   openCreateDialog(): void {
     this.dialog.open(UserFormDialogComponent, {
       width: '700px',
-      data: { roles: this.assignableRoles, genders: this.genders },
+      data: {
+        roles: this.assignableRoles,
+        genders: this.genders,
+        organizations: this.organizations,
+        currentUserRoleCode: this.currentUserRoleCode,
+      },
     }).afterClosed().subscribe(result => {
       if (result) {
         if (result.warning === 'EMAIL_DELIVERY_FAILED') {
@@ -144,7 +159,13 @@ export class AppUserManagementComponent implements OnInit {
   openEditDialog(user: IUser): void {
     this.dialog.open(UserFormDialogComponent, {
       width: '700px',
-      data: { user, roles: this.assignableRoles, genders: this.genders },
+      data: {
+        user,
+        roles: this.assignableRoles,
+        genders: this.genders,
+        organizations: this.organizations,
+        currentUserRoleCode: this.currentUserRoleCode,
+      },
     }).afterClosed().subscribe(result => {
       if (result) {
         this.showSnackbar('Usuario actualizado.');

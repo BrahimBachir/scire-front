@@ -33,6 +33,9 @@ export const Routes = {
     roles: {
       all: 'roles',
     },
+    organizations: {
+      all: 'organizations',
+    },
     learning: {
       categories: 'learning/categories',
       categoriesByCourse: 'learning/categories/course/:courseId',

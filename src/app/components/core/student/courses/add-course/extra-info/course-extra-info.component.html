@@ -52,6 +52,13 @@
         <div class="col-sm-4 m-t-15">
           <app-year-picker  formControlName="calling_year"></app-year-picker>
         </div>
+        @if(isOrgCourseType) {
+        <div class="col-sm-4 m-t-15 d-flex align-items-center">
+          <mat-slide-toggle formControlName="isPublic" [disabled]="!canEditVisibility">
+            Curso público
+          </mat-slide-toggle>
+        </div>
+        }
       </div>
     </mat-card>
   </div>

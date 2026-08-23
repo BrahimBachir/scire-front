@@ -176,9 +176,7 @@
     "CALENDAR": "Calendar",
     "ORGANIZATIONS": "Organizations",
     "USERS": "Users",
-    "MODERATION": "Moderation",
-    "ORGANIZATIONS_COMING_SOON_TITLE": "Coming soon.",
-    "ORGANIZATIONS_COMING_SOON_TEXT": "Organization management is on its way."
+    "MODERATION": "Moderation"
   },
   "DIALOGS": {
     "DELETE": {

@@ -1,0 +1,65 @@
+<mat-card class="cardWithShadow m-b-0">
+  <mat-card-header class="b-b-1 d-flex align-items-center justify-content-between w-100">
+    <mat-card-title>Organizaciones</mat-card-title>
+    <div class="d-flex gap-10">
+      <button mat-flat-button color="primary" type="button" (click)="openCreateDialog()">
+        <i-tabler name="plus" class="icon-18"></i-tabler>
+        Nueva organización
+      </button>
+    </div>
+  </mat-card-header>
+
+  <mat-card-content class="module-list">
+    <div class="col-md-4 m-b-15">
+      <search-term-filter [formControl]="searchControl"></search-term-filter>
+    </div>
+
+    @if(loading) {
+    <div class="h-100 d-flex align-items-center justify-content-center p-10">
+      <mat-spinner></mat-spinner>
+    </div>
+    } @else {
+    <div class="table-responsive">
+      <table mat-table [dataSource]="organizations" class="w-100">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let organization">{{ organization.description }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="active">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let organization">
+            <span class="{{ organization.active ? 'text-success' : 'text-error' }}">
+              {{ organization.active ? 'Activa' : 'Inactiva' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let organization" class="d-flex gap-10 justify-content-end">
+            <button mat-icon-button type="button" (click)="openEditDialog(organization)">
+              <i-tabler name="edit" class="icon-18"></i-tabler>
+            </button>
+            <button mat-icon-button type="button" (click)="deleteOne(organization)">
+              <i-tabler name="trash" class="icon-18 text-error"></i-tabler>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      @if(!organizations.length) {
+      <app-banner-nof-found class="w-100" bannerText="No hay organizaciones que coincidan con la búsqueda."
+        bannerTitle="Sin resultados."></app-banner-nof-found>
+      }
+    </div>
+
+    <mat-paginator [length]="total" [pageIndex]="pageIndex" [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
+    </mat-paginator>
+    }
+  </mat-card-content>
+</mat-card>

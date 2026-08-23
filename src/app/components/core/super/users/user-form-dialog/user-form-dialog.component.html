@@ -58,6 +58,17 @@
         </mat-select>
       </mat-form-field>
 
+      @if(showOrganizationPicker && isOrganizationRole(form.get('role')?.value)) {
+      <mat-form-field appearance="outline" class="w-100 col-md-6">
+        <mat-label>Organización</mat-label>
+        <mat-select formControlName="organization" [compareWith]="compareById" required>
+          @for(organization of data.organizations; track organization.id) {
+          <mat-option [value]="organization">{{ organization.description }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      }
+
       <div class="col-12 m-b-10">
         <mat-slide-toggle formControlName="active">Activo</mat-slide-toggle>
       </div>

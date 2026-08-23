@@ -1,0 +1,42 @@
+<div class="d-flex col h-100">
+  <mat-dialog-content class="flex-grow-1">
+    <div class="d-flex w-100 align-items-center justify-content-between m-b-15">
+      <h3 mat-dialog-title class="p-0">
+        {{ isEditing ? 'Editar organización' : 'Crear organización' }}
+      </h3>
+      <button mat-icon-button mat-dialog-close class="d-flex justify-content-center m-l-20 bg-error text-white">
+        <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
+      </button>
+    </div>
+
+    <form [formGroup]="form" class="w-100 row">
+      <mat-form-field appearance="outline" class="w-100 col-md-12">
+        <mat-label>Nombre</mat-label>
+        <input matInput required formControlName="description">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 col-md-12">
+        <mat-label>Icono</mat-label>
+        <input matInput formControlName="icon">
+      </mat-form-field>
+
+      <div class="col-12 m-b-10">
+        <mat-slide-toggle formControlName="active">Activa</mat-slide-toggle>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="d-flex justify-content-between">
+    <div>
+      @if(error) {
+      <mat-error class="f-s-12">{{ error }}</mat-error>
+      }
+    </div>
+    <div class="d-flex justify-content-end">
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button mat-flat-button color="primary" [disabled]="form.invalid || loading" (click)="submit()">
+        {{ loading ? 'Guardando...' : 'Guardar' }}
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

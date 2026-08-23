@@ -1,4 +1,4 @@
-import { ICourseType, ITopic, ICaller, ICourseCategory, ICourseStatus, IExercise, IUser, ICreationType } from '.';
+import { ICourseType, ITopic, ICaller, ICourseCategory, ICourseStatus, IExercise, IUser, ICreationType, IOrganization } from '.';
 
 export interface ICourse {
   id: number | null;
@@ -21,6 +21,12 @@ export interface ICourse {
   caller?: ICaller;
   callerId?: number;
   callerDescription?: string;
+
+  // ORG/TUT course types only — see course-permissions.helper.ts (backend).
+  organization?: IOrganization;
+  organizationId?: number;
+  organizationDescription?: string;
+  isPublic?: boolean;
 
   type?: ICourseType;
   typeId?: number;
@@ -57,6 +63,8 @@ export interface ICourseExtraInfo {
   official_call_url?: string;
   calling_year: number;
   examDate?: Date | null;
+  isPublic?: boolean;
+  organizationId?: number;
 }
 
 export interface ICourseGeneralInfo {

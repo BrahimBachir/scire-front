@@ -9,6 +9,7 @@ export * from './tracker.service';
 export * from './kanban.service';
 export * from './legislation.service';
 export * from './role.service';
+export * from './organizations.service';
 export * from './courses.service';
 export * from './topic.service';
 export * from './video.service';

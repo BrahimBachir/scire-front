@@ -1,5 +1,6 @@
 export * from './login.interface';
 export * from './role.interface';
+export * from './organization.interface';
 export * from './permit.interface';
 export * from './user.interface';
 export * from './country.interface';

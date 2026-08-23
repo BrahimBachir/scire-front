@@ -67,6 +67,9 @@ export class AddCourseComponent implements OnInit {
       callerId: this.fb.control<number | null>(null, Validators.required),
       typeId: this.fb.control<number | null>(null, Validators.required),
       categoryId: this.fb.control<number | null>(null, Validators.required),
+      // ORG course types only — see course-extra-info.component.ts. Left
+      // undefined for any other type; the backend ignores it in that case.
+      isPublic: this.fb.control<boolean | null>(null),
     }),
   });
 
@@ -116,6 +119,7 @@ export class AddCourseComponent implements OnInit {
             callerId: course.callerId,
             typeId: course.typeId,
             categoryId: course.categoryId,
+            isPublic: course.isPublic ?? null,
           },
         });
       });
@@ -140,6 +144,7 @@ export class AddCourseComponent implements OnInit {
       callerId: extra.callerId || 0,
       typeId: extra.typeId || 0,
       categoryId: extra.categoryId || 0,
+      isPublic: extra.isPublic ?? undefined,
     };
   }
 

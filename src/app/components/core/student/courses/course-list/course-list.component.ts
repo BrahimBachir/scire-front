@@ -99,6 +99,7 @@ export class AppCourseListComponent implements OnInit {
   protected isSuper: boolean = false;
   private currentUserId: number | null = null;
   private currentUserRoleCode: string | null = null;
+  private currentUserOrganizationId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -117,7 +118,10 @@ export class AppCourseListComponent implements OnInit {
       this.isSuper = role.code === 'SUPER';
       this.currentUserRoleCode = role.code ?? null;
     });
-    this.store.select(selectLogedUser).subscribe(user => this.currentUserId = user?.id ?? null);
+    this.store.select(selectLogedUser).subscribe(user => {
+      this.currentUserId = user?.id ?? null;
+      this.currentUserOrganizationId = user?.organizationId ?? null;
+    });
 
     this.showOnlyMyCourses = !!this.route.snapshot.data['myCourses'];
 
@@ -190,11 +194,25 @@ export class AppCourseListComponent implements OnInit {
   }
 
   canEdit(course: ICourse): boolean {
-    return canEditCourse(course.typeCode, course.creatorId, this.currentUserRoleCode ?? undefined, this.currentUserId ?? undefined);
+    return canEditCourse(
+      course.typeCode,
+      course.creatorId,
+      this.currentUserRoleCode ?? undefined,
+      this.currentUserId ?? undefined,
+      course.organizationId,
+      this.currentUserOrganizationId ?? undefined,
+    );
   }
 
   canDelete(course: ICourse): boolean {
-    return canDeleteCourse(course.typeCode, course.creatorId, this.currentUserRoleCode ?? undefined, this.currentUserId ?? undefined);
+    return canDeleteCourse(
+      course.typeCode,
+      course.creatorId,
+      this.currentUserRoleCode ?? undefined,
+      this.currentUserId ?? undefined,
+      course.organizationId,
+      this.currentUserOrganizationId ?? undefined,
+    );
   }
 
   remove(id: number) {

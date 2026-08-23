@@ -1,4 +1,4 @@
-import { IPhone, IEmail, IAddress, IRole, IPermit, IGender, IUserPricingPlan, ICourse, IAnnouncement, ISocialMedia } from '.';
+import { IPhone, IEmail, IAddress, IRole, IPermit, IGender, IUserPricingPlan, ICourse, IAnnouncement, ISocialMedia, IOrganization } from '.';
 
 export interface IUser {
   id?: number;
@@ -9,6 +9,8 @@ export interface IUser {
   addresses?: IAddress[];
   role: IRole;
   gender: IGender;
+  organizationId?: number;
+  organization?: IOrganization;
   permits?: IPermit[];
   code?: string;
   title?: string;
