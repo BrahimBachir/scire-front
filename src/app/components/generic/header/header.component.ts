@@ -139,7 +139,7 @@ export class HeaderComponent {
       link: 'account',
     },
     {
-      id: 3,
+      id: 4,
       title: 'MENU.FAQ',
       link: 'faq',
     }

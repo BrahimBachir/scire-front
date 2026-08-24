@@ -156,6 +156,65 @@
     "ACCOUNT": "Compte",
     "FAQ": "Preguntes freqüents"
   },
+  "FAQ": {
+    "TITLE": "Preguntes freqüents",
+    "SUBTITLE": "Tot el que necessites saber per treure el màxim profit de Scire",
+    "ITEMS": {
+      "CREATE_COURSE": {
+        "Q": "Com creo un curs?",
+        "A": "Com a instructor, fes clic al botó \"+\" de la teva llista de cursos per obrir l'assistent de creació. Aniràs completant informació general, detalls addicionals, categories, seccions i temes, pujada de materials, preu i exercicis; pots desar el progrés i continuar més tard des de la pàgina d'edició del curs."
+      },
+      "JOIN_COURSE": {
+        "Q": "Com m'uneixo a un curs?",
+        "A": "Obre el curs que t'interessi i fes clic a \"Unir-se al curs\" a la seva pàgina. Quedaràs inscrit a l'instant, i el botó canviarà a \"Abandonar el curs\" si en algun moment vols donar-te de baixa."
+      },
+      "SHARE_COURSE": {
+        "Q": "Com comparteixo un curs?",
+        "A": "A la pàgina del curs, fes clic a la icona de compartir. Això copia l'enllaç directe del curs al teu porta-retalls perquè el puguis enviar a qui vulguis."
+      },
+      "FAVORITE_COURSE": {
+        "Q": "Com afegeixo un curs a preferits?",
+        "A": "Obre el curs i fes clic a la icona de l'estrella a la seva pàgina. Torna-hi a fer clic per treure'l dels teus preferits."
+      },
+      "CHANGE_ROLE": {
+        "Q": "Com canvio el meu rol?",
+        "A": "Vés a la Configuració del compte i tria \"Canviar rol\". Pots alternar entre estudiant i instructor en qualsevol moment."
+      },
+      "UPGRADE_PLAN": {
+        "Q": "Com milloro el meu pla?",
+        "A": "Vés a Preus (des de la targeta de millora del tauler, la Configuració del compte o el menú d'usuari) i tria Bronze, Plata o Or. Els plans de pagament passen per un pagament segur; el canvi al pla gratuït s'aplica a l'instant."
+      },
+      "COURSE_STATS": {
+        "Q": "Com veig les estadístiques del meu curs?",
+        "A": "Obre un curs i accedeix a les seves Estadístiques. El pla Bronze inclou el tauler Bàsic (resum, activitat, progrés per tema, propers passos, compte enrere de l'examen i preparació); els plans Plata i Or desbloquegen el tauler Avançat, amb gràfics d'activitat més detallats, un radar d'habilitats, rendiment per tema, detecció de punts febles i un pla d'estudi personalitzat."
+      },
+      "CREATE_TEST": {
+        "Q": "Com creo un test?",
+        "A": "Els tests s'afegeixen com a exercicis en crear o editar un curs, al pas d'exercicis de l'assistent del curs."
+      },
+      "TEST_STATS": {
+        "Q": "Com veig els resultats d'un test?",
+        "A": "En acabar un test, obre la seva pàgina de Resultats per veure el desglossament de la teva puntuació, encerts i errors, temps emprat i com et compares entre intents."
+      },
+      "RESET_PASSWORD": {
+        "Q": "Com restableixo la meva contrasenya?",
+        "A": "A la pàgina d'accés, fes clic a \"Has oblidat la contrasenya?\", introdueix el teu correu i segueix l'enllaç que t'enviarem per establir-ne una de nova."
+      },
+      "FREE_PLAN_VOUCHER": {
+        "Q": "Com aconsegueixo accés gratuït a un pla de pagament?",
+        "A": "Visita la pàgina de Voucher des del menú d'usuari per comprovar si ets elegible per a la promoció actual. Si ho ets, pots sol·licitar un codi per correu i bescanviar-lo per obtenir accés gratuït a un pla de pagament durant el període indicat en aquesta pàgina."
+      },
+      "EXAM_READINESS": {
+        "Q": "Com sé si estic preparat per a l'examen?",
+        "A": "Obre el tauler Bàsic del teu curs i consulta la targeta de Preparació: compara les teves puntuacions per tipus de test amb el percentatge necessari per aprovar i t'indica si estàs \"Preparat\", \"Gairebé preparat\" o \"Encara no\", juntament amb el compte enrere fins al teu examen."
+      }
+    },
+    "CONTACT": {
+      "TITLE": "Encara tens dubtes?",
+      "SUBTITLE": "No trobes la resposta que busques? Posa't en contacte amb el nostre equip.",
+      "BUTTON": "Contacta'ns"
+    }
+  },
   "NAV": {
     "CAPTIONS": {
       "GENERAL": "General",

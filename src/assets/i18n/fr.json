@@ -156,6 +156,65 @@
     "ACCOUNT": "Compte",
     "FAQ": "FAQ"
   },
+  "FAQ": {
+    "TITLE": "Foire aux questions",
+    "SUBTITLE": "Tout ce qu'il faut savoir pour tirer le meilleur parti de Scire",
+    "ITEMS": {
+      "CREATE_COURSE": {
+        "Q": "Comment créer un cours ?",
+        "A": "En tant qu'instructeur, cliquez sur le bouton « + » de votre liste de cours pour ouvrir l'assistant de création. Vous renseignerez les informations générales, des détails supplémentaires, les catégories, les sections et thèmes, l'envoi des supports, le prix et les exercices ; vous pouvez enregistrer votre progression et continuer plus tard depuis la page d'édition du cours."
+      },
+      "JOIN_COURSE": {
+        "Q": "Comment rejoindre un cours ?",
+        "A": "Ouvrez le cours qui vous intéresse et cliquez sur « Rejoindre le cours » sur sa page. Vous êtes inscrit immédiatement, et le bouton devient « Quitter le cours » si vous souhaitez vous désinscrire."
+      },
+      "SHARE_COURSE": {
+        "Q": "Comment partager un cours ?",
+        "A": "Sur la page du cours, cliquez sur l'icône de partage. Le lien direct du cours est copié dans votre presse-papiers afin que vous puissiez l'envoyer à qui vous voulez."
+      },
+      "FAVORITE_COURSE": {
+        "Q": "Comment ajouter un cours à mes favoris ?",
+        "A": "Ouvrez le cours et cliquez sur l'icône étoile sur sa page. Cliquez à nouveau dessus pour le retirer de vos favoris."
+      },
+      "CHANGE_ROLE": {
+        "Q": "Comment changer de rôle ?",
+        "A": "Allez dans les paramètres du compte et choisissez « Changer de rôle ». Vous pouvez passer d'étudiant à instructeur, et inversement, à tout moment."
+      },
+      "UPGRADE_PLAN": {
+        "Q": "Comment mettre à niveau mon forfait ?",
+        "A": "Allez sur la page Tarifs (depuis la carte de mise à niveau du tableau de bord, les paramètres du compte ou le menu utilisateur) et choisissez Bronze, Argent ou Or. Les forfaits payants passent par un paiement sécurisé ; le passage au forfait gratuit est immédiat."
+      },
+      "COURSE_STATS": {
+        "Q": "Comment voir les statistiques de mon cours ?",
+        "A": "Ouvrez un cours et accédez à ses Statistiques. Le forfait Bronze donne accès au tableau de bord Basique (aperçu, activité, progression par thème, prochaines étapes, compte à rebours de l'examen et préparation) ; les forfaits Argent et Or débloquent le tableau de bord Avancé, avec des graphiques d'activité plus détaillés, un radar de compétences, la performance par thème, la détection des points faibles et un plan d'étude personnalisé."
+      },
+      "CREATE_TEST": {
+        "Q": "Comment créer un test ?",
+        "A": "Les tests sont ajoutés comme exercices lors de la création ou de la modification d'un cours, à l'étape « exercices » de l'assistant du cours."
+      },
+      "TEST_STATS": {
+        "Q": "Comment voir les résultats d'un test ?",
+        "A": "Une fois un test terminé, ouvrez sa page Résultats pour voir le détail de votre score, les bonnes et mauvaises réponses, le temps passé et votre comparaison entre tentatives."
+      },
+      "RESET_PASSWORD": {
+        "Q": "Comment réinitialiser mon mot de passe ?",
+        "A": "Sur la page de connexion, cliquez sur « Mot de passe oublié ? », saisissez votre e-mail, puis suivez le lien que nous vous envoyons pour définir un nouveau mot de passe."
+      },
+      "FREE_PLAN_VOUCHER": {
+        "Q": "Comment obtenir un accès gratuit à un forfait payant ?",
+        "A": "Consultez la page Voucher depuis le menu utilisateur pour vérifier votre éligibilité à l'offre en cours. Si vous êtes éligible, vous pouvez demander un code par e-mail et l'échanger contre un accès gratuit à un forfait payant pendant la période indiquée sur cette page."
+      },
+      "EXAM_READINESS": {
+        "Q": "Comment savoir si je suis prêt pour l'examen ?",
+        "A": "Ouvrez le tableau de bord Basique de votre cours et consultez la carte Préparation : elle compare vos scores par type de test au pourcentage requis pour réussir et indique si vous êtes « Prêt », « Presque prêt » ou « Pas encore », avec un compte à rebours jusqu'à votre examen."
+      }
+    },
+    "CONTACT": {
+      "TITLE": "Vous avez encore des questions ?",
+      "SUBTITLE": "Vous ne trouvez pas la réponse que vous cherchez ? Contactez notre équipe.",
+      "BUTTON": "Nous contacter"
+    }
+  },
   "NAV": {
     "CAPTIONS": {
       "GENERAL": "Général",

@@ -156,6 +156,65 @@
     "ACCOUNT": "Cuenta",
     "FAQ": "FAQs"
   },
+  "FAQ": {
+    "TITLE": "Preguntas frecuentes",
+    "SUBTITLE": "Todo lo que necesitas saber para aprovechar Scire al máximo",
+    "ITEMS": {
+      "CREATE_COURSE": {
+        "Q": "¿Cómo creo un curso?",
+        "A": "Como instructor, haz clic en el botón \"+\" de tu lista de cursos para abrir el asistente de creación. Irás completando información general, detalles adicionales, categorías, secciones y temas, subida de materiales, precio y ejercicios; puedes guardar el progreso y continuar más tarde desde la página de edición del curso."
+      },
+      "JOIN_COURSE": {
+        "Q": "¿Cómo me uno a un curso?",
+        "A": "Abre el curso que te interese y haz clic en \"Unirse al curso\" en su página. Quedarás inscrito al instante, y el botón cambiará a \"Abandonar curso\" si alguna vez quieres darte de baja."
+      },
+      "SHARE_COURSE": {
+        "Q": "¿Cómo comparto un curso?",
+        "A": "En la página del curso, haz clic en el icono de compartir. Esto copia el enlace directo del curso a tu portapapeles para que puedas enviarlo a quien quieras."
+      },
+      "FAVORITE_COURSE": {
+        "Q": "¿Cómo añado un curso a favoritos?",
+        "A": "Abre el curso y haz clic en el icono de la estrella en su página. Vuelve a hacer clic para quitarlo de tus favoritos."
+      },
+      "CHANGE_ROLE": {
+        "Q": "¿Cómo cambio mi rol?",
+        "A": "Ve a Configuración de la cuenta y elige \"Cambiar rol\". Puedes alternar entre estudiante e instructor en cualquier momento."
+      },
+      "UPGRADE_PLAN": {
+        "Q": "¿Cómo mejoro mi plan?",
+        "A": "Ve a Precios (desde la tarjeta de mejora del panel, la Configuración de la cuenta o el menú de usuario) y elige Bronce, Plata u Oro. Los planes de pago pasan por un proceso de pago seguro; pasar al plan gratuito se aplica al instante."
+      },
+      "COURSE_STATS": {
+        "Q": "¿Cómo veo las estadísticas de mi curso?",
+        "A": "Abre un curso y accede a sus Estadísticas. El plan Bronce incluye el panel Básico (resumen, actividad, progreso por tema, próximos pasos, cuenta atrás del examen y preparación); los planes Plata y Oro desbloquean el panel Avanzado, con gráficos de actividad más detallados, un radar de habilidades, rendimiento por tema, detección de puntos débiles y un plan de estudio personalizado."
+      },
+      "CREATE_TEST": {
+        "Q": "¿Cómo creo un test?",
+        "A": "Los tests se añaden como ejercicios al crear o editar un curso, en el paso de ejercicios del asistente del curso."
+      },
+      "TEST_STATS": {
+        "Q": "¿Cómo veo los resultados de un test?",
+        "A": "Al terminar un test, abre su página de Resultados para ver el desglose de tu puntuación, aciertos y errores, tiempo empleado y cómo te comparas entre intentos."
+      },
+      "RESET_PASSWORD": {
+        "Q": "¿Cómo restablezco mi contraseña?",
+        "A": "En la página de acceso, haz clic en \"¿Has olvidado tu contraseña?\", introduce tu correo y sigue el enlace que te enviaremos para establecer una nueva."
+      },
+      "FREE_PLAN_VOUCHER": {
+        "Q": "¿Cómo consigo acceso gratuito a un plan de pago?",
+        "A": "Visita la página de Voucher desde el menú de usuario para comprobar si eres elegible para la promoción actual. Si lo eres, puedes solicitar un código por correo y canjearlo para obtener acceso gratuito a un plan de pago durante el periodo indicado en esa página."
+      },
+      "EXAM_READINESS": {
+        "Q": "¿Cómo sé si estoy preparado para el examen?",
+        "A": "Abre el panel Básico de tu curso y consulta la tarjeta de Preparación: compara tus puntuaciones por tipo de test con el porcentaje necesario para aprobar y te indica si estás \"Preparado\", \"Casi preparado\" o \"Aún no\", junto con la cuenta atrás hasta tu examen."
+      }
+    },
+    "CONTACT": {
+      "TITLE": "¿Todavía tienes dudas?",
+      "SUBTITLE": "¿No encuentras la respuesta que buscas? Ponte en contacto con nuestro equipo.",
+      "BUTTON": "Contáctanos"
+    }
+  },
   "NAV": {
     "CAPTIONS": {
       "GENERAL": "General",

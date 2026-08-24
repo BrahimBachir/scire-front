@@ -156,6 +156,65 @@
     "ACCOUNT": "Account",
     "FAQ": "FAQs"
   },
+  "FAQ": {
+    "TITLE": "Frequently asked questions",
+    "SUBTITLE": "Everything you need to know to get the most out of Scire",
+    "ITEMS": {
+      "CREATE_COURSE": {
+        "Q": "How do I create a course?",
+        "A": "As an instructor, click the \"+\" button on your course list to open the course creation wizard. Walk through general info, extra details, categories, sections and topics, uploading materials, pricing, and exercises — you can save your progress and come back to finish it later from the course's edit page."
+      },
+      "JOIN_COURSE": {
+        "Q": "How do I join a course?",
+        "A": "Open the course you're interested in and click \"Join course\" on the course page. You're enrolled right away, and the button switches to \"Leave course\" if you ever want to unenroll."
+      },
+      "SHARE_COURSE": {
+        "Q": "How do I share a course?",
+        "A": "On the course page, click the share icon. This copies the course's direct link to your clipboard so you can send it to anyone."
+      },
+      "FAVORITE_COURSE": {
+        "Q": "How do I add a course to my favorites?",
+        "A": "Open the course and click the star icon on the course page. Click it again to remove it from your favorites."
+      },
+      "CHANGE_ROLE": {
+        "Q": "How do I change my role?",
+        "A": "Go to Account settings and choose \"Change role.\" You can switch between student and instructor at any time."
+      },
+      "UPGRADE_PLAN": {
+        "Q": "How do I upgrade my plan?",
+        "A": "Go to Pricing — from the dashboard's upgrade card, Account settings, or the user menu — and choose Bronze, Silver, or Gold. Paid plans go through a secure checkout; switching to the free plan applies instantly."
+      },
+      "COURSE_STATS": {
+        "Q": "How do I see my course's statistics?",
+        "A": "Open a course and go to its Statistics. Bronze plans get the Basic dashboard (overview, activity, topic progress, next steps, exam countdown, and exam readiness); Silver and Gold plans unlock the Advanced dashboard with deeper activity charts, a skills radar, topic performance, weak-spot detection, and a personalized study plan."
+      },
+      "CREATE_TEST": {
+        "Q": "How do I create a test?",
+        "A": "Tests are added as exercises while building or editing a course, in the exercises step of the course wizard."
+      },
+      "TEST_STATS": {
+        "Q": "How do I see a test's results?",
+        "A": "After completing a test, open its Results page to see your score breakdown, correct and incorrect answers, time spent, and how you compare across attempts."
+      },
+      "RESET_PASSWORD": {
+        "Q": "How do I reset my password?",
+        "A": "On the login page, click \"Forgot your password?\", enter your email, and follow the link we send you to set a new password."
+      },
+      "FREE_PLAN_VOUCHER": {
+        "Q": "How can I get free access to a paid plan?",
+        "A": "Visit the Voucher page from the user menu to check your eligibility for our current promotion. If eligible, you can request a voucher code by email and redeem it for free access to a paid plan for the period shown on that page."
+      },
+      "EXAM_READINESS": {
+        "Q": "How do I know if I'm ready for the exam?",
+        "A": "Open your course's Basic dashboard and check the Readiness card — it compares your scores per test type against the required passing percentage and tells you whether you're \"Ready,\" \"Almost ready,\" or \"Not there yet,\" alongside a countdown to your exam date."
+      }
+    },
+    "CONTACT": {
+      "TITLE": "Still have questions?",
+      "SUBTITLE": "Can't find the answer you're looking for? Get in touch with our team.",
+      "BUTTON": "Contact us"
+    }
+  },
   "NAV": {
     "CAPTIONS": {
       "GENERAL": "General",
