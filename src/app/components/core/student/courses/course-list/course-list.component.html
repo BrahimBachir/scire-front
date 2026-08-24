@@ -25,7 +25,17 @@
         <div class="col-sm-6 col-lg-4">
           <mat-card class="card overflow-hidden shadow-none b-1 cursor-pointer" (click)="goToCourseDetails(course)">
             <img mat-card-image src="{{ course.imgSrc }}" alt="Imagen principal del curso" />
-            <div class="card-overlay h-100 d-flex align-items-center justify-content-end">
+            <div class="card-overlay h-100 d-flex align-items-center justify-content-between">
+              @if(course.isPaid) {
+              <mat-chip class="f-s-12 f-w-600 m-y-16 m-l-16 bg-primary text-white">
+                @if(course.discountPercentage) {
+                <span class="text-decoration-line-through m-r-4">{{ course.price | currency:'EUR' }}</span>
+                }
+                {{ course.finalPrice | currency:'EUR' }}
+              </mat-chip>
+              } @else {
+              <span></span>
+              }
               <mat-chip class="f-s-12 f-w-600 m-y-16 m-r-16 bg-white">{{ course.callerDescription }}</mat-chip>
             </div>
             

@@ -33,6 +33,13 @@ export interface ICourse {
   typeDescription?: string;
   typeCode?: string;
 
+  // TUT course type only — see course-permissions.helper.ts (backend).
+  isPaid?: boolean;
+  price?: number;
+  discountPercentage?: number;
+  vatPercentage?: number;
+  finalPrice?: number;
+
   status?: ICourseStatus;
   statusId?: number;
   statusDescription?: string;

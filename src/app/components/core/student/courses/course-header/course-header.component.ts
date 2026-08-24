@@ -12,7 +12,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { environment } from 'src/environments/environment';
-import { BasicMetricsService, CourseService } from 'src/app/services';
+import { BasicMetricsService, CourseService, PaymentsService } from 'src/app/services';
 import { ICourse } from 'src/app/common/models/interfaces';
 import { ToastrService } from 'ngx-toastr';
 import { ERROR, SUCCESS, WARNING } from 'src/app/common/config/constants';
@@ -50,6 +50,7 @@ export class AppCourseHeaderComponent implements OnInit {
   constructor(
     public activatedRouter: ActivatedRoute,
     public courseService: CourseService,
+    private paymentsService: PaymentsService,
     private basicMetricsService: BasicMetricsService,
     private router: Router,
     private route: ActivatedRoute,
@@ -62,8 +63,25 @@ export class AppCourseHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.isFavorite();
     this.isUserJoined();
+    this.handleCourseCheckoutReturn();
     console.log('course-header.component.ts', this.course);
     console.log('course-header.component.ts', this.course.id);
+  }
+
+  // After a paid-course Stripe redirect back (success or cancelled), refresh
+  // the joined state (the webhook may have already granted access) and
+  // strip the query param so a page refresh doesn't re-trigger this.
+  private handleCourseCheckoutReturn(): void {
+    this.route.queryParams.subscribe((params) => {
+      if (params['checkout'] === 'success') {
+        this.isUserJoined();
+        this.toastService.success('¡Pago recibido! Ya tienes acceso al curso.', SUCCESS, { timeOut: 4000 });
+        this.router.navigate([], { queryParams: {}, replaceUrl: true });
+      } else if (params['checkout'] === 'cancelled') {
+        this.toastService.warning('Pago cancelado.', WARNING, { timeOut: 3000 });
+        this.router.navigate([], { queryParams: {}, replaceUrl: true });
+      }
+    });
   }
 
   isFavorite() {
@@ -149,8 +167,26 @@ export class AppCourseHeaderComponent implements OnInit {
   }
 
   joinCourse(){
+    if (!this.course.id) return;
+
+    // Paid courses go through Stripe first — enrollment only happens once
+    // the webhook confirms payment, so don't flip `joined` optimistically.
+    if (this.course.isPaid) {
+      this.paymentsService.createCourseCheckoutSession(this.course.id).subscribe({
+        next: ({ url }) => {
+          window.location.href = url;
+        },
+        error: (error) => {
+          this.toastService.error(`${error.error.message}`, ERROR, {
+            timeOut: 3000,
+          });
+        }
+      });
+      return;
+    }
+
     this.joined = true;
-    if(this.course.id) this.courseService.joinCourse(this.course.id).subscribe({
+    this.courseService.joinCourse(this.course.id).subscribe({
       next: () => {
         this.toastService.success('Te has unido al curso!', SUCCESS, {
           timeOut: 3000,
@@ -161,7 +197,7 @@ export class AppCourseHeaderComponent implements OnInit {
           timeOut: 3000,
         });
       }
-    })    
+    })
   }
   
   unJoinCourse(){

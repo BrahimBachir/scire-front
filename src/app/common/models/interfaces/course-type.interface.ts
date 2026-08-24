@@ -38,8 +38,10 @@ export function canCreateCourseType(typeCode: string | undefined, userRoleCode: 
 }
 
 // organizationId is the course's own org; userOrganizationId is the caller's
-// — an ADMIN/INSTRUCTOR may only touch ORG/TUT courses in their own org, not
-// any such course platform-wide. UX only, the backend is the real boundary.
+// — an ADMIN may only touch ORG courses in their own org, not any such
+// course platform-wide. TUT courses belong to the Instructor who created
+// them (they need not belong to an org at all), so they're creator-scoped
+// instead, like COM. UX only, the backend is the real boundary.
 export function canEditCourse(
   typeCode: string | undefined,
   creatorId: number | undefined,
@@ -58,7 +60,7 @@ export function canEditCourse(
     case 'ORG':
       return userRoleCode === 'ADMIN' && !!organizationId && organizationId === userOrganizationId;
     case 'TUT':
-      return userRoleCode === 'INSTRUCTOR' && !!organizationId && organizationId === userOrganizationId;
+      return userRoleCode === 'INSTRUCTOR' && creatorId !== undefined && creatorId === userId;
     default:
       return false;
   }
@@ -82,7 +84,7 @@ export function canDeleteCourse(
     case 'ORG':
       return userRoleCode === 'ADMIN' && !!organizationId && organizationId === userOrganizationId;
     case 'TUT':
-      return userRoleCode === 'INSTRUCTOR' && !!organizationId && organizationId === userOrganizationId;
+      return userRoleCode === 'INSTRUCTOR' && creatorId !== undefined && creatorId === userId;
     default:
       return false;
   }

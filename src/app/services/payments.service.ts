@@ -21,4 +21,11 @@ export class PaymentsService {
     let URL = `${environment.api_base_url}${this.routes.api.payments.setup_session}`;
     return this.http.post<{ url: string }>(URL, { planCode });
   }
+
+  // One-time payment for a single paid (TUT) course — redirects to Stripe
+  // Checkout; enrollment happens server-side once payment is confirmed.
+  public createCourseCheckoutSession(courseId: number): Observable<{ url: string }> {
+    let URL = `${environment.api_base_url}${this.routes.api.payments.course_checkout_session}`;
+    return this.http.post<{ url: string }>(URL, { courseId });
+  }
 }

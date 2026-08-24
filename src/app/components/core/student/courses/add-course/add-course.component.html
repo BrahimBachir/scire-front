@@ -17,7 +17,9 @@
   <app-course-sections></app-course-sections>
   <app-course-upload></app-course-upload>
   <app-course-topics></app-course-topics>
+  @if(course?.type?.code === 'TUT') {
   <app-course-pricing></app-course-pricing>
+  }
   }
   <div class="d-flex justify-content-end">
     <button
