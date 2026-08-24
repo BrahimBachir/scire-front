@@ -1,3 +1,22 @@
+# [2.11.0](https://github.com/BrahimBachir/scire-front/compare/v2.10.1...v2.11.0) (2026-08-24)
+
+
+### Bug Fixes
+
+* **profile:** resolve own user id for Mi perfil route ([9642720](https://github.com/BrahimBachir/scire-front/commit/964272004b223489ce80fc33f1576b2d5d9bbcb5))
+* **users:** drop stray required marker on the organization picker ([2b9ae9b](https://github.com/BrahimBachir/scire-front/commit/2b9ae9b5cda7353e50d82a718d1667e9ebb2a513))
+
+
+### Features
+
+* **auth:** add self-service password reset screens ([93b813d](https://github.com/BrahimBachir/scire-front/commit/93b813d512e9551c9a0a0b57bfa8b05b4bc19e36))
+* **courses:** add paid TUT course pricing UI and Stripe checkout ([ac17e80](https://github.com/BrahimBachir/scire-front/commit/ac17e80743fbaa4200cf9428e42d12d2fc6dbf64))
+* **faq:** implement Scire-specific FAQ content with i18n and contact link ([5bb4662](https://github.com/BrahimBachir/scire-front/commit/5bb46627861bdbed5fcb36c6105770937fce99b3))
+* **instructor:** add role-based menu, routes, and instructor courses view ([60be482](https://github.com/BrahimBachir/scire-front/commit/60be4820a7dcdb4b79b87b55ef5c89bb962c8027))
+* **organizations:** add organization management UI and org-scoped course visibility ([36a8933](https://github.com/BrahimBachir/scire-front/commit/36a89339e16678742698686a81d6c7a69e103b2e))
+* **super-admin:** add SUPER menu, user provisioning, and self-service role change ([fc08102](https://github.com/BrahimBachir/scire-front/commit/fc081027bc5154e76fd7d04da9a9b4e6b3f40080))
+* **vouchers:** add plan selection and voucher redemption flow ([e2e84af](https://github.com/BrahimBachir/scire-front/commit/e2e84af2bd522195760aea0fae297ce22f317a4d))
+
 ## [2.10.1](https://github.com/BrahimBachir/scire-front/compare/v2.10.0...v2.10.1) (2026-08-22)
 
 
