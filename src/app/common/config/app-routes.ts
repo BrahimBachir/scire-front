@@ -7,6 +7,8 @@ export const Routes = {
     refresh: 'logins/refresh',
     logout: 'logins/logout',
     mandatory_password: 'logins/mandatory-password',
+    forgot_password: 'logins/forgot-password',
+    reset_password: 'logins/reset-password',
   },
   api: {
     users: {

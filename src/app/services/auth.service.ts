@@ -44,6 +44,23 @@ export class AuthService {
     );
   }
 
+  public forgotPassword(email: string): Observable<{ message: string }> {
+    let URL = `${environment.auth_base_url}${this.routes.auth.forgot_password}`;
+    return this.http.post<{ message: string }>(URL, { email });
+  }
+
+  // Same HttpBackend-bypass rationale as completeMandatoryPasswordChange: the
+  // stored session token (if any) must not be sent here — only the reset
+  // token carried in the emailed link, read by the caller from the URL.
+  public resetPassword(resetToken: string, newPassword: string): Observable<{ message: string }> {
+    let URL = `${environment.auth_base_url}${this.routes.auth.reset_password}`;
+    return this.rawHttp.patch<{ message: string }>(
+      URL,
+      { newPassword },
+      { headers: { Authorization: `Bearer ${resetToken}` } },
+    );
+  }
+
   public login(login: ILogin) {
     let URL = `${environment.auth_base_url}${this.routes.auth.logins}`
     return this.http.post(URL, {

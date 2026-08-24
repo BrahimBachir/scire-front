@@ -7,9 +7,10 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../material.module';
 import { AppAuthBrandingComponent } from '../../generic/branding/auth-branding.component';
+import { AuthService } from 'src/app/services';
 
 @Component({
   selector: 'app-forgot-password',
@@ -24,11 +25,14 @@ import { AppAuthBrandingComponent } from '../../generic/branding/auth-branding.c
 })
 export class AppForgotPasswordComponent {
   options = this.settings.getOptions();
+  loading = false;
+  sent = false;
+  error: string | null = null;
 
-  constructor(private settings: CoreService, private router: Router) {}
+  constructor(private settings: CoreService, private authService: AuthService) {}
 
   form = new FormGroup({
-    email: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
   });
 
   get f() {
@@ -36,6 +40,20 @@ export class AppForgotPasswordComponent {
   }
 
   submit() {
-    this.router.navigate(['/dashboards/dashboard1']);
+    if (this.form.invalid) return;
+
+    this.loading = true;
+    this.error = null;
+
+    this.authService.forgotPassword(this.f.email.value ?? '').subscribe({
+      next: () => {
+        this.loading = false;
+        this.sent = true;
+      },
+      error: () => {
+        this.loading = false;
+        this.error = 'No se ha podido enviar el correo. Inténtalo de nuevo.';
+      },
+    });
   }
 }
