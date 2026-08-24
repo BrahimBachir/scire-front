@@ -69,9 +69,9 @@ export class AuthService {
     return this.http.get(URL, {});
   }
 
-  public createUserLogin(user: IUser) {
+  public createUserLogin(user: IUser, planCode?: string) {
     let URL = `${environment.api_base_url}${this.routes.api.users.new_login}`;
-    return this.http.post(URL, {user});
+    return this.http.post(URL, { user, planCode });
   }
 
   public createLogin(login: ILogin): Observable<any>{

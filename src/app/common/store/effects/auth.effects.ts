@@ -52,7 +52,7 @@ export class AuthEffects {
   createLogin$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(createUserLogin),
-        exhaustMap((action) => this.authService.createUserLogin(action.user)
+        exhaustMap((action) => this.authService.createUserLogin(action.user, action.planCode)
         .pipe(
           map(res => {
             const user = res as IUser & { token: string };

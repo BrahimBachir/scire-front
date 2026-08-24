@@ -1,0 +1,73 @@
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <mat-card class="cardWithShadow">
+      <mat-card-content class="p-24">
+
+        @if (redeemed(); as result) {
+          <h4 class="f-s-20 f-w-600 m-b-16">¡Enhorabuena!</h4>
+          <p class="f-s-14">
+            Tienes acceso gratuito al plan <strong>{{ result.planCode }}</strong> hasta el
+            <strong>{{ result.grantedUntil | date: 'longDate' }}</strong>.
+          </p>
+          <p class="f-s-14">
+            Si quieres, puedes guardar una tarjeta ahora para que el pago se active automáticamente cuando termine
+            tu acceso gratuito. No se te cobrará nada hoy.
+          </p>
+          <div class="d-flex gap-8 m-t-16">
+            <button mat-flat-button color="primary" (click)="saveCard()">Guardar tarjeta</button>
+            <button mat-stroked-button (click)="continueWithFree()">Ahora no</button>
+          </div>
+        } @else {
+          <h4 class="f-s-20 f-w-600 m-b-8">Consigue meses de acceso gratis</h4>
+          <p class="f-s-14 m-b-24">
+            Solicita un código de acceso gratuito por email y canjéalo aquí para activar tu plan.
+          </p>
+
+          @if (eligibility(); as e) {
+            @if (e.alreadyRedeemed) {
+              <p class="f-s-14 text-success">Ya has canjeado tu código de acceso gratuito.</p>
+            } @else if (!e.campaignOpen && !e.pending) {
+              <p class="f-s-14">La campaña de códigos gratuitos ya se ha completado.</p>
+              <button mat-flat-button color="primary" class="m-t-8" (click)="goToPricing()">Ver planes de pago</button>
+            } @else {
+              <!-- Request -->
+              <div class="m-b-24">
+                <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Plan</mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select [formControl]="planControl">
+                    @for (plan of planes(); track plan.code) {
+                      <mat-option [value]="plan.code">{{ plan.description }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+                <button mat-flat-button color="primary" class="w-100"
+                  [disabled]="!planControl.valid || requesting()"
+                  (click)="requestCode()">
+                  {{ e.pending ? 'Reenviar código' : 'Solicitar código' }}
+                </button>
+              </div>
+            }
+          }
+
+          <!-- Redeem -->
+          <div class="m-t-24 p-t-24" style="border-top: 1px solid #eee;">
+            <mat-label class="f-s-14 f-w-600 m-b-8 d-block">¿Ya tienes un código?</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput [formControl]="codeControl" type="text" placeholder="XXXXX-XXXXX" />
+            </mat-form-field>
+            <button mat-flat-button color="primary" class="w-100"
+              [disabled]="!codeControl.valid || redeeming()"
+              (click)="redeemCode()">
+              Canjear código
+            </button>
+          </div>
+
+          <div class="m-t-24 text-center">
+            <button mat-button (click)="goToPricing()">Prefiero ver los planes de pago</button>
+          </div>
+        }
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

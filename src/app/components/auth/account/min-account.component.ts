@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CoreService } from 'src/app/services/core.service';
 import { MaterialModule } from '../../../material.module';
 import { GendersService, RoleService } from 'src/app/services';
+import { ConfigService } from 'src/app/services/config.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/common/store/app.store';
@@ -21,6 +22,7 @@ import { selectLogedIn } from 'src/app/common/store/selectors';
 import { FRONT_ROUTE_TOKEN_EMPTY } from 'src/app/common/config';
 import { AppAuthBrandingComponent } from '../../generic/branding/auth-branding.component';
 import { IconModule } from 'src/app/icon/icon.module';
+import { IPlan } from 'src/app/common/models/interfaces';
 
 @Component({
   selector: 'app-min-profile',
@@ -55,37 +57,44 @@ export class MinimumAccountComponent implements OnInit {
   selectedRole!: IRole;
   genders: IGender[] = [];
   selectedGender!: IGender;
+  planes: IPlan[] = [];
   user!: IUser;
 
   constructor(
     //private store: Store<AppState>,
     private readonly gendersService: GendersService,
     private readonly rolesService: RoleService,
+    private readonly configService: ConfigService,
     private settings: CoreService,
     private activatedRouter: ActivatedRoute,
   ) {
   }
   ngOnInit(): void {
         this.store.select(selectLogedIn).subscribe((logedIn) => {
-          if (logedIn) this.router.navigate([FRONT_ROUTE_TOKEN_EMPTY]);
+          if (logedIn) {
+            const planCode = this.form.get('planCode')?.value;
+            const isPaidPlan = this.planes.find((p) => p.code === planCode && Number(p.price) > 0);
+            this.router.navigate([isPaidPlan ? '/student/voucher' : FRONT_ROUTE_TOKEN_EMPTY]);
+          }
         });
     this.userCode = this.activatedRouter?.snapshot?.paramMap?.get('code') || '';
     if(!this.userCode || this.userCode === '') this.store.dispatch(logoutAction());
     else this.form.get('code')?.setValue(this.userCode);
-  
+
     this.getGenders();
     this.getRoles();
+    this.getPlanes();
   }
 
-  // TODO: Clean aout the form
   form = new FormGroup(
     {
-      name: new FormControl('Ibra', [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
-      first_surname: new FormControl('Prueba', [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
-      second_surname: new FormControl('Prueba', [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
+      name: new FormControl('', [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
+      first_surname: new FormControl('', [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
+      second_surname: new FormControl('', [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
       code: new FormControl({ value: '', disabled: true}),
       gender: new FormControl(0, [Validators.required]),
       role: new FormControl(0, [Validators.required]),
+      planCode: new FormControl('', [Validators.required]),
     }
   );
 
@@ -95,7 +104,8 @@ export class MinimumAccountComponent implements OnInit {
 
   submit() {
     this.creatingUser();
-    this.store.dispatch(createUserLogin({user: this.user}))
+    const planCode = this.form.value.planCode || undefined;
+    this.store.dispatch(createUserLogin({ user: this.user, planCode }));
   }
 
   getGenders(){
@@ -111,12 +121,22 @@ export class MinimumAccountComponent implements OnInit {
   
   getRoles(){
     this.rolesService.getAll().subscribe({
-      next: (roles) => { 
+      next: (roles) => {
         this.roles = roles;
         this.selectedRole = roles.find(r => r.by_default) || roles[0];
         if(this.selectedRole) this.form.get('role')?.setValue(this.selectedRole.id);
       },
       //error: (error) => console.error(error)
+    })
+  }
+
+  getPlanes(){
+    this.configService.getPlanes().subscribe({
+      next: (planes: IPlan[]) => {
+        this.planes = planes;
+        const defaultPlan = planes.find((p) => Number(p.price) === 0) || planes[0];
+        if (defaultPlan) this.form.get('planCode')?.setValue(defaultPlan.code);
+      },
     })
   }
 

@@ -307,6 +307,7 @@
       "VIDEOS": "Vídeo no encontrado.",
       "DIAGRAMS": "Diagrama no encontrado.",
       "PLANS": "Plan de precios no encontrado.",
+      "VOUCHERS": "Código de acceso gratuito no encontrado.",
       "ROLES": "Rol no encontrado.",
       "CATEGORIES": "Categoría no encontrada.",
       "SECTIONS": "Sección no encontrada.",
@@ -328,6 +329,7 @@
       "VIDEOS": "Debes seleccionar al menos un artículo para este vídeo.",
       "DIAGRAMS": "Debes seleccionar al menos un artículo para este diagrama.",
       "PLANS": "Este plan no está disponible en este momento.",
+      "VOUCHERS": "El código no es válido, ha caducado o ya ha sido utilizado.",
       "PAYMENTS": "No se ha podido procesar el pago.",
       "AI": "El servicio de IA no ha podido generar una respuesta.",
       "CATEGORIES": "Se requiere una categoría para crear esta sección.",
@@ -340,11 +342,13 @@
       "CATEGORIES": "Ya existe una categoría con este nombre.",
       "SECTIONS": "Ya existe una sección con este nombre en esta categoría.",
       "TOPICS": "Ya existe un tema con esta descripción.",
-      "EMAIL": "Esta dirección de correo ya está registrada."
+      "EMAIL": "Esta dirección de correo ya está registrada.",
+      "VOUCHERS": "Ya has canjeado un código de acceso gratuito."
     },
     "FORBIDDEN": {
       "USERS": "No tienes permiso para editar este usuario.",
-      "PLANS": "Esta funcionalidad no está disponible en tu plan actual."
+      "PLANS": "Esta funcionalidad no está disponible en tu plan actual.",
+      "VOUCHERS": "La campaña de códigos de acceso gratuito ya se ha completado."
     },
     "UNAUTHORIZED": {
       "TOKEN": "Tu sesión ha caducado. Inicia sesión de nuevo.",

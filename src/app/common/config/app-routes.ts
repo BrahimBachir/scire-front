@@ -26,6 +26,12 @@ export const Routes = {
     },
     payments: {
       checkout_session: 'payments/checkout-session',
+      setup_session: 'payments/setup-session',
+    },
+    vouchers: {
+      eligibility: 'vouchers/eligibility',
+      request: 'vouchers/request',
+      redeem: 'vouchers/redeem',
     },
     genders: {
       all: 'genders',

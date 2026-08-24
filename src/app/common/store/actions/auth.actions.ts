@@ -17,7 +17,7 @@ export const MANDATORY_PASSWORD_CHANGE_REQUIRED = '[USER - Login] Mandatory pass
 
 export const verifiyingEmail = createAction(VERIFIIYING_EMAIL);
 export const emailVerificantionCodeSent = createAction(EMAIL_VERIFICATION_CODE_SENT);
-export const createUserLogin = createAction(CREATE_USER_LOGIN, props<{ user: IUser }>());
+export const createUserLogin = createAction(CREATE_USER_LOGIN, props<{ user: IUser; planCode?: string }>());
 
 export const submitLogin = createAction(LOGIN_SUBMIT, (login: ILogin) => ({
   login,

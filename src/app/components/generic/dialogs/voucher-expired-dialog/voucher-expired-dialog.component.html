@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Tu acceso gratuito ha finalizado</h2>
+<mat-dialog-content>
+  <p>
+    Tu acceso gratuito a <strong>{{ data.previousPlanCode || 'tu plan' }}</strong> ha terminado y tu cuenta se ha
+    pasado automáticamente al plan Bronce (gratuito). Puedes seguir usando Scire sin coste, o contratar un plan de
+    pago para recuperar todas las funciones.
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="continueWithFree()">Continuar con Bronce</button>
+  <button mat-flat-button color="primary" mat-dialog-close="pricing" cdkFocusInitial>
+    Ver planes de pago
+  </button>
+</mat-dialog-actions>

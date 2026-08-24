@@ -307,6 +307,7 @@
       "VIDEOS": "Video not found.",
       "DIAGRAMS": "Diagram not found.",
       "PLANS": "Pricing plan not found.",
+      "VOUCHERS": "Free-access voucher not found.",
       "ROLES": "Role not found.",
       "CATEGORIES": "Category not found.",
       "SECTIONS": "Section not found.",
@@ -328,6 +329,7 @@
       "VIDEOS": "You must select at least one article for this video.",
       "DIAGRAMS": "You must select at least one article for this diagram.",
       "PLANS": "This plan isn't available right now.",
+      "VOUCHERS": "This code is invalid, expired, or already used.",
       "PAYMENTS": "The payment could not be processed.",
       "AI": "The AI service could not generate a response.",
       "CATEGORIES": "A category is required to create this section.",
@@ -340,11 +342,13 @@
       "CATEGORIES": "A category with this name already exists.",
       "SECTIONS": "A section with this name already exists in this category.",
       "TOPICS": "A topic with this description already exists.",
-      "EMAIL": "This email address is already registered."
+      "EMAIL": "This email address is already registered.",
+      "VOUCHERS": "You've already redeemed a free-access voucher."
     },
     "FORBIDDEN": {
       "USERS": "You don't have permission to edit this user.",
-      "PLANS": "This feature isn't available on your current plan."
+      "PLANS": "This feature isn't available on your current plan.",
+      "VOUCHERS": "The free-access voucher campaign is already full."
     },
     "UNAUTHORIZED": {
       "TOKEN": "Your session has expired. Please sign in again.",

@@ -29,6 +29,17 @@ export const CHANGE_USER_ROLE_FAILED = '[USERS] Change user role failed';
 export const START_CHECKOUT = '[USERS] Start checkout';
 export const CHECKOUT_SESSION_FAILED = '[USERS] Checkout session failed';
 
+export const REQUEST_VOUCHER = '[VOUCHERS] Request voucher';
+export const VOUCHER_REQUESTED = '[VOUCHERS] Voucher requested';
+export const VOUCHER_REQUEST_FAILED = '[VOUCHERS] Voucher request failed';
+
+export const REDEEM_VOUCHER = '[VOUCHERS] Redeem voucher';
+export const VOUCHER_REDEEMED = '[VOUCHERS] Voucher redeemed';
+export const VOUCHER_REDEEM_FAILED = '[VOUCHERS] Voucher redeem failed';
+
+export const START_SETUP_CHECKOUT = '[VOUCHERS] Start setup checkout';
+export const SETUP_SESSION_FAILED = '[VOUCHERS] Setup session failed';
+
 
 export const createUser = createAction(CREATE_USER, props<{ user: IUser }>());
 
@@ -116,5 +127,45 @@ export const startCheckout = createAction(
 
 export const checkoutSessionFailed = createAction(
   CHECKOUT_SESSION_FAILED,
+  props<{ error: any }>()
+);
+
+export const requestVoucher = createAction(
+  REQUEST_VOUCHER,
+  props<{ planCode: string }>()
+);
+
+export const voucherRequested = createAction(
+  VOUCHER_REQUESTED,
+  props<{ validTo: string; warning?: string }>()
+);
+
+export const voucherRequestFailed = createAction(
+  VOUCHER_REQUEST_FAILED,
+  props<{ error: any }>()
+);
+
+export const redeemVoucher = createAction(
+  REDEEM_VOUCHER,
+  props<{ code: string }>()
+);
+
+export const voucherRedeemed = createAction(
+  VOUCHER_REDEEMED,
+  props<{ planCode: string; grantedUntil: string }>()
+);
+
+export const voucherRedeemFailed = createAction(
+  VOUCHER_REDEEM_FAILED,
+  props<{ error: any }>()
+);
+
+export const startSetupCheckout = createAction(
+  START_SETUP_CHECKOUT,
+  props<{ planCode: string }>()
+);
+
+export const setupSessionFailed = createAction(
+  SETUP_SESSION_FAILED,
   props<{ error: any }>()
 );

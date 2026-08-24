@@ -2,6 +2,7 @@ import { BreakpointObserver, MediaMatcher } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { combineLatest, Subscription } from 'rxjs';
 import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
+import { MatDialog } from '@angular/material/dialog';
 import { CoreService } from 'src/app/services/core.service';
 import { AppSettings } from 'src/app/config';
 import { filter } from 'rxjs/operators';
@@ -14,8 +15,9 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { AppState } from 'src/app/common/store/app.store';
 import { Store } from '@ngrx/store';
 import { selectChoosenCourse } from 'src/app/common/store/selectors/learning.selectors';
-import { selectUserRole } from 'src/app/common/store/selectors/auth.selectors';
+import { selectUserRole, selectVoucherExpired, selectVoucherPreviousPlan } from 'src/app/common/store/selectors/auth.selectors';
 import { ICourse } from 'src/app/common/models/interfaces';
+import { AppVoucherExpiredDialogComponent } from '../generic/dialogs/voucher-expired-dialog/voucher-expired-dialog.component';
 import { AppAuthBrandingComponent } from '../generic/branding/auth-branding.component';
 import { AppBreadcrumbComponent } from '../generic/breadcrumb/breadcrumb.component';
 import { HeaderComponent } from '../generic/header/header.component';
@@ -81,6 +83,7 @@ export class MainComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private navService: NavService,
     private store: Store<AppState>,
+    private dialog: MatDialog,
   ) {
     this.htmlElement = document.querySelector('html')!;
     this.layoutChangesSubscription = this.breakpointObserver
@@ -118,6 +121,22 @@ export class MainComponent implements OnInit {
           this.content.scrollTo({ top: 0 });
         }
       });
+
+    // The downgrade itself already happened server-side (see
+    // UserService.findLoggedUser()'s enforceVoucherValidity) — this is purely
+    // informational, so PlanGuard/PlanRedirectGuard need no changes.
+    combineLatest([
+      this.store.select(selectVoucherExpired),
+      this.store.select(selectVoucherPreviousPlan),
+    ]).subscribe(([voucherExpired, previousPlanCode]) => {
+      if (!voucherExpired) return;
+      this.dialog
+        .open(AppVoucherExpiredDialogComponent, { data: { previousPlanCode }, disableClose: true })
+        .afterClosed()
+        .subscribe((result) => {
+          if (result === 'pricing') this.router.navigate(['/student/pricing']);
+        });
+    });
   }
 
   ngOnDestroy() {

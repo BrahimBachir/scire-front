@@ -307,6 +307,7 @@
       "VIDEOS": "Vidéo introuvable.",
       "DIAGRAMS": "Diagramme introuvable.",
       "PLANS": "Forfait introuvable.",
+      "VOUCHERS": "Code d'accès gratuit introuvable.",
       "ROLES": "Rôle introuvable.",
       "CATEGORIES": "Catégorie introuvable.",
       "SECTIONS": "Section introuvable.",
@@ -328,6 +329,7 @@
       "VIDEOS": "Vous devez sélectionner au moins un article pour cette vidéo.",
       "DIAGRAMS": "Vous devez sélectionner au moins un article pour ce diagramme.",
       "PLANS": "Ce forfait n'est pas disponible pour le moment.",
+      "VOUCHERS": "Ce code n'est pas valide, a expiré ou a déjà été utilisé.",
       "PAYMENTS": "Le paiement n'a pas pu être traité.",
       "AI": "Le service d'IA n'a pas pu générer de réponse.",
       "CATEGORIES": "Une catégorie est requise pour créer cette section.",
@@ -340,11 +342,13 @@
       "CATEGORIES": "Une catégorie avec ce nom existe déjà.",
       "SECTIONS": "Une section avec ce nom existe déjà dans cette catégorie.",
       "TOPICS": "Un sujet avec cette description existe déjà.",
-      "EMAIL": "Cette adresse e-mail est déjà enregistrée."
+      "EMAIL": "Cette adresse e-mail est déjà enregistrée.",
+      "VOUCHERS": "Vous avez déjà utilisé un code d'accès gratuit."
     },
     "FORBIDDEN": {
       "USERS": "Vous n'avez pas la permission de modifier cet utilisateur.",
-      "PLANS": "Cette fonctionnalité n'est pas disponible avec votre forfait actuel."
+      "PLANS": "Cette fonctionnalité n'est pas disponible avec votre forfait actuel.",
+      "VOUCHERS": "La campagne de codes d'accès gratuit est déjà complète."
     },
     "UNAUTHORIZED": {
       "TOKEN": "Votre session a expiré. Veuillez vous reconnecter.",

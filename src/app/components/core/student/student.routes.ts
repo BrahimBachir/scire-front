@@ -8,6 +8,7 @@ import { AppAccountSettingComponent } from '../../generic/account-setting/accoun
 import { ProfileContentComponent } from '../../generic/account/profile-content/profile-content.component';
 import { AppFaqComponent } from '../../generic/faq/faq.component';
 import { AppPricingComponent } from '../../generic/pricing/pricing.component';
+import { AppVoucherComponent } from '../../generic/voucher/voucher.component';
 import { FlashcardWrapperComponent } from './courses/common/flashcard/flashcard-wrapper.component';
 import { VideoWrapperComponent } from './courses/common/video/video-wrapper.component';
 import { TopicBlocksComponent } from './courses/add-course/topics/topic-blocks/topic-blocks.component';
@@ -78,6 +79,17 @@ export const StudentRoutes: Routes = [
           urls: [
             { title: 'Academia', url: '/' },
             { title: 'Precios' },
+          ],
+        },
+      },
+      {
+        path: 'voucher',
+        component: AppVoucherComponent,
+        data: {
+          title: 'Código de acceso gratuito',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Código de acceso gratuito' },
           ],
         },
       },

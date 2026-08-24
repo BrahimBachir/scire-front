@@ -307,6 +307,7 @@
       "VIDEOS": "Vídeo no trobat.",
       "DIAGRAMS": "Diagrama no trobat.",
       "PLANS": "Pla de preus no trobat.",
+      "VOUCHERS": "Codi d'accés gratuït no trobat.",
       "ROLES": "Rol no trobat.",
       "CATEGORIES": "Categoria no trobada.",
       "SECTIONS": "Secció no trobada.",
@@ -328,6 +329,7 @@
       "VIDEOS": "Has de seleccionar almenys un article per a aquest vídeo.",
       "DIAGRAMS": "Has de seleccionar almenys un article per a aquest diagrama.",
       "PLANS": "Aquest pla no està disponible en aquest moment.",
+      "VOUCHERS": "El codi no és vàlid, ha caducat o ja s'ha utilitzat.",
       "PAYMENTS": "No s'ha pogut processar el pagament.",
       "AI": "El servei d'IA no ha pogut generar una resposta.",
       "CATEGORIES": "Cal una categoria per crear aquesta secció.",
@@ -340,11 +342,13 @@
       "CATEGORIES": "Ja existeix una categoria amb aquest nom.",
       "SECTIONS": "Ja existeix una secció amb aquest nom en aquesta categoria.",
       "TOPICS": "Ja existeix un tema amb aquesta descripció.",
-      "EMAIL": "Aquesta adreça de correu ja està registrada."
+      "EMAIL": "Aquesta adreça de correu ja està registrada.",
+      "VOUCHERS": "Ja has bescanviat un codi d'accés gratuït."
     },
     "FORBIDDEN": {
       "USERS": "No tens permís per editar aquest usuari.",
-      "PLANS": "Aquesta funcionalitat no està disponible en el teu pla actual."
+      "PLANS": "Aquesta funcionalitat no està disponible en el teu pla actual.",
+      "VOUCHERS": "La campanya de codis d'accés gratuït ja s'ha completat."
     },
     "UNAUTHORIZED": {
       "TOKEN": "La teva sessió ha caducat. Torna a iniciar sessió.",

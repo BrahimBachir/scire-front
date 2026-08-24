@@ -64,3 +64,18 @@ export const selectUserSocialMedias = createSelector(
   selectLogin,
   (state: AuthState) => state.user.social_medias
 );
+
+export const selectVoucherExpired = createSelector(
+  selectLogin,
+  (state: AuthState) => state.user.voucherExpired
+);
+
+export const selectVoucherPreviousPlan = createSelector(
+  selectLogin,
+  (state: AuthState) => state.user.voucherPreviousPlanCode
+);
+
+export const selectPendingPlanCode = createSelector(
+  selectLogin,
+  (state: AuthState) => state.user.pendingPlanCode
+);

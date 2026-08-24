@@ -27,4 +27,7 @@ export interface IUser {
   courses?: ICourse[];
   announcements?: IAnnouncement[];
   social_medias?: ISocialMedia[];
+  voucherExpired?: boolean;
+  voucherPreviousPlanCode?: string;
+  pendingPlanCode?: string;
 }

@@ -13,4 +13,12 @@ export class PaymentsService {
     let URL = `${environment.api_base_url}${this.routes.api.payments.checkout_session}`;
     return this.http.post<{ url: string }>(URL, { planCode, interval });
   }
+
+  // Saves a card with no charge attempted (Stripe Checkout in setup mode) —
+  // offered after a voucher redemption so billing can start automatically
+  // once the free period ends.
+  public createSetupSession(planCode: string): Observable<{ url: string }> {
+    let URL = `${environment.api_base_url}${this.routes.api.payments.setup_session}`;
+    return this.http.post<{ url: string }>(URL, { planCode });
+  }
 }

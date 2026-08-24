@@ -30,10 +30,18 @@ import {
   loadLogedUser,
   startCheckout,
   checkoutSessionFailed,
+  requestVoucher,
+  voucherRequested,
+  voucherRequestFailed,
+  redeemVoucher,
+  voucherRedeemed,
+  voucherRedeemFailed,
+  startSetupCheckout,
+  setupSessionFailed,
 } from '../actions';
 import { EMPTY, of } from 'rxjs';
 import { IUser } from '../../models/interfaces';
-import { UsersService, PaymentsService } from 'src/app/services';
+import { UsersService, PaymentsService, VouchersService } from 'src/app/services';
 import { getDecodedAccessToken } from '../../utils';
 
 @Injectable()
@@ -42,6 +50,7 @@ export class UsersEffects {
     private actions$: Actions,
     private usersService: UsersService,
     private paymentsService: PaymentsService,
+    private vouchersService: VouchersService,
     public router: Router,
   ) {}
 
@@ -183,6 +192,56 @@ export class UsersEffects {
           }),
           map(() => ({ type: '[Payments] Checkout session created' })),
           catchError((error) => of(checkoutSessionFailed({ error })))
+        )
+      )
+    )
+  );
+
+  requestVoucher$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(requestVoucher),
+      concatMap(({ planCode }) =>
+        this.vouchersService.requestVoucher(planCode).pipe(
+          map(({ validTo, warning }) => voucherRequested({ validTo, warning })),
+          catchError((error) => of(voucherRequestFailed({ error })))
+        )
+      )
+    )
+  );
+
+  // Refreshes the logged-in user afterwards (loadLogedUser$ in auth.effects.ts)
+  // so the newly-granted plan is reflected everywhere immediately — the same
+  // pattern changeUserPlan$ and changeUserRole$ already use above.
+  redeemVoucher$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(redeemVoucher),
+      concatMap(({ code }) =>
+        this.vouchersService.redeemVoucher(code).pipe(
+          map(({ planCode, grantedUntil }) => voucherRedeemed({ planCode, grantedUntil })),
+          catchError((error) => of(voucherRedeemFailed({ error })))
+        )
+      )
+    )
+  );
+
+  voucherRedeemedRefresh$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(voucherRedeemed),
+      map(() => loadLogedUser())
+    )
+  );
+
+  // Redirects to Stripe Checkout in setup mode, same shape as startCheckout$.
+  startSetupCheckout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(startSetupCheckout),
+      concatMap(({ planCode }) =>
+        this.paymentsService.createSetupSession(planCode).pipe(
+          tap(({ url }) => {
+            window.location.href = url;
+          }),
+          map(() => ({ type: '[Payments] Setup session created' })),
+          catchError((error) => of(setupSessionFailed({ error })))
         )
       )
     )
