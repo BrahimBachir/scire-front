@@ -28,10 +28,11 @@ export const RoleRoutes: Routes = [
       import('./student/student.routes').then((m) => m.StudentRoutes),
     canMatch: [AuthGuard, RoleGuard],
   },
-  /*   {
+  {
     path: FRONT_ROUTE_TOKEN_INSTRUCTOR,
     data: { role: Roles.INSTRUCTOR },
-    loadChildren: () => import('./../pages/apps/apps.routes').then((m) => m.AppsRoutes),
+    loadChildren: () =>
+      import('./instructor/instructor.routes').then((m) => m.InstructorRoutes),
     canMatch: [AuthGuard, RoleGuard],
-  }, */
+  },
 ];

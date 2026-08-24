@@ -96,6 +96,7 @@ export class AppCourseListComponent implements OnInit {
   isMobileView = false;
 
   private showOnlyMyCourses: boolean = false;
+  private showOnlyInstructorCourses: boolean = false;
   protected isSuper: boolean = false;
   private currentUserId: number | null = null;
   private currentUserRoleCode: string | null = null;
@@ -124,6 +125,7 @@ export class AppCourseListComponent implements OnInit {
     });
 
     this.showOnlyMyCourses = !!this.route.snapshot.data['myCourses'];
+    this.showOnlyInstructorCourses = !!this.route.snapshot.data['instructorCourses'];
 
     this.filtersForm = this.fb.group({
       caller: [''],
@@ -162,9 +164,11 @@ export class AppCourseListComponent implements OnInit {
       skip: this.pageSize * this.currentPageIndex
     }
     this.filteredCourses.set(null);
-    const request$ = this.showOnlyMyCourses
-      ? this.service.getMyCourses(this.filters)
-      : this.service.getAll(this.filters);
+    const request$ = this.showOnlyInstructorCourses
+      ? this.service.getInstructorCourses(this.filters)
+      : this.showOnlyMyCourses
+        ? this.service.getMyCourses(this.filters)
+        : this.service.getAll(this.filters);
     request$.subscribe({
       next: (res) => {
         this.courses.set(res.rows as ICourse[]);

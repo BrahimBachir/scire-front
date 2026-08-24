@@ -1,5 +1,5 @@
 import { selectUserActivePlan } from '../store/selectors';
-import { createGuard } from '.';
+import { createGuard } from './base.guard';
 
 export const PlanGuard = createGuard(
   selectUserActivePlan,

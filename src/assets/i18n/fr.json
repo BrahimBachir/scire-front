@@ -159,7 +159,8 @@
   "NAV": {
     "CAPTIONS": {
       "GENERAL": "Général",
-      "COURSE": "Cours"
+      "COURSE": "Cours",
+      "FINANCIAL": "Partie financière"
     },
     "COURSES": "Cours",
     "MY_COURSES": "Mes cours",
@@ -176,7 +177,8 @@
     "CALENDAR": "Calendrier",
     "ORGANIZATIONS": "Organisations",
     "USERS": "Utilisateurs",
-    "MODERATION": "Modération"
+    "MODERATION": "Modération",
+    "STATUS": "Statut"
   },
   "DIALOGS": {
     "DELETE": {

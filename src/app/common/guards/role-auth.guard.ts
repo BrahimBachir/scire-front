@@ -1,5 +1,5 @@
 import { selectUserRole } from '../store/selectors';
-import { createGuard } from '.';
+import { createGuard } from './base.guard';
 
 export const RoleGuard = createGuard(
   selectUserRole,
