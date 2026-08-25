@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AppCourseListComponent } from './courses/course-list/course-list.component';
-import { AuthGuard } from 'src/app/common/guards';
+import { AuthGuard, NoOrganizationGuard } from 'src/app/common/guards';
 import { AppRulesComponent } from './rules/rules.component';
 import { AppTopicContentComponent } from './courses/topic-content/topic-content.component';
 import { RuleFormWrapperComponent } from './rules/rule-wrapper/rule-wrapper.component';
@@ -85,6 +85,7 @@ export const StudentRoutes: Routes = [
       {
         path: 'voucher',
         component: AppVoucherComponent,
+        canActivate: [NoOrganizationGuard],
         data: {
           title: 'Código de acceso gratuito',
           urls: [

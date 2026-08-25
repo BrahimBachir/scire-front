@@ -25,12 +25,14 @@ import { BrandingComponent } from '../branding/branding.component';
 import { IconModule } from 'src/app/icon/icon.module';
 import { Theme, ThemeService } from 'src/app/services/theme.service';
 import { Lang, LanguageService } from 'src/app/services/language.service';
+import { Roles } from 'src/app/common/enums/roles.enum';
 
 interface profiledd {
   id: number;
   title: string;
   link: string;
   new?: boolean;
+  roles?: Roles[];
 }
 
 @Component({
@@ -96,6 +98,13 @@ export class HeaderComponent {
     this.logedIn$ = this.store.select(selectLogedIn);
     this.plan$ = this.store.select(selectUserActivePlan);
 
+    this.logedUser$.subscribe((user) => {
+      this.profileMenu = this.profiledd.filter((item) => {
+        if (item.roles && !item.roles.includes(user?.role?.code as Roles)) return false;
+        if (item.link === 'voucher' && user?.organizationId) return false;
+        return true;
+      });
+    });
   }
 
   goToLink(route: profiledd) {
@@ -130,8 +139,9 @@ export class HeaderComponent {
     },
     {
       id: 2,
-      title: 'MENU.MY_COURSES',
-      link: 'my-courses',
+      title: 'MENU.VOUCHER',
+      link: 'voucher',
+      roles: [Roles.STUDENT],
     },
     {
       id: 3,
@@ -144,4 +154,6 @@ export class HeaderComponent {
       link: 'faq',
     }
   ];
+
+  profileMenu: profiledd[] = this.profiledd;
 }

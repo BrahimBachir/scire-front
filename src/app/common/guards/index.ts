@@ -4,3 +4,4 @@ export * from './semi-auth.guard';
 export * from './role-auth.guard';
 export * from './role-redirect.guard';
 export * from './plan-redirect.guard';
+export * from './no-organization.guard';
