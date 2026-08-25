@@ -7,7 +7,23 @@ import { QuestionFormComponent } from 'src/app/components/core/student/courses/c
 import { VideoFormComponent } from 'src/app/components/core/student/courses/common/video/form/video-form.component';
 import { DiagramStrategy, FeatureStrategy, FlashcardStrategy, NoteStrategy, QuestionStrategy, VideoStrategy } from 'src/app/strategies';
 
-export type FeatureType = 'COURSE' | 'RULE' | 'FLASHCARD' | 'QUESTION' | 'DIAGRAM' | 'VIDEO' | 'NOTE' | 'AI';
+// FEATURE, TOPIC, BLOCK and ARTICLE only apply to Feedback - reactions/
+// reviews/comments never target those types - but it's simpler to keep one
+// shared union (matching the backend's `FeatureType`, see
+// scire-api/src/common/entities/content-type.entity.ts) than a parallel type.
+export type FeatureType =
+  | 'COURSE'
+  | 'RULE'
+  | 'FLASHCARD'
+  | 'QUESTION'
+  | 'DIAGRAM'
+  | 'VIDEO'
+  | 'NOTE'
+  | 'AI'
+  | 'FEATURE'
+  | 'TOPIC'
+  | 'BLOCK'
+  | 'ARTICLE';
 
 export type VoteType = "LIKE" | "DISLIKE";
 

@@ -235,6 +235,7 @@
     "VIDEOS": "Vidéos",
     "KANBAN": "Kanban",
     "CALENDAR": "Calendrier",
+    "FEEDBACK": "Feedback",
     "ORGANIZATIONS": "Organisations",
     "USERS": "Utilisateurs",
     "MODERATION": "Modération",
@@ -374,7 +375,8 @@
       "CATEGORIES": "Catégorie introuvable.",
       "SECTIONS": "Section introuvable.",
       "TOPICS": "Sujet introuvable.",
-      "BULK_UPLOAD": "Tâche d'import en masse introuvable."
+      "BULK_UPLOAD": "Tâche d'import en masse introuvable.",
+      "FEEDBACK": "L'élément signalé, ou le type de feedback, est introuvable."
     },
     "VALIDATION": {
       "RULES": "Un paramètre requis est manquant pour cette loi.",
@@ -396,7 +398,8 @@
       "AI": "Le service d'IA n'a pas pu générer de réponse.",
       "CATEGORIES": "Une catégorie est requise pour créer cette section.",
       "BULK_UPLOAD": "Le fichier importé n'est pas valide.",
-      "EMAIL": "L'adresse e-mail est incorrecte ou n'existe pas."
+      "EMAIL": "L'adresse e-mail est incorrecte ou n'existe pas.",
+      "FEEDBACK": "Ce feedback n'a pas pu être envoyé : vérifiez l'élément et le type sélectionnés."
     },
     "CONFLICT": {
       "RULES": "Une loi avec ce code existe déjà.",
@@ -410,7 +413,8 @@
     "FORBIDDEN": {
       "USERS": "Vous n'avez pas la permission de modifier cet utilisateur.",
       "PLANS": "Cette fonctionnalité n'est pas disponible avec votre forfait actuel.",
-      "VOUCHERS": "La campagne de codes d'accès gratuit est déjà complète."
+      "VOUCHERS": "La campagne de codes d'accès gratuit est déjà complète.",
+      "FEEDBACK": "Les utilisateurs SUPER ne peuvent pas envoyer de feedback."
     },
     "UNAUTHORIZED": {
       "TOKEN": "Votre session a expiré. Veuillez vous reconnecter.",

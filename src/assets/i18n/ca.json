@@ -235,6 +235,7 @@
     "VIDEOS": "Vídeos",
     "KANBAN": "Kanban",
     "CALENDAR": "Calendari",
+    "FEEDBACK": "Feedback",
     "ORGANIZATIONS": "Organitzacions",
     "USERS": "Usuaris",
     "MODERATION": "Moderació",
@@ -374,7 +375,8 @@
       "CATEGORIES": "Categoria no trobada.",
       "SECTIONS": "Secció no trobada.",
       "TOPICS": "Tema no trobat.",
-      "BULK_UPLOAD": "Feina de càrrega massiva no trobada."
+      "BULK_UPLOAD": "Feina de càrrega massiva no trobada.",
+      "FEEDBACK": "No s'ha trobat l'element sobre el qual dones feedback, o el tipus de feedback."
     },
     "VALIDATION": {
       "RULES": "Falta un paràmetre necessari per a aquesta llei.",
@@ -396,7 +398,8 @@
       "AI": "El servei d'IA no ha pogut generar una resposta.",
       "CATEGORIES": "Cal una categoria per crear aquesta secció.",
       "BULK_UPLOAD": "El fitxer pujat no és vàlid.",
-      "EMAIL": "L'adreça de correu és incorrecta o no existeix."
+      "EMAIL": "L'adreça de correu és incorrecta o no existeix.",
+      "FEEDBACK": "Aquest feedback no s'ha pogut enviar: revisa l'element i el tipus seleccionats."
     },
     "CONFLICT": {
       "RULES": "Ja existeix una llei amb aquest codi.",
@@ -410,7 +413,8 @@
     "FORBIDDEN": {
       "USERS": "No tens permís per editar aquest usuari.",
       "PLANS": "Aquesta funcionalitat no està disponible en el teu pla actual.",
-      "VOUCHERS": "La campanya de codis d'accés gratuït ja s'ha completat."
+      "VOUCHERS": "La campanya de codis d'accés gratuït ja s'ha completat.",
+      "FEEDBACK": "Els usuaris SUPER no poden enviar feedback."
     },
     "UNAUTHORIZED": {
       "TOKEN": "La teva sessió ha caducat. Torna a iniciar sessió.",

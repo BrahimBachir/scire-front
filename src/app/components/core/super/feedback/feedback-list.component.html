@@ -1,0 +1,84 @@
+<mat-card class="cardWithShadow m-b-0">
+  <mat-card-header class="b-b-1">
+    <mat-card-title>Feedback de los usuarios</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row p-b-15">
+      <mat-form-field appearance="outline" class="col-md-4">
+        <mat-label>Tipo de elemento</mat-label>
+        <mat-select [(value)]="featureTypeFilter" (selectionChange)="getItems()">
+          <mat-option [value]="null">Todos</mat-option>
+          @for (type of featureTypes; track type.value) {
+            <mat-option [value]="type.value">{{ type.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-md-4">
+        <mat-label>Tipo de feedback</mat-label>
+        <mat-select [(value)]="feedbackTypeFilter" (selectionChange)="getItems()">
+          <mat-option [value]="null">Todos</mat-option>
+          @for (t of feedbackTypes(); track t.id) {
+            <mat-option [value]="t.id">{{ t.description }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    @if (feedbacks(); as rows) {
+      @if (rows.length) {
+        <table mat-table [dataSource]="rows" class="w-100">
+          <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef>Usuario</th>
+            <td mat-cell *matCellDef="let row">{{ row.user?.full_name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="target">
+            <th mat-header-cell *matHeaderCellDef>Elemento</th>
+            <td mat-cell *matCellDef="let row">
+              <span class="f-w-600">{{ row.targetLabel }}</span>
+              <span class="f-s-12 text-muted d-block">{{ row.featureType }}</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="feedbackType">
+            <th mat-header-cell *matHeaderCellDef>Tipo</th>
+            <td mat-cell *matCellDef="let row">
+              <mat-chip>{{ row.feedbackType?.description }}</mat-chip>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="text">
+            <th mat-header-cell *matHeaderCellDef>Feedback</th>
+            <td mat-cell *matCellDef="let row" class="feedback-text">{{ stripHtml(row.text) }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="attachments">
+            <th mat-header-cell *matHeaderCellDef>Capturas</th>
+            <td mat-cell *matCellDef="let row">
+              @for (attachment of row.attachments; track attachment.id) {
+                <button mat-icon-button type="button" (click)="viewAttachment(attachment)" [matTooltip]="attachment.originalName">
+                  <mat-icon>image</mat-icon>
+                </button>
+              }
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef>Fecha</th>
+            <td mat-cell *matCellDef="let row">{{ row.createdAt | date: 'short' }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      } @else {
+        <app-banner-nof-found bannerTitle="Sin feedback" bannerText="Todavía no se ha recibido ningún feedback."></app-banner-nof-found>
+      }
+    } @else {
+      <div class="h-100 d-flex align-items-center justify-content-center p-10">
+        <mat-spinner></mat-spinner>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

@@ -113,5 +113,8 @@ export function buildParams(queryingDto: IQueryingDto, params: HttpParams): Http
     if (queryingDto.statusCode && queryingDto.statusCode.trim() !== '')
         params = params.append('statusCode', queryingDto.statusCode.trim());
 
+    if (queryingDto.feedbackTypeId && queryingDto.feedbackTypeId >= 0)
+        params = params.append('feedbackTypeId', queryingDto.feedbackTypeId);
+
     return params;
 }

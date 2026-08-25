@@ -31,3 +31,4 @@ export * from './study-schedule.service';
 export * from './payments.service';
 export * from './vouchers.service';
 export * from './bulk-upload.service';
+export * from './feedback.service';

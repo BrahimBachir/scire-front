@@ -235,6 +235,7 @@
     "VIDEOS": "Vídeos",
     "KANBAN": "Kanban",
     "CALENDAR": "Calendario",
+    "FEEDBACK": "Feedback",
     "ORGANIZATIONS": "Organizaciones",
     "USERS": "Usuarios",
     "MODERATION": "Moderación",
@@ -374,7 +375,8 @@
       "CATEGORIES": "Categoría no encontrada.",
       "SECTIONS": "Sección no encontrada.",
       "TOPICS": "Tema no encontrado.",
-      "BULK_UPLOAD": "Trabajo de carga masiva no encontrado."
+      "BULK_UPLOAD": "Trabajo de carga masiva no encontrado.",
+      "FEEDBACK": "No se ha encontrado el elemento sobre el que das feedback, o el tipo de feedback."
     },
     "VALIDATION": {
       "RULES": "Falta un parámetro necesario para esta ley.",
@@ -396,7 +398,8 @@
       "AI": "El servicio de IA no ha podido generar una respuesta.",
       "CATEGORIES": "Se requiere una categoría para crear esta sección.",
       "BULK_UPLOAD": "El archivo subido no es válido.",
-      "EMAIL": "La dirección de correo es incorrecta o no existe."
+      "EMAIL": "La dirección de correo es incorrecta o no existe.",
+      "FEEDBACK": "No se ha podido enviar este feedback: revisa el elemento y el tipo seleccionados."
     },
     "CONFLICT": {
       "RULES": "Ya existe una ley con este código.",
@@ -410,7 +413,8 @@
     "FORBIDDEN": {
       "USERS": "No tienes permiso para editar este usuario.",
       "PLANS": "Esta funcionalidad no está disponible en tu plan actual.",
-      "VOUCHERS": "La campaña de códigos de acceso gratuito ya se ha completado."
+      "VOUCHERS": "La campaña de códigos de acceso gratuito ya se ha completado.",
+      "FEEDBACK": "Los usuarios SUPER no pueden enviar feedback."
     },
     "UNAUTHORIZED": {
       "TOKEN": "Tu sesión ha caducado. Inicia sesión de nuevo.",

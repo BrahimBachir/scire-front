@@ -5,6 +5,7 @@ import { AppAccountSettingComponent } from '../../generic/account-setting/accoun
 import { ProfileContentComponent } from '../../generic/account/profile-content/profile-content.component';
 import { AppFaqComponent } from '../../generic/faq/faq.component';
 import { AppPricingComponent } from '../../generic/pricing/pricing.component';
+import { AppFeedbackSubmitComponent } from '../feedback/submit/feedback-submit.component';
 
 export const InstructorRoutes: Routes = [
   {
@@ -69,6 +70,17 @@ export const InstructorRoutes: Routes = [
           urls: [
             { title: 'Academia', url: '/' },
             { title: 'Precios' },
+          ],
+        },
+      },
+      {
+        path: 'feedback',
+        component: AppFeedbackSubmitComponent,
+        data: {
+          title: 'Feedback',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Feedback' },
           ],
         },
       },

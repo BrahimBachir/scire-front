@@ -14,6 +14,7 @@ import { VideoWrapperComponent } from './courses/common/video/video-wrapper.comp
 import { TopicBlocksComponent } from './courses/add-course/topics/topic-blocks/topic-blocks.component';
 import { DiagramFormComponent } from './courses/common/diagram/form/diagram-form.component';
 import { DiagramWrapperComponent } from './courses/common/diagram/diagram-wrapper.component';
+import { AppFeedbackSubmitComponent } from '../feedback/submit/feedback-submit.component';
 
 
 export const StudentRoutes: Routes = [
@@ -209,6 +210,17 @@ export const StudentRoutes: Routes = [
           ],
         },
       },
+      {
+        path: 'feedback',
+        component: AppFeedbackSubmitComponent,
+        data: {
+          title: 'Feedback',
+          urls: [
+            { title: 'Academia', url: '/' },
+            { title: 'Feedback' },
+          ],
+        },
+      },
     ],
   },
-]; 
+];

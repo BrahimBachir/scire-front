@@ -1,0 +1,75 @@
+<mat-card class="cardWithShadow m-b-0">
+  <mat-card-header class="b-b-1">
+    <mat-card-title>Enviar feedback</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form" class="row">
+      <div class="col-md-6 p-b-15">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>¿Sobre qué quieres dar feedback?</mat-label>
+          <mat-select formControlName="featureType">
+            @for (type of featureTypes; track type.value) {
+              <mat-option [value]="type.value">{{ type.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6 p-b-15">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Elemento concreto</mat-label>
+          <input
+            matInput
+            [formControl]="itemControl"
+            [matAutocomplete]="itemAuto"
+            [disabled]="!form.get('featureType')?.value"
+            placeholder="Busca por nombre..."
+          />
+          <mat-autocomplete #itemAuto="matAutocomplete" [displayWith]="displayItem" (optionSelected)="onItemSelected($event)">
+            @for (item of itemOptions(); track item.id) {
+              <mat-option [value]="item">{{ item.description }}</mat-option>
+            }
+          </mat-autocomplete>
+          @if (itemNeedsSelection()) {
+            <mat-hint class="text-error">Elige una opción de la lista de sugerencias.</mat-hint>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6 p-b-15">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Tipo de feedback</mat-label>
+          <mat-select formControlName="feedbackTypeId">
+            @for (t of feedbackTypes(); track t.id) {
+              <mat-option [value]="t.id">{{ t.description }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-12 p-b-15">
+        <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Cuéntanos qué ha pasado</mat-label>
+        <div class="NgxEditor__Wrapper">
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+          <ngx-editor [editor]="editor" formControlName="content" placeholder="Escribe aquí..."></ngx-editor>
+        </div>
+      </div>
+
+      <div class="col-md-12 p-b-15">
+        <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Capturas de pantalla (opcional, máx. 5)</mat-label>
+        <ngx-dropzone accept="image/*" [multiple]="true" (change)="onFilesAdded($event)">
+          <ngx-dropzone-label>Arrastra tus capturas aquí, o haz clic para seleccionarlas</ngx-dropzone-label>
+          @for (file of screenshots(); track file.name) {
+            <ngx-dropzone-image-preview [file]="file" [removable]="true" (removed)="removeFile(file)"></ngx-dropzone-image-preview>
+          }
+        </ngx-dropzone>
+      </div>
+
+      <div class="col-md-12 d-flex justify-content-end">
+        <button mat-flat-button color="primary" type="button" [disabled]="!canSubmit()" (click)="submit()">
+          {{ submitting() ? 'Enviando…' : 'Enviar feedback' }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

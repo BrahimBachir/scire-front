@@ -68,3 +68,4 @@ export * from './social-media-brand.interface'
 export * from './social-media.interface'
 export * from './study-schedule.interface'
 export * from './bulk-upload.interface';
+export * from './feedback.interface';

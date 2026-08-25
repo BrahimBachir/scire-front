@@ -206,6 +206,12 @@ export const Routes = {
     comments: {
       base: 'comments',
     },
+    feedback: {
+      base: 'feedback',
+      types: 'feedback/types',
+      searchable_items: 'feedback/searchable-items',
+      attachment: 'feedback/attachments/:attachmentId',
+    },
     ai: {
       base: 'auto-generate',
     },

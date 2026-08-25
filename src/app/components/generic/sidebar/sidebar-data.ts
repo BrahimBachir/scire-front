@@ -28,6 +28,13 @@ export const navItems: NavItem[] = [
     type: 'GEN',
   },
   {
+    displayName: 'NAV.FEEDBACK',
+    iconName: 'message-report',
+    route: 'feedback',
+    type: 'GEN',
+    roles: NON_SUPER_ROLES,
+  },
+  {
     displayName: 'NAV.ORGANIZATIONS',
     iconName: 'building-community',
     route: 'organizations',
@@ -45,6 +52,13 @@ export const navItems: NavItem[] = [
     displayName: 'NAV.MODERATION',
     iconName: 'gavel',
     route: 'moderation',
+    type: 'GEN',
+    roles: [Roles.SUPER],
+  },
+  {
+    displayName: 'NAV.FEEDBACK',
+    iconName: 'message-report',
+    route: 'feedback',
     type: 'GEN',
     roles: [Roles.SUPER],
   },

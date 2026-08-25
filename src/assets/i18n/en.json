@@ -235,6 +235,7 @@
     "VIDEOS": "Videos",
     "KANBAN": "Kanban",
     "CALENDAR": "Calendar",
+    "FEEDBACK": "Feedback",
     "ORGANIZATIONS": "Organizations",
     "USERS": "Users",
     "MODERATION": "Moderation",
@@ -374,7 +375,8 @@
       "CATEGORIES": "Category not found.",
       "SECTIONS": "Section not found.",
       "TOPICS": "Topic not found.",
-      "BULK_UPLOAD": "Bulk upload job not found."
+      "BULK_UPLOAD": "Bulk upload job not found.",
+      "FEEDBACK": "The item you're reporting feedback on, or the feedback type, could not be found."
     },
     "VALIDATION": {
       "RULES": "A required parameter is missing for this law.",
@@ -396,7 +398,8 @@
       "AI": "The AI service could not generate a response.",
       "CATEGORIES": "A category is required to create this section.",
       "BULK_UPLOAD": "The uploaded file is invalid.",
-      "EMAIL": "The email address is invalid or doesn't exist."
+      "EMAIL": "The email address is invalid or doesn't exist.",
+      "FEEDBACK": "This feedback couldn't be submitted - check the selected item and feedback type."
     },
     "CONFLICT": {
       "RULES": "A law with this code already exists.",
@@ -410,7 +413,8 @@
     "FORBIDDEN": {
       "USERS": "You don't have permission to edit this user.",
       "PLANS": "This feature isn't available on your current plan.",
-      "VOUCHERS": "The free-access voucher campaign is already full."
+      "VOUCHERS": "The free-access voucher campaign is already full.",
+      "FEEDBACK": "Super users can't submit feedback."
     },
     "UNAUTHORIZED": {
       "TOKEN": "Your session has expired. Please sign in again.",
