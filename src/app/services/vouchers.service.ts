@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 export interface IVoucherEligibility {
   campaignOpen: boolean;
   alreadyRedeemed: boolean;
+  hasPaidPlan: boolean;
   pending?: { planCode: string; validTo: string } | null;
 }
 

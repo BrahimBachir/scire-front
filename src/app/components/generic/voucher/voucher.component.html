@@ -26,6 +26,8 @@
           @if (eligibility(); as e) {
             @if (e.alreadyRedeemed) {
               <p class="f-s-14 text-success">Ya has canjeado tu código de acceso gratuito.</p>
+            } @else if (e.hasPaidPlan) {
+              <p class="f-s-14">Ya tienes un plan de pago activo, así que no puedes solicitar más códigos de acceso gratuito.</p>
             } @else if (!e.campaignOpen && !e.pending) {
               <p class="f-s-14">La campaña de códigos gratuitos ya se ha completado.</p>
               <button mat-flat-button color="primary" class="m-t-8" (click)="goToPricing()">Ver planes de pago</button>
@@ -56,7 +58,7 @@
               <input matInput [formControl]="codeControl" type="text" placeholder="XXXXX-XXXXX" />
             </mat-form-field>
             <button mat-flat-button color="primary" class="w-100"
-              [disabled]="!codeControl.valid || redeeming()"
+              [disabled]="!codeControl.valid || redeeming() || !!eligibility()?.hasPaidPlan"
               (click)="redeemCode()">
               Canjear código
             </button>
