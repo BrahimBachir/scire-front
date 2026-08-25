@@ -1,3 +1,13 @@
+# [2.12.0](https://github.com/BrahimBachir/scire-front/compare/v2.11.0...v2.12.0) (2026-08-25)
+
+
+### Features
+
+* **courses:** add burndown/burn-up progress chart page ([fcb70ca](https://github.com/BrahimBachir/scire-front/commit/fcb70cadfe2773fe2c376dfe97710068653903fb))
+* **feedback:** add Feedback submission page and SUPER review screen ([c0ec079](https://github.com/BrahimBachir/scire-front/commit/c0ec0792f627603169782cb3d7f538d255b202ea))
+* **menu:** make the user menu role- and organization-aware ([f27d57b](https://github.com/BrahimBachir/scire-front/commit/f27d57b853cfb424816c2f5b66f99f57c6c650de))
+* **vouchers:** disable voucher claims for users on a paid plan ([4a7194e](https://github.com/BrahimBachir/scire-front/commit/4a7194e3c66bebcf1cd671ae38fc5f855394cdd8))
+
 # [2.11.0](https://github.com/BrahimBachir/scire-front/compare/v2.10.1...v2.11.0) (2026-08-24)
 
 
