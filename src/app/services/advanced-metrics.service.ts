@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Routes } from '../common/config';
 import {
   IActivityTrend,
+  IBurnChart,
   IPassProbability,
   ISkillsRadar,
   IStudyPlanItem,
@@ -53,6 +54,12 @@ export class AdvancedMetricsService {
   getStudyPlan(courseId: number): Observable<IStudyPlanItem[]> {
     return this.http.get<IStudyPlanItem[]>(
       environment.api_base_url + this.routes.api.learning.advancedMetrics.studyPlan.replace(':courseId', courseId.toString()),
+    );
+  }
+
+  getBurnChart(courseId: number): Observable<IBurnChart> {
+    return this.http.get<IBurnChart>(
+      environment.api_base_url + this.routes.api.learning.advancedMetrics.burnChart.replace(':courseId', courseId.toString()),
     );
   }
 }

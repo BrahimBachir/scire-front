@@ -1,0 +1,61 @@
+@if (!loading) {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <div class="chart-header">
+      <div>
+        <mat-card-title>Progreso del curso</mat-card-title>
+        <mat-card-subtitle>Cobertura del temario a lo largo del tiempo</mat-card-subtitle>
+      </div>
+      <div class="view-toggle">
+        <button type="button" class="toggle-btn" [class.active]="view === 'burndown'" (click)="setView('burndown')">Burndown</button>
+        <button type="button" class="toggle-btn" [class.active]="view === 'burnup'" (click)="setView('burnup')">Burn-up</button>
+      </div>
+    </div>
+
+    @if (burnChart && burnChart.points.length) {
+    <div class="stats-row m-t-16">
+      <div class="stat">
+        <div class="stat-label">Alcance total</div>
+        <div class="stat-value">{{ burnChart.totalScope }} artículos</div>
+      </div>
+      @if (burnChart.daysRemaining !== null) {
+      <div class="stat">
+        <div class="stat-label">Días restantes</div>
+        <div class="stat-value">{{ burnChart.daysRemaining }}</div>
+      </div>
+      }
+      @if (onTrackStatus) {
+      <span class="status-pill status-{{ onTrackStatus }}">
+        <i-tabler class="icon-13" name="circle-filled"></i-tabler>
+        {{ onTrackStatus === 'ok' ? 'Al día' : 'Retrasado' }}
+      </span>
+      }
+    </div>
+
+    <div class="chart-wrap m-t-16">
+      <apx-chart
+        [series]="chartData.series!"
+        [chart]="chartData.chart!"
+        [xaxis]="chartData.xaxis!"
+        [yaxis]="chartData.yaxis!"
+        [stroke]="chartData.stroke!"
+        [dataLabels]="chartData.dataLabels!"
+        [colors]="chartData.colors!"
+        [fill]="chartData.fill!"
+        [tooltip]="chartData.tooltip!"
+        [legend]="chartData.legend!"
+        [grid]="chartData.grid!"
+      ></apx-chart>
+    </div>
+    } @else {
+    <p class="empty-state m-t-16">Todavía no hay datos suficientes para mostrar el progreso de este curso.</p>
+    }
+  </mat-card-content>
+</mat-card>
+} @else {
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+}

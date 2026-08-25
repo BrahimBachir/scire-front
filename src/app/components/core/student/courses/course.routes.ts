@@ -15,6 +15,7 @@ import { PlanGuard } from 'src/app/common/guards/plan-auth.guard';
 import { AppAdvancedDashboardComponent } from 'src/app/components/generic/dashboard/advanced-dashboard/advanced-dashboard.component';
 import { Planes } from 'src/app/common/enums';
 import { AppBasicDashboardComponent } from 'src/app/components/generic/dashboard/basic-dashboard/basic-dashboard.component';
+import { AppBurnChartComponent } from 'src/app/components/generic/dashboard/burn-chart/burn-chart.component';
 
 export const CourseRoutes: Routes = [
   {
@@ -140,6 +141,20 @@ export const CourseRoutes: Routes = [
             { title: 'Academia', url: '/student' },
             { title: 'Curso', url: 'student/courses/:courseId/details' },
             { title: 'Estadística' },
+          ],
+        },
+      },
+      {
+        path: 'courses/:courseId/progress',
+        component: AppBurnChartComponent,
+        canActivate: [PlanGuard],
+        data: {
+          planes: [Planes.SILVER, Planes.GOLD],
+          title: 'Progreso',
+          urls: [
+            { title: 'Academia', url: '/student' },
+            { title: 'Curso', url: 'student/courses/:courseId/details' },
+            { title: 'Progreso' },
           ],
         },
       },

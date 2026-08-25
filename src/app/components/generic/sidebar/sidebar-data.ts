@@ -77,6 +77,17 @@ export const navItems: NavItem[] = [
     roles: [Roles.STUDENT],
   },
   {
+    displayName: 'NAV.PROGRESS_CHART',
+    iconName: 'chart-line',
+    route: 'courses/:courseId/progress',
+    type: 'COUR',
+    chip: true,
+    chipClass: 'b-1 border-secondary text-secondary',
+    chipContent: 'PRO',
+    requiresPlan: [Planes.SILVER, Planes.GOLD],
+    roles: [Roles.STUDENT],
+  },
+  {
     displayName: 'NAV.TESTS',
     iconName: 'devices-question',
     route: 'courses/:courseId/tests',

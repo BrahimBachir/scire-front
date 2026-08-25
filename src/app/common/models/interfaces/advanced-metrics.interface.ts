@@ -63,3 +63,19 @@ export interface IStudyPlanItem {
   title: string;
   reason: string;
 }
+
+export interface IBurnChartPoint {
+  date: string;
+  idealRemaining: number;
+  actualRemaining: number;
+  completedCumulative: number;
+}
+
+export interface IBurnChart {
+  startDate: string;
+  endDate: string;
+  totalScope: number;
+  points: IBurnChartPoint[];
+  daysRemaining: number | null;
+  onTrack: boolean | null;
+}

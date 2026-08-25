@@ -102,6 +102,7 @@ export const Routes = {
         skillsRadar: 'learning/advanced-metrics/:courseId/skills-radar',
         passProbability: 'learning/advanced-metrics/:courseId/pass-probability',
         studyPlan: 'learning/advanced-metrics/:courseId/study-plan',
+        burnChart: 'learning/advanced-metrics/:courseId/burn-chart',
       },
       exercises: {
         base: 'learning/courses/exercises',
