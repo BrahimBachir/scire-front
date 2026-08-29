@@ -23,4 +23,5 @@ export interface IQuestion {
   generatedBy?: IGeneratedBy;
   creationType?: ICreationType;
   creationTypeId?: number;
+  blocked?: boolean;
 }

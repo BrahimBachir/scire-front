@@ -70,3 +70,4 @@ export * from './study-schedule.interface'
 export * from './bulk-upload.interface';
 export * from './feedback.interface';
 export * from './session.interface';
+export * from './moderation.interface';

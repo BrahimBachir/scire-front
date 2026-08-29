@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterModule } from '@angular/router';
 import { IconModule } from 'src/app/icon/icon.module';
 import { MaterialModule } from 'src/app/material.module';
 import { CourseService } from 'src/app/services';
@@ -14,6 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CommonModule,
     MaterialModule,
     IconModule,
+    RouterModule,
     MatProgressSpinnerModule,
     AppBannersNotFoundComponent,
   ],
@@ -24,6 +26,7 @@ export class AppCourseModerationComponent implements OnInit {
   private service = inject(CourseService);
   private _snackBar = inject(MatSnackBar);
 
+  protected readonly displayedColumns = ['course', 'details', 'topics', 'actions'];
   protected courses: ICourse[] | null = null;
   protected processingId: number | null = null;
 

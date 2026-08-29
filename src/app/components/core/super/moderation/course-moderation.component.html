@@ -4,29 +4,57 @@
   </mat-card-header>
   <mat-card-content class="module-list">
     @if(courses) {
-    <div class="row">
-      @for(course of courses; track course.id) {
-      <div class="col-md-6">
-        <mat-card class="shadow-none b-1 m-b-15">
-          <mat-card-content class="d-flex justify-content-between align-items-center">
-            <div>
-              <div class="f-w-600">{{ course.description }}</div>
-              <div class="f-s-12">{{ course.callerDescription }} · {{ course.typeDescription }}</div>
-            </div>
-            <div class="d-flex gap-10">
-              <button mat-flat-button color="primary" type="button" [disabled]="processingId === course.id"
-                (click)="approve(course)">
-                Aprobar
-              </button>
-              <button mat-stroked-button color="warn" type="button" [disabled]="processingId === course.id"
-                (click)="reject(course)">
-                Rechazar
-              </button>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      } @empty {
+    <div class="table-responsive">
+      <table mat-table [dataSource]="courses" class="w-100">
+        <ng-container matColumnDef="course">
+          <th mat-header-cell *matHeaderCellDef>Curso</th>
+          <td mat-cell *matCellDef="let course">
+            <div class="f-w-600">{{ course.description }}</div>
+            <div class="f-s-12">{{ course.callerDescription }} · {{ course.typeDescription }}</div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="details">
+          <th mat-header-cell *matHeaderCellDef>Detalles</th>
+          <td mat-cell *matCellDef="let course">
+            <a mat-stroked-button type="button" [routerLink]="['/super/courses', course.id, 'details']"
+              target="_blank" rel="noopener">
+              <i-tabler name="file-description" class="icon-18"></i-tabler>
+              Ver detalles
+            </a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="topics">
+          <th mat-header-cell *matHeaderCellDef>Temario</th>
+          <td mat-cell *matCellDef="let course">
+            <a mat-stroked-button type="button" [routerLink]="['/super/courses', course.id, 'topics']"
+              target="_blank" rel="noopener">
+              <i-tabler name="book" class="icon-18"></i-tabler>
+              Ver temario
+            </a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let course" class="d-flex gap-10 justify-content-end">
+            <button mat-flat-button color="primary" type="button" [disabled]="processingId === course.id"
+              (click)="approve(course)">
+              Aprobar
+            </button>
+            <button mat-stroked-button color="warn" type="button" [disabled]="processingId === course.id"
+              (click)="reject(course)">
+              Rechazar
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      @if(!courses.length) {
       <app-banner-nof-found class="w-100" bannerText="No hay cursos pendientes de moderación."
         bannerTitle="Todo al día."></app-banner-nof-found>
       }

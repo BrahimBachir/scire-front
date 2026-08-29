@@ -1,3 +1,18 @@
+@if (blocked()) {
+<div class="d-flex align-items-center gap-10 m-b-10 p-10"
+    style="background: #fdecea; color: #b71c1c; border-radius: 6px;">
+    <i-tabler name="ban" class="icon-18"></i-tabler>
+    <span>Este contenido ha sido bloqueado tras ser revisado por un moderador.</span>
+</div>
+} @else if (inModeration()) {
+<div class="d-flex align-items-center gap-10 m-b-10 p-10"
+    style="background: #fff4e5; color: #8a5a00; border-radius: 6px;">
+    <i-tabler name="alert-triangle" class="icon-18"></i-tabler>
+    <span>Este contenido está en revisión por la comunidad.</span>
+</div>
+}
+
+@if (!blocked()) {
 <div class="d-flex d-row col-lg-3">
     <span class="m-r-10 d-flex" (click)="react('LIKE')">
         @if( userVote() === 'LIKE'){
@@ -17,3 +32,4 @@
         {{dislikeCount()}}
     </span>
 </div>
+}

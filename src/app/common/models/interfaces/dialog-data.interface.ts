@@ -10,6 +10,8 @@ export interface ReactionResponse {
   voteType?: string;
   likeCount?: number;
   dislikeCount?: number;
+  inModeration?: boolean;
+  blocked?: boolean;
 }
 
 export interface CreateDialogData {

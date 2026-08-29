@@ -1,0 +1,37 @@
+<h3 mat-dialog-title>Comentarios de moderación</h3>
+<mat-dialog-content>
+  <p class="f-s-12 m-b-15 text-muted">{{ data.summary }}</p>
+
+  @if (current) {
+  <div class="d-flex align-items-center justify-content-between gap-10">
+    <button mat-icon-button type="button" matTooltip="Anterior" [disabled]="index === 0" (click)="previous()">
+      <i-tabler name="chevron-left" class="icon-20"></i-tabler>
+    </button>
+
+    <div class="flex-grow-1 p-15" style="border: 1px solid var(--mat-sys-outline-variant, #e0e0e0); border-radius: 8px; min-height: 120px;">
+      <div class="d-flex align-items-center justify-content-between m-b-10">
+        <strong>{{ current.authorName ?? 'Usuario anónimo' }}</strong>
+        @if (current.isRead) {
+        <span class="f-s-12 d-flex align-items-center gap-5" matTooltip="Comentario leído">
+          <i-tabler name="check" class="icon-16"></i-tabler>
+          Leído
+        </span>
+        }
+      </div>
+      <p class="m-0">{{ current.feedbackText ?? 'Sin comentario.' }}</p>
+    </div>
+
+    <button mat-icon-button type="button" matTooltip="Siguiente" [disabled]="index === reactions.length - 1"
+      (click)="next()">
+      <i-tabler name="chevron-right" class="icon-20"></i-tabler>
+    </button>
+  </div>
+
+  <div class="text-center f-s-12 m-t-10">{{ index + 1 }} / {{ reactions.length }}</div>
+  } @else {
+  <p>No hay comentarios que mostrar.</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close cdkFocusInitial>Cerrar</button>
+</mat-dialog-actions>

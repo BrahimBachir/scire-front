@@ -213,6 +213,12 @@ export const Routes = {
       feature_vote: 'reactions/feature-vote/',
       vote_state: 'reactions/vote-state',
     },
+    moderation: {
+      features: 'moderation/features',
+      resolve: 'moderation/features/:featureType/:id/resolve',
+      discard: 'moderation/features/:featureType/:id/discard',
+      readReaction: 'moderation/reactions/:id/read',
+    },
     reviews: {
       base: 'reviews',
       summary: 'reviews/summary',

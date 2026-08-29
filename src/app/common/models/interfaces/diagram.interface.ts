@@ -14,4 +14,5 @@ export interface IDiagram {
   creationType?: ICreationType;
   creationTypeId?: number;
   articlesIds?: number[];
+  blocked?: boolean;
 }

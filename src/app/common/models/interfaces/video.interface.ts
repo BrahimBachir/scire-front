@@ -18,4 +18,5 @@ export interface IVideo {
   creationTypeId?: number;
   articlesIds?: number[];
   articles_features?: IArticlesFeatures[];
+  blocked?: boolean;
 }

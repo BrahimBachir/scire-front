@@ -34,6 +34,8 @@ export class AppReactionsComponent /* implements OnInit */ {
     protected userVote = signal<string>('');
     protected likeCount = signal<number>(0);
     protected dislikeCount = signal<number>(0);
+    protected inModeration = signal<boolean>(false);
+    protected blocked = signal<boolean>(false);
 
 
     contentChangeEffect = effect(() => {
@@ -48,6 +50,8 @@ export class AppReactionsComponent /* implements OnInit */ {
             this.userVote.set('');
             this.likeCount.set(0);
             this.dislikeCount.set(0);
+            this.inModeration.set(false);
+            this.blocked.set(false);
         }
     });
     
@@ -88,6 +92,8 @@ export class AppReactionsComponent /* implements OnInit */ {
         ).subscribe(response => {
             this.likeCount.set(response.likeCount ?? 0);
             this.dislikeCount.set(response.dislikeCount ?? 0);
+            this.inModeration.set(response.inModeration ?? false);
+            this.blocked.set(response.blocked ?? false);
         });
     }
 }

@@ -14,4 +14,5 @@ export interface IFlashcard {
   creationType?: ICreationType;
   creationTypeId?: number;
   articlesIds?: number[];
+  blocked?: boolean;
 }

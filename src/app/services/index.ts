@@ -33,3 +33,4 @@ export * from './payments.service';
 export * from './vouchers.service';
 export * from './bulk-upload.service';
 export * from './feedback.service';
+export * from './moderation.service';
