@@ -405,6 +405,8 @@
       "PAYMENTS": "No se ha podido procesar el pago.",
       "AI": "El servicio de IA no ha podido generar una respuesta.",
       "CATEGORIES": "Se requiere una categoría para crear esta sección.",
+      "CATEGORY_NOT_ASSOCIATED": "Esta categoría no está asociada a este curso.",
+      "SECTION_NOT_ASSOCIATED": "Esta sección no está asociada a este curso.",
       "BULK_UPLOAD": "El archivo subido no es válido.",
       "EMAIL": "La dirección de correo es incorrecta o no existe.",
       "FEEDBACK": "No se ha podido enviar este feedback: revisa el elemento y el tipo seleccionados.",

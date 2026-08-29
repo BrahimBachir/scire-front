@@ -11,9 +11,10 @@
     @if(mode === 'SELECTING'){
     <form [formGroup]="form" class="w-100">
       <div class="row w-100 p-b-15">
-        <app-topic-category-filter class="col-lg-6" formControlName="categoryId"></app-topic-category-filter>
-        <app-topic-section-filter class="col-lg-6" formControlName="sectionId"
-          [parentId]="form.get('categoryId')?.value || 0"></app-topic-section-filter>
+        <app-associated-category-filter class="col-lg-6" formControlName="categoryId"
+          [parentId]="data.courseId ?? null"></app-associated-category-filter>
+        <app-associated-section-filter class="col-lg-6" formControlName="sectionId"
+          [courseId]="data.courseId ?? null" [parentId]="form.get('categoryId')?.value || 0"></app-associated-section-filter>
       </div>
       <div class="d-flex w-100 row justify-content-between">
         <app-topic-filter class="col-lg-10" formControlName="topicId"
@@ -29,9 +30,10 @@
     } @else {
     <form [formGroup]="form" class="w-100">
       <div class="row p-b-15 w-100">
-        <app-topic-category-filter formControlName="categoryId" class="col-md-4"></app-topic-category-filter>
-        <app-topic-section-filter formControlName="sectionId" class="col-md-4"
-          [parentId]="form.get('categoryId')?.value || 0"></app-topic-section-filter>
+        <app-associated-category-filter formControlName="categoryId" class="col-md-4"
+          [parentId]="data.courseId ?? null"></app-associated-category-filter>
+        <app-associated-section-filter formControlName="sectionId" class="col-md-4"
+          [courseId]="data.courseId ?? null" [parentId]="form.get('categoryId')?.value || 0"></app-associated-section-filter>
         <mat-form-field appearance="outline" class="w-100 col-md-4">
           <mat-label>Nombre</mat-label>
           <input type="text" matInput required aria-label="Nombre" id="name" name="name" formControlName="name"

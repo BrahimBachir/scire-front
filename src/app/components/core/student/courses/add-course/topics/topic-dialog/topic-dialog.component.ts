@@ -13,8 +13,8 @@ import { CommonModule } from '@angular/common';
 import { finalize } from 'rxjs';
 import { IconModule } from 'src/app/icon/icon.module';
 import { TopicStrategy } from 'src/app/strategies';
-import { TopicCategoryFilterComponent } from "src/app/components/generic/filters/topic-category/topic-category-filter.component";
-import { TopicSectionFilterComponent } from "src/app/components/generic/filters/topic-section/topic-section-filter.component";
+import { AssociatedCategoryFilterComponent } from "src/app/components/generic/filters/associated-category/associated-category-filter.component";
+import { AssociatedSectionFilterComponent } from "src/app/components/generic/filters/associated-section/associated-section-filter.component";
 import { TopicFilterComponent } from "src/app/components/generic/filters/topic/topic-filter.component";
 import { BlockFormComponent } from '../blocks/block-form.component';
 
@@ -29,8 +29,8 @@ import { BlockFormComponent } from '../blocks/block-form.component';
     MatDialogContent,
     MaterialModule,
     IconModule,
-    TopicCategoryFilterComponent,
-    TopicSectionFilterComponent,
+    AssociatedCategoryFilterComponent,
+    AssociatedSectionFilterComponent,
     TopicFilterComponent,
   ],
   templateUrl: './topic-dialog.component.html',

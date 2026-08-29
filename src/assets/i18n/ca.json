@@ -405,6 +405,8 @@
       "PAYMENTS": "No s'ha pogut processar el pagament.",
       "AI": "El servei d'IA no ha pogut generar una resposta.",
       "CATEGORIES": "Cal una categoria per crear aquesta secció.",
+      "CATEGORY_NOT_ASSOCIATED": "Aquesta categoria no està associada a aquest curs.",
+      "SECTION_NOT_ASSOCIATED": "Aquesta secció no està associada a aquest curs.",
       "BULK_UPLOAD": "El fitxer pujat no és vàlid.",
       "EMAIL": "L'adreça de correu és incorrecta o no existeix.",
       "FEEDBACK": "Aquest feedback no s'ha pogut enviar: revisa l'element i el tipus seleccionats.",

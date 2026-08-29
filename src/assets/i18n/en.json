@@ -405,6 +405,8 @@
       "PAYMENTS": "The payment could not be processed.",
       "AI": "The AI service could not generate a response.",
       "CATEGORIES": "A category is required to create this section.",
+      "CATEGORY_NOT_ASSOCIATED": "This category is not associated with this course.",
+      "SECTION_NOT_ASSOCIATED": "This section is not associated with this course.",
       "BULK_UPLOAD": "The uploaded file is invalid.",
       "EMAIL": "The email address is invalid or doesn't exist.",
       "FEEDBACK": "This feedback couldn't be submitted - check the selected item and feedback type.",
