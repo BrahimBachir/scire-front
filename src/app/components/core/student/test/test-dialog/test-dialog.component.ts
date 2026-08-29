@@ -35,6 +35,7 @@ import { DifficultyFilterComponent } from 'src/app/components/generic/filters/di
 import { ExerciceFilterComponent } from 'src/app/components/generic/filters/exercise/exercise-filter.component';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { TopicMultiSelectComponent } from 'src/app/components/generic/filters/multi-topic/multi-topic-select.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-test-dialog',
@@ -53,6 +54,7 @@ import { TopicMultiSelectComponent } from 'src/app/components/generic/filters/mu
     DifficultyFilterComponent,
     ExerciceFilterComponent,
     TopicMultiSelectComponent,
+    TranslateModule,
   ],
   templateUrl: './test-dialog.component.html',
   styleUrl: './test-dialog.component.scss',
