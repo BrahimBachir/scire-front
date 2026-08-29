@@ -1,3 +1,10 @@
+## [2.13.2](https://github.com/BrahimBachir/scire-front/compare/v2.13.1...v2.13.2) (2026-08-29)
+
+
+### Bug Fixes
+
+* **test-dialog:** translate backend error codes in the create-test dialog ([b3f2e55](https://github.com/BrahimBachir/scire-front/commit/b3f2e55fb556a8f65272c0f6f79d2229f8fc24d9))
+
 ## [2.13.1](https://github.com/BrahimBachir/scire-front/compare/v2.13.0...v2.13.1) (2026-08-29)
 
 
