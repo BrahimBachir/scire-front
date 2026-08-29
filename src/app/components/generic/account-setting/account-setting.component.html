@@ -8,24 +8,25 @@
             <i-tabler name="user-circle" class="icon-20 m-r-8 d-flex"></i-tabler>
           </mat-icon>
         </div>
-        Cuenta
+        {{ 'ACCOUNT.TABS.ACCOUNT' | translate }}
       </ng-template>
       <mat-card-content class="p-y-24">
         <div class="row">
           <div class="col-sm-6">
             <mat-card class="cardWithShadow">
               <mat-card-content class="p-y-24">
-                <mat-card-title>Change Profile</mat-card-title>
-                <mat-card-subtitle class="f-s-14">Change your profile picture from here</mat-card-subtitle>
+                <mat-card-title>{{ 'ACCOUNT.AVATAR.TITLE' | translate }}</mat-card-title>
+                <mat-card-subtitle class="f-s-14">{{ 'ACCOUNT.AVATAR.SUBTITLE' | translate }}</mat-card-subtitle>
                 <div class="text-center m-t-24">
-                  <img src="/assets/images/profile/user-1.jpg" class="rounded-circle" width="120" />
+                  <img [src]="loggedUser()?.image || '/assets/images/profile/user-1.jpg'" class="rounded-circle" width="120" />
                   <div class="m-t-24">
-                    <button mat-flat-button color="primary" class="m-r-8">
-                      Upload
+                    <input #avatarInput type="file" accept="image/*" class="d-none" (change)="onAvatarFileSelected($event)" />
+                    <button mat-flat-button color="primary" class="m-r-8" [disabled]="uploadingAvatar()" (click)="avatarInput.click()">
+                      {{ 'ACCOUNT.AVATAR.UPLOAD' | translate }}
                     </button>
-                    <button mat-stroked-button color="warn">Reset</button>
+                    <button mat-stroked-button color="warn" [disabled]="uploadingAvatar()" (click)="resetAvatar()">{{ 'ACCOUNT.AVATAR.RESET' | translate }}</button>
                   </div>
-                  <span class="f-s-14 m-t-24 d-block">Allowed JPG, GIF or PNG. Max size of 800K</span>
+                  <span class="f-s-14 m-t-24 d-block">{{ 'ACCOUNT.AVATAR.HINT' | translate }}</span>
                 </div>
               </mat-card-content>
             </mat-card>
@@ -33,25 +34,39 @@
           <div class="col-sm-6">
             <mat-card class="cardWithShadow">
               <mat-card-content class="p-y-24">
-                <mat-card-title>Change Password</mat-card-title>
-                <mat-card-subtitle class="f-s-14">To change your password please confirm
-                  here</mat-card-subtitle>
-                <form class="m-t-24">
+                <mat-card-title>{{ 'ACCOUNT.PASSWORD.TITLE' | translate }}</mat-card-title>
+                <mat-card-subtitle class="f-s-14">{{ 'ACCOUNT.PASSWORD.SUBTITLE' | translate }}</mat-card-subtitle>
+                <form class="m-t-24" [formGroup]="passwordForm" (ngSubmit)="changePassword()">
                   <!-- input -->
-                  <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Current Password</mat-label>
+                  <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PASSWORD.CURRENT' | translate }}</mat-label>
                   <mat-form-field appearance="outline" class="w-100" color="primary">
-                    <input matInput type="password" value="password" />
+                    <input matInput [type]="showCurrentPassword() ? 'text' : 'password'" formControlName="currentPassword" />
+                    <button mat-icon-button matSuffix type="button" (click)="toggleCurrentPasswordVisibility()">
+                      <mat-icon>{{ showCurrentPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
                   </mat-form-field>
                   <!-- input -->
-                  <mat-label class="f-s-14 f-w-600 m-b-8 d-block">New Password</mat-label>
+                  <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PASSWORD.NEW' | translate }}</mat-label>
                   <mat-form-field appearance="outline" class="w-100" color="primary">
-                    <input matInput type="password" value="password" />
+                    <input matInput [type]="showNewPassword() ? 'text' : 'password'" formControlName="newPassword" />
+                    <button mat-icon-button matSuffix type="button" (click)="toggleNewPasswordVisibility()">
+                      <mat-icon>{{ showNewPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
                   </mat-form-field>
                   <!-- input -->
-                  <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Confirm Password</mat-label>
+                  <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PASSWORD.CONFIRM' | translate }}</mat-label>
                   <mat-form-field appearance="outline" class="w-100 hide-hint" color="primary">
-                    <input matInput type="password" value="password" />
+                    <input matInput [type]="showConfirmPassword() ? 'text' : 'password'" formControlName="confirmPassword" />
+                    <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPasswordVisibility()">
+                      <mat-icon>{{ showConfirmPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
                   </mat-form-field>
+                  @if (passwordForm.errors?.['mismatch'] && (pf.confirmPassword.dirty || pf.confirmPassword.touched)) {
+                    <span class="f-s-14 text-error d-block m-b-16">{{ 'ACCOUNT.PASSWORD.MISMATCH' | translate }}</span>
+                  }
+                  <button mat-flat-button color="primary" type="submit" [disabled]="passwordForm.invalid || changingPassword()">
+                    {{ 'ACCOUNT.PASSWORD.SUBMIT' | translate }}
+                  </button>
                 </form>
               </mat-card-content>
             </mat-card>
@@ -59,63 +74,74 @@
           <div class="col-12">
             <mat-card class="cardWithShadow">
               <mat-card-content>
-                <mat-card-title>Personal Details</mat-card-title>
-                <mat-card-subtitle class="f-s-14">To change your personal detail , edit and save from
-                  here</mat-card-subtitle>
+                <mat-card-title>{{ 'ACCOUNT.PERSONAL.TITLE' | translate }}</mat-card-title>
+                <mat-card-subtitle class="f-s-14">{{ 'ACCOUNT.PERSONAL.SUBTITLE' | translate }}</mat-card-subtitle>
 
-                <div class="row m-t-24">
-                  <div class="col-sm-6">
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Your Name</mat-label>
-                    <mat-form-field appearance="outline" class="w-100" color="primary">
-                      <input matInput type="text" value="Mathew Anderson" />
-                    </mat-form-field>
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Location D</mat-label>
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-select value="in">
-                        <mat-option value="in">India</mat-option>
-                        <mat-option value="us">United States</mat-option>
-                        <mat-option value="uk">United Kingdom</mat-option>
-                        <mat-option value="ru">Russia</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Email</mat-label>
-                    <mat-form-field appearance="outline" class="w-100" color="primary">
-                      <input matInput type="email" value="info@modernize.com" />
-                    </mat-form-field>
+                <form [formGroup]="personalForm" (ngSubmit)="savePersonalDetails()">
+                  <div class="row m-t-24">
+                    <div class="col-sm-6">
+                      <!-- input -->
+                      <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.NAME' | translate }}</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput type="text" formControlName="name" />
+                      </mat-form-field>
+                      <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.EMAIL' | translate }}</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput type="email" formControlName="email" />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-6">
+                      <!-- input -->
+                      <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.FIRST_SURNAME' | translate }}</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput type="text" formControlName="first_surname" />
+                      </mat-form-field>
+                      <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.SECOND_SURNAME' | translate }}</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput type="text" formControlName="second_surname" />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-6">
+                      <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.PHONE' | translate }}</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput type="text" formControlName="phone" />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-6">
+                      <app-country-filter formControlName="countryId"></app-country-filter>
+                    </div>
+                    <div class="col-sm-6">
+                      <app-town-filter formControlName="townId" [parentId]="personalForm.get('countryId')?.value || 0"></app-town-filter>
+                    </div>
+                    <div class="col-sm-6">
+                      <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.STREET' | translate }}</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput type="text" formControlName="street" />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-3">
+                      <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.NUMBER' | translate }}</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput type="number" formControlName="number" />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-3">
+                      <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.POSTAL_CODE' | translate }}</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput type="text" formControlName="postal_code" />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12">
+                      <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.OTHER_INFO' | translate }}</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput type="text" formControlName="other_info" />
+                      </mat-form-field>
+                    </div>
                   </div>
-                  <div class="col-sm-6">
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Store Name</mat-label>
-                    <mat-form-field appearance="outline" class="w-100" color="primary">
-                      <input matInput type="text" value="Maxima Studio" />
-                    </mat-form-field>
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Currency</mat-label>
-                    <mat-form-field appearance="outline" class="w-100" color="primary">
-                      <mat-select value="in">
-                        <mat-option value="in">India (INR)</mat-option>
-                        <mat-option value="us">Us Dollar ($)</mat-option>
-                        <mat-option value="uk">United Kingdom(Pound)</mat-option>
-                        <mat-option value="ru">Russia (Ruble)</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Phone</mat-label>
-                    <mat-form-field appearance="outline" class="w-100" color="primary">
-                      <input matInput type="text" value="+91 12345 65478" />
-                    </mat-form-field>
-                  </div>
-                  <div class="col-12">
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Address</mat-label>
-                    <mat-form-field appearance="outline" class="w-100" color="primary">
-                      <input matInput type="text" value="814 Howard Street, 120065, India" />
-                    </mat-form-field>
-                  </div>
-                </div>
+                  <button mat-flat-button color="primary" type="submit" [disabled]="personalForm.invalid || savingPersonal()">
+                    {{ 'ACCOUNT.PERSONAL.SAVE' | translate }}
+                  </button>
+                </form>
               </mat-card-content>
             </mat-card>
           </div>
@@ -156,139 +182,77 @@
             <i-tabler name="bell" class="icon-20 m-r-8 d-flex"></i-tabler>
           </mat-icon>
         </div>
-        Notificaciones
+        {{ 'ACCOUNT.TABS.NOTIFICATIONS' | translate }}
       </ng-template>
       <mat-card-content class="p-y-24">
         <div class="row justify-content-center">
           <div class="col-lg-9">
             <mat-card class="cardWithShadow">
               <mat-card-content class="p-y-24">
-                <mat-card-title>Notification Preferences</mat-card-title>
-                <mat-card-subtitle class="f-s-14">Select the notificaitons ou would like to receive via
-                  email. Please note that you cannot opt out of receving
-                  service messages, such as payment, security or legal
-                  notifications.</mat-card-subtitle>
+                <mat-card-title>{{ 'ACCOUNT.NOTIFICATIONS.TITLE' | translate }}</mat-card-title>
+                <mat-card-subtitle class="f-s-14">{{ 'ACCOUNT.NOTIFICATIONS.SUBTITLE' | translate }}</mat-card-subtitle>
 
-                <!-- input -->
-                <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-24">Email Address*</mat-label>
-                <mat-form-field appearance="outline" class="w-100" color="primary">
-                  <input matInput type="email" />
-                  <mat-hint> Required for notificaitons.</mat-hint>
-                </mat-form-field>
+                <form [formGroup]="notificationsForm" (ngSubmit)="saveNotificationPreferences()">
+                  <!-- input -->
+                  <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-24">{{ 'ACCOUNT.NOTIFICATIONS.EMAIL' | translate }}</mat-label>
+                  <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <input matInput type="email" formControlName="notificationEmail" />
+                    <mat-hint>{{ 'ACCOUNT.NOTIFICATIONS.EMAIL_HINT' | translate }}</mat-hint>
+                  </mat-form-field>
 
-                <div class="d-flex align-items-center m-t-24">
-                  <button mat-mini-fab class="bg-light-primary shadow-none rounded icon-48">
-                    <i-tabler name="article" class="icon-20 d-flex text-primary"></i-tabler>
-                  </button>
-                  <div class="m-l-16 w-100">
-                    <h5 class="f-s-16 f-w-600 m-0 m-b-4">Our newsletter</h5>
-                    <div class="d-flex align-items-center justify-content-center w-100">
-                      <span class="f-s-14">We'll always let you know about important
-                        changes</span>
-                      <mat-slide-toggle class="m-l-auto"></mat-slide-toggle>
+                  <div class="d-flex align-items-center m-t-24">
+                    <button mat-mini-fab type="button" class="bg-light-primary shadow-none rounded icon-48">
+                      <i-tabler name="article" class="icon-20 d-flex text-primary"></i-tabler>
+                    </button>
+                    <div class="m-l-16 w-100">
+                      <h5 class="f-s-16 f-w-600 m-0 m-b-4">{{ 'ACCOUNT.NOTIFICATIONS.NEWSLETTER_TITLE' | translate }}</h5>
+                      <div class="d-flex align-items-center justify-content-center w-100">
+                        <span class="f-s-14">{{ 'ACCOUNT.NOTIFICATIONS.NEWSLETTER_SUBTITLE' | translate }}</span>
+                        <mat-slide-toggle class="m-l-auto" formControlName="newsletterOptIn"></mat-slide-toggle>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="d-flex align-items-center m-t-24">
-                  <button mat-mini-fab class="bg-light-primary shadow-none rounded icon-48">
-                    <i-tabler name="checkbox" class="icon-20 d-flex text-primary"></i-tabler>
-                  </button>
-                  <div class="m-l-16 w-100">
-                    <h5 class="f-s-16 f-w-600 m-0 m-b-4">
-                      Order Confirmation
-                    </h5>
-                    <div class="d-flex align-items-center justify-content-center w-100">
-                      <span class="f-s-14">You will be notified when customer order any
-                        product</span>
-                      <mat-slide-toggle class="m-l-auto"></mat-slide-toggle>
+                  <div class="d-flex align-items-center m-t-24">
+                    <button mat-mini-fab type="button" class="bg-light-primary shadow-none rounded icon-48">
+                      <i-tabler name="mail" class="icon-20 d-flex text-primary"></i-tabler>
+                    </button>
+                    <div class="m-l-16 w-100">
+                      <h5 class="f-s-16 f-w-600 m-0 m-b-4">{{ 'ACCOUNT.NOTIFICATIONS.COURSE_UPDATES_TITLE' | translate }}</h5>
+                      <div class="d-flex align-items-center justify-content-center w-100">
+                        <span class="f-s-14">{{ 'ACCOUNT.NOTIFICATIONS.COURSE_UPDATES_SUBTITLE' | translate }}</span>
+                        <mat-slide-toggle class="m-l-auto" formControlName="courseUpdatesOptIn"></mat-slide-toggle>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="d-flex align-items-center m-t-24">
-                  <button mat-mini-fab class="bg-light-primary shadow-none rounded icon-48">
-                    <i-tabler name="clock" class="icon-20 d-flex text-primary"></i-tabler>
-                  </button>
-                  <div class="m-l-16 w-100">
-                    <h5 class="f-s-16 f-w-600 m-0 m-b-4">
-                      Order Status Changed
-                    </h5>
-                    <div class="d-flex align-items-center justify-content-center w-100">
-                      <span class="f-s-14">You will be notified when customer make changes to
-                        the order</span>
-                      <mat-slide-toggle class="m-l-auto"></mat-slide-toggle>
+                  <div class="d-flex align-items-center m-t-24">
+                    <button mat-mini-fab type="button" class="bg-light-primary shadow-none rounded icon-48">
+                      <i-tabler name="gavel" class="icon-20 d-flex text-primary"></i-tabler>
+                    </button>
+                    <div class="m-l-16 w-100">
+                      <h5 class="f-s-16 f-w-600 m-0 m-b-4">{{ 'ACCOUNT.NOTIFICATIONS.LAW_UPDATES_TITLE' | translate }}</h5>
+                      <div class="d-flex align-items-center justify-content-center w-100">
+                        <span class="f-s-14">{{ 'ACCOUNT.NOTIFICATIONS.LAW_UPDATES_SUBTITLE' | translate }}</span>
+                        <mat-slide-toggle class="m-l-auto" formControlName="lawUpdatesOptIn"></mat-slide-toggle>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="d-flex align-items-center m-t-24">
-                  <button mat-mini-fab class="bg-light-primary shadow-none rounded icon-48">
-                    <i-tabler name="truck-delivery" class="icon-20 d-flex text-primary"></i-tabler>
-                  </button>
-                  <div class="m-l-16 w-100">
-                    <h5 class="f-s-16 f-w-600 m-0 m-b-4">Order Delivered</h5>
-                    <div class="d-flex align-items-center justify-content-center w-100">
-                      <span class="f-s-14">You will be notified once the order is
-                        delivered</span>
-                      <mat-slide-toggle class="m-l-auto"></mat-slide-toggle>
+                  <div class="d-flex align-items-center m-t-24">
+                    <button mat-mini-fab type="button" class="bg-light-primary shadow-none rounded icon-48">
+                      <i-tabler name="speakerphone" class="icon-20 d-flex text-primary"></i-tabler>
+                    </button>
+                    <div class="m-l-16 w-100">
+                      <h5 class="f-s-16 f-w-600 m-0 m-b-4">{{ 'ACCOUNT.NOTIFICATIONS.INSTRUCTOR_PUBLICATIONS_TITLE' | translate }}</h5>
+                      <div class="d-flex align-items-center justify-content-center w-100">
+                        <span class="f-s-14">{{ 'ACCOUNT.NOTIFICATIONS.INSTRUCTOR_PUBLICATIONS_SUBTITLE' | translate }}</span>
+                        <mat-slide-toggle class="m-l-auto" formControlName="instructorPublicationsOptIn"></mat-slide-toggle>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="d-flex align-items-center m-t-24">
-                  <button mat-mini-fab class="bg-light-primary shadow-none rounded icon-48">
-                    <i-tabler name="mail" class="icon-20 d-flex text-primary"></i-tabler>
+
+                  <button mat-flat-button color="primary" type="submit" class="m-t-24" [disabled]="notificationsForm.invalid || savingNotifications()">
+                    {{ 'ACCOUNT.NOTIFICATIONS.SAVE' | translate }}
                   </button>
-                  <div class="m-l-16 w-100">
-                    <h5 class="f-s-16 f-w-600 m-0 m-b-4">
-                      Email Notification
-                    </h5>
-                    <div class="d-flex align-items-center justify-content-center w-100">
-                      <span class="f-s-14">Turn on email notificaiton to get updates through
-                        email</span>
-                      <mat-slide-toggle class="m-l-auto"></mat-slide-toggle>
-                    </div>
-                  </div>
-                </div>
-              </mat-card-content>
-            </mat-card>
-
-            <mat-card class="cardWithShadow">
-              <mat-card-content class="p-y-24">
-                <mat-card-title>Date & Time</mat-card-title>
-                <mat-card-subtitle class="f-s-14">Time zones and calendar display
-                  settings.</mat-card-subtitle>
-
-                <div class="d-flex align-items-center m-t-24">
-                  <button mat-mini-fab class="bg-light-primary shadow-none rounded icon-48">
-                    <i-tabler name="clock" class="icon-20 d-flex text-primary"></i-tabler>
-                  </button>
-                  <div class="m-l-16 w-100">
-                    <span class="f-s-14 d-block m-b-4">Time zone</span>
-                    <h5 class="f-s-16 f-w-600 m-0 m-b-4">
-                      (UTC + 02:00) Athens, Bucharet
-                    </h5>
-                  </div>
-                  <span class="m-l-auto">
-                    <i-tabler name="download" class="icon-20"></i-tabler>
-                  </span>
-                </div>
-              </mat-card-content>
-            </mat-card>
-
-            <mat-card class="cardWithShadow">
-              <mat-card-content class="p-y-24">
-                <mat-card-title>Ignore Tracking</mat-card-title>
-
-                <div class="d-flex align-items-center m-t-24">
-                  <button mat-mini-fab class="bg-light-primary shadow-none rounded icon-48">
-                    <i-tabler name="clock" class="icon-20 d-flex text-primary"></i-tabler>
-                  </button>
-                  <div class="m-l-16 w-100">
-                    <h5 class="f-s-16 f-w-600 m-0 m-b-4">
-                      Ignore Browser Tracking
-                    </h5>
-                    <span class="f-s-14">Browser Cookie</span>
-                  </div>
-                  <mat-slide-toggle class="m-l-auto"></mat-slide-toggle>
-                </div>
+                </form>
               </mat-card-content>
             </mat-card>
           </div>
@@ -302,51 +266,60 @@
             <i-tabler name="receipt" class="icon-20 m-r-8 d-flex"></i-tabler>
           </mat-icon>
         </div>
-        Facturación
+        {{ 'ACCOUNT.TABS.BILLING' | translate }}
       </ng-template>
       <mat-card-content class="p-y-24">
         <div class="row justify-content-center">
           <div class="col-lg-9">
             <mat-card class="cardWithShadow">
               <mat-card-content class="p-y-24">
-                <mat-card-title class="m-b-24">Billing Information</mat-card-title>
+                <mat-card-title class="m-b-24">{{ 'ACCOUNT.BILLING.TITLE' | translate }}</mat-card-title>
+                <mat-card-subtitle class="f-s-14 m-b-24">{{ 'ACCOUNT.BILLING.SUBTITLE' | translate }}</mat-card-subtitle>
 
-                <div class="row">
-                  <div class="col-sm-6">
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Business Name*</mat-label>
-                    <mat-form-field appearance="outline" class="w-100" color="primary">
-                      <input matInput type="text" value="Visitor Analytics" />
-                    </mat-form-field>
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Business Address*</mat-label>
-                    <mat-form-field appearance="outline" class="w-100" color="primary">
-                      <input matInput type="text" />
-                    </mat-form-field>
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">First Name*</mat-label>
-                    <mat-form-field appearance="outline" class="w-100" color="primary">
-                      <input matInput type="text" />
-                    </mat-form-field>
-                  </div>
-                  <div class="col-sm-6">
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Business Sector*</mat-label>
-                    <mat-form-field appearance="outline" class="w-100" color="primary">
-                      <input matInput type="text" value="Arts, Media & Entertainment" />
-                    </mat-form-field>
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Country*</mat-label>
-                    <mat-form-field appearance="outline" class="w-100" color="primary">
-                      <input matInput type="text" value="Romania" />
-                    </mat-form-field>
-                    <!-- input -->
-                    <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Last Name*</mat-label>
-                    <mat-form-field appearance="outline" class="w-100" color="primary">
-                      <input matInput type="text" />
-                    </mat-form-field>
-                  </div>
-                </div>
+                <mat-radio-group [value]="useDifferentBillingAddress()" (change)="onBillingModeChange($event.value)">
+                  <mat-radio-button [value]="false" class="m-r-24">{{ 'ACCOUNT.BILLING.USE_DEFAULT' | translate }}</mat-radio-button>
+                  <mat-radio-button [value]="true">{{ 'ACCOUNT.BILLING.USE_DIFFERENT' | translate }}</mat-radio-button>
+                </mat-radio-group>
+
+                @if (useDifferentBillingAddress()) {
+                  <form class="m-t-24" [formGroup]="billingForm" (ngSubmit)="saveBillingAddress()">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <app-country-filter formControlName="countryId"></app-country-filter>
+                      </div>
+                      <div class="col-sm-6">
+                        <app-town-filter formControlName="townId" [parentId]="billingForm.get('countryId')?.value || 0"></app-town-filter>
+                      </div>
+                      <div class="col-sm-6">
+                        <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.STREET' | translate }}</mat-label>
+                        <mat-form-field appearance="outline" class="w-100" color="primary">
+                          <input matInput type="text" formControlName="street" />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-sm-3">
+                        <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.NUMBER' | translate }}</mat-label>
+                        <mat-form-field appearance="outline" class="w-100" color="primary">
+                          <input matInput type="number" formControlName="number" />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-sm-3">
+                        <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.POSTAL_CODE' | translate }}</mat-label>
+                        <mat-form-field appearance="outline" class="w-100" color="primary">
+                          <input matInput type="text" formControlName="postal_code" />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12">
+                        <mat-label class="f-s-14 f-w-600 m-b-8 d-block">{{ 'ACCOUNT.PERSONAL.OTHER_INFO' | translate }}</mat-label>
+                        <mat-form-field appearance="outline" class="w-100" color="primary">
+                          <input matInput type="text" formControlName="other_info" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <button mat-flat-button color="primary" type="submit" [disabled]="billingForm.invalid || savingBilling()">
+                      {{ 'ACCOUNT.BILLING.SAVE' | translate }}
+                    </button>
+                  </form>
+                }
               </mat-card-content>
             </mat-card>
 
@@ -441,53 +414,36 @@
             <i-tabler name="lock" class="icon-20 m-r-8 d-flex"></i-tabler>
           </mat-icon>
         </div>
-        Security
+        {{ 'ACCOUNT.TABS.SECURITY' | translate }}
       </ng-template>
       <mat-card-content class="p-y-24">
         <div class="row">
           <div class="col-lg-8">
             <mat-card class="cardWithShadow">
               <mat-card-content class="p-y-24">
-                <mat-card-title>Two-factor Authentication</mat-card-title>
+                <mat-card-title>{{ 'ACCOUNT.SECURITY.TWO_FACTOR_TITLE' | translate }}</mat-card-title>
                 <div class="d-flex align-items-center p-b-30">
-                  <mat-card-subtitle class="f-s-14">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Corporis sapiente sunt earum officiis laboriosam
-                    ut.</mat-card-subtitle>
-                  <button mat-flat-button color="primary" class="m-l-auto">
-                    Enable
-                  </button>
+                  <mat-card-subtitle class="f-s-14">{{ 'ACCOUNT.SECURITY.TWO_FACTOR_SUBTITLE' | translate }}</mat-card-subtitle>
+                  @if (twoFactorEnabled()) {
+                    <button mat-stroked-button color="warn" class="m-l-auto" [disabled]="togglingTwoFactor()" (click)="toggleTwoFactor(false)">
+                      {{ 'ACCOUNT.SECURITY.DISABLE' | translate }}
+                    </button>
+                  } @else {
+                    <button mat-flat-button color="primary" class="m-l-auto" [disabled]="togglingTwoFactor()" (click)="toggleTwoFactor(true)">
+                      {{ 'ACCOUNT.SECURITY.ENABLE' | translate }}
+                    </button>
+                  }
                 </div>
                 <mat-divider></mat-divider>
                 <div class="d-flex align-items-center p-y-24">
                   <div>
-                    <h5 class="f-s-16 f-w-600 m-0">Authentication App</h5>
-                    <mat-card-subtitle class="f-s-14">Google auth app</mat-card-subtitle>
+                    <h5 class="f-s-16 f-w-600 m-0">{{ 'ACCOUNT.SECURITY.SMS_RECOVERY_TITLE' | translate }}</h5>
+                    <mat-card-subtitle class="f-s-14">{{ 'ACCOUNT.SECURITY.SMS_RECOVERY_SUBTITLE' | translate }}</mat-card-subtitle>
                   </div>
 
-                  <button mat-stroked-button color="primary" class="m-l-auto">
-                    Setup
-                  </button>
-                </div>
-                <mat-divider></mat-divider>
-                <div class="d-flex align-items-center p-y-24">
-                  <div>
-                    <h5 class="f-s-16 f-w-600 m-0">Another e-mail</h5>
-                    <mat-card-subtitle class="f-s-14">E-mail to send verification link</mat-card-subtitle>
-                  </div>
-
-                  <button mat-stroked-button color="primary" class="m-l-auto">
-                    Setup
-                  </button>
-                </div>
-                <mat-divider></mat-divider>
-                <div class="d-flex align-items-center p-y-24">
-                  <div>
-                    <h5 class="f-s-16 f-w-600 m-0">SMS Recovery</h5>
-                    <mat-card-subtitle class="f-s-14">Your phone number or something</mat-card-subtitle>
-                  </div>
-
-                  <button mat-stroked-button color="primary" class="m-l-auto">
-                    Setup
+                  <mat-chip class="m-l-auto m-r-8">{{ 'ACCOUNT.SECURITY.COMING_SOON' | translate }}</mat-chip>
+                  <button mat-stroked-button color="primary" disabled>
+                    {{ 'ACCOUNT.SECURITY.SETUP' | translate }}
                   </button>
                 </div>
                 <mat-divider></mat-divider>
@@ -500,40 +456,34 @@
                 <button mat-mini-fab class="bg-light-primary shadow-none rounded icon-48">
                   <i-tabler name="device-laptop" class="icon-22 d-flex text-primary"></i-tabler>
                 </button>
-                <mat-card-title class="m-t-16">Devices</mat-card-title>
-                <mat-card-subtitle class="f-s-14">Lorem ipsum dolor sit amet consectetur adipisicing elit
-                  Rem.</mat-card-subtitle>
-                <button mat-flat-button color="primary" class="m-t-24">
-                  Sign out from all devices
+                <mat-card-title class="m-t-16">{{ 'ACCOUNT.SECURITY.DEVICES_TITLE' | translate }}</mat-card-title>
+                <mat-card-subtitle class="f-s-14">{{ 'ACCOUNT.SECURITY.DEVICES_SUBTITLE' | translate }}</mat-card-subtitle>
+                <button mat-flat-button color="primary" class="m-t-24" [disabled]="sessions().length < 2" (click)="revokeOtherSessions()">
+                  {{ 'ACCOUNT.SECURITY.SIGN_OUT_ALL' | translate }}
                 </button>
 
-                <div class="d-flex align-items-center p-y-24 b-b-1">
-                  <span>
-                    <i-tabler name="device-mobile" class="icon-22"></i-tabler>
-                  </span>
-                  <div class="m-l-16">
-                    <mat-card-title class="m-b-0">iPhone 14</mat-card-title>
-                    <mat-card-subtitle class="f-s-14">London UK, Oct 23 at 1:15 AM
-                    </mat-card-subtitle>
+                @for (session of sessions(); track session.familyId) {
+                  <div class="d-flex align-items-center p-y-24 b-b-1">
+                    <span>
+                      <i-tabler [name]="session.userAgent && session.userAgent.toLowerCase().includes('mobile') ? 'device-mobile' : 'device-laptop'" class="icon-22"></i-tabler>
+                    </span>
+                    <div class="m-l-16">
+                      <mat-card-title class="m-b-0 f-s-14">
+                        {{ session.userAgent || 'Unknown device' }}
+                        @if (session.isCurrent) {
+                          <span class="f-s-12 text-primary"> · {{ 'ACCOUNT.SECURITY.CURRENT_DEVICE' | translate }}</span>
+                        }
+                      </mat-card-title>
+                      <mat-card-subtitle class="f-s-14">{{ session.ip }} · {{ session.lastUsedAt | date:'short' }}
+                      </mat-card-subtitle>
+                    </div>
+                    @if (!session.isCurrent) {
+                      <button mat-icon-button class="m-l-auto" (click)="revokeSession(session.familyId)">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    }
                   </div>
-                  <button mat-icon-button class="m-l-auto">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                </div>
-                <div class="d-flex align-items-center p-t-24">
-                  <span>
-                    <i-tabler name="device-laptop" class="icon-22"></i-tabler>
-                  </span>
-                  <div class="m-l-16">
-                    <mat-card-title class="m-b-0">Macbook Air</mat-card-title>
-                    <mat-card-subtitle class="f-s-14">Gujarat India, Oct 24 at 3:15 AM
-                    </mat-card-subtitle>
-                  </div>
-                  <button mat-icon-button class="m-l-auto">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                </div>
-                <button mat-stroked-button color="primary" class="m-t-16 w-100">Need Help?</button>
+                }
               </mat-card-content>
             </mat-card>
           </div>
@@ -541,8 +491,4 @@
       </mat-card-content>
     </mat-tab>
   </mat-tab-group>
-  <div class="text-right p-24 p-t-0">
-    <button mat-flat-button class="m-r-8">Save</button>
-    <button mat-flat-button class="bg-error text-white">Cancel</button>
-  </div>
 </mat-card>

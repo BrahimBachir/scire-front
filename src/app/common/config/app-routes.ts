@@ -29,6 +29,13 @@ export const Routes = {
       role: 'users/role',
       bulk_delete: 'users/bulk-delete',
       provision: 'users/provision',
+      avatar: 'users/avatar',
+      avatar_reset: 'users/avatar/reset',
+      email: 'users/email',
+      phone: 'users/phone',
+      address: 'users/address',
+      billing_address: 'users/billing-address',
+      notification_preferences: 'users/notification-preferences',
     },
     config: {
       pricing_planes: 'configs/pricing-planes',

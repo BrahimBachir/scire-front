@@ -2,9 +2,18 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Routes } from '../common/config';
-import { IQueryingDto, IUser } from '../common/models/interfaces';
+import { IAddress, IEmail, INotificationPreference, IPhone, IQueryingDto, IUser } from '../common/models/interfaces';
 import { environment } from 'src/environments/environment';
 import { buildParams } from '../common/utils';
+
+export interface IUpdateAddressPayload {
+  countryId: number;
+  townId: number;
+  street: string;
+  number: number;
+  postal_code: string;
+  other_info?: string;
+}
 
 export interface IUsersPage {
   rows: IUser[];
@@ -77,5 +86,57 @@ export class UsersService {
   public changeRole(roleCode: string) {
     let URL = `${environment.api_base_url}${this.routes.api.users.role}`;
     return this.http.patch(URL, { roleCode });
+  }
+
+  public uploadAvatar(file: File): Observable<{ image: string }> {
+    let URL = `${environment.api_base_url}${this.routes.api.users.avatar}`;
+    const formData = new FormData();
+    formData.append('image', file);
+    return this.http.post<{ image: string }>(URL, formData);
+  }
+
+  public resetAvatar(): Observable<{ image: string }> {
+    let URL = `${environment.api_base_url}${this.routes.api.users.avatar_reset}`;
+    return this.http.post<{ image: string }>(URL, {});
+  }
+
+  public updateEmail(value: string): Observable<IEmail> {
+    let URL = `${environment.api_base_url}${this.routes.api.users.email}`;
+    return this.http.put<IEmail>(URL, { value });
+  }
+
+  public updatePhone(number: string, has_whatsapp?: boolean): Observable<IPhone> {
+    let URL = `${environment.api_base_url}${this.routes.api.users.phone}`;
+    return this.http.put<IPhone>(URL, { number, has_whatsapp });
+  }
+
+  public updateAddress(dto: IUpdateAddressPayload): Observable<IAddress> {
+    let URL = `${environment.api_base_url}${this.routes.api.users.address}`;
+    return this.http.put<IAddress>(URL, dto);
+  }
+
+  public getBillingAddress(): Observable<IAddress | null> {
+    let URL = `${environment.api_base_url}${this.routes.api.users.billing_address}`;
+    return this.http.get<IAddress | null>(URL);
+  }
+
+  public upsertBillingAddress(dto: IUpdateAddressPayload): Observable<IAddress> {
+    let URL = `${environment.api_base_url}${this.routes.api.users.billing_address}`;
+    return this.http.put<IAddress>(URL, dto);
+  }
+
+  public deleteBillingAddress(): Observable<void> {
+    let URL = `${environment.api_base_url}${this.routes.api.users.billing_address}`;
+    return this.http.delete<void>(URL);
+  }
+
+  public getNotificationPreferences(): Observable<INotificationPreference> {
+    let URL = `${environment.api_base_url}${this.routes.api.users.notification_preferences}`;
+    return this.http.get<INotificationPreference>(URL);
+  }
+
+  public updateNotificationPreferences(dto: Partial<INotificationPreference>): Observable<INotificationPreference> {
+    let URL = `${environment.api_base_url}${this.routes.api.users.notification_preferences}`;
+    return this.http.patch<INotificationPreference>(URL, dto);
   }
 }

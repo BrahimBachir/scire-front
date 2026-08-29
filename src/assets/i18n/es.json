@@ -350,7 +350,8 @@
       "MODULE": "Eliminar módulo",
       "COURSE": "Eliminar curso",
       "COMMENT": "Eliminar comentario"
-    }
+    },
+    "CLOSE": "Cerrar"
   },
   "ERRORS": {
     "NOT_FOUND": {
@@ -378,7 +379,12 @@
       "SECTIONS": "Sección no encontrada.",
       "TOPICS": "Tema no encontrado.",
       "BULK_UPLOAD": "Trabajo de carga masiva no encontrado.",
-      "FEEDBACK": "No se ha encontrado el elemento sobre el que das feedback, o el tipo de feedback."
+      "FEEDBACK": "No se ha encontrado el elemento sobre el que das feedback, o el tipo de feedback.",
+      "AVATAR": "Imagen de perfil no encontrada.",
+      "ADDRESSES": "Dirección no encontrada.",
+      "ADDRESS_TYPES": "Tipo de dirección no encontrado.",
+      "PHONES": "Teléfono no encontrado.",
+      "PHONE_TYPES": "Tipo de teléfono no encontrado."
     },
     "VALIDATION": {
       "RULES": "Falta un parámetro necesario para esta ley.",
@@ -401,7 +407,9 @@
       "CATEGORIES": "Se requiere una categoría para crear esta sección.",
       "BULK_UPLOAD": "El archivo subido no es válido.",
       "EMAIL": "La dirección de correo es incorrecta o no existe.",
-      "FEEDBACK": "No se ha podido enviar este feedback: revisa el elemento y el tipo seleccionados."
+      "FEEDBACK": "No se ha podido enviar este feedback: revisa el elemento y el tipo seleccionados.",
+      "AVATAR": "Elige un archivo de imagen válido (máx. 2MB).",
+      "PASSWORD": "Tu nueva contraseña debe ser diferente de la actual."
     },
     "CONFLICT": {
       "RULES": "Ya existe una ley con este código.",
@@ -428,9 +436,94 @@
       "RULES": "No hemos podido obtener los datos oficiales de esta ley en este momento.",
       "ARTICLES": "No hemos podido obtener los datos oficiales de este artículo en este momento.",
       "UNKNOWN": "Algo ha salido mal. Inténtalo de nuevo."
+    },
+    "LOGIN": {
+      "PASSWORD_TOO_SHORT": "La contraseña debe tener al menos 8 caracteres.",
+      "PASSWORD_TOO_WEAK": "La contraseña debe contener letras y números."
     }
   },
   "SUCCESS": {
-    "DELETED": "¡Elemento eliminado con éxito!"
+    "DELETED": "¡Elemento eliminado con éxito!",
+    "AVATAR_UPDATED": "¡Imagen de perfil actualizada!",
+    "AVATAR_RESET": "¡Imagen de perfil restablecida!",
+    "PASSWORD_CHANGED": "¡Contraseña cambiada con éxito!",
+    "PROFILE_UPDATED": "¡Tus datos se han actualizado!"
+  },
+  "ACCOUNT": {
+    "TABS": {
+      "ACCOUNT": "Cuenta",
+      "NOTIFICATIONS": "Notificaciones",
+      "BILLING": "Facturación",
+      "SECURITY": "Seguridad"
+    },
+    "AVATAR": {
+      "TITLE": "Cambiar foto de perfil",
+      "SUBTITLE": "Cambia tu foto de perfil desde aquí",
+      "UPLOAD": "Subir",
+      "RESET": "Restablecer",
+      "HINT": "Se admiten JPG, GIF, PNG o WEBP. Tamaño máximo de 2MB."
+    },
+    "PASSWORD": {
+      "TITLE": "Cambiar contraseña",
+      "SUBTITLE": "Para cambiar tu contraseña, confirma primero la actual",
+      "CURRENT": "Contraseña actual",
+      "NEW": "Nueva contraseña",
+      "CONFIRM": "Confirmar nueva contraseña",
+      "SUBMIT": "Cambiar contraseña",
+      "MISMATCH": "Las contraseñas no coinciden."
+    },
+    "PERSONAL": {
+      "TITLE": "Datos personales",
+      "SUBTITLE": "Para cambiar tus datos personales, edítalos y guarda desde aquí",
+      "NAME": "Nombre",
+      "FIRST_SURNAME": "Primer apellido",
+      "SECOND_SURNAME": "Segundo apellido",
+      "EMAIL": "Correo electrónico",
+      "PHONE": "Teléfono",
+      "ADDRESS": "Dirección",
+      "COUNTRY": "País",
+      "TOWN": "Localidad",
+      "STREET": "Calle",
+      "NUMBER": "Número",
+      "POSTAL_CODE": "Código postal",
+      "OTHER_INFO": "Otros datos",
+      "SAVE": "Guardar"
+    },
+    "NOTIFICATIONS": {
+      "TITLE": "Preferencias de notificación",
+      "SUBTITLE": "Elige qué correos quieres recibir. No puedes desactivar los mensajes de servicio como pagos, seguridad o avisos legales.",
+      "EMAIL": "Correo de notificaciones",
+      "EMAIL_HINT": "Se usa solo para notificaciones - tu correo de acceso no cambia.",
+      "NEWSLETTER_TITLE": "Nuestro boletín",
+      "NEWSLETTER_SUBTITLE": "Te avisaremos siempre de los cambios importantes",
+      "COURSE_UPDATES_TITLE": "Actualizaciones de cursos",
+      "COURSE_UPDATES_SUBTITLE": "Novedades y cambios en los cursos en los que estás inscrito",
+      "LAW_UPDATES_TITLE": "Actualizaciones de normativa",
+      "LAW_UPDATES_SUBTITLE": "Cambios en la legislación que sigues",
+      "INSTRUCTOR_PUBLICATIONS_TITLE": "Publicaciones de instructores",
+      "INSTRUCTOR_PUBLICATIONS_SUBTITLE": "Nuevas publicaciones de los instructores que sigues",
+      "SAVE": "Guardar preferencias"
+    },
+    "BILLING": {
+      "TITLE": "Dirección de facturación",
+      "SUBTITLE": "Elige la dirección que debemos usar para facturar",
+      "USE_DEFAULT": "Usar mi dirección predeterminada",
+      "USE_DIFFERENT": "Usar una dirección de facturación distinta",
+      "SAVE": "Guardar dirección de facturación"
+    },
+    "SECURITY": {
+      "TWO_FACTOR_TITLE": "Autenticación en dos pasos",
+      "TWO_FACTOR_SUBTITLE": "Recibe un código por correo cada vez que accedas desde un nuevo dispositivo.",
+      "ENABLE": "Activar",
+      "DISABLE": "Desactivar",
+      "SMS_RECOVERY_TITLE": "Recuperación por SMS",
+      "SMS_RECOVERY_SUBTITLE": "Recupera el acceso a tu cuenta por mensaje de texto.",
+      "SETUP": "Configurar",
+      "COMING_SOON": "PRÓXIMAMENTE",
+      "DEVICES_TITLE": "Dispositivos",
+      "DEVICES_SUBTITLE": "Gestiona los dispositivos con sesión iniciada en tu cuenta.",
+      "SIGN_OUT_ALL": "Cerrar sesión en todos los dispositivos",
+      "CURRENT_DEVICE": "Este dispositivo"
+    }
   }
 }

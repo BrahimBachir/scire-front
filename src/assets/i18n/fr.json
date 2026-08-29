@@ -350,7 +350,8 @@
       "MODULE": "Supprimer le module",
       "COURSE": "Supprimer le cours",
       "COMMENT": "Supprimer le commentaire"
-    }
+    },
+    "CLOSE": "Fermer"
   },
   "ERRORS": {
     "NOT_FOUND": {
@@ -378,7 +379,12 @@
       "SECTIONS": "Section introuvable.",
       "TOPICS": "Sujet introuvable.",
       "BULK_UPLOAD": "Tâche d'import en masse introuvable.",
-      "FEEDBACK": "L'élément signalé, ou le type de feedback, est introuvable."
+      "FEEDBACK": "L'élément signalé, ou le type de feedback, est introuvable.",
+      "AVATAR": "Photo de profil introuvable.",
+      "ADDRESSES": "Adresse introuvable.",
+      "ADDRESS_TYPES": "Type d'adresse introuvable.",
+      "PHONES": "Téléphone introuvable.",
+      "PHONE_TYPES": "Type de téléphone introuvable."
     },
     "VALIDATION": {
       "RULES": "Un paramètre requis est manquant pour cette loi.",
@@ -401,7 +407,9 @@
       "CATEGORIES": "Une catégorie est requise pour créer cette section.",
       "BULK_UPLOAD": "Le fichier importé n'est pas valide.",
       "EMAIL": "L'adresse e-mail est incorrecte ou n'existe pas.",
-      "FEEDBACK": "Ce feedback n'a pas pu être envoyé : vérifiez l'élément et le type sélectionnés."
+      "FEEDBACK": "Ce feedback n'a pas pu être envoyé : vérifiez l'élément et le type sélectionnés.",
+      "AVATAR": "Choisissez un fichier image valide (max 2 Mo).",
+      "PASSWORD": "Votre nouveau mot de passe doit être différent de l'actuel."
     },
     "CONFLICT": {
       "RULES": "Une loi avec ce code existe déjà.",
@@ -428,9 +436,94 @@
       "RULES": "Impossible de récupérer les données officielles de cette loi pour le moment.",
       "ARTICLES": "Impossible de récupérer les données officielles de cet article pour le moment.",
       "UNKNOWN": "Une erreur est survenue. Veuillez réessayer."
+    },
+    "LOGIN": {
+      "PASSWORD_TOO_SHORT": "Le mot de passe doit comporter au moins 8 caractères.",
+      "PASSWORD_TOO_WEAK": "Le mot de passe doit contenir des lettres et des chiffres."
     }
   },
   "SUCCESS": {
-    "DELETED": "Élément supprimé avec succès !"
+    "DELETED": "Élément supprimé avec succès !",
+    "AVATAR_UPDATED": "Photo de profil mise à jour !",
+    "AVATAR_RESET": "Photo de profil réinitialisée !",
+    "PASSWORD_CHANGED": "Mot de passe changé avec succès !",
+    "PROFILE_UPDATED": "Vos informations ont été mises à jour !"
+  },
+  "ACCOUNT": {
+    "TABS": {
+      "ACCOUNT": "Compte",
+      "NOTIFICATIONS": "Notifications",
+      "BILLING": "Facturation",
+      "SECURITY": "Sécurité"
+    },
+    "AVATAR": {
+      "TITLE": "Changer la photo de profil",
+      "SUBTITLE": "Changez votre photo de profil ici",
+      "UPLOAD": "Téléverser",
+      "RESET": "Réinitialiser",
+      "HINT": "Formats acceptés : JPG, GIF, PNG ou WEBP. Taille maximale de 2 Mo."
+    },
+    "PASSWORD": {
+      "TITLE": "Changer le mot de passe",
+      "SUBTITLE": "Pour changer votre mot de passe, confirmez d'abord l'actuel",
+      "CURRENT": "Mot de passe actuel",
+      "NEW": "Nouveau mot de passe",
+      "CONFIRM": "Confirmer le nouveau mot de passe",
+      "SUBMIT": "Changer le mot de passe",
+      "MISMATCH": "Les mots de passe ne correspondent pas."
+    },
+    "PERSONAL": {
+      "TITLE": "Informations personnelles",
+      "SUBTITLE": "Pour modifier vos informations personnelles, éditez-les et enregistrez ici",
+      "NAME": "Prénom",
+      "FIRST_SURNAME": "Premier nom de famille",
+      "SECOND_SURNAME": "Second nom de famille",
+      "EMAIL": "E-mail",
+      "PHONE": "Téléphone",
+      "ADDRESS": "Adresse",
+      "COUNTRY": "Pays",
+      "TOWN": "Ville",
+      "STREET": "Rue",
+      "NUMBER": "Numéro",
+      "POSTAL_CODE": "Code postal",
+      "OTHER_INFO": "Autres informations",
+      "SAVE": "Enregistrer"
+    },
+    "NOTIFICATIONS": {
+      "TITLE": "Préférences de notification",
+      "SUBTITLE": "Choisissez les e-mails que vous souhaitez recevoir. Vous ne pouvez pas désactiver les messages de service tels que les paiements, la sécurité ou les avis légaux.",
+      "EMAIL": "E-mail de notification",
+      "EMAIL_HINT": "Utilisé uniquement pour les notifications - votre e-mail de connexion reste inchangé.",
+      "NEWSLETTER_TITLE": "Notre newsletter",
+      "NEWSLETTER_SUBTITLE": "Nous vous informerons toujours des changements importants",
+      "COURSE_UPDATES_TITLE": "Mises à jour des cours",
+      "COURSE_UPDATES_SUBTITLE": "Nouveautés et changements sur les cours auxquels vous êtes inscrit",
+      "LAW_UPDATES_TITLE": "Mises à jour législatives",
+      "LAW_UPDATES_SUBTITLE": "Changements dans la législation que vous suivez",
+      "INSTRUCTOR_PUBLICATIONS_TITLE": "Publications des instructeurs",
+      "INSTRUCTOR_PUBLICATIONS_SUBTITLE": "Nouvelles publications des instructeurs que vous suivez",
+      "SAVE": "Enregistrer les préférences"
+    },
+    "BILLING": {
+      "TITLE": "Adresse de facturation",
+      "SUBTITLE": "Choisissez l'adresse à utiliser pour la facturation",
+      "USE_DEFAULT": "Utiliser mon adresse par défaut",
+      "USE_DIFFERENT": "Utiliser une adresse de facturation différente",
+      "SAVE": "Enregistrer l'adresse de facturation"
+    },
+    "SECURITY": {
+      "TWO_FACTOR_TITLE": "Authentification à deux facteurs",
+      "TWO_FACTOR_SUBTITLE": "Recevez un code par e-mail à chaque connexion depuis un nouvel appareil.",
+      "ENABLE": "Activer",
+      "DISABLE": "Désactiver",
+      "SMS_RECOVERY_TITLE": "Récupération par SMS",
+      "SMS_RECOVERY_SUBTITLE": "Récupérez l'accès à votre compte par message texte.",
+      "SETUP": "Configurer",
+      "COMING_SOON": "BIENTÔT",
+      "DEVICES_TITLE": "Appareils",
+      "DEVICES_SUBTITLE": "Gérez les appareils connectés à votre compte.",
+      "SIGN_OUT_ALL": "Se déconnecter de tous les appareils",
+      "CURRENT_DEVICE": "Cet appareil"
+    }
   }
 }

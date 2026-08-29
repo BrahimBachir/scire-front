@@ -350,7 +350,8 @@
       "MODULE": "Eliminar mòdul",
       "COURSE": "Eliminar curs",
       "COMMENT": "Eliminar comentari"
-    }
+    },
+    "CLOSE": "Tancar"
   },
   "ERRORS": {
     "NOT_FOUND": {
@@ -378,7 +379,12 @@
       "SECTIONS": "Secció no trobada.",
       "TOPICS": "Tema no trobat.",
       "BULK_UPLOAD": "Feina de càrrega massiva no trobada.",
-      "FEEDBACK": "No s'ha trobat l'element sobre el qual dones feedback, o el tipus de feedback."
+      "FEEDBACK": "No s'ha trobat l'element sobre el qual dones feedback, o el tipus de feedback.",
+      "AVATAR": "Imatge de perfil no trobada.",
+      "ADDRESSES": "Adreça no trobada.",
+      "ADDRESS_TYPES": "Tipus d'adreça no trobat.",
+      "PHONES": "Telèfon no trobat.",
+      "PHONE_TYPES": "Tipus de telèfon no trobat."
     },
     "VALIDATION": {
       "RULES": "Falta un paràmetre necessari per a aquesta llei.",
@@ -401,7 +407,9 @@
       "CATEGORIES": "Cal una categoria per crear aquesta secció.",
       "BULK_UPLOAD": "El fitxer pujat no és vàlid.",
       "EMAIL": "L'adreça de correu és incorrecta o no existeix.",
-      "FEEDBACK": "Aquest feedback no s'ha pogut enviar: revisa l'element i el tipus seleccionats."
+      "FEEDBACK": "Aquest feedback no s'ha pogut enviar: revisa l'element i el tipus seleccionats.",
+      "AVATAR": "Tria un fitxer d'imatge vàlid (màx. 2MB).",
+      "PASSWORD": "La teva nova contrasenya ha de ser diferent de l'actual."
     },
     "CONFLICT": {
       "RULES": "Ja existeix una llei amb aquest codi.",
@@ -428,9 +436,94 @@
       "RULES": "No hem pogut obtenir les dades oficials d'aquesta llei en aquest moment.",
       "ARTICLES": "No hem pogut obtenir les dades oficials d'aquest article en aquest moment.",
       "UNKNOWN": "Alguna cosa ha fallat. Torna-ho a provar."
+    },
+    "LOGIN": {
+      "PASSWORD_TOO_SHORT": "La contrasenya ha de tenir almenys 8 caràcters.",
+      "PASSWORD_TOO_WEAK": "La contrasenya ha de contenir lletres i números."
     }
   },
   "SUCCESS": {
-    "DELETED": "Element eliminat amb èxit!"
+    "DELETED": "Element eliminat amb èxit!",
+    "AVATAR_UPDATED": "Imatge de perfil actualitzada!",
+    "AVATAR_RESET": "Imatge de perfil restablerta!",
+    "PASSWORD_CHANGED": "Contrasenya canviada amb èxit!",
+    "PROFILE_UPDATED": "Les teves dades s'han actualitzat!"
+  },
+  "ACCOUNT": {
+    "TABS": {
+      "ACCOUNT": "Compte",
+      "NOTIFICATIONS": "Notificacions",
+      "BILLING": "Facturació",
+      "SECURITY": "Seguretat"
+    },
+    "AVATAR": {
+      "TITLE": "Canviar foto de perfil",
+      "SUBTITLE": "Canvia la teva foto de perfil des d'aquí",
+      "UPLOAD": "Pujar",
+      "RESET": "Restablir",
+      "HINT": "S'admeten JPG, GIF, PNG o WEBP. Mida màxima de 2MB."
+    },
+    "PASSWORD": {
+      "TITLE": "Canviar contrasenya",
+      "SUBTITLE": "Per canviar la teva contrasenya, confirma primer l'actual",
+      "CURRENT": "Contrasenya actual",
+      "NEW": "Nova contrasenya",
+      "CONFIRM": "Confirma la nova contrasenya",
+      "SUBMIT": "Canviar contrasenya",
+      "MISMATCH": "Les contrasenyes no coincideixen."
+    },
+    "PERSONAL": {
+      "TITLE": "Dades personals",
+      "SUBTITLE": "Per canviar les teves dades personals, edita-les i desa-les des d'aquí",
+      "NAME": "Nom",
+      "FIRST_SURNAME": "Primer cognom",
+      "SECOND_SURNAME": "Segon cognom",
+      "EMAIL": "Correu electrònic",
+      "PHONE": "Telèfon",
+      "ADDRESS": "Adreça",
+      "COUNTRY": "País",
+      "TOWN": "Localitat",
+      "STREET": "Carrer",
+      "NUMBER": "Número",
+      "POSTAL_CODE": "Codi postal",
+      "OTHER_INFO": "Altres dades",
+      "SAVE": "Desar"
+    },
+    "NOTIFICATIONS": {
+      "TITLE": "Preferències de notificació",
+      "SUBTITLE": "Tria quins correus vols rebre. No pots desactivar els missatges de servei com pagaments, seguretat o avisos legals.",
+      "EMAIL": "Correu de notificacions",
+      "EMAIL_HINT": "S'utilitza només per a notificacions - el teu correu d'accés no canvia.",
+      "NEWSLETTER_TITLE": "El nostre butlletí",
+      "NEWSLETTER_SUBTITLE": "T'avisarem sempre dels canvis importants",
+      "COURSE_UPDATES_TITLE": "Actualitzacions de cursos",
+      "COURSE_UPDATES_SUBTITLE": "Novetats i canvis en els cursos on estàs inscrit",
+      "LAW_UPDATES_TITLE": "Actualitzacions de normativa",
+      "LAW_UPDATES_SUBTITLE": "Canvis en la legislació que segueixes",
+      "INSTRUCTOR_PUBLICATIONS_TITLE": "Publicacions d'instructors",
+      "INSTRUCTOR_PUBLICATIONS_SUBTITLE": "Noves publicacions dels instructors que segueixes",
+      "SAVE": "Desar preferències"
+    },
+    "BILLING": {
+      "TITLE": "Adreça de facturació",
+      "SUBTITLE": "Tria l'adreça que hem de fer servir per facturar",
+      "USE_DEFAULT": "Utilitzar la meva adreça predeterminada",
+      "USE_DIFFERENT": "Utilitzar una adreça de facturació diferent",
+      "SAVE": "Desar adreça de facturació"
+    },
+    "SECURITY": {
+      "TWO_FACTOR_TITLE": "Autenticació en dos passos",
+      "TWO_FACTOR_SUBTITLE": "Rep un codi per correu cada vegada que accedeixis des d'un nou dispositiu.",
+      "ENABLE": "Activar",
+      "DISABLE": "Desactivar",
+      "SMS_RECOVERY_TITLE": "Recuperació per SMS",
+      "SMS_RECOVERY_SUBTITLE": "Recupera l'accés al teu compte per missatge de text.",
+      "SETUP": "Configurar",
+      "COMING_SOON": "PROPERAMENT",
+      "DEVICES_TITLE": "Dispositius",
+      "DEVICES_SUBTITLE": "Gestiona els dispositius amb sessió iniciada al teu compte.",
+      "SIGN_OUT_ALL": "Tanca la sessió a tots els dispositius",
+      "CURRENT_DEVICE": "Aquest dispositiu"
+    }
   }
 }

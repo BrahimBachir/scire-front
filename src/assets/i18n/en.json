@@ -350,7 +350,8 @@
       "MODULE": "Delete module",
       "COURSE": "Delete course",
       "COMMENT": "Delete comment"
-    }
+    },
+    "CLOSE": "Close"
   },
   "ERRORS": {
     "NOT_FOUND": {
@@ -378,7 +379,12 @@
       "SECTIONS": "Section not found.",
       "TOPICS": "Topic not found.",
       "BULK_UPLOAD": "Bulk upload job not found.",
-      "FEEDBACK": "The item you're reporting feedback on, or the feedback type, could not be found."
+      "FEEDBACK": "The item you're reporting feedback on, or the feedback type, could not be found.",
+      "AVATAR": "Profile picture not found.",
+      "ADDRESSES": "Address not found.",
+      "ADDRESS_TYPES": "Address type not found.",
+      "PHONES": "Phone not found.",
+      "PHONE_TYPES": "Phone type not found."
     },
     "VALIDATION": {
       "RULES": "A required parameter is missing for this law.",
@@ -401,7 +407,9 @@
       "CATEGORIES": "A category is required to create this section.",
       "BULK_UPLOAD": "The uploaded file is invalid.",
       "EMAIL": "The email address is invalid or doesn't exist.",
-      "FEEDBACK": "This feedback couldn't be submitted - check the selected item and feedback type."
+      "FEEDBACK": "This feedback couldn't be submitted - check the selected item and feedback type.",
+      "AVATAR": "Please choose a valid image file (max 2MB).",
+      "PASSWORD": "Your new password must be different from your current one."
     },
     "CONFLICT": {
       "RULES": "A law with this code already exists.",
@@ -428,9 +436,94 @@
       "RULES": "We couldn't retrieve this law's official data right now.",
       "ARTICLES": "We couldn't retrieve this article's official data right now.",
       "UNKNOWN": "Something went wrong. Please try again."
+    },
+    "LOGIN": {
+      "PASSWORD_TOO_SHORT": "Password must be at least 8 characters.",
+      "PASSWORD_TOO_WEAK": "Password must contain letters and numbers."
     }
   },
   "SUCCESS": {
-    "DELETED": "Item successfully deleted!"
+    "DELETED": "Item successfully deleted!",
+    "AVATAR_UPDATED": "Profile picture updated!",
+    "AVATAR_RESET": "Profile picture reset!",
+    "PASSWORD_CHANGED": "Password changed successfully!",
+    "PROFILE_UPDATED": "Your details have been updated!"
+  },
+  "ACCOUNT": {
+    "TABS": {
+      "ACCOUNT": "Account",
+      "NOTIFICATIONS": "Notifications",
+      "BILLING": "Billing",
+      "SECURITY": "Security"
+    },
+    "AVATAR": {
+      "TITLE": "Change profile picture",
+      "SUBTITLE": "Change your profile picture from here",
+      "UPLOAD": "Upload",
+      "RESET": "Reset",
+      "HINT": "Allowed JPG, GIF, PNG or WEBP. Max size of 2MB."
+    },
+    "PASSWORD": {
+      "TITLE": "Change password",
+      "SUBTITLE": "To change your password, confirm your current one here",
+      "CURRENT": "Current password",
+      "NEW": "New password",
+      "CONFIRM": "Confirm new password",
+      "SUBMIT": "Change password",
+      "MISMATCH": "Passwords don't match."
+    },
+    "PERSONAL": {
+      "TITLE": "Personal details",
+      "SUBTITLE": "To change your personal details, edit and save from here",
+      "NAME": "Name",
+      "FIRST_SURNAME": "First surname",
+      "SECOND_SURNAME": "Second surname",
+      "EMAIL": "Email",
+      "PHONE": "Phone",
+      "ADDRESS": "Address",
+      "COUNTRY": "Country",
+      "TOWN": "Town",
+      "STREET": "Street",
+      "NUMBER": "Number",
+      "POSTAL_CODE": "Postal code",
+      "OTHER_INFO": "Other details",
+      "SAVE": "Save"
+    },
+    "NOTIFICATIONS": {
+      "TITLE": "Notification preferences",
+      "SUBTITLE": "Choose which emails you'd like to receive. You can't opt out of service messages such as payment, security or legal notifications.",
+      "EMAIL": "Notification email",
+      "EMAIL_HINT": "Used only for notifications - your login email stays the same.",
+      "NEWSLETTER_TITLE": "Our newsletter",
+      "NEWSLETTER_SUBTITLE": "We'll always let you know about important changes",
+      "COURSE_UPDATES_TITLE": "Course updates",
+      "COURSE_UPDATES_SUBTITLE": "New content and changes on courses you're enrolled in",
+      "LAW_UPDATES_TITLE": "Law updates",
+      "LAW_UPDATES_SUBTITLE": "Changes to legislation you're tracking",
+      "INSTRUCTOR_PUBLICATIONS_TITLE": "Instructor publications",
+      "INSTRUCTOR_PUBLICATIONS_SUBTITLE": "New publications from instructors you follow",
+      "SAVE": "Save preferences"
+    },
+    "BILLING": {
+      "TITLE": "Billing address",
+      "SUBTITLE": "Choose the address we should use for billing",
+      "USE_DEFAULT": "Use my default address",
+      "USE_DIFFERENT": "Use a different billing address",
+      "SAVE": "Save billing address"
+    },
+    "SECURITY": {
+      "TWO_FACTOR_TITLE": "Two-factor authentication",
+      "TWO_FACTOR_SUBTITLE": "Get a code by email whenever you sign in from a new device.",
+      "ENABLE": "Enable",
+      "DISABLE": "Disable",
+      "SMS_RECOVERY_TITLE": "SMS Recovery",
+      "SMS_RECOVERY_SUBTITLE": "Recover access to your account by text message.",
+      "SETUP": "Setup",
+      "COMING_SOON": "SOON",
+      "DEVICES_TITLE": "Devices",
+      "DEVICES_SUBTITLE": "Manage the devices signed in to your account.",
+      "SIGN_OUT_ALL": "Sign out from all devices",
+      "CURRENT_DEVICE": "This device"
+    }
   }
 }
