@@ -10,6 +10,7 @@ export const FRONT_ROUTE_TOKEN_AUTH_LOGIN = 'login';
 export const FRONT_ROUTE_TOKEN_AUTH_ACOUNT = 'account';
 export const FRONT_ROUTE_TOKEN_AUTH_SIGNUP = 'sign-up';
 export const FRONT_ROUTE_TOKEN_AUTH_PASS_CHANGE = 'pass-change';
+export const FRONT_ROUTE_TOKEN_AUTH_TWO_FACTOR = 'two-factor';
 export const FRONT_ROUTE_TOKEN_AUTH_PASS_RESET = 'pass-reset';
 
 /* GENERAL ROUTES */

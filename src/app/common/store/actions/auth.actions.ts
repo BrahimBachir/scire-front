@@ -14,6 +14,7 @@ export const LOGOUT_FINISHED = '[USER - Logout] Logout successfully!';
 export const LOGIN_ERROR = '[USER - Login] An error has occured!';
 export const CREATE_USER_LOGIN = '[USER - Login] Create user-login';
 export const MANDATORY_PASSWORD_CHANGE_REQUIRED = '[USER - Login] Mandatory password change required';
+export const TWO_FACTOR_REQUIRED = '[USER - Login] Two-factor verification required';
 
 export const verifiyingEmail = createAction(VERIFIIYING_EMAIL);
 export const emailVerificantionCodeSent = createAction(EMAIL_VERIFICATION_CODE_SENT);
@@ -48,6 +49,7 @@ export const logedUserLoaded = createAction(
 );
 
 export const mandatoryPasswordChangeRequired = createAction(MANDATORY_PASSWORD_CHANGE_REQUIRED);
+export const twoFactorRequired = createAction(TWO_FACTOR_REQUIRED);
 
 export const logoutAction = createAction(START_LOGOUT);
 export const endLogoutAction = createAction(LOGOUT_FINISHED);

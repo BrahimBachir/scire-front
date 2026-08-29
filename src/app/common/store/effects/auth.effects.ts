@@ -11,10 +11,11 @@ import {
   createUserLogin,
   loadLogedUser,
   mandatoryPasswordChangeRequired,
+  twoFactorRequired,
 } from '../actions';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services';
-import { FRONT_ROUTE_TOKEN_AUTH_URL, FRONT_ROUTE_TOKEN_AUTH_PASS_CHANGE } from '../../config';
+import { FRONT_ROUTE_TOKEN_AUTH_URL, FRONT_ROUTE_TOKEN_AUTH_PASS_CHANGE, FRONT_ROUTE_TOKEN_AUTH_TWO_FACTOR } from '../../config';
 import { IUser } from '../../models/interfaces';
 import { getDecodedAccessToken } from '../../utils';
 import { of } from 'rxjs';
@@ -36,6 +37,11 @@ export class AuthEffects {
               this.authService.setChangeToken(res.changeToken);
               this.router.navigate([FRONT_ROUTE_TOKEN_AUTH_URL, FRONT_ROUTE_TOKEN_AUTH_PASS_CHANGE]);
               return mandatoryPasswordChangeRequired();
+            }
+            if (res?.twoFactorRequired) {
+              this.authService.setTwoFactorToken(res.twoFactorToken);
+              this.router.navigate([FRONT_ROUTE_TOKEN_AUTH_URL, FRONT_ROUTE_TOKEN_AUTH_TWO_FACTOR]);
+              return twoFactorRequired();
             }
             const data_parsed = Object.create(res);
             let detokenized = getDecodedAccessToken(data_parsed.token);

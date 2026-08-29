@@ -9,6 +9,14 @@ export const Routes = {
     mandatory_password: 'logins/mandatory-password',
     forgot_password: 'logins/forgot-password',
     reset_password: 'logins/reset-password',
+    change_password: 'logins/change-password',
+    me: 'logins/me',
+    two_factor_toggle: 'logins/two-factor',
+    two_factor_verify: 'logins/two-factor/verify',
+    two_factor_resend: 'logins/two-factor/resend',
+    sessions: 'logins/sessions',
+    session: 'logins/sessions/:familyId',
+    sessions_revoke_others: 'logins/sessions/revoke-others',
   },
   api: {
     users: {
