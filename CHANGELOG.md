@@ -1,3 +1,14 @@
+# [2.13.0](https://github.com/BrahimBachir/scire-front/compare/v2.12.0...v2.13.0) (2026-08-29)
+
+
+### Features
+
+* **account:** rewrite account settings with avatar, security, billing, and notification preferences ([1e26efd](https://github.com/BrahimBachir/scire-front/commit/1e26efd7c5cb4cc2621864fb2b1829b68d5aafb1))
+* **auth:** add two-factor authentication and session management ([d3d58f0](https://github.com/BrahimBachir/scire-front/commit/d3d58f05ffa67f592f6e1c5b1509e7d01365d7b9))
+* **calendar:** show past events with completion status ([45ce9bf](https://github.com/BrahimBachir/scire-front/commit/45ce9bf5f880116ff94cda40553de3fa4f6375cd))
+* **geo:** add country and town address filters ([30f864d](https://github.com/BrahimBachir/scire-front/commit/30f864d0d14f4a127383e30c0e873cbf4abd0eba))
+* **moderation:** add content moderation queue for courses and community features ([c54be1b](https://github.com/BrahimBachir/scire-front/commit/c54be1bf7802cf5d4226feaf8e3ffb2dcf929e13))
+
 # [2.12.0](https://github.com/BrahimBachir/scire-front/compare/v2.11.0...v2.12.0) (2026-08-25)
 
 
