@@ -47,6 +47,12 @@ export const Routes = {
     genders: {
       all: 'genders',
     },
+    countries: {
+      all: 'countries',
+    },
+    towns: {
+      all: 'towns',
+    },
     roles: {
       all: 'roles',
     },

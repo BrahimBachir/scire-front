@@ -309,6 +309,8 @@
       "CALLING_ORG": "Organisme convocateur",
       "DIFFICULTY": "Difficulté",
       "TOPIC": "Sujet",
+      "COUNTRY": "Pays",
+      "TOWN": "Ville",
       "SEARCH_LABEL": "Rechercher",
       "SEARCH_PLACEHOLDER": "Rechercher un élément..."
     }

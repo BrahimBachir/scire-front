@@ -1,6 +1,7 @@
 export * from './auth.service';
 export * from './users.service';
 export * from './gender.service';
+export * from './geo.service';
 export * from './learning.service';
 export * from './test.service';
 export * from './basic-metrics.service';

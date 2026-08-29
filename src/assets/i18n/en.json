@@ -309,6 +309,8 @@
       "CALLING_ORG": "Calling body",
       "DIFFICULTY": "Difficulty",
       "TOPIC": "Topic",
+      "COUNTRY": "Country",
+      "TOWN": "Town",
       "SEARCH_LABEL": "Search",
       "SEARCH_PLACEHOLDER": "Search item..."
     }

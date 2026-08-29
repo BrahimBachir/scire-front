@@ -309,6 +309,8 @@
       "CALLING_ORG": "Convocant",
       "DIFFICULTY": "Dificultat",
       "TOPIC": "Tema",
+      "COUNTRY": "País",
+      "TOWN": "Localitat",
       "SEARCH_LABEL": "Cercar",
       "SEARCH_PLACEHOLDER": "Cercar element..."
     }
