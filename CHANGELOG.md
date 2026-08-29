@@ -1,3 +1,10 @@
+## [2.13.1](https://github.com/BrahimBachir/scire-front/compare/v2.13.0...v2.13.1) (2026-08-29)
+
+
+### Bug Fixes
+
+* **learning:** scope topic-dialog category/section pickers to the course ([ddc35e4](https://github.com/BrahimBachir/scire-front/commit/ddc35e4a9c8cd18305b0f09ae251b586bd3e9702))
+
 # [2.13.0](https://github.com/BrahimBachir/scire-front/compare/v2.12.0...v2.13.0) (2026-08-29)
 
 
