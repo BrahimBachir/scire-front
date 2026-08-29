@@ -17,13 +17,23 @@
   </div>
 
   @if (data?.event?.meta?.readonly) {
+    <p class="m-b-8">
+      <span class="badge sp-badge sp-{{ data.event.meta.status }}">
+        {{ statusLabel(data.event.meta.status) }}
+      </span>
+    </p>
     @if (data.event.meta.kind === 'articles') {
       <p class="m-b-8">
         Artículos a estudiar el {{ data.event.start | date : 'dd/MM/yyyy' }}:
       </p>
       <ul class="m-b-16">
         @for (article of data.event.meta.articles; track article.id) {
-          <li>{{ article.title }}</li>
+          <li>
+            {{ article.title }}
+            @if (article.status === 'completed') {
+              <i-tabler name="check" class="icon-16 text-success"></i-tabler>
+            }
+          </li>
         }
       </ul>
       <button mat-flat-button color="primary" (click)="goToTopic()">
@@ -34,9 +44,15 @@
         Test del tema "{{ data.event.meta.topicName }}" programado para el
         {{ data.event.start | date : 'dd/MM/yyyy' }}.
       </p>
-      <button mat-flat-button color="primary" (click)="createTopicTest()">
-        Crear test
-      </button>
+      @if (data.event.meta.status === 'completed') {
+        <button mat-flat-button color="primary" (click)="viewTestResult()">
+          Ver resultado
+        </button>
+      } @else {
+        <button mat-flat-button color="primary" (click)="createTopicTest()">
+          Crear test
+        </button>
+      }
     }
   } @else {
   <div class="d-flex align-items-center gap-12">

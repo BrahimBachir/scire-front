@@ -120,6 +120,7 @@ export const Routes = {
         callingOrgs: 'learning/courses/calling-orgs',
         categories: 'learning/courses/categories',
         topics: 'learning/courses/:id/topics',
+        study_plan: 'learning/courses/:id/study-plan',
         join: 'learning/courses/:id/join',
         is_join: 'learning/courses/:id/is-joined',
         un_join: 'learning/courses/:id/un-join',

@@ -28,8 +28,7 @@ import {
   subMonths,
   addMonths,
 } from 'date-fns';
-import { forkJoin, of, Subject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import {
   CalendarDateFormatter,
   CalendarEvent,
@@ -46,14 +45,20 @@ import {
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { IconModule } from 'src/app/icon/icon.module';
-import { CourseService, StudyScheduleService, TopicService } from 'src/app/services';
+import { StudyPlanService } from 'src/app/services';
 import {
   ICourseStudySchedule,
-  IScheduleTopicInput,
+  IScheduleEventStatus,
   ITest,
-  ITopic,
 } from 'src/app/common/models/interfaces';
 import { TestDialogComponent } from '../student/test/test-dialog/test-dialog.component';
+
+const STATUS_LABELS: Record<IScheduleEventStatus, string> = {
+  completed: 'Completado',
+  missed: 'No completado',
+  today: 'Hoy',
+  pending: 'Pendiente',
+};
 
 const colors: any = {
   red: {
@@ -107,12 +112,24 @@ export class CalendarDialogComponent {
     private dialog: MatDialog
   ) {}
 
+  statusLabel(status: IScheduleEventStatus | undefined): string {
+    return status ? STATUS_LABELS[status] : '';
+  }
+
   goToTopic(): void {
     const courseId = this.data?.event?.meta?.courseId;
     const topicId = this.data?.event?.meta?.topicId;
     if (!courseId || !topicId) return;
     this.dialogRef.close();
     this.router.navigate([`student/courses/${courseId}/topic/${topicId}/content`]);
+  }
+
+  viewTestResult(): void {
+    const courseId = this.data?.event?.meta?.courseId;
+    const testId = this.data?.event?.meta?.testId;
+    if (!courseId || !testId) return;
+    this.dialogRef.close();
+    this.router.navigate([`student/courses/${courseId}/tests/${testId}/results`]);
   }
 
   createTopicTest(): void {
@@ -215,9 +232,7 @@ export class AppFullcalendarComponent implements OnInit {
     public dialog: MatDialog,
     @Inject(DOCUMENT) doc: any,
     private route: ActivatedRoute,
-    private courseService: CourseService,
-    private topicService: TopicService,
-    private studyScheduleService: StudyScheduleService
+    private studyPlanService: StudyPlanService
   ) {}
 
   ngOnInit(): void {
@@ -229,60 +244,23 @@ export class AppFullcalendarComponent implements OnInit {
   private loadSchedule(): void {
     this.loading.set(true);
 
-    this.courseService
-      .getTopics(this.courseId)
-      .pipe(
-        switchMap((incoming) => {
-          const topicList = (incoming?.rows as ITopic[]) || [];
-          if (topicList.length === 0) {
-            return of([] as IScheduleTopicInput[]);
-          }
-          return forkJoin(
-            topicList.map((topic) =>
-              this.topicService
-                .getArticles(topic.id, { courseId: this.courseId })
-                .pipe(
-                  map((articles) => ({
-                    id: topic.id,
-                    name: topic.name,
-                    articles: (articles || [])
-                      .filter((article) => article.progress?.percentage !== 100)
-                      .map((article) => ({
-                        id: article.id,
-                        title: article.description,
-                      })),
-                  }))
-                )
-            )
-          );
-        }),
-        switchMap((topicsWithArticles) =>
-          this.courseService
-            .getOne(this.courseId)
-            .pipe(map((course) => ({ course, topicsWithArticles })))
-        )
-      )
-      .subscribe({
-        next: ({ course, topicsWithArticles }) => {
-          this.loading.set(false);
+    this.studyPlanService.getSchedule(this.courseId).subscribe({
+      next: (schedule) => {
+        this.loading.set(false);
 
-          if (!course.examDate) {
-            this.noExamDate.set(true);
-            this.events.set([]);
-            return;
-          }
+        if (schedule.noExamDate) {
+          this.noExamDate.set(true);
+          this.events.set([]);
+          return;
+        }
 
-          this.noExamDate.set(false);
-          const schedule = this.studyScheduleService.buildSchedule(
-            topicsWithArticles,
-            new Date(course.examDate)
-          );
-          this.applySchedule(schedule);
-        },
-        error: () => {
-          this.loading.set(false);
-        },
-      });
+        this.noExamDate.set(false);
+        this.applySchedule(schedule);
+      },
+      error: () => {
+        this.loading.set(false);
+      },
+    });
   }
 
   private applySchedule(schedule: ICourseStudySchedule): void {
@@ -296,7 +274,12 @@ export class AppFullcalendarComponent implements OnInit {
   private mapScheduleToCalendarEvents(schedule: ICourseStudySchedule): any[] {
     const articleDayBuckets = new Map<
       string,
-      { topicId: number; topicName: string; date: Date; articles: { id: number; title: string }[] }
+      {
+        topicId: number;
+        topicName: string;
+        date: Date;
+        articles: { id: number; title: string; status: IScheduleEventStatus }[];
+      }
     >();
     const result: any[] = [];
 
@@ -307,6 +290,7 @@ export class AppFullcalendarComponent implements OnInit {
           end: endOfDay(evt.date),
           title: `Examen: ${evt.topicName}`,
           color: TEST_COLOR,
+          cssClass: `sp-event sp-${evt.status}`,
           allDay: true,
           draggable: false,
           resizable: { beforeStart: false, afterEnd: false },
@@ -316,6 +300,8 @@ export class AppFullcalendarComponent implements OnInit {
             topicId: evt.topicId,
             topicName: evt.topicName,
             courseId: this.courseId,
+            status: evt.status,
+            testId: evt.testId,
           },
         });
         continue;
@@ -332,16 +318,18 @@ export class AppFullcalendarComponent implements OnInit {
         };
         articleDayBuckets.set(key, bucket);
       }
-      bucket.articles.push({ id: evt.articleId, title: evt.articleTitle });
+      bucket.articles.push({ id: evt.articleId, title: evt.articleTitle, status: evt.status });
     }
 
     for (const bucket of articleDayBuckets.values()) {
       const articleCount = bucket.articles.length;
+      const bucketStatus = this.bucketStatus(bucket.articles.map((a) => a.status));
       result.push({
         start: startOfDay(bucket.date),
         end: endOfDay(bucket.date),
         title: `${bucket.topicName} · ${articleCount} artículo${articleCount > 1 ? 's' : ''}`,
         color: TOPIC_COLORS[bucket.topicId % TOPIC_COLORS.length],
+        cssClass: `sp-event sp-${bucketStatus}`,
         allDay: true,
         draggable: false,
         resizable: { beforeStart: false, afterEnd: false },
@@ -351,12 +339,23 @@ export class AppFullcalendarComponent implements OnInit {
           topicId: bucket.topicId,
           topicName: bucket.topicName,
           courseId: this.courseId,
+          status: bucketStatus,
           articles: bucket.articles,
         },
       });
     }
 
     return result;
+  }
+
+  // A day can bucket several articles from the same topic with different
+  // statuses (e.g. some completed, some not yet due) — the bucket only
+  // shows as fully "completed" once every article in it is.
+  private bucketStatus(statuses: IScheduleEventStatus[]): IScheduleEventStatus {
+    if (statuses.every((s) => s === 'completed')) return 'completed';
+    if (statuses.some((s) => s === 'missed')) return 'missed';
+    if (statuses.some((s) => s === 'today')) return 'today';
+    return 'pending';
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

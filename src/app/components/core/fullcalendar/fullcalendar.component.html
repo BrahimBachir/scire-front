@@ -29,6 +29,12 @@
           {{ shortfallDays() }} día{{ shortfallDays() > 1 ? 's' : '' }}.
         </p>
       }
+      <div class="sp-legend d-flex flex-wrap align-items-center gap-16 m-t-8">
+        <span><span class="sp-legend-dot sp-completed"></span>Completado</span>
+        <span><span class="sp-legend-dot sp-missed"></span>No completado</span>
+        <span><span class="sp-legend-dot sp-today"></span>Hoy</span>
+        <span><span class="sp-legend-dot sp-pending"></span>Pendiente</span>
+      </div>
     }
   </mat-card-content>
 </mat-card>

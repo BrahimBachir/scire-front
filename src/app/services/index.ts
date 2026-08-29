@@ -27,7 +27,7 @@ export * from './front/paginator-init.service';
 export * from './course-progress.service';
 export * from './article-progress.facade';
 export * from './annuncements.service';
-export * from './study-schedule.service';
+export * from './study-plan.service';
 export * from './payments.service';
 export * from './vouchers.service';
 export * from './bulk-upload.service';
